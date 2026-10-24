@@ -1,0 +1,63 @@
+{
+  "observed_at_utc": "2026-10-24T18:01:58.726546+00:00",
+  "checks": [
+    {
+      "name": "matrix_chain_id",
+      "url": "https://testnet.matrixlabs.app/",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "eth_chainId",
+        "params": []
+      },
+      "result": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": "0xbbbb2"
+      }
+    },
+    {
+      "name": "matrix_latest",
+      "url": "https://testnet.matrixlabs.app/",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "eth_getBlockByNumber",
+        "params": [
+          "latest",
+          false
+        ]
+      },
+      "result": {
+        "number": "0x3d69e42",
+        "hash": "0x13869af4023fb5a479968e166adceb6e825577c989cd2ec974b83eddcffb5a2b",
+        "timestamp": "0x6cf8bc5b",
+        "timestamp_utc": "2027-12-08T04:34:35+00:00",
+        "transactions_count": 1
+      }
+    },
+    {
+      "name": "echobit_public_ticker",
+      "url": "https://uapi.echobit.com/uapi/exchange/ticker?symbol=BTCUSDT",
+      "request": null,
+      "result": {
+        "msg": "success",
+        "code": "0",
+        "data": [
+          {
+            "t": 1792864918510,
+            "s": "BTCUSDT",
+            "sn": "BTCUSDT",
+            "c": "80272.4",
+            "h": "81659.5",
+            "l": "79260.1",
+            "o": "81600",
+            "v": "15720.82009",
+            "qv": "1259887007.078401",
+            "m": "-0.0163"
+          }
+        ]
+      }
+    }
+  ]
+}
