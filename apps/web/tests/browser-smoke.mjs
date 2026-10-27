@@ -1,4 +1,5 @@
-// Read-only Chromium smoke check; no wallet injection, signing, uploads or chain writes.
+// Read-only Chromium smoke check; no wallet injection, signing or chain writes.
+// The image preparation check intercepts uploads in browser memory; no evidence service is written.
 // Run against a local production server: node tests/browser-smoke.mjs
 import {spawn} from "node:child_process";
 import {mkdir,writeFile} from "node:fs/promises";
@@ -28,6 +29,14 @@ try{
  await evaluate("document.querySelector('[aria-label=\"Use dark theme\"]').click()");assert.equal(await evaluate("document.documentElement.dataset.theme"),"dark");await screenshot("home-mobile-dark");checks.push({darkTheme:true});
  await evaluate("document.querySelector('.wallet-button').click()");await delay(1500);assert(await evaluate("!!document.querySelector('[role=dialog]')"));assert(await evaluate("document.body.innerText.includes('No wallet detected')"));await evaluate("document.querySelector('[aria-label=\"Close wallet\"]').click()");checks.push({walletMissingState:true});
  for(const route of["/items","/operator","/arbiter","/proof"]){await navigate(route);}
+ await navigate("/operator");
+ const fixture=await evaluate("(()=>{const c=document.createElement('canvas');c.width=1000;c.height=1000;const x=c.getContext('2d');const d=x.createImageData(1000,1000);let seed=7;for(let i=0;i<d.data.length;i+=4){seed=(seed*1664525+1013904223)>>>0;d.data[i]=seed&255;d.data[i+1]=(seed>>>8)&255;d.data[i+2]=(seed>>>16)&255;d.data[i+3]=255;}x.putImageData(d,0,0);return c.toDataURL('image/png').split(',')[1]})()");
+ const fixturePath=path.join(output,"synthetic-compression-test.png");await writeFile(fixturePath,Buffer.from(fixture,"base64"));
+ await evaluate("(()=>{const original=window.fetch.bind(window);window.__evidenceTest={};window.fetch=async(input,init)=>{const u=String(input);if(u==='/api/evidence'&&init?.method==='POST'){const blob=init.body;const bytes=await blob.arrayBuffer();const digest=await crypto.subtle.digest('SHA-256',bytes);const hash='0x'+Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('');window.__evidenceTest={size:blob.size,mime:blob.type,matched:hash===new Headers(init.headers).get('x-content-sha256'),hash,blob};return Response.json({hash,url:'/api/evidence/'+hash.slice(2),size:blob.size},{status:201});}if(u==='/api/evidence/'+window.__evidenceTest.hash?.slice(2))return new Response(window.__evidenceTest.blob,{headers:{'content-type':'image/jpeg'}});return original(input,init)};document.querySelector('input[type=file]').closest('details').open=true})()");
+ const doc=await send("DOM.getDocument");const fileInput=await send("DOM.querySelector",{nodeId:doc.root.nodeId,selector:"input[type=file]"});await send("DOM.setFileInputFiles",{nodeId:fileInput.nodeId,files:[fixturePath]});
+ for(let i=0;i<80;i++){if(await evaluate("document.body.innerText.includes('Stored bytes match')"))break;await delay(150);}
+ const prepared=await evaluate("({size:window.__evidenceTest.size,mime:window.__evidenceTest.mime,matched:window.__evidenceTest.matched,verified:document.body.innerText.includes('Stored bytes match')})");assert(prepared.size>0&&prepared.size<=65536,"Final browser thumbnail must fit 64 KiB");assert.equal(prepared.mime,"image/jpeg");assert.equal(prepared.matched,true);assert.equal(prepared.verified,true);checks.push({browserFinalJpeg:prepared,backend:"intercepted in memory; no upload"});
+ await navigate("/proof");
  await screenshot("proof-mobile-dark");assert.equal(errors.length,0,`Browser exceptions: ${JSON.stringify(errors)}`);
  await writeFile(path.join(output,"browser-results.json"),JSON.stringify({origin:appOrigin,checkedAt:new Date().toISOString(),checks,exceptions:errors},null,2));console.log(JSON.stringify({checks:checks.length,exceptions:errors.length,screenshots:output},null,2));
  await send("Browser.close").catch(()=>{});
