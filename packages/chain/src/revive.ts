@@ -461,8 +461,8 @@ export async function storeEvidence(
   );
 }
 
-export type EvidenceReconciliation =
-  | { status: "confirmed"; evidence: StoredEvidence }
+export type TransactionReconciliation =
+  | { status: "confirmed"; evidence: TransactionEvidence }
   | { status: "failed"; evidence: TransactionEvidence; dispatchError: unknown }
   | {
       status: "pending" | "unknown";
@@ -473,11 +473,11 @@ export type EvidenceReconciliation =
     };
 
 /** Bounded, read-only recovery. Not found is never permission to resend automatically. */
-export async function reconcileEvidence(input: {
+export async function reconcileTransaction(input: {
   txHash: Hex;
   fromBlock: number;
   maxBlocks?: number;
-}): Promise<EvidenceReconciliation> {
+}): Promise<TransactionReconciliation> {
   const maxBlocks = input.maxBlocks ?? 64;
   if (
     !/^0x[0-9a-f]{64}$/i.test(input.txHash) ||
@@ -550,40 +550,11 @@ export async function reconcileEvidence(input: {
         (event) =>
           event.type === "System" && event.value.type === "ExtrinsicSuccess",
       );
-      const stored = events.find(
-        (event) =>
-          event.type === "TransactionStorage" && event.value.type === "Stored",
-      );
-      if (!success || !stored)
+      if (!success)
         throw new Error(
-          "The transaction is finalized but expected successful storage proof is missing",
+          "The transaction was found but its finalized dispatch outcome is unavailable",
         );
-      const value = stored.value.value as { index: number; content_hash: Hex };
-      const [metadata, retentionBlocks] = await Promise.all([
-        api.query.TransactionStorage.Transactions.getValue(block, {
-          at: blockHash,
-          signal: AbortSignal.timeout(45_000),
-        }),
-        api.query.TransactionStorage.RetentionPeriod.getValue({
-          at: blockHash,
-          signal: AbortSignal.timeout(45_000),
-        }),
-      ]);
-      const transaction = metadata?.[value.index];
-      if (!transaction || transaction.content_hash !== value.content_hash)
-        throw new Error(
-          "Stored event and native transaction metadata could not be reconciled",
-        );
-      return {
-        status: "confirmed",
-        evidence: {
-          ...evidence,
-          storageIndex: value.index,
-          storageContentHash: value.content_hash,
-          bytes: transaction.size,
-          retentionBlocks,
-        },
-      };
+      return { status: "confirmed", evidence };
     }
     return {
       status: "pending",
@@ -601,6 +572,67 @@ export async function reconcileEvidence(input: {
       txHash: input.txHash,
       searchedThrough,
       nextBlock: searchedThrough + 1,
+      reason: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
+export type EvidenceReconciliation =
+  | { status: "confirmed"; evidence: StoredEvidence }
+  | Exclude<TransactionReconciliation, { status: "confirmed" }>;
+
+/** Adds native storage proof to generic finalized transaction reconciliation. */
+export async function reconcileEvidence(input: {
+  txHash: Hex;
+  fromBlock: number;
+  maxBlocks?: number;
+}): Promise<EvidenceReconciliation> {
+  const result = await reconcileTransaction(input);
+  if (result.status !== "confirmed") return result;
+  const evidence = result.evidence;
+  try {
+    const stored = evidence.events.find(
+      (event) =>
+        event.type === "TransactionStorage" && event.value.type === "Stored",
+    );
+    if (!stored)
+      throw new Error(
+        "The transaction finalized successfully but TransactionStorage.Stored proof is missing",
+      );
+    const value = stored.value.value as { index: number; content_hash: Hex };
+    const options = {
+      at: evidence.blockHash,
+      signal: AbortSignal.timeout(45_000),
+    };
+    const api = getApi();
+    const [metadata, retentionBlocks] = await Promise.all([
+      api.query.TransactionStorage.Transactions.getValue(
+        evidence.block,
+        options,
+      ),
+      api.query.TransactionStorage.RetentionPeriod.getValue(options),
+    ]);
+    const transaction = metadata?.[value.index];
+    if (!transaction || transaction.content_hash !== value.content_hash)
+      throw new Error(
+        "Stored event and native transaction metadata could not be reconciled",
+      );
+    return {
+      status: "confirmed",
+      evidence: {
+        ...evidence,
+        storageIndex: value.index,
+        storageContentHash: value.content_hash,
+        bytes: transaction.size,
+        retentionBlocks,
+      },
+    };
+  } catch (error) {
+    return {
+      status: "unknown",
+      txHash: input.txHash,
+      searchedThrough: evidence.block - 1,
+      nextBlock: evidence.block,
       reason: error instanceof Error ? error.message : String(error),
     };
   }
