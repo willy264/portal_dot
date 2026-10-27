@@ -33,12 +33,14 @@ async function initialize(){
     const capability=manifest.nativeScheduler;
     configureNativeScheduler({...capability,p5Verified:true,weight:{ref_time:BigInt(capability.weight.ref_time),proof_size:BigInt(capability.weight.proof_size)},storageDepositLimit:BigInt(capability.storageDepositLimit)});
   }
-  scanner=new Scanner(store,new SubstrateSource([{address:cronpot,abi:cronpotAbi},{address:meterMend,abi:meterMendAbi}]),startBlock);
+  const source=new SubstrateSource([{address:cronpot,abi:cronpotAbi},{address:meterMend,abi:meterMendAbi}]);
+  scanner=new Scanner(store,source,startBlock);
   const blockTimeMs=Number(await getApi().constants.Babe.ExpectedBlockTime());
   engine=new JobEngine(store,{
     readJob:async id=>{const result=await readContract<readonly [Address,Address,bigint,number,bigint]>(cronpotAbi,cronpot,'jobs',[id]);return {status:result[3],executeAfter:result[2]};},
     execute:async(id,onStatus)=>{if(!signer)throw new Error('Relayer signer is not configured');return await reviveCall({signer,to:cronpot,data:encodeFunctionData({abi:cronpotAbi,functionName:'execute',args:[id]}),onStatus});},
-    schedule:async(job,delayBlocks,onStatus)=>{if(!signer)throw new Error('Relayer signer is not configured');return await scheduleCronpot({signer,address:cronpot,jobId:BigInt(job.id),delayBlocks,onStatus});}
+    schedule:async(job,delayBlocks,onStatus)=>{if(!signer)throw new Error('Relayer signer is not configured');return await scheduleCronpot({signer,address:cronpot,jobId:BigInt(job.id),delayBlocks,onStatus});},
+    reconcile:(txHash,fromBlock,throughBlock,operation)=>source.reconcile(txHash,fromBlock,throughBlock,operation)
   },mode,meterMend,blockTimeMs);
 }
 
@@ -53,7 +55,7 @@ async function tick(){
     await scanner!.tick();
     const cursor=store.cursor('chain');const from=(store.cursor('jobs')?.block??startBlock-1)+1;
     if(cursor&&cursor.block>=from)store.transaction(()=>{engine!.ingest(store.eventRange(from,cursor.block));store.setCursor('jobs',cursor.block,cursor.hash);});
-    if(signer&&scanner!.lastHead)await engine!.tick(scanner!.lastHead.timestamp);
+    if(signer&&scanner!.lastHead)await engine!.tick(scanner!.lastHead.timestamp,scanner!.lastHead.number);
     lastError=null;
   }catch(error){lastError=error instanceof Error?error.message:String(error);console.error(lastError);}
   finally{busy=false;}

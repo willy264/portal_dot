@@ -4,10 +4,26 @@ import { Store, delayBlocks, keeperReady, type ChainEvent, type StoredJob } from
 const refundAbi = parseAbi(['function finalizeRefund(uint256 rentalId)']);
 const states = ['None', 'Scheduled', 'Executed', 'Cancelled', 'Failed'];
 export interface ExecutionReceipt { txHash: string; block: number; events?: unknown[]; task?: unknown }
+export type SubmissionReconciliation =
+  | { status: 'confirmed'; receipt: ExecutionReceipt }
+  | { status: 'failed'; receipt: ExecutionReceipt; reason: string }
+  | { status: 'pending' | 'unknown'; searchedThrough: number; reason: string };
 export interface ExecutionAdapter {
   readJob(id: bigint): Promise<{ status: number; executeAfter: bigint }>;
   schedule(job: StoredJob, blocks: number, onStatus: (event: unknown) => void): Promise<ExecutionReceipt>;
   execute(id: bigint, onStatus: (event: unknown) => void): Promise<ExecutionReceipt>;
+  reconcile?(txHash: string, fromBlock: number, throughBlock: number, operation: 'schedule' | 'execute'): Promise<SubmissionReconciliation>;
+}
+
+interface PendingSubmission {
+  jobId: string;
+  operation: 'schedule' | 'execute';
+  txHash?: string;
+  submittedAfterBlock?: number;
+  searchedThrough?: number;
+  type?: string;
+  block?: unknown;
+  ok?: boolean;
 }
 
 /** The funded relayer only subsidizes this deployment's refund jobs. Cronpot itself remains generic. */
@@ -36,14 +52,18 @@ export class JobEngine {
     }
   }
 
-  async tick(chainTime: bigint): Promise<void> {
+  async tick(chainTime: bigint, finalizedHeadNumber?: number): Promise<void> {
     for (const job of this.store.jobs()) {
       if (job.state !== 'Scheduled' || job.scheduling === 'outside-policy') continue;
       const current = await this.adapter.readJob(BigInt(job.id));
       job.state = states[current.status] ?? 'Unknown';
       if (job.state !== 'Scheduled') { this.store.putJob(job); continue; }
-      // Unknown inclusion is a persisted pause. A restart never blindly rebroadcasts it.
-      if (['execution-unknown','executing','scheduling','native-unknown','manual-review'].includes(job.scheduling)) continue;
+      // Reconcile finalized evidence before leaving an uncertain submission state.
+      if (['execution-unknown','executing','scheduling','native-unknown'].includes(job.scheduling)) {
+        await this.reconcilePending(job,chainTime,finalizedHeadNumber);
+        continue;
+      }
+      if(job.scheduling==='manual-review')continue;
       if (job.nextAttemptAt && chainTime < BigInt(job.nextAttemptAt)) continue;
       if (job.attempts >= 5) { job.scheduling='manual-review'; this.store.putJob(job); continue; }
       const due = keeperReady(current.executeAfter, chainTime);
@@ -52,12 +72,14 @@ export class JobEngine {
       if (native && job.attempts >= 3) { job.scheduling = 'keeper-fallback'; this.store.putJob(job); continue; }
       job.attempts++;
       job.scheduling = native ? 'scheduling' : 'executing';
+      const pending:PendingSubmission={jobId:job.id,operation:native?'schedule':'execute',submittedAfterBlock:finalizedHeadNumber};
+      job.evidence={...(job.evidence as object??{}),pendingSubmission:pending};
       this.store.putJob(job);
       let submittedHash: string | undefined;
       const onStatus = (event: unknown) => {
         const record = event as { type?: string; txHash?: string; block?: unknown; ok?: boolean };
         submittedHash = record.txHash ?? submittedHash;
-        const journal = { jobId:job.id, operation:native?'schedule':'execute', txHash:submittedHash, type:record.type, block:record.block, ok:record.ok };
+        const journal:PendingSubmission = { ...pending, txHash:submittedHash, type:record.type, block:record.block, ok:record.ok };
         job.evidence = { ...(job.evidence as object ?? {}), pendingSubmission:journal };
         this.store.transaction(()=>{this.store.putJob(job);this.store.observation('transaction-status',journal);});
       };
@@ -83,6 +105,44 @@ export class JobEngine {
       }
       this.store.putJob(job);
     }
+  }
+
+  private async reconcilePending(job:StoredJob,chainTime:bigint,finalizedHeadNumber?:number):Promise<void>{
+    const evidence=job.evidence as {pendingSubmission?:PendingSubmission;lastError?:{txHash?:string}}|undefined;
+    const pending=evidence?.pendingSubmission;
+    const hash=pending?.txHash??evidence?.lastError?.txHash;
+    if(!this.adapter.reconcile||!hash||!pending||pending.submittedAfterBlock===undefined||finalizedHeadNumber===undefined){
+      job.lastError='Submission remains uncertain; a recorded hash, start block and finalized reconciliation source are required';
+      this.store.putJob(job);return;
+    }
+    const from=(pending.searchedThrough??pending.submittedAfterBlock)+1;
+    if(from>finalizedHeadNumber)return;
+    const through=Math.min(finalizedHeadNumber,from+24);
+    let result:SubmissionReconciliation;
+    try{result=await this.adapter.reconcile(hash,from,through,pending.operation);}
+    catch(error){result={status:'unknown',searchedThrough:from-1,reason:error instanceof Error?error.message:String(error)};}
+    if(!('receipt' in result)){
+      if(!Number.isSafeInteger(result.searchedThrough)||result.searchedThrough<from-1||result.searchedThrough>through)throw new Error('Invalid reconciliation cursor');
+      pending.searchedThrough=result.searchedThrough;
+      job.lastError=result.reason;
+      job.evidence={...(job.evidence as object??{}),pendingSubmission:pending};
+      this.store.transaction(()=>{this.store.putJob(job);this.store.observation('submission-reconciliation-pending',{jobId:job.id,txHash:hash,from,through,...result});});
+      return;
+    }
+    job.evidence={...(job.evidence as object??{}),reconciledSubmission:result.receipt};
+    if(result.status==='failed'){
+      job.scheduling=pending.operation==='schedule'?'keeper-fallback':'pending';
+      job.lastError=result.reason;
+      job.nextAttemptAt=(chainTime+BigInt(Math.min(300,10*2**Math.min(job.attempts,5)))).toString();
+    }else{
+      job.lastError=undefined;
+      if(pending.operation==='schedule'){
+        job.scheduling='native-scheduled';job.scheduleTxHash=result.receipt.txHash;job.task=result.receipt.task;
+      }else{
+        job.scheduling='keeper-executed';job.state='FinalizedAwaitingEvents';
+      }
+    }
+    this.store.transaction(()=>{this.store.putJob(job);this.store.observation('submission-reconciled',{jobId:job.id,operation:pending.operation,...result});});
   }
 
   automaticRefundCount(): number {
