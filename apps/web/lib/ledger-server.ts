@@ -1,6 +1,6 @@
 import "server-only";
-import { createPublicClient, http } from "viem";
-import { meterMendAbi } from "./abi";
+import {chainAdapter} from "./wallet-chain";
+import {snapshotReader} from "./snapshot-reader";
 import { publicConfig } from "./server-config";
 import { errorMessage, metadata } from "./format";
 import { normalizeEvents } from "./history";
@@ -22,27 +22,29 @@ async function range<T>(next: bigint, read: (id: bigint) => Promise<T>): Promise
   }
   return values;
 }
-export async function readLedger(): Promise<Ledger> {
+let pendingSnapshot:Promise<Ledger>|null=null;
+/** Overlapping browser polls share the in-flight read instead of multiplying RPC work. */
+export function readLedger():Promise<Ledger>{if(!pendingSnapshot)pendingSnapshot=loadLedger().finally(()=>{pendingSnapshot=null;});return pendingSnapshot;}
+async function loadLedger(): Promise<Ledger> {
   const config = await publicConfig();
   const empty: Ledger = { config, state: "unconfigured", observedAt: new Date().toISOString(), block: null, blockTimestamp: null, items: [], rentals: [], repairs: [], events: [], jobs: [], automaticRefundCount: null, historyStatus: "A verified deployment is required to load the workshop." };
   if (!config.meterMend) return empty;
-  const client = createPublicClient({transport: http(config.evmRpcUrl, { timeout: 10000, retryCount: 1 })});
   try {
-    if (await client.getChainId() !== config.chainId) throw new Error("The RPC returned a different network. Reads and transactions are disabled.");
-    const block = await client.getBlock();
-    const base = { address: config.meterMend, abi: meterMendAbi, blockNumber: block.number } as const;
+    const chain=await chainAdapter(config,8000);await chain.verifyNetwork();
+    const block=await chain.getFinalizedHead();const observedAt=new Date().toISOString();
+    const read=snapshotReader(chain,config.meterMend,block);
     const [nextItems, nextRentals, nextRepairs, cronTip] = await Promise.all([
-      client.readContract({...base,functionName:"nextItemId"}), client.readContract({...base,functionName:"nextRentalId"}), client.readContract({...base,functionName:"nextRepairId"}), client.readContract({...base,functionName:"cronTip"})
+      read("nextItemId"),read("nextRentalId"),read("nextRepairId"),read("cronTip")
     ]);
     config.cronTip = cronTip.toString();
     const [items, rentals, repairs, historyResult, jobsResult] = await Promise.all([
-      range(nextItems, async id => { const i = await client.readContract({...base,functionName:"items",args:[id]}); return { id:id.toString(),operator:i[0],arbiter:i[1],fee:i[2].toString(),deposit:i[3].toString(),reserveBps:i[4],disputeWindow:i[5],active:i[6],rented:i[7],reserve:i[8].toString(),metadataURI:i[9],...metadata(i[9],id.toString())}; }),
-      range(nextRentals, async id => { const r = await client.readContract({...base,functionName:"rentals",args:[id]}); const rental:Rental={id:id.toString(),itemId:r[0].toString(),renter:r[1],deposit:r[2].toString(),startedAt:Number(r[3]),refundAt:Number(r[4]),status:r[5],cronJobId:r[6].toString()}; if(r[5]===3){const d=await client.readContract({...base,functionName:"disputes",args:[id]});rental.dispute={amount:d[0].toString(),evidenceHash:d[1],renterVoted:d[2],renterApproved:d[3],arbiterVoted:d[4],arbiterApproved:d[5]};} return rental; }),
-      range(nextRepairs, async id => { const r=await client.readContract({...base,functionName:"repairs",args:[id]});return {id:id.toString(),itemId:r[0].toString(),repairer:r[1],amount:r[2].toString(),receiptHash:r[3],paid:r[4],rejected:r[5]}; }),
+      range(nextItems, async id => { const i=await read("items",[id]);return { id:id.toString(),operator:i[0],arbiter:i[1],fee:i[2].toString(),deposit:i[3].toString(),reserveBps:i[4],disputeWindow:i[5],active:i[6],rented:i[7],reserve:i[8].toString(),metadataURI:i[9],...metadata(i[9],id.toString())}; }),
+      range(nextRentals, async id => { const r=await read("rentals",[id]);const rental:Rental={id:id.toString(),itemId:r[0].toString(),renter:r[1],deposit:r[2].toString(),startedAt:Number(r[3]),refundAt:Number(r[4]),status:r[5],cronJobId:r[6].toString()}; if(r[5]===3){const d=await read("disputes",[id]);rental.dispute={amount:d[0].toString(),evidenceHash:d[1],renterVoted:d[2],renterApproved:d[3],arbiterVoted:d[4],arbiterApproved:d[5]};} return rental; }),
+      range(nextRepairs, async id => { const r=await read("repairs",[id]);return {id:id.toString(),itemId:r[0].toString(),repairer:r[1],amount:r[2].toString(),receiptHash:r[3],paid:r[4],rejected:r[5]}; }),
       backend("/events").then(value=>({value,error:null})).catch(error=>({value:null,error:errorMessage(error)})),
       backend("/jobs").then(value=>({value,error:null})).catch(error=>({value:null,error:errorMessage(error)})),
     ]);
     const h=historyResult.value;
-    return {...empty,config,state:"ready",block:block.number.toString(),blockTimestamp:Number(block.timestamp),items,rentals,repairs,events:normalizeEvents(h),historyStatus:historyResult.error ?? (h?.gap ? "The indexer reports a history gap. Previously stored events are retained; completeness is unverified." : "Persisted events from the workshop indexer."),jobs:Array.isArray(jobsResult.value)?jobsResult.value:jobsResult.value?.jobs??[],jobsError:jobsResult.error??undefined,automaticRefundCount:typeof h?.automaticRefundCount==="number"?h.automaticRefundCount:null};
+    return {...empty,config,state:"ready",observedAt,block:block.number.toString(),blockTimestamp:Number(block.timestamp),items,rentals,repairs,events:normalizeEvents(h),historyStatus:historyResult.error ?? (h?.gap ? "The indexer reports a history gap. Previously stored events are retained; completeness is unverified." : "Persisted events from the workshop indexer."),jobs:Array.isArray(jobsResult.value)?jobsResult.value:jobsResult.value?.jobs??[],jobsError:jobsResult.error??undefined,automaticRefundCount:typeof h?.automaticRefundCount==="number"?h.automaticRefundCount:null};
   } catch(error) { return {...empty,state:"error",error:errorMessage(error),historyStatus:"Current chain state could not be verified. Refresh before taking action."}; }
 }

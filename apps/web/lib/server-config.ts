@@ -31,7 +31,7 @@ export async function publicConfig(): Promise<PublicConfig> {
     nativeDecimals: 14, evmDecimals: 18, unitsVerified: unitMatch && units?.verified === true && Number(d?.chainId) === 420420777,
     storageConfigured: !!process.env.EVIDENCE_BACKEND_URL || (!!process.env.WEB_EVIDENCE_DIR && !process.env.VERCEL),
     nativeEvidence:nativeEvidenceCapability(funded),
-    appUrl: process.env.PUBLIC_APP_URL ?? null,
+    appUrl: process.env.PUBLIC_APP_URL ?? process.env.APP_URL ?? null,
     deploymentBlock: d?.contracts?.MeterMend?.blockNumber?.toString() ?? d?.contracts?.MeterMend?.block?.toString() ?? d?.deploymentBlock?.toString() ?? null,
   };
 }

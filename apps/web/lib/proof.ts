@@ -1,5 +1,6 @@
 export type ProofTransaction={label:string;txHash:string|null;blockHash:string|null;block:string|null;status:string;eventNames:string[]};
 export type ProbeRow={id:string;label:string;status:string;summary:string};
+export function demoStatus(value:unknown):string{if(!value||typeof value!=="object")return"Not run";const report=value as Record<string,unknown>;if(typeof report.status==="string")return report.status;if(typeof report.completedAt==="string"&&Number.isFinite(Date.parse(report.completedAt)))return"Completed (recorded)";if(typeof report.startedAt==="string")return"Started; not completed";return"Not run";}
 const hash=(value:unknown)=>typeof value==="string"&&/^0x[\da-f]{64}$/i.test(value)?value:null;
 const scalar=(value:unknown)=>typeof value==="string"||typeof value==="number"||typeof value==="boolean"?String(value):null;
 const labels:Record<string,string>={P1:"Network identity",P2:"Runtime integrations",P3:"Contract code format",P4:"Mapping & payment units",P5:"Native scheduling",P6:"Evidence storage",P7:"Optional EVM writes"};
