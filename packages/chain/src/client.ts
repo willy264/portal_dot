@@ -6,6 +6,9 @@ import { Blake2256 } from "@polkadot-api/substrate-bindings";
 import { Binary, Enum } from "polkadot-api";
 import { createPublicClient, decodeEventLog, decodeFunctionResult, encodeFunctionData, hexToBytes, http, toHex, type Abi, type Address, type Hex } from "viem";
 import { NATIVE_TO_EVM_RATIO } from "./units";
+import { historyWithFallback, HistoryGapError } from "./history";
+export { HistoryGapError } from "./history";
+export type { HistoryResult } from "./history";
 
 export const CHAIN_ID = 420420777;
 export const GENESIS_HASH = "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd";
@@ -41,21 +44,24 @@ export function disconnectChain(): void {
 }
 
 /** Every write calls this guard; upgraded metadata remains PAPI compatibility-checked. */
-export function verifyNetwork(): Promise<void> {
-  return verified ??= (async () => {
+export async function verifyNetwork(): Promise<void> {
+  await (verified ??= (async () => {
     const api = getApi();
     const [genesis, runtime, id, ratio, nativeChainId] = await Promise.all([
       getClient()._request<string>("chain_getBlockHash", [0]),
       getClient()._request<{ specName: string }>("state_getRuntimeVersion", []),
-      getEvmClient().getChainId(),
+      getEvmClient().getChainId().catch(() => null),
       api.constants.Revive.NativeToEthRatio(),
       api.constants.Revive.ChainId(),
     ]);
-    if (genesis !== GENESIS_HASH || runtime.specName !== "portaldot-v3" || id !== CHAIN_ID || nativeChainId !== BigInt(CHAIN_ID)) {
+    if (genesis !== GENESIS_HASH || runtime.specName !== "portaldot-v3" || (id !== null && id !== CHAIN_ID) || nativeChainId !== BigInt(CHAIN_ID)) {
       throw new Error("Endpoint identity differs from the verified Portaldot V3 testnet");
     }
     if (BigInt(ratio) !== NATIVE_TO_EVM_RATIO) throw new Error("Native/EVM ratio changed; refresh probe and conversion policy before writing");
-  })().catch((error: unknown) => { verified = undefined; throw error; });
+  })().catch((error: unknown) => { verified = undefined; throw error; }));
+  // Runtime upgrades can change denomination while a process keeps its connection open.
+  const ratio = await getApi().constants.Revive.NativeToEthRatio();
+  if (BigInt(ratio) !== NATIVE_TO_EVM_RATIO) throw new Error("Native/EVM ratio changed; refresh probe and conversion policy before writing");
 }
 
 export async function h160Of(address: string): Promise<Address> {
@@ -93,16 +99,27 @@ export async function getBlock(number: number) {
   return { number, hash, timestamp: timestampMs / 1000n };
 }
 
-export async function readContract<T = unknown>(abi: Abi, address: Address, fn: string, args: readonly unknown[] = []): Promise<T> {
+export type ContractReadOptions = { at?: { number: number; hash: string } };
+const checkedSnapshots = new Map<number, string>();
+export async function readContract<T = unknown>(abi: Abi, address: Address, fn: string, args: readonly unknown[] = [], options: ContractReadOptions = {}): Promise<T> {
+  const head = await firstValueFrom(getClient().finalizedBlock$.pipe(timeout(settings.timeoutMs)));
+  const finalized = options.at ?? head;
+  if (!Number.isSafeInteger(finalized.number) || finalized.number < 0 || finalized.number > head.number) throw new RangeError("Contract reads require a finalized snapshot");
+  if (options.at && checkedSnapshots.get(finalized.number) !== finalized.hash) {
+    const canonicalHash = await getClient()._request<string>("chain_getBlockHash", [finalized.number]);
+    if (canonicalHash !== finalized.hash) throw new Error("Requested contract snapshot hash does not match the finalized chain");
+    if (checkedSnapshots.size >= 128) checkedSnapshots.clear();
+    checkedSnapshots.set(finalized.number, finalized.hash);
+  }
   try {
-    return await getEvmClient().readContract({ abi, address, functionName: fn, args }) as T;
+    return await getEvmClient().readContract({ abi, address, functionName: fn, args, blockNumber: BigInt(finalized.number) }) as T;
   } catch (evmError) {
     try {
       const data = encodeFunctionData({ abi, functionName: fn, args });
       const simulation = await getApi().apis.ReviveApi.call_versioned(Enum("V1", {
         origin: settings.readOrigin, dest: address, value: 0n, gas_limit: undefined,
         storage_deposit_limit: undefined, input_data: Binary.fromHex(data),
-      }), { signal: AbortSignal.timeout(settings.timeoutMs) });
+      }), { at: finalized.hash, signal: AbortSignal.timeout(settings.timeoutMs) });
       const result = simulation.value.result;
       if (!result.success) throw new Error(`Runtime read failed: ${JSON.stringify(result.value)}`);
       if (result.value.flags & 1) throw new Error(`Runtime read reverted: ${toHex(result.value.data)}`);
@@ -120,16 +137,25 @@ export type DecodedLog = {
 
 /** Caller supplies a finalized end block; never treats a head log as finalized proof. */
 export async function getLogs(abi: Abi, address: Address, fromBlock: bigint | number, toBlock?: bigint | number): Promise<DecodedLog[]> {
-  const end = toBlock === undefined ? BigInt((await getFinalizedHead()).number) : BigInt(toBlock);
+  const result = await getLogsWithProvenance(abi, address, fromBlock, toBlock);
+  if (!result.complete) throw new HistoryGapError(result.fromBlock, result.toBlock, result);
+  return result.logs;
+}
+
+/** Explicit partial-history API for diagnostics. Never advance a durable cursor when complete=false. */
+export async function getLogsWithProvenance(abi: Abi, address: Address, fromBlock: bigint | number, toBlock?: bigint | number) {
+  const finalizedEnd = BigInt((await getFinalizedHead()).number);
+  const end = toBlock === undefined ? finalizedEnd : BigInt(toBlock);
   const start = BigInt(fromBlock);
   if (start < 0n || end < start || end > BigInt(Number.MAX_SAFE_INTEGER)) throw new RangeError("Invalid log block range");
+  if (end > finalizedEnd) throw new RangeError("Requested log range includes unfinalized blocks");
   // Native events cover signed Revive calls and on_initialize Scheduler executions,
   // which an EVM facade may omit without returning an RPC error.
-  try { return await getNativeContractLogs(abi, address, Number(start), Number(end)); }
-  catch (nativeError) {
-    try { return await getEvmContractLogs(abi, address, start, end); }
-    catch (evmError) { throw new AggregateError([nativeError, evmError], "Both native event and EVM log retrieval failed"); }
-  }
+  const result = await historyWithFallback(
+    () => getNativeContractLogs(abi, address, Number(start), Number(end)),
+    () => getEvmContractLogs(abi, address, start, end),
+  );
+  return { ...result, fromBlock: start, toBlock: end };
 }
 
 export async function getEvmContractLogs(abi: Abi, address: Address, fromBlock: bigint, toBlock: bigint): Promise<DecodedLog[]> {

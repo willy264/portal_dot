@@ -1,6 +1,7 @@
 import { Binary, Enum, type Transaction, type TxCreator, type TxEvent, type TxFinalized } from "polkadot-api";
-import { type Abi, type Address, type Hex, concatHex, decodeErrorResult, encodeFunctionData, toHex } from "viem";
-import { getAccountState, getApi, getClient, h160Of, verifyNetwork } from "./client";
+import { Blake2256 } from "@polkadot-api/substrate-bindings";
+import { type Abi, type Address, type Hex, concatHex, decodeErrorResult, encodeFunctionData, hexToBytes, toHex } from "viem";
+import { getAccountState, getApi, getClient, getFinalizedHead, h160Of, verifyNetwork } from "./client";
 import { evmToNative, withTwentyPercentMargin } from "./units";
 
 export type ChainSigner = { address: string; txCreator: TxCreator };
@@ -51,8 +52,9 @@ export async function submitAndWatch(tx: Transaction, signer: ChainSigner, optio
     const timer = setTimeout(() => stop(txHash
       ? new SubmissionUnknownError("Finalization timed out. Reconcile this transaction hash before any retry.", txHash)
       : new Error("Transaction creation timed out before a transaction hash was available")), options.timeoutMs ?? 180_000);
-    subscription = tx.createSubmitAndWatch(signer.txCreator).subscribe({
+    try { subscription = tx.createSubmitAndWatch(signer.txCreator).subscribe({
       next(event) {
+        if (finished) return;
         txHash = event.txHash as Hex;
         try { options.onStatus?.(event); }
         catch (error) { stop(new SubmissionUnknownError("Transaction journal callback failed; reconcile the transaction before retrying", txHash, { cause: error })); return; }
@@ -68,7 +70,9 @@ export async function submitAndWatch(tx: Transaction, signer: ChainSigner, optio
         stop(txHash ? new SubmissionUnknownError("Submission outcome is unknown. Reconcile this transaction hash before any retry.", txHash, { cause: error }) : error);
       },
       complete() { if (!finished) stop(new SubmissionUnknownError("Transaction stream ended without finalized proof", txHash)); },
-    });
+    }); } catch (error) {
+      stop(txHash ? new SubmissionUnknownError("Submission creation threw after a hash was observed; reconcile before retrying", txHash, { cause: error }) : error);
+    }
   });
 }
 
@@ -183,6 +187,92 @@ export async function buildReviveDeploy(input: ReviveDeployInput) {
     code: Binary.fromHex(concatHex([input.code, input.ctorData])), data: Binary.fromHex("0x"), salt: undefined,
   });
   return { ...estimate, tx };
+}
+
+export type StoredEvidence = TransactionEvidence & {
+  storageIndex: number;
+  /** Runtime content identifier; distinct from the app's WebCrypto SHA-256 commitment. */
+  storageContentHash: Hex;
+  bytes: number;
+  retentionBlocks: number;
+};
+
+/** Stores the final thumbnail bytes; callers hash and back up these exact bytes first. */
+export async function storeEvidence(input: {
+  signer: ChainSigner; bytes: Uint8Array;
+} & SubmissionOptions): Promise<StoredEvidence> {
+  if (input.bytes.byteLength < 1 || input.bytes.byteLength > 64 * 1024) throw new RangeError("Evidence thumbnails must contain 1–65536 bytes");
+  const bytes = Uint8Array.from(input.bytes);
+  await ensureMapped(input.signer, input);
+  const api = getApi();
+  const tx = api.tx.TransactionStorage.store({ data: bytes });
+  const [maximum, byteFee, entryFee, retentionBlocks, existentialDeposit, fee, account] = await Promise.all([
+    api.constants.TransactionStorage.MaxTransactionSize(),
+    api.query.TransactionStorage.ByteFee.getValue(), api.query.TransactionStorage.EntryFee.getValue(),
+    api.query.TransactionStorage.RetentionPeriod.getValue(), api.constants.Balances.ExistentialDeposit(),
+    tx.getEstimatedFees(input.signer.txCreator), getAccountState(input.signer.address),
+  ]);
+  if (bytes.byteLength > maximum) throw new RangeError(`Runtime evidence limit is ${maximum} bytes`);
+  if (byteFee === undefined || entryFee === undefined) throw new Error("TransactionStorage fees are not configured on this runtime");
+  const required = byteFee * BigInt(bytes.byteLength) + entryFee + withTwentyPercentMargin(fee) + existentialDeposit;
+  if (account.nativeBalance - account.nativeFrozen < required) throw new Error("Insufficient native balance for evidence storage, transaction fee and account survival");
+  const evidence = await submitAndWatch(tx, input.signer, input);
+  for (const event of evidence.events) {
+    if (event.type === "TransactionStorage" && event.value.type === "Stored") {
+      const stored = event.value.value as { index: number; content_hash: Hex };
+      return { ...evidence, storageIndex: stored.index, storageContentHash: stored.content_hash, bytes: bytes.byteLength, retentionBlocks };
+    }
+  }
+  throw new SubmissionUnknownError("Storage finalized without TransactionStorage.Stored; reconcile the recorded transaction hash before retrying", evidence.txHash);
+}
+
+export type EvidenceReconciliation =
+  | { status: "confirmed"; evidence: StoredEvidence }
+  | { status: "failed"; evidence: TransactionEvidence; dispatchError: unknown }
+  | { status: "pending" | "unknown"; txHash: Hex; searchedThrough: number; nextBlock: number; reason: string };
+
+/** Bounded, read-only recovery. Not found is never permission to resend automatically. */
+export async function reconcileEvidence(input: { txHash: Hex; fromBlock: number; maxBlocks?: number }): Promise<EvidenceReconciliation> {
+  const maxBlocks = input.maxBlocks ?? 64;
+  if (!/^0x[0-9a-f]{64}$/i.test(input.txHash) || !Number.isSafeInteger(input.fromBlock) || input.fromBlock < 0
+    || !Number.isSafeInteger(maxBlocks) || maxBlocks < 1 || maxBlocks > 256) throw new RangeError("A transaction hash, nonnegative start block and 1–256 block scan limit are required");
+  let searchedThrough = input.fromBlock - 1;
+  try {
+    await verifyNetwork();
+    const head = await getFinalizedHead();
+    const through = Math.min(head.number, input.fromBlock + maxBlocks - 1);
+    const api = getApi();
+    for (let block = input.fromBlock; block <= through; block++) {
+      const blockHash = await getClient()._request<Hex | null>("chain_getBlockHash", [block]);
+      if (!blockHash) throw new Error(`Block ${block} is unavailable`);
+      const body = await getClient()._request<{ block: { extrinsics: Hex[] } } | null>("chain_getBlock", [blockHash]);
+      if (!body) throw new Error(`Block body ${block} is unavailable`);
+      const extrinsicIndex = body.block.extrinsics.findIndex(tx => toHex(Blake2256(hexToBytes(tx))).toLowerCase() === input.txHash.toLowerCase());
+      if (extrinsicIndex < 0) { searchedThrough = block; continue; }
+      const records = await api.query.System.Events.getValue({ at: blockHash, signal: AbortSignal.timeout(45_000) });
+      const events = records.filter(record => record.phase.type === "ApplyExtrinsic" && record.phase.value === extrinsicIndex)
+        .map(record => ({ ...record, ...record.event })) as TxFinalized["events"];
+      const evidence: TransactionEvidence = { txHash: input.txHash, block, blockHash, extrinsicIndex, events };
+      const failure = events.find(event => event.type === "System" && event.value.type === "ExtrinsicFailed");
+      if (failure) return { status: "failed", evidence, dispatchError: failure.value.value };
+      const success = events.some(event => event.type === "System" && event.value.type === "ExtrinsicSuccess");
+      const stored = events.find(event => event.type === "TransactionStorage" && event.value.type === "Stored");
+      if (!success || !stored) throw new Error("The transaction is finalized but expected successful storage proof is missing");
+      const value = stored.value.value as { index: number; content_hash: Hex };
+      const [metadata, retentionBlocks] = await Promise.all([
+        api.query.TransactionStorage.Transactions.getValue(block, { at: blockHash, signal: AbortSignal.timeout(45_000) }),
+        api.query.TransactionStorage.RetentionPeriod.getValue({ at: blockHash, signal: AbortSignal.timeout(45_000) }),
+      ]);
+      const transaction = metadata?.[value.index];
+      if (!transaction || transaction.content_hash !== value.content_hash) throw new Error("Stored event and native transaction metadata could not be reconciled");
+      return { status: "confirmed", evidence: { ...evidence, storageIndex: value.index, storageContentHash: value.content_hash, bytes: transaction.size, retentionBlocks } };
+    }
+    return { status: "pending", txHash: input.txHash, searchedThrough, nextBlock: searchedThrough + 1,
+      reason: through < head.number ? "More finalized blocks remain to inspect; continue from nextBlock" : "No finalized inclusion found in this range; the transaction may still be pending. Do not automatically resend." };
+  } catch (error) {
+    return { status: "unknown", txHash: input.txHash, searchedThrough, nextBlock: searchedThrough + 1,
+      reason: error instanceof Error ? error.message : String(error) };
+  }
 }
 
 export type NativeSchedulerCapability = {

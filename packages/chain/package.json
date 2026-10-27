@@ -14,7 +14,7 @@
   "scripts": {
     "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run src/units.test.ts",
+    "test": "vitest run src",
     "metadata:generate": "papi generate",
     "metadata:update": "papi update portaldot"
   },

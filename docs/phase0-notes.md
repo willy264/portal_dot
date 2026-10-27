@@ -29,7 +29,7 @@ Verified endpoints: `wss://test-node-v3.portaldot.dev` and `https://test-evm-rpc
 
 ## Shared package boundaries
 
-`@metermend/chain/client`, `/revive`, `/units`, `/abi`, and the root entrypoint are browser-safe. Node seed handling is isolated under `/node`. `getApi` and `getClient` expose the generated typed API for native event indexing. `readContract` falls back to native Revive simulation if EVM reads fail. `getLogs` scans native `Revive.ContractEmitted` first, because the EVM facade may silently omit Substrate-origin calls; an EVM retrieval fallback is also available. Native events emitted during block initialization correctly carry `txHash: null`.
+`@metermend/chain/client`, `/revive`, `/units`, `/abi`, and the root entrypoint are browser-safe. Node seed handling is isolated under `/node`. `getApi` and `getClient` expose the generated typed API for native event indexing. `readContract` pins EVM reads to a native finalized block number and falls back to native Revive simulation at the same finalized hash. `getLogs` scans native `Revive.ContractEmitted` first, because the EVM facade may silently omit Substrate-origin calls. If native history is pruned, an EVM response (even an empty array) cannot establish complete history: ordinary `getLogs` throws `HistoryGapError`; `getLogsWithProvenance` exposes any partial fallback logs with `complete: false`, source and gap details. Never advance a durable cursor from this partial response. Native events emitted during block initialization correctly carry `txHash: null`.
 
 `scripts/budget.ts` simulated the actual compiled product constructors with a public mapped account selected solely for its sufficient balance. `deployments/budget.json` records **383.4735 tPOT** for Cronpot, **774.5265 tPOT** for MeterMend, and **29.49 tPOT** for Ping: **1187.49 tPOT** total storage deposits, excluding fees, subsequent storage and demo balances. These are independent read-only simulations, not contract deployments. The MeterMend simulation uses an illustrative nonzero Cronpot constructor address; real deployment must simulate again with the deployed address.
 
@@ -39,6 +39,20 @@ The committed `.papi/metadata/portaldot.scale` and `.papi/descriptors/dist` file
 
 ## Validation
 
-Read-only probe completed successfully with P1–P3 passed and remaining funded stages labeled honestly. Shared chain TypeScript check passes. Four unit tests cover native/EVM one-token equivalence, large-amount precision, dust/negative-value rejection and upward estimation margin. These checks do not substitute for funded deployment, value movement, native scheduling, or TransactionStorage write tests.
+Read-only probe completed successfully with P1–P3 passed and remaining funded stages labeled honestly. Shared chain TypeScript check passes. Sixteen unit tests cover native/EVM precision, finality and unknown-submission outcomes, one subscription without automatic rebroadcast, synchronous durable-journal callbacks, and partial-history coverage. A regression test found and fixed a timeout leak when transaction creation throws synchronously. These checks do not substitute for funded deployment, value movement, native scheduling, or TransactionStorage write tests.
 
 Primary API references: [PAPI code generation](https://papi.how/codegen/), [PAPI typed runtime APIs](https://papi.how/typed/apis/), [upstream Revive runtime API](https://paritytech.github.io/polkadot-sdk/master/pallet_revive/trait.ReviveApi.html). Live metadata and simulation output, rather than upstream defaults, determine the implementation above.
+
+## Subsequent funded verification
+
+The original `probe.json` remains a read-only snapshot. A separate authorized funded run is recorded in `deployments/funded-probe.json` and its journal:
+
+- P4 **passed**: real Ping deployment at `0x96ee88d272550530b518cbaa15a80cf5d38cdcfd`; call in finalized block **213573**, transaction `0x1e4af77310fe6f7afbf03b9310963a7a84bbfaebab50d291315c10127cbef7c2`. A native value of 10000000000 produced emitted EVM `msg.value = 100000000000000`, directly measuring ratio 10000.
+- P5 **unavailable for this ordinary signed account**: `Scheduler.schedule_after` finalized with **BadOrigin** in block **213576**, transaction `0x7a05968d67b82e52899f6414ec7acefda443b0fa76aae4a49aaa216e8ef16276`. Keeper mode is therefore the supported current path, rather than merely an untested fallback.
+- P6 **passed for 1 KiB**: `TransactionStorage.store` finalized successfully in block **213579**, transaction `0x76ffd5d81bf8e97d1dde819ba38e1fb1b94f90e1cbfec8216667b5a75abcc4b1`. This verifies the tested upload size; it does not prove a 64 KiB thumbnail upload or permanent availability.
+
+An independent read-only SDK log check across blocks 213570–213579 recovered the exact Pinged event and Substrate extrinsic hash above, confirming native event decoding and historical block access. No funded probe was repeated for that check.
+
+The shared `storeEvidence({ signer, bytes, onStatus })` helper snapshots the final bytes, caps thumbnails at 64 KiB, checks runtime limits and native fee/balance requirements, then requires finalized `TransactionStorage.Stored`. It returns `storageIndex`, `storageContentHash`, retention and transaction evidence. The runtime content hash is kept separate from the app's WebCrypto SHA-256 commitment.
+
+`reconcileEvidence({ txHash, fromBlock, maxBlocks })` performs a bounded, read-only finalized-block scan. It returns confirmed storage proof, a known finalized dispatch failure, or an explicit pending/unknown result. A missing transaction is never treated as permission to automatically resend. The helper successfully recovered the existing P6 transaction: storage index 0, 1024 bytes, retention 100800 blocks. The new helper itself has not issued an additional upload.
