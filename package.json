@@ -4,10 +4,14 @@
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.34.9",
-  "engines": { "node": ">=22.12.0 <23", "pnpm": ">=10 <11" },
+  "engines": {
+    "node": ">=22.12.0 <23",
+    "pnpm": ">=10 <11"
+  },
   "scripts": {
     "probe": "tsx scripts/probe.ts",
     "contracts:abi": "node scripts/build-contracts.mjs",
+    "format": "prettier --write apps packages services scripts docs README.md .github",
     "build": "pnpm -r build",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
@@ -31,10 +35,18 @@
     "solc": "0.8.30",
     "tsx": "4.23.15",
     "typescript": "5.9.3",
-    "vitest": "5.0.5"
+    "vitest": "5.0.5",
+    "prettier": "3.9.10"
   },
   "pnpm": {
-    "overrides": { "solc": "0.8.30" },
-    "onlyBuiltDependencies": ["esbuild", "better-sqlite3"]
+    "overrides": {
+      "solc": "0.8.30",
+      "tmp": "0.2.7",
+      "deepmerge-ts": "8.0.0"
+    },
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "better-sqlite3"
+    ]
   }
 }

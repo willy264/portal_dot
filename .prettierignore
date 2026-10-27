@@ -1,0 +1,13 @@
+**/node_modules/**
+**/.next/**
+**/test-artifacts/**
+**/data/**
+**/dist/**
+**/out/**
+**/cache/**
+packages/chain/.papi/**
+packages/chain/src/abi.ts
+deployments/**
+research/**
+.tools/**
+pnpm-lock.yaml
