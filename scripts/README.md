@@ -1,6 +1,6 @@
 # Chain operations and rehearsal
 
-Run from the repository root with Node 22 and the pinned pnpm version. Secrets belong in ignored `.env`; these scripts only print public addresses and transaction evidence. Every command verifies the Portaldot V3 testnet identity before proceeding. Native balances have 14 decimals; EVM contract amounts have 18. Amount arguments are tPOT decimals and reject excess precision.
+Run from the repository root with Node 22 and the pinned pnpm version. Secrets belong in ignored `.env`; these scripts only print public addresses and transaction evidence. Chain operation commands verify the Portaldot V3 testnet identity before proceeding. Native balances have 14 decimals; EVM contract amounts have 18. Amount arguments are tPOT decimals and reject excess precision.
 
 ## Web launcher
 
