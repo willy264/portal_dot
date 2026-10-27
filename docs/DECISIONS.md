@@ -1,6 +1,6 @@
 # MeterMend implementation decisions
 
-Date: October 27, 2026. Facts below distinguish observed read-only results from funded probes that have not run. The authoritative requirements and amendments are in [SPEC.md](../SPEC.md).
+Date: October 27, 2026. Facts below distinguish read-only simulations, completed funded probes and work still pending. The authoritative requirements and amendments are in [SPEC.md](../SPEC.md).
 
 ## Phase 0
 

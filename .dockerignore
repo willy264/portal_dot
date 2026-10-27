@@ -1,0 +1,17 @@
+.git
+.env
+.env.*
+!.env.example
+.tools
+**/node_modules
+**/.next
+**/test-artifacts
+**/*.tsbuildinfo
+data
+**/data
+contracts/out
+contracts/cache
+reports
+site
+*.sqlite*
+*.db*
