@@ -1,0 +1,46 @@
+name: ci
+on: [push, pull_request]
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: v1.8.6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.23.4
+      - run: forge build --sizes
+        working-directory: contracts
+      - run: node scripts/build-contracts.mjs --check
+      - name: Save machine-readable test evidence
+        run: |
+          mkdir -p reports
+          forge test --root contracts -vvv --json > reports/foundry.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: foundry-results
+          path: reports/foundry.json
+  typescript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.34.9
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22.23.4
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm -r typecheck
+      - run: pnpm exec tsc -p scripts/tsconfig.json
+      - run: pnpm -r test
+      - run: pnpm run test:scripts
+      - run: pnpm --filter web build

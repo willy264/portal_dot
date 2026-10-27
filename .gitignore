@@ -21,3 +21,5 @@ data/
 .vercel/
 playwright-report/
 test-results/
+reports/
+deployments/*.tmp
