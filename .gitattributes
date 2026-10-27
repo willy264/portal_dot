@@ -1,0 +1,9 @@
+* text=auto
+*.ts text eol=lf
+*.tsx text eol=lf
+*.mjs text eol=lf
+*.sol text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+*.scale binary
+packages/chain/.papi/descriptors/dist/** linguist-generated=true -whitespace

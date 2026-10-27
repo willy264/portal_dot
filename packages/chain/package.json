@@ -1,0 +1,30 @@
+{
+  "name": "@metermend/chain",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./revive": "./src/revive.ts",
+    "./units": "./src/units.ts",
+    "./abi": "./src/abi.ts",
+    "./node": "./src/node.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run src/units.test.ts",
+    "metadata:generate": "papi generate",
+    "metadata:update": "papi update portaldot"
+  },
+  "dependencies": {
+    "@polkadot-api/descriptors": "file:.papi/descriptors",
+    "@polkadot-api/substrate-bindings": "0.21.2",
+    "@polkadot-labs/hdkd": "0.0.32",
+    "@polkadot-labs/hdkd-helpers": "0.0.34",
+    "polkadot-api": "3.3.0",
+    "rxjs": "7.8.2",
+    "viem": "2.57.12"
+  }
+}

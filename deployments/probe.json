@@ -1,0 +1,2291 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-27T05:28:46.863Z",
+  "mode": "read-only",
+  "signedTransactions": 0,
+  "endpoints": {
+    "substrate": "wss://test-node-v3.portaldot.dev",
+    "evm": "https://test-evm-rpc-v3.portaldot.dev"
+  },
+  "simulationAccount": {
+    "address": "5Dttvxy9hkPHngYPfioratFH4iru9p1Lp1nwKoJJeMzHbC22",
+    "provenance": "PROBE_SS58 configuration",
+    "ownsAccount": false,
+    "explanation": "Runtime dry-runs accept an origin without its private key. This is not a funded transaction or proof of account ownership."
+  },
+  "checks": {
+    "P1": {
+      "status": "passed",
+      "chainName": "PortaldotV3 Test",
+      "nodeName": "PortaldotV3 Node",
+      "nodeVersion": "3.0.0-dev-fddd43141f2",
+      "runtime": {
+        "specName": "portaldot-v3",
+        "implName": "portaldot-v3-node",
+        "authoringVersion": 10,
+        "specVersion": 3002,
+        "implVersion": 0,
+        "apis": [
+          [
+            "0x17a6bc0d0062aeb3",
+            1
+          ],
+          [
+            "0x18ef58a3b67ba770",
+            1
+          ],
+          [
+            "0xcbca25e39f142387",
+            2
+          ],
+          [
+            "0x687ad44ad37f03c2",
+            1
+          ],
+          [
+            "0x6ef953004ba30e59",
+            1
+          ],
+          [
+            "0xbc9d89904f5b923f",
+            1
+          ],
+          [
+            "0x8453b50b22293977",
+            1
+          ],
+          [
+            "0x68b66ba122c93fa7",
+            2
+          ],
+          [
+            "0x37c8bb1350a9a2a8",
+            4
+          ],
+          [
+            "0x8a8047a53a8277ec",
+            1
+          ],
+          [
+            "0xf3ff14d5ab527059",
+            3
+          ],
+          [
+            "0x899a250cbe84f250",
+            1
+          ],
+          [
+            "0x49eaaf1b548a0cb0",
+            6
+          ],
+          [
+            "0x91d5df18b0d2cf58",
+            3
+          ],
+          [
+            "0x6fd7c327202e4a8d",
+            1
+          ],
+          [
+            "0xab3c0572291feb8b",
+            2
+          ],
+          [
+            "0x3b1cfc440dd23f49",
+            2
+          ],
+          [
+            "0xfbc577b9d747efd6",
+            1
+          ],
+          [
+            "0x8c403e5c4a9fd442",
+            2
+          ],
+          [
+            "0xdf6acb689907609b",
+            5
+          ],
+          [
+            "0x37e397fc7c91f5e4",
+            2
+          ],
+          [
+            "0xccd9de6396c899ca",
+            1
+          ],
+          [
+            "0x40fe3ad401f8959a",
+            6
+          ],
+          [
+            "0xd2bc9897eed08f15",
+            3
+          ],
+          [
+            "0xf78b278be53f454c",
+            2
+          ],
+          [
+            "0xed99c5acb25eedf5",
+            3
+          ]
+        ],
+        "transactionVersion": 2,
+        "systemVersion": 1,
+        "stateVersion": 1
+      },
+      "properties": {
+        "ss58Format": 42,
+        "tokenDecimals": 14,
+        "tokenSymbol": "tPOT"
+      },
+      "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+      "chainId": 420420777,
+      "chainIdHex": "0x190f1ca9",
+      "correctedSuppliedHex": {
+        "supplied": "0x190F1B29",
+        "actualSuppliedDecimal": 420420393,
+        "correct": "0x190f1ca9"
+      },
+      "rpcMethods": [
+        "account_nextIndex",
+        "archive_v1_body",
+        "archive_v1_call",
+        "archive_v1_finalizedHeight",
+        "archive_v1_genesisHash",
+        "archive_v1_hashByHeight",
+        "archive_v1_header",
+        "archive_v1_stopStorage",
+        "archive_v1_storage",
+        "archive_v1_storageDiff",
+        "archive_v1_storageDiff_stopStorageDiff",
+        "author_hasKey",
+        "author_hasSessionKeys",
+        "author_insertKey",
+        "author_pendingExtrinsics",
+        "author_removeExtrinsic",
+        "author_rotateKeys",
+        "author_rotateKeysWithOwner",
+        "author_submitAndWatchExtrinsic",
+        "author_submitExtrinsic",
+        "author_unwatchExtrinsic",
+        "babe_epochAuthorship",
+        "beefy_getFinalizedHead",
+        "beefy_subscribeJustifications",
+        "beefy_unsubscribeJustifications",
+        "bitswap_v1_get",
+        "chainHead_v1_body",
+        "chainHead_v1_call",
+        "chainHead_v1_continue",
+        "chainHead_v1_follow",
+        "chainHead_v1_header",
+        "chainHead_v1_stopOperation",
+        "chainHead_v1_storage",
+        "chainHead_v1_unfollow",
+        "chainHead_v1_unpin",
+        "chainSpec_v1_chainName",
+        "chainSpec_v1_genesisHash",
+        "chainSpec_v1_properties",
+        "chain_getBlock",
+        "chain_getBlockHash",
+        "chain_getFinalisedHead",
+        "chain_getFinalizedHead",
+        "chain_getHead",
+        "chain_getHeader",
+        "chain_getRuntimeVersion",
+        "chain_subscribeAllHeads",
+        "chain_subscribeFinalisedHeads",
+        "chain_subscribeFinalizedHeads",
+        "chain_subscribeNewHead",
+        "chain_subscribeNewHeads",
+        "chain_subscribeRuntimeVersion",
+        "chain_unsubscribeAllHeads",
+        "chain_unsubscribeFinalisedHeads",
+        "chain_unsubscribeFinalizedHeads",
+        "chain_unsubscribeNewHead",
+        "chain_unsubscribeNewHeads",
+        "chain_unsubscribeRuntimeVersion",
+        "childstate_getKeys",
+        "childstate_getKeysPaged",
+        "childstate_getKeysPagedAt",
+        "childstate_getStorage",
+        "childstate_getStorageEntries",
+        "childstate_getStorageHash",
+        "childstate_getStorageSize",
+        "dev_getBlockStats",
+        "grandpa_proveFinality",
+        "grandpa_roundState",
+        "grandpa_subscribeJustifications",
+        "grandpa_unsubscribeJustifications",
+        "mmr_generateAncestryProof",
+        "mmr_generateProof",
+        "mmr_root",
+        "mmr_verifyProof",
+        "mmr_verifyProofStateless",
+        "offchain_localStorageClear",
+        "offchain_localStorageGet",
+        "offchain_localStorageSet",
+        "payment_queryFeeDetails",
+        "payment_queryInfo",
+        "rpc_methods",
+        "state_call",
+        "state_callAt",
+        "state_callRecorded",
+        "state_getChildReadProof",
+        "state_getKeys",
+        "state_getKeysPaged",
+        "state_getKeysPagedAt",
+        "state_getMetadata",
+        "state_getPairs",
+        "state_getReadProof",
+        "state_getRuntimeVersion",
+        "state_getStorage",
+        "state_getStorageAt",
+        "state_getStorageHash",
+        "state_getStorageHashAt",
+        "state_getStorageSize",
+        "state_getStorageSizeAt",
+        "state_queryStorage",
+        "state_queryStorageAt",
+        "state_subscribeRuntimeVersion",
+        "state_subscribeStorage",
+        "state_traceBlock",
+        "state_trieMigrationStatus",
+        "state_unsubscribeRuntimeVersion",
+        "state_unsubscribeStorage",
+        "statement_submit",
+        "statement_subscribeStatement",
+        "statement_unsubscribeStatement",
+        "subscribe_newHead",
+        "sync_state_genSyncSpec",
+        "system_accountNextIndex",
+        "system_addLogFilter",
+        "system_addReservedPeer",
+        "system_chain",
+        "system_chainType",
+        "system_dryRun",
+        "system_dryRunAt",
+        "system_health",
+        "system_localListenAddresses",
+        "system_localPeerId",
+        "system_name",
+        "system_nodeRoles",
+        "system_peers",
+        "system_properties",
+        "system_removeReservedPeer",
+        "system_reservedPeers",
+        "system_resetLogFilter",
+        "system_syncState",
+        "system_unstable_networkState",
+        "system_version",
+        "transactionWatch_v1_submitAndWatch",
+        "transactionWatch_v1_unwatch",
+        "transaction_v1_broadcast",
+        "transaction_v1_stop",
+        "unsubscribe_newHead"
+      ]
+    },
+    "P2": {
+      "status": "passed",
+      "metadataVersion": 16,
+      "metadataBytes": 640746,
+      "metadataSha256": "c877170476691042ffe20a228ef84a6be2e2456237ab102687c18b19546e13d7",
+      "pallets": [
+        {
+          "name": "Revive",
+          "present": true,
+          "index": 80,
+          "calls": {
+            "type": 343,
+            "deprecationInfo": []
+          },
+          "storageEntries": [
+            "PristineCode",
+            "CodeInfoOf",
+            "AccountInfoOf",
+            "NativeDepositOf",
+            "ImmutableDataOf",
+            "DeletionQueue",
+            "DeletionQueueCounter",
+            "OriginalAccount",
+            "EthereumBlock",
+            "BlockHash",
+            "ReceiptInfoData",
+            "EthBlockBuilderIR",
+            "EthBlockBuilderFirstValues",
+            "DebugSettingsOf"
+          ],
+          "constants": [
+            {
+              "name": "DepositPerByte",
+              "type": 43,
+              "value": "0x0060defb740500000000000000000000",
+              "docs": [
+                " The amount of balance a caller has to pay for each byte of storage.",
+                "",
+                " # Note",
+                "",
+                " It is safe to change this value on a live chain as all refunds are pro rata."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "DepositPerItem",
+              "type": 43,
+              "value": "0x00f0ab75a40d00000000000000000000",
+              "docs": [
+                " The amount of balance a caller has to pay for each storage item.",
+                "",
+                " # Note",
+                "",
+                " It is safe to change this value on a live chain as all refunds are pro rata."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "DepositPerChildTrieItem",
+              "type": 43,
+              "value": "0x005cb2ec220000000000000000000000",
+              "docs": [
+                " The amount of balance a caller has to pay for each child trie storage item.",
+                "",
+                " Those are the items created by a contract. In Solidity each value is a single",
+                " storage item. This is why we need to set a lower value here than for the main",
+                " trie items. Otherwise the storage deposit is too high.",
+                "",
+                " # Note",
+                "",
+                " It is safe to change this value on a live chain as all refunds are pro rata."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "CodeHashLockupDepositPercent",
+              "type": 111,
+              "value": "0x00a3e111",
+              "docs": [
+                " The percentage of the storage deposit that should be held for using a code hash.",
+                " Instantiating a contract, protects the code from being removed. In order to prevent",
+                " abuse these actions are protected with a percentage of the code deposit."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "AllowEVMBytecode",
+              "type": 40,
+              "value": "0x01",
+              "docs": [
+                " Allow EVM bytecode to be uploaded and instantiated."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "ChainId",
+              "type": 10,
+              "value": "0xa91c0f1900000000",
+              "docs": [
+                " The [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain ID.",
+                "",
+                " This is a unique identifier assigned to each blockchain network,",
+                " preventing replay attacks."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "NativeToEthRatio",
+              "type": 4,
+              "value": "0x10270000",
+              "docs": [
+                " The ratio between the decimal representation of the native token and the ETH token."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "MaxEthExtrinsicWeight",
+              "type": 151,
+              "value": "0x0000da493b717d0c0000000000000000",
+              "docs": [
+                " The fraction the maximum extrinsic weight `eth_transact` extrinsics are capped to.",
+                "",
+                " This is not a security measure but a requirement due to how we map gas to `(Weight,",
+                " StorageDeposit)`. The mapping might derive a `Weight` that is too large to fit into an",
+                " extrinsic. In this case we cap it to the limit specified here.",
+                "",
+                " `eth_transact` transactions that use more weight than specified will fail with an out of",
+                " gas error during execution. Larger fractions will allow more transactions to run.",
+                " Smaller values waste less block space: Choose as small as possible and as large as",
+                " necessary.",
+                "",
+                "  Default: `0.5`."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "DebugEnabled",
+              "type": 40,
+              "value": "0x00",
+              "docs": [
+                " Allows debug-mode configuration, such as enabling unlimited contract size."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "AutoMap",
+              "type": 40,
+              "value": "0x01",
+              "docs": [
+                " When enabled, accounts are automatically mapped on creation and unmapped on",
+                " kill via [`AutoMapper`]. This removes the need for explicit `map_account` calls.",
+                "",
+                " Requires `frame_system::Config::OnNewAccount` and `OnKilledAccount` to be set",
+                " to [`AutoMapper`]. When enabled, the `map_account` and `unmap_account`",
+                " dispatchables are disabled."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "GasScale",
+              "type": 4,
+              "value": "0x05000000",
+              "docs": [
+                " This determines the relative scale of our gas price and gas estimates.",
+                "",
+                " By default, the gas price (in wei) is `FeeInfo::next_fee_multiplier()` multiplied by",
+                " `NativeToEthRatio`. `GasScale` allows to scale this value: the actual gas price is the",
+                " default gas price multiplied by `GasScale`.",
+                "",
+                " As a consequence, gas cost (gas estimates and actual gas usage during transaction) is",
+                " scaled down by the same factor. Thus, the total transaction cost is not affected by",
+                " `GasScale` – apart from rounding differences: the transaction cost is always a multiple",
+                " of the gas price and is derived by rounded up, so that with higher `GasScales` this can",
+                " lead to higher gas cost as the rounding difference would be larger.",
+                "",
+                " The main purpose of changing the `GasScale` is to tune the gas cost so that it is closer",
+                " to standard EVM gas cost and contracts will not run out of gas when tools or code",
+                " assume hard coded gas limits.",
+                "",
+                " Requirement: `GasScale` must not be 0"
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            }
+          ],
+          "associatedTypes": [
+            {
+              "name": "RuntimeCall",
+              "type": 8,
+              "docs": [
+                " The overarching call type."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Scheduler",
+          "present": true,
+          "index": 32,
+          "calls": {
+            "type": 209,
+            "deprecationInfo": []
+          },
+          "storageEntries": [
+            "IncompleteSince",
+            "Agenda",
+            "Retries",
+            "Lookup"
+          ],
+          "constants": [
+            {
+              "name": "MaximumWeight",
+              "type": 23,
+              "value": "0x0b00806e87740113cccccccccccccccc",
+              "docs": [
+                " The maximum weight that may be scheduled per block for any dispatchables."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "MaxScheduledPerBlock",
+              "type": 4,
+              "value": "0x32000000",
+              "docs": [
+                " The maximum number of scheduled calls in the queue for a single block.",
+                "",
+                " NOTE:",
+                " + Dependent pallets' benchmarks might require a higher limit for the setting. Set a",
+                " higher limit under `runtime-benchmarks` feature."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            }
+          ],
+          "associatedTypes": [
+            {
+              "name": "RuntimeCall",
+              "type": 8,
+              "docs": [
+                " The aggregated call type."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "TransactionStorage",
+          "present": true,
+          "index": 51,
+          "calls": {
+            "type": 269,
+            "deprecationInfo": []
+          },
+          "storageEntries": [
+            "Authorizations",
+            "Transactions",
+            "ByteFee",
+            "EntryFee",
+            "RetentionPeriod",
+            "BlockTransactions",
+            "ProofChecked"
+          ],
+          "constants": [
+            {
+              "name": "MaxBlockTransactions",
+              "type": 4,
+              "value": "0x00020000",
+              "docs": [
+                " Maximum number of indexed transactions in the block."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "MaxTransactionSize",
+              "type": 4,
+              "value": "0x00008000",
+              "docs": [
+                " Maximum data set in a single transaction in bytes."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            }
+          ],
+          "associatedTypes": [
+            {
+              "name": "RuntimeCall",
+              "type": 8,
+              "docs": [
+                " A dispatchable call."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Multisig",
+          "present": true,
+          "index": 36,
+          "calls": {
+            "type": 217,
+            "deprecationInfo": []
+          },
+          "storageEntries": [
+            "Multisigs"
+          ],
+          "constants": [
+            {
+              "name": "DepositBase",
+              "type": 43,
+              "value": "0x00f01c0adbed01000000000000000000",
+              "docs": [
+                " The base amount of currency needed to reserve for creating a multisig execution or to",
+                " store a dispatch call for later.",
+                "",
+                " This is held for an additional storage item whose value size is",
+                " `4 + sizeof((BlockNumber, Balance, AccountId))` bytes and whose key size is",
+                " `32 + sizeof(AccountId)` bytes."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "DepositFactor",
+              "type": 43,
+              "value": "0x0000cc7b9fae00000000000000000000",
+              "docs": [
+                " The amount of currency needed per unit threshold when creating a multisig execution.",
+                "",
+                " This is held for adding 32 bytes more into a pre-existing storage value."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "MaxSignatories",
+              "type": 4,
+              "value": "0x64000000",
+              "docs": [
+                " The maximum amount of signatories allowed in the multisig."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            }
+          ],
+          "associatedTypes": [
+            {
+              "name": "RuntimeCall",
+              "type": 8,
+              "docs": [
+                " The overarching call type."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Proxy",
+          "present": true,
+          "index": 35,
+          "calls": {
+            "type": 214,
+            "deprecationInfo": []
+          },
+          "storageEntries": [
+            "Proxies",
+            "Announcements"
+          ],
+          "constants": [
+            {
+              "name": "ProxyDepositBase",
+              "type": 43,
+              "value": "0x00f09e544c3900000000000000000000",
+              "docs": [
+                " The base amount of currency needed to reserve for creating a proxy.",
+                "",
+                " This is held for an additional storage item whose value size is",
+                " `sizeof(Balance)` bytes and whose key size is `sizeof(AccountId)` bytes."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "ProxyDepositFactor",
+              "type": 43,
+              "value": "0x0060aa7714b400000000000000000000",
+              "docs": [
+                " The amount of currency needed per proxy added.",
+                "",
+                " This is held for adding 32 bytes plus an instance of `ProxyType` more into a",
+                " pre-existing storage value. Thus, when configuring `ProxyDepositFactor` one should take",
+                " into account `32 + proxy_type.encode().len()` bytes of data."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "MaxProxies",
+              "type": 4,
+              "value": "0x20000000",
+              "docs": [
+                " The maximum amount of proxies allowed for a single account."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "MaxPending",
+              "type": 4,
+              "value": "0x20000000",
+              "docs": [
+                " The maximum amount of time-delayed announcements that are allowed to be pending."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "AnnouncementDepositBase",
+              "type": 43,
+              "value": "0x00f09e544c3900000000000000000000",
+              "docs": [
+                " The base amount of currency needed to reserve for creating an announcement.",
+                "",
+                " This is held when a new storage item holding a `Balance` is created (typically 16",
+                " bytes)."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "AnnouncementDepositFactor",
+              "type": 43,
+              "value": "0x00c054ef286801000000000000000000",
+              "docs": [
+                " The amount of currency needed per announcement made.",
+                "",
+                " This is held for adding an `AccountId`, `Hash` and `BlockNumber` (typically 68 bytes)",
+                " into a pre-existing storage value."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            }
+          ],
+          "associatedTypes": [
+            {
+              "name": "RuntimeCall",
+              "type": 8,
+              "docs": [
+                " The overarching call type."
+              ]
+            },
+            {
+              "name": "ProxyType",
+              "type": 216,
+              "docs": [
+                " A kind of proxy; specified with the proxy and passed in to the `IsProxyable` filter.",
+                " The instance filter determines whether a given call may be proxied under this type.",
+                "",
+                " IMPORTANT: `Default` must be provided and MUST BE the the *most permissive* value."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Identity",
+          "present": true,
+          "index": 28,
+          "calls": {
+            "type": 159,
+            "deprecationInfo": []
+          },
+          "storageEntries": [
+            "IdentityOf",
+            "UsernameOf",
+            "SuperOf",
+            "SubsOf",
+            "Registrars",
+            "AuthorityOf",
+            "UsernameInfoOf",
+            "PendingUsernames",
+            "UnbindingUsernames"
+          ],
+          "constants": [
+            {
+              "name": "BasicDeposit",
+              "type": 43,
+              "value": "0x0050702f696a00000000000000000000",
+              "docs": [
+                " The amount held on deposit for a registered identity."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "ByteDeposit",
+              "type": 43,
+              "value": "0x0060defb740500000000000000000000",
+              "docs": [
+                " The amount held on deposit per encoded byte for a registered identity."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "UsernameDeposit",
+              "type": 43,
+              "value": "0x0000cc7b9fae00000000000000000000",
+              "docs": [
+                " The amount held on deposit per registered username. This value should change only in",
+                " runtime upgrades with proper migration of existing deposits."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "SubAccountDeposit",
+              "type": 43,
+              "value": "0x0080f420e6b500000000000000000000",
+              "docs": [
+                " The amount held on deposit for a registered subaccount. This should account for the fact",
+                " that one storage item's value will increase by the size of an account ID, and there will",
+                " be another trie item whose value is the size of an account ID plus 32 bytes."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "MaxSubAccounts",
+              "type": 4,
+              "value": "0x64000000",
+              "docs": [
+                " The maximum number of sub-accounts allowed per identified account."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "MaxRegistrars",
+              "type": 4,
+              "value": "0x14000000",
+              "docs": [
+                " Maximum number of registrars allowed in the system. Needed to bound the complexity",
+                " of, e.g., updating judgements."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "PendingUsernameExpiration",
+              "type": 4,
+              "value": "0xc0890100",
+              "docs": [
+                " The number of blocks within which a username grant must be accepted."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "UsernameGracePeriod",
+              "type": 4,
+              "value": "0x80970600",
+              "docs": [
+                " The number of blocks that must pass to enable the permanent deletion of a username by",
+                " its respective authority."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "MaxSuffixLength",
+              "type": 4,
+              "value": "0x07000000",
+              "docs": [
+                " The maximum length of a suffix."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            },
+            {
+              "name": "MaxUsernameLength",
+              "type": 4,
+              "value": "0x20000000",
+              "docs": [
+                " The maximum length of a username, including its suffix and any system-added delimiters."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            }
+          ],
+          "associatedTypes": [
+            {
+              "name": "OffchainSignature",
+              "type": 200,
+              "docs": [
+                " Signature type for pre-authorizing usernames off-chain.",
+                "",
+                " Can verify whether an `Self::SigningPublicKey` created a signature."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Utility",
+          "present": true,
+          "index": 1,
+          "calls": {
+            "type": 15,
+            "deprecationInfo": []
+          },
+          "constants": [
+            {
+              "name": "batched_calls_limit",
+              "type": 4,
+              "value": "0xaa2a0000",
+              "docs": [
+                " The limit on the number of batched calls."
+              ],
+              "deprecationInfo": {
+                "tag": "NotDeprecated"
+              }
+            }
+          ],
+          "associatedTypes": [
+            {
+              "name": "RuntimeCall",
+              "type": 8,
+              "docs": [
+                " The overarching call type."
+              ]
+            },
+            {
+              "name": "PalletsOrigin",
+              "type": 18,
+              "docs": [
+                " The caller origin, overarching type of all pallets origins."
+              ]
+            }
+          ]
+        }
+      ],
+      "reviveApi": {
+        "name": "ReviveApi",
+        "methods": [
+          {
+            "name": "eth_block",
+            "inputs": [],
+            "output": 1005,
+            "docs": [
+              " Returns the current ETH block.",
+              "",
+              " This is one block behind the substrate block."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `eth_block_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "eth_block_hash",
+            "inputs": [
+              {
+                "name": "number",
+                "type": 346
+              }
+            ],
+            "output": 869,
+            "docs": [
+              " Returns the ETH block hash for the given block number."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `eth_block_hash_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "eth_receipt_data",
+            "inputs": [],
+            "output": 1026,
+            "docs": [
+              " The details needed to reconstruct the receipt information offchain.",
+              "",
+              " # Note",
+              "",
+              " Each entry corresponds to the appropriate Ethereum transaction in the current block."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `eth_receipt_data_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "block_gas_limit",
+            "inputs": [],
+            "output": 346,
+            "docs": [
+              " Returns the block gas limit."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `block_gas_limit_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "max_extrinsic_weight_in_gas",
+            "inputs": [],
+            "output": 346,
+            "docs": [
+              " Returns the block gas limit as calculated from the weights."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `max_extrinsic_weight_in_gas_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "balance",
+            "inputs": [
+              {
+                "name": "address",
+                "type": 344
+              }
+            ],
+            "output": 346,
+            "docs": [
+              " Returns the free balance of the given `[H160]` address, using EVM decimals."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `balance_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "gas_price",
+            "inputs": [],
+            "output": 346,
+            "docs": [
+              " Returns the gas price."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `gas_price_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "nonce",
+            "inputs": [
+              {
+                "name": "address",
+                "type": 344
+              }
+            ],
+            "output": 4,
+            "docs": [
+              " Returns the nonce of the given `[H160]` address."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `nonce_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "call",
+            "inputs": [
+              {
+                "name": "origin",
+                "type": 1
+              },
+              {
+                "name": "dest",
+                "type": 344
+              },
+              {
+                "name": "value",
+                "type": 43
+              },
+              {
+                "name": "gas_limit",
+                "type": 503
+              },
+              {
+                "name": "storage_deposit_limit",
+                "type": 121
+              },
+              {
+                "name": "input_data",
+                "type": 6
+              }
+            ],
+            "output": 1028,
+            "docs": [
+              " Perform a call from a specified account to a given contract.",
+              "",
+              " See [`crate::Pallet::bare_call`]."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `call_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "instantiate",
+            "inputs": [
+              {
+                "name": "origin",
+                "type": 1
+              },
+              {
+                "name": "value",
+                "type": 43
+              },
+              {
+                "name": "gas_limit",
+                "type": 503
+              },
+              {
+                "name": "storage_deposit_limit",
+                "type": 121
+              },
+              {
+                "name": "code",
+                "type": 1033
+              },
+              {
+                "name": "data",
+                "type": 6
+              },
+              {
+                "name": "salt",
+                "type": 345
+              }
+            ],
+            "output": 1034,
+            "docs": [
+              " Instantiate a new contract.",
+              "",
+              " See `[crate::Pallet::bare_instantiate]`."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `instantiate_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "eth_transact",
+            "inputs": [
+              {
+                "name": "tx",
+                "type": 1037
+              }
+            ],
+            "output": 1044,
+            "docs": [
+              " Perform an Ethereum call.",
+              "",
+              " See [`crate::Pallet::dry_run_eth_transact`]"
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `eth_transact_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "eth_transact_with_config",
+            "inputs": [
+              {
+                "name": "tx",
+                "type": 1037
+              },
+              {
+                "name": "config",
+                "type": 1047
+              }
+            ],
+            "output": 1044,
+            "docs": [
+              " Perform an Ethereum call.",
+              "",
+              " See [`crate::Pallet::dry_run_eth_transact`]"
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `eth_transact_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "eth_estimate_gas",
+            "inputs": [
+              {
+                "name": "tx",
+                "type": 1037
+              },
+              {
+                "name": "config",
+                "type": 1047
+              }
+            ],
+            "output": 1060,
+            "docs": [
+              " Estimates the amount of gas that a transactions requires.",
+              "",
+              " This function estimates the gas of the transaction according to the same binary search",
+              " algorithm that's implemented in Geth. It stops when with an acceptable error ratio of",
+              " 1.5% so that the algorithm terminates early."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `eth_estimate_gas_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "eth_pre_dispatch_weight",
+            "inputs": [
+              {
+                "name": "tx",
+                "type": 6
+              }
+            ],
+            "output": 1061,
+            "docs": [
+              " Return the pre-dispatch weight booked for the signed Ethereum transaction payload."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `eth_pre_dispatch_weight_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "upload_code",
+            "inputs": [
+              {
+                "name": "origin",
+                "type": 1
+              },
+              {
+                "name": "code",
+                "type": 6
+              },
+              {
+                "name": "storage_deposit_limit",
+                "type": 121
+              }
+            ],
+            "output": 1062,
+            "docs": [
+              " Upload new code without instantiating a contract from it.",
+              "",
+              " See [`crate::Pallet::bare_upload_code`]."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `upload_code_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "get_storage",
+            "inputs": [
+              {
+                "name": "address",
+                "type": 344
+              },
+              {
+                "name": "key",
+                "type": 2
+              }
+            ],
+            "output": 1064,
+            "docs": [
+              " Query a given storage key in a given contract.",
+              "",
+              " Returns `Ok(Some(Vec<u8>))` if the storage value exists under the given key in the",
+              " specified account and `Ok(None)` if it doesn't. If the account specified by the address",
+              " doesn't exist, or doesn't have a contract then `Err` is returned."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `get_storage_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "get_storage_var_key",
+            "inputs": [
+              {
+                "name": "address",
+                "type": 344
+              },
+              {
+                "name": "key",
+                "type": 6
+              }
+            ],
+            "output": 1064,
+            "docs": [
+              " Query a given variable-sized storage key in a given contract.",
+              "",
+              " Returns `Ok(Some(Vec<u8>))` if the storage value exists under the given key in the",
+              " specified account and `Ok(None)` if it doesn't. If the account specified by the address",
+              " doesn't exist, or doesn't have a contract then `Err` is returned."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `get_storage_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "trace_block",
+            "inputs": [
+              {
+                "name": "block",
+                "type": 526
+              },
+              {
+                "name": "config",
+                "type": 1066
+              }
+            ],
+            "output": 1073,
+            "docs": [
+              " Traces the execution of an entire block and returns call traces.",
+              "",
+              " This is intended to be called through `state_call` to replay the block from the",
+              " parent block.",
+              "",
+              " See eth-rpc `debug_traceBlockByNumber` for usage."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `trace_block_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "trace_tx",
+            "inputs": [
+              {
+                "name": "block",
+                "type": 526
+              },
+              {
+                "name": "tx_index",
+                "type": 4
+              },
+              {
+                "name": "config",
+                "type": 1066
+              }
+            ],
+            "output": 1099,
+            "docs": [
+              " Traces the execution of a specific transaction within a block.",
+              "",
+              " This is intended to be called through `state_call` to replay the block from the",
+              " parent hash up to the transaction.",
+              "",
+              " See eth-rpc `debug_traceTransaction` for usage."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `trace_tx_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "trace_call",
+            "inputs": [
+              {
+                "name": "tx",
+                "type": 1037
+              },
+              {
+                "name": "config",
+                "type": 1066
+              }
+            ],
+            "output": 1100,
+            "docs": [
+              " Dry run and return the trace of the given call.",
+              "",
+              " See eth-rpc `debug_traceCall` for usage."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `trace_call_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "trace_call_with_config",
+            "inputs": [
+              {
+                "name": "tx",
+                "type": 1037
+              },
+              {
+                "name": "tracer_type",
+                "type": 1066
+              },
+              {
+                "name": "config",
+                "type": 1101
+              }
+            ],
+            "output": 1100,
+            "docs": [
+              " Dry run and return the trace of the given call with additional configuration.",
+              "",
+              " Like [`Self::trace_call`], but accepts a [`TracingConfigV1`] that can carry state",
+              " overrides. The config must be the **last argument** for backwards compatibility."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `trace_call_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "block_author",
+            "inputs": [],
+            "output": 344,
+            "docs": [
+              " The address of the validator that produced the current block."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `block_author_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "address",
+            "inputs": [
+              {
+                "name": "account_id",
+                "type": 1
+              }
+            ],
+            "output": 344,
+            "docs": [
+              " Get the H160 address associated to this account id"
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `address_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "account_id",
+            "inputs": [
+              {
+                "name": "address",
+                "type": 344
+              }
+            ],
+            "output": 1,
+            "docs": [
+              " Get the account id associated to this H160 address."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `account_id_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "runtime_pallets_address",
+            "inputs": [],
+            "output": 344,
+            "docs": [
+              " The address used to call the runtime's pallets dispatchables"
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `runtime_pallets_address_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "code",
+            "inputs": [
+              {
+                "name": "address",
+                "type": 344
+              }
+            ],
+            "output": 6,
+            "docs": [
+              " The code at the specified address taking pre-compiles into account."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `code_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "new_balance_with_dust",
+            "inputs": [
+              {
+                "name": "balance",
+                "type": 346
+              }
+            ],
+            "output": 1102,
+            "docs": [
+              " Construct the new balance and dust components of this EVM balance."
+            ],
+            "deprecationInfo": {
+              "tag": "Deprecated",
+              "value": {
+                "note": "Use the versioned equivalent `new_balance_with_dust_versioned` if available on your runtime"
+              }
+            }
+          },
+          {
+            "name": "version_declarations",
+            "inputs": [],
+            "output": 1105,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "eth_block_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1109
+              }
+            ],
+            "output": 1111,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "eth_block_hash_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1113
+              }
+            ],
+            "output": 1115,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "eth_receipt_data_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1117
+              }
+            ],
+            "output": 1119,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "block_gas_limit_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1121
+              }
+            ],
+            "output": 1123,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "max_extrinsic_weight_in_gas_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1125
+              }
+            ],
+            "output": 1127,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "balance_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1129
+              }
+            ],
+            "output": 1131,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "gas_price_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1133
+              }
+            ],
+            "output": 1135,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "nonce_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1137
+              }
+            ],
+            "output": 1139,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "call_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1141
+              }
+            ],
+            "output": 1143,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "instantiate_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1145
+              }
+            ],
+            "output": 1147,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "eth_transact_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1149
+              }
+            ],
+            "output": 1151,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "eth_estimate_gas_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1154
+              }
+            ],
+            "output": 1156,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "eth_pre_dispatch_weight_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1159
+              }
+            ],
+            "output": 1161,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "upload_code_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1164
+              }
+            ],
+            "output": 1166,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "get_storage_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1169
+              }
+            ],
+            "output": 1172,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "runtime_pallets_address_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1175
+              }
+            ],
+            "output": 1177,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "code_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1179
+              }
+            ],
+            "output": 1181,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "account_id_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1183
+              }
+            ],
+            "output": 1185,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "new_balance_with_dust_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1187
+              }
+            ],
+            "output": 1189,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "block_author_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1192
+              }
+            ],
+            "output": 1194,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "address_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1196
+              }
+            ],
+            "output": 1198,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "trace_block_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1200
+              }
+            ],
+            "output": 1203,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "trace_tx_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1214
+              }
+            ],
+            "output": 1217,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          },
+          {
+            "name": "trace_call_versioned",
+            "inputs": [
+              {
+                "name": "input",
+                "type": 1221
+              }
+            ],
+            "output": 1224,
+            "docs": [],
+            "deprecationInfo": {
+              "tag": "NotDeprecated"
+            }
+          }
+        ],
+        "docs": [
+          " The API used to dry-run contract interactions."
+        ],
+        "version": 2,
+        "deprecationInfo": {
+          "tag": "NotDeprecated"
+        }
+      },
+      "caveat": "Metadata establishes available interfaces, not permission to dispatch Scheduler or successful funded execution."
+    },
+    "P3": {
+      "status": "passed",
+      "codeFormat": "evm",
+      "evmVersion": "prague",
+      "attempts": [
+        {
+          "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+          "evmVersion": "prague",
+          "bytes": 291,
+          "sourceSha256": "746508fcd86227a2cddc673f4398272893bcce752519dccf9176950607dd8341",
+          "bytecodeSha256": "4886f7835df16eba804c163897e26ae8f416f9bc77a4190c2eed57b836f783a3",
+          "runtimeApi": "ReviveApi.instantiate_versioned/V1",
+          "simulation": {
+            "type": "V1",
+            "value": {
+              "weight_consumed": {
+                "ref_time": "1322944",
+                "proof_size": "0"
+              },
+              "weight_required": {
+                "ref_time": "1322944",
+                "proof_size": "0"
+              },
+              "storage_deposit": {
+                "type": "Charge",
+                "value": "3362400000000000"
+              },
+              "max_storage_deposit": {
+                "type": "Charge",
+                "value": "3362400000000000"
+              },
+              "gas_consumed": "1146522373565064",
+              "result": {
+                "success": true,
+                "value": {
+                  "result": {
+                    "flags": 0,
+                    "data": "0x6080604052600436106025575f3560e01c806306661abd1460295780635c36b18614604d575b5f5ffd5b3480156033575f5ffd5b50603b5f5481565b60405190815260200160405180910390f35b60536055565b005b60015f5f8282546064919060ad565b90915550505f5460405133917fdcc771264ff60ea7e7d5530d00c9e91f464ff8d3f9bcebe874cf0621b651115d9160a391348252602082015260400190565b60405180910390a2565b8082018082111560cb57634e487b7160e01b5f52601160045260245ffd5b9291505056fea2646970667358221220c8ae1fdb6f319721ab1e436adb560420cab2a5a8e5f14fee1dd42059ca027e1164736f6c634300081e0033"
+                  },
+                  "addr": "0x2606de87de75a6fb8d7c25e16f2609fcccd51758"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "deploymentStatus": "Dry-run only: no contract was deployed; simulated addresses are not deployments."
+    },
+    "P4": {
+      "status": "partial",
+      "nativeDecimals": 14,
+      "nativeToEthRatio": "10000",
+      "derivedEvmDecimals": 18,
+      "mappedH160": "0xeb8941c82e3a3bb15c839853640e49c6e0829942",
+      "nativeAccount": {
+        "nonce": 0,
+        "consumers": 0,
+        "providers": 1,
+        "sufficients": 0,
+        "data": {
+          "free": "50000000000000000",
+          "reserved": "0",
+          "frozen": "0",
+          "flags": "170141183460469231731687303715884105728"
+        }
+      },
+      "evmBalance": "499900000000000000000",
+      "nativeBalanceAt": "0xc82348d2c9b39ce417917b7ae4b52bc824086b440cdc05ca0e1db6025bd27042",
+      "evmBalanceAt": "latest (different snapshot; not a value-movement proof)",
+      "versionDeclarations": [
+        [
+          "account_id_versioned",
+          1
+        ],
+        [
+          "address_versioned",
+          1
+        ],
+        [
+          "balance_versioned",
+          1
+        ],
+        [
+          "block_author_versioned",
+          1
+        ],
+        [
+          "block_gas_limit_versioned",
+          1
+        ],
+        [
+          "call_versioned",
+          1
+        ],
+        [
+          "code_versioned",
+          1
+        ],
+        [
+          "eth_block_hash_versioned",
+          1
+        ],
+        [
+          "eth_block_versioned",
+          1
+        ],
+        [
+          "eth_estimate_gas_versioned",
+          1
+        ],
+        [
+          "eth_pre_dispatch_weight_versioned",
+          1
+        ],
+        [
+          "eth_receipt_data_versioned",
+          1
+        ],
+        [
+          "eth_transact_versioned",
+          1
+        ],
+        [
+          "gas_price_versioned",
+          1
+        ],
+        [
+          "get_storage_versioned",
+          1
+        ],
+        [
+          "instantiate_versioned",
+          1
+        ],
+        [
+          "max_extrinsic_weight_in_gas_versioned",
+          1
+        ],
+        [
+          "new_balance_with_dust_versioned",
+          1
+        ],
+        [
+          "nonce_versioned",
+          1
+        ],
+        [
+          "runtime_pallets_address_versioned",
+          1
+        ],
+        [
+          "trace_block_versioned",
+          2
+        ],
+        [
+          "trace_call_versioned",
+          2
+        ],
+        [
+          "trace_tx_versioned",
+          2
+        ],
+        [
+          "upload_code_versioned",
+          1
+        ]
+      ],
+      "autoMap": true,
+      "allowEvmBytecode": true,
+      "depositPerByte": "6000000000000",
+      "depositPerItem": "15000000000000",
+      "depositPerChildTrieItem": "150000000000",
+      "fundedValueMovement": {
+        "status": "not-run",
+        "reason": "Requires an explicitly funded signer; no transaction was signed."
+      },
+      "arithmetic": "For native-denominated amounts, evmUnits = nativeUnits * 10000. App conversions back must reject non-divisible values rather than silently discarding EVM dust.",
+      "caveat": "Ratio and signatures are observed; funded extrinsic denomination has not yet been measured."
+    },
+    "P5": {
+      "status": "not-run",
+      "fallbackMode": "keeper",
+      "nativeSchedulerVerified": false,
+      "schedulerConstants": {
+        "MaximumWeight": {
+          "ref_time": "1600000000000",
+          "proof_size": "14757395258967641292"
+        },
+        "MaxScheduledPerBlock": 50
+      },
+      "reason": "A funded schedule_after call and Scheduler.Dispatched(Ok) plus Ping event are required. Metadata presence does not prove Signed-origin permission."
+    },
+    "P6": {
+      "status": "partial",
+      "present": true,
+      "constants": {
+        "MaxBlockTransactions": 512,
+        "MaxTransactionSize": 8388608
+      },
+      "byteFee": "10",
+      "entryFee": "1000",
+      "retentionPeriod": 100800,
+      "storageEntries": [
+        {
+          "name": "Authorizations",
+          "modifier": 0,
+          "type": {
+            "tag": "map",
+            "value": {
+              "hashers": [
+                {
+                  "tag": "Blake2128Concat"
+                }
+              ],
+              "key": 780,
+              "value": 781
+            }
+          },
+          "fallback": "0x00",
+          "docs": [
+            " Authorizations, keyed by scope."
+          ],
+          "deprecationInfo": {
+            "tag": "NotDeprecated"
+          }
+        },
+        {
+          "name": "Transactions",
+          "modifier": 0,
+          "type": {
+            "tag": "map",
+            "value": {
+              "hashers": [
+                {
+                  "tag": "Blake2128Concat"
+                }
+              ],
+              "key": 4,
+              "value": 783
+            }
+          },
+          "fallback": "0x00",
+          "docs": [
+            " Collection of transaction metadata by block number."
+          ],
+          "deprecationInfo": {
+            "tag": "NotDeprecated"
+          }
+        },
+        {
+          "name": "ByteFee",
+          "modifier": 0,
+          "type": {
+            "tag": "plain",
+            "value": 43
+          },
+          "fallback": "0x00",
+          "docs": [
+            " Storage fee per byte."
+          ],
+          "deprecationInfo": {
+            "tag": "NotDeprecated"
+          }
+        },
+        {
+          "name": "EntryFee",
+          "modifier": 0,
+          "type": {
+            "tag": "plain",
+            "value": 43
+          },
+          "fallback": "0x00",
+          "docs": [
+            " Storage fee per transaction."
+          ],
+          "deprecationInfo": {
+            "tag": "NotDeprecated"
+          }
+        },
+        {
+          "name": "RetentionPeriod",
+          "modifier": 1,
+          "type": {
+            "tag": "plain",
+            "value": 4
+          },
+          "fallback": "0x00000000",
+          "docs": [
+            " Number of blocks for which stored data must be retained.",
+            "",
+            " Data older than `RetentionPeriod` blocks is eligible for removal unless it",
+            " has been explicitly renewed. Validators are required to prove possession of",
+            " data corresponding to block `N - RetentionPeriod` when producing block `N`."
+          ],
+          "deprecationInfo": {
+            "tag": "NotDeprecated"
+          }
+        },
+        {
+          "name": "BlockTransactions",
+          "modifier": 1,
+          "type": {
+            "tag": "plain",
+            "value": 783
+          },
+          "fallback": "0x00",
+          "docs": [],
+          "deprecationInfo": {
+            "tag": "NotDeprecated"
+          }
+        },
+        {
+          "name": "ProofChecked",
+          "modifier": 1,
+          "type": {
+            "tag": "plain",
+            "value": 40
+          },
+          "fallback": "0x00",
+          "docs": [
+            " Was the proof checked in this block?"
+          ],
+          "deprecationInfo": {
+            "tag": "NotDeprecated"
+          }
+        }
+      ],
+      "oneKiBStore": {
+        "status": "not-run",
+        "reason": "Requires an explicitly funded signer."
+      },
+      "selectedModeUntilWriteVerified": "hash-only application storage"
+    },
+    "P7": {
+      "status": "not-run",
+      "optional": true,
+      "metaMaskWritesEnabled": false,
+      "reason": "No raw EOA transaction was signed. Default writes remain Substrate-signed PAPI Revive calls."
+    }
+  },
+  "at": {
+    "hash": "0xc82348d2c9b39ce417917b7ae4b52bc824086b440cdc05ca0e1db6025bd27042",
+    "number": 213414,
+    "parent": "0x178c569140e07baa55496ecb3db1065800c0b9185fdbe60ab4826ae0824037b0",
+    "hasNewRuntime": false
+  },
+  "runtimeCodeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+  "completedAt": "2026-10-27T05:28:55.601Z"
+}

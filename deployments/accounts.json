@@ -1,0 +1,21 @@
+{
+  "network": "portaldot-v3-testnet",
+  "accounts": {
+    "deployer": {
+      "ss58": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+      "publicKey": "0xd0895f0ce1e2f0e39d55ce5fabfbf47063558ef83484842ce445e68af40aa374"
+    },
+    "renter": {
+      "ss58": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+      "publicKey": "0xea1988be081cacefbcbaa2673b6b967d924102a7540a7bf34c932179f6204b6e"
+    },
+    "arbiter": {
+      "ss58": "5DjjjeBpydQRtt4wDHF9hq1xpKPDEWoeREbRkc4YbghL6fua",
+      "publicKey": "0x4a0121058e3ecc3c941c10066cd032768ea67f5c54da06e146652181bfd0361d"
+    },
+    "relayer": {
+      "ss58": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+      "publicKey": "0x506478042f11fb087203f528b13228a60613281137c098db88fc3c3c75911c58"
+    }
+  }
+}

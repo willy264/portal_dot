@@ -1,0 +1,40 @@
+{
+  "name": "metermend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.9",
+  "engines": { "node": ">=22.12.0 <23", "pnpm": ">=10 <11" },
+  "scripts": {
+    "probe": "tsx scripts/probe.ts",
+    "contracts:abi": "node scripts/build-contracts.mjs",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "dev": "pnpm --filter web dev",
+    "deploy": "tsx scripts/deploy.ts",
+    "seed": "tsx scripts/seed.ts",
+    "demo": "tsx scripts/demo.ts",
+    "report": "tsx scripts/report.ts --out site/index.html"
+  },
+  "dependencies": {
+    "@polkadot-api/substrate-bindings": "0.21.2",
+    "@polkadot-labs/hdkd": "0.0.32",
+    "@polkadot-labs/hdkd-helpers": "0.0.34",
+    "dotenv": "17.2.3",
+    "polkadot-api": "3.3.0",
+    "rxjs": "7.8.2",
+    "viem": "2.57.12"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "solc": "0.8.30",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "vitest": "5.0.5"
+  },
+  "pnpm": {
+    "overrides": { "solc": "0.8.30" },
+    "onlyBuiltDependencies": ["esbuild", "better-sqlite3"]
+  }
+}
