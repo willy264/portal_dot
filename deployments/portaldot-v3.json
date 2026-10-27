@@ -1,0 +1,350 @@
+{
+  "network": "portaldot-v3-testnet",
+  "chainId": 420420777,
+  "specVersion": 3002,
+  "codeFormat": "evm",
+  "cronpotMode": "keeper",
+  "contracts": {
+    "Ping": {
+      "txHash": "0x5003af976f3c78775fd5911a1a6308565a97136d18feeeb8406f1254324a011c",
+      "block": 213570,
+      "blockHash": "0x17145fd481181a25e4aa7c1a155a13419eb2a8b29910ea7068d079131f372a31",
+      "extrinsicIndex": 1,
+      "events": [
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "Withdraw",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "amount": "3630941530588"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "Withdraw",
+            "value": {
+              "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+              "amount": "3630941530588"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "System",
+            "value": {
+              "type": "NewAccount",
+              "value": {
+                "account": "5FUbu7qnLxNeYLwwUrc8L8Mj1KdfgBHf4uq5FovBSeAZqQKF"
+              }
+            }
+          },
+          "topics": [],
+          "type": "System",
+          "value": {
+            "type": "NewAccount",
+            "value": {
+              "account": "5FUbu7qnLxNeYLwwUrc8L8Mj1KdfgBHf4uq5FovBSeAZqQKF"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "Endowed",
+              "value": {
+                "account": "5FUbu7qnLxNeYLwwUrc8L8Mj1KdfgBHf4uq5FovBSeAZqQKF",
+                "free_balance": "10000000000000"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "Endowed",
+            "value": {
+              "account": "5FUbu7qnLxNeYLwwUrc8L8Mj1KdfgBHf4uq5FovBSeAZqQKF",
+              "free_balance": "10000000000000"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "Minted",
+              "value": {
+                "who": "5FUbu7qnLxNeYLwwUrc8L8Mj1KdfgBHf4uq5FovBSeAZqQKF",
+                "amount": "10000000000000"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "Minted",
+            "value": {
+              "who": "5FUbu7qnLxNeYLwwUrc8L8Mj1KdfgBHf4uq5FovBSeAZqQKF",
+              "amount": "10000000000000"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "TransferAndHold",
+              "value": {
+                "reason": {
+                  "type": "Revive",
+                  "value": {
+                    "type": "CodeUploadDepositReserve"
+                  }
+                },
+                "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "dest": "5EYCAe5ijiYfhaAUBd6H9WGRTsvwFFc7GnhQkiHvBYxdvpbV",
+                "transferred": "1680000000000000"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "TransferAndHold",
+            "value": {
+              "reason": {
+                "type": "Revive",
+                "value": {
+                  "type": "CodeUploadDepositReserve"
+                }
+              },
+              "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+              "dest": "5EYCAe5ijiYfhaAUBd6H9WGRTsvwFFc7GnhQkiHvBYxdvpbV",
+              "transferred": "1680000000000000"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Revive",
+            "value": {
+              "type": "Instantiated",
+              "value": {
+                "deployer": "0xa83014ba71476262795173fbbc06656546b57ec0",
+                "contract": "0x96ee88d272550530b518cbaa15a80cf5d38cdcfd"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Revive",
+          "value": {
+            "type": "Instantiated",
+            "value": {
+              "deployer": "0xa83014ba71476262795173fbbc06656546b57ec0",
+              "contract": "0x96ee88d272550530b518cbaa15a80cf5d38cdcfd"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "TransferAndHold",
+              "value": {
+                "reason": {
+                  "type": "Revive",
+                  "value": {
+                    "type": "StorageDepositReserve"
+                  }
+                },
+                "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "dest": "5FUbu7qnLxNeYLwwUrc8L8Mj1KdfgBHf4uq5FovBSeAZqQKF",
+                "transferred": "1269000000000000"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "TransferAndHold",
+            "value": {
+              "reason": {
+                "type": "Revive",
+                "value": {
+                  "type": "StorageDepositReserve"
+                }
+              },
+              "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+              "dest": "5FUbu7qnLxNeYLwwUrc8L8Mj1KdfgBHf4uq5FovBSeAZqQKF",
+              "transferred": "1269000000000000"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "Deposit",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "amount": "153640"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "Deposit",
+            "value": {
+              "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+              "amount": "153640"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "Deposit",
+              "value": {
+                "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+                "amount": "3630941376948"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "Deposit",
+            "value": {
+              "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+              "amount": "3630941376948"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "TransactionPayment",
+            "value": {
+              "type": "TransactionFeePaid",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "actual_fee": "3630941376948",
+                "tip": "0"
+              }
+            }
+          },
+          "topics": [],
+          "type": "TransactionPayment",
+          "value": {
+            "type": "TransactionFeePaid",
+            "value": {
+              "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+              "actual_fee": "3630941376948",
+              "tip": "0"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "System",
+            "value": {
+              "type": "ExtrinsicSuccess",
+              "value": {
+                "dispatch_info": {
+                  "weight": {
+                    "ref_time": "1529278160",
+                    "proof_size": "19007"
+                  },
+                  "class": {
+                    "type": "Normal"
+                  },
+                  "pays_fee": {
+                    "type": "Yes"
+                  }
+                }
+              }
+            }
+          },
+          "topics": [],
+          "type": "System",
+          "value": {
+            "type": "ExtrinsicSuccess",
+            "value": {
+              "dispatch_info": {
+                "weight": {
+                  "ref_time": "1529278160",
+                  "proof_size": "19007"
+                },
+                "class": {
+                  "type": "Normal"
+                },
+                "pays_fee": {
+                  "type": "Yes"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "address": "0x96ee88d272550530b518cbaa15a80cf5d38cdcfd",
+      "bytecodeSha256": "cbc1d1f5630db6a3f1ccd5122356d70e26595313ac49d00234fa22fc1f44aea2",
+      "deployedAt": "2026-10-27T05:44:24.729Z"
+    }
+  },
+  "units": {
+    "nativeDecimals": 14,
+    "evmDecimals": 18,
+    "nativeToEthRatio": "10000",
+    "verified": true,
+    "evidence": "0x1e4af77310fe6f7afbf03b9310963a7a84bbfaebab50d291315c10127cbef7c2"
+  }
+}

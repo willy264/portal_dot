@@ -4,23 +4,27 @@ Date: October 27, 2026. Facts below distinguish observed read-only results from 
 
 ## Phase 0
 
-| Probe | Status | Evidence / decision |
-|---|---|---|
-| P1 V3 identity | Read-only verified | Supplied V3 endpoints respond with runtime spec3002 and EVM chain420420777. Correct hex is0x190f1ca9; original0x190F1B29 represented420420393. Reproducible script evidence is being collected in deployments/probe.json. |
-| P2 pallets | Read-only verified | Revive, Scheduler, TransactionStorage, Multisig, Proxy, Identity and Utility exist. Scheduler presence does not establish the signed origin's permission to schedule. Metadata and constants are saved in probe.json. |
-| P3 bytecode | Read-only simulation passed | V3 accepted solc0.8.30 EVM bytecode, targetprague, with successful instantiate result and flags0. Use EVM/Foundry compilation. The simulation used the participant's funded public address without signing; this is not deployment evidence. Full results in deployments/probe.json. |
-| P4 units | Constant observed; funded verification pending | NativeToEthRatio=10000, native tPOT decimals14; implies EVM decimals18. Exact conversions must reject non-divisible amounts. Runtime extrinsic value denomination will be checked against metadata and a funded movement. |
-| P5 scheduler | Unverified funded stage | No successful Scheduler.Dispatched evidence yet. Keeper is the safe default, not proof that native mode is unavailable. |
-| P6 evidence bytes | Metadata verified; write pending | MaxTransactionSize8MiB; up to512 entries/block; ByteFee10 and EntryFee1000 native units; retention100800 blocks. A funded store call and its authorization remain unverified, so hash-only application storage remains the default. |
-| P7 raw EOA | Optional; not run | Default all writes remain Substrate-signed. |
+| Probe             | Status                                  | Evidence / decision                                                                                                                                                                                                                                                                  |
+| ----------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| P1 V3 identity    | Read-only verified                      | Supplied V3 endpoints respond with runtime spec3002 and EVM chain420420777. Correct hex is0x190f1ca9; original0x190F1B29 represented420420393. Reproducible script evidence is being collected in deployments/probe.json.                                                            |
+| P2 pallets        | Read-only verified                      | Revive, Scheduler, TransactionStorage, Multisig, Proxy, Identity and Utility exist. Scheduler presence does not establish the signed origin's permission to schedule. Metadata and constants are saved in probe.json.                                                                |
+| P3 bytecode       | Read-only simulation passed             | V3 accepted solc0.8.30 EVM bytecode, targetprague, with successful instantiate result and flags0. Use EVM/Foundry compilation. The simulation used the participant's funded public address without signing; this is not deployment evidence. Full results in deployments/probe.json. |
+| P4 units          | Funded verification passed              | A native value of10000000000 produced Ping's EVM value100000000000000: exact ratio10000. Transaction0x1e4af77310fe6f7afbf03b9310963a7a84bbfaebab50d291315c10127cbef7c2, block213573. Native14/EVM18 decimals; reject fractional native-unit dust.                                    |
+| P5 scheduler      | Signed origin rejected; keeper selected | The actual schedule_after request finalized with BadOrigin, tx0x7a05968d67b82e52899f6414ec7acefda443b0fa76aae4a49aaa216e8ef16276, block213576. No Scheduler.Dispatched success is claimed. Use the pre-authorized keeper fallback.                                                   |
+| P6 evidence bytes | Funded store passed                     | A1KiB store succeeded, tx0x76ffd5d81bf8e97d1dde819ba38e1fb1b94f90e1cbfec8216667b5a75abcc4b1, block213579. Storage fee11240 native units; MaxTransactionSize8MiB, retention100800 blocks. Enable native evidence with an application backup.                                          |
+| P7 raw EOA        | Optional; not run                       | Default all writes remain Substrate-signed.                                                                                                                                                                                                                                          |
 
 The old mainnet endpoint is deliberately excluded from implementation/deployment. No seeds, credentials or signer private material belong in evidence files.
+
+The dedicated Ping contract deployed at0x96ee88d272550530b518cbaa15a80cf5d38cdcfd in transaction0x5003af976f3c78775fd5911a1a6308565a97136d18feeeb8406f1254324a011c, block213570. [Funded probe results](../deployments/funded-probe.json) preserve all receipts, including the scheduler rejection. Ping is not an application deployment. The100tPOT funding transfer left66.48817150285716tPOT after these probes; additional funds are required for Cronpot/MeterMend.
 
 ## Exact toolchain
 
 Requested package lines were checked against the npm registry. Pins: Node22.23.4; pnpm10.34.9; TypeScript5.9.3; solc0.8.30; PAPI3.3.0; substrate-bindings0.21.2; viem2.57.12; RxJS7.8.2; tsx4.23.15; Vitest5.0.5. Foundry1.8.6 (commit6bad0a66de7c83f7b33695044138f0f5fa4c5990) is the current stable release fetched from the official repository. Node22 is installed in an ignored project-local tools directory because the machine default Node25 falls outside the selected Vitest engine range.
 
 PAPI3 migration is material: imports use `polkadot-api/ws`; extension accounts supply `txCreator`; transactions use `createSubmitAndWatch`. Exact Revive types come from generated metadata. Sources: [PAPI3 migration](https://papi.how/v3migration/), [extension API](https://papi.how/signers/extensions/).
+
+GitHub dependency scanning and the npm audit identified vulnerable transitive build-tool packages. Pin overrides to `tmp@0.2.7` (used by solc, including the follow-up type-confusion fix) and `deepmerge-ts@8.0.0` (used by PAPI CLI's package writer), preserving requested chain-facing versions. Validate compilation and offline descriptor generation after these substitutions. Sources: [tmp follow-up advisory](https://github.com/advisories/GHSA-7c78-jf6q-g5cm), [deepmerge-ts advisory](https://github.com/RebeccaStevens/deepmerge-ts/security/advisories/GHSA-ggr8-5vv4-36mx).
 
 ## Contract review corrections
 

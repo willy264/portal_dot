@@ -1,0 +1,26 @@
+{
+  "generator": "scripts/make-demo-fixtures.mjs",
+  "fixtures": [
+    {
+      "name": "return",
+      "path": "scripts/fixtures/return.png",
+      "bytes": 42569,
+      "sha256": "440cb2128282ffef1ad8e2e7ad3a111126fb1ef84354425a17181438fc7416f1",
+      "provenance": "Locally rendered labeled SVG text fixture; not a photograph or a real-world receipt."
+    },
+    {
+      "name": "dispute",
+      "path": "scripts/fixtures/dispute.png",
+      "bytes": 41924,
+      "sha256": "588d76c88c3eb8fbb5def1dd0f534e01a4cca8336bc242adf7b02abf38f5336e",
+      "provenance": "Locally rendered labeled SVG text fixture; not a photograph or a real-world receipt."
+    },
+    {
+      "name": "repair",
+      "path": "scripts/fixtures/repair.png",
+      "bytes": 41060,
+      "sha256": "9ffdbea7ec8c2683f6bf2600986b0685e5d58e335744b367a7ecac7b805e8771",
+      "provenance": "Locally rendered labeled SVG text fixture; not a photograph or a real-world receipt."
+    }
+  ]
+}

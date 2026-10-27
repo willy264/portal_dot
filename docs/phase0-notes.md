@@ -7,9 +7,9 @@ The reproducible read-only entrypoint is `scripts/probe.ts`; the full result is 
 | P1 | Passed | `portaldot-v3`, spec 3002, transaction version 2; system `PortaldotV3 Test`, node `3.0.0-dev-fddd43141f2`; EVM chain ID **420420777 / 0x190f1ca9**. The initially supplied `0x190F1B29` encodes 420420393 and is incorrect. |
 | P2 | Passed | Generated PAPI 3.3.0 descriptors from live metadata v16; Revive, Scheduler, TransactionStorage, Multisig, Proxy, Identity and Utility all present. Metadata proves interface availability, not Signed-origin permission. |
 | P3 | Passed, dry-run only | `ReviveApi.instantiate_versioned(V1)` accepted solc 0.8.30 Prague EVM bytecode (291 bytes), success true and flags 0. No contract was deployed. PVM/resolc fallback was unnecessary. |
-| P4 | Partial | Native 14 decimals; `NativeToEthRatio = 10000`; EVM amounts have 18 decimals. Address derived with `ReviveApi.address`. Actual funded value movement remains pending. |
-| P5 | Not run | Scheduler present; native scheduling and executor rewards remain unverified. Keeper mode is the selected fallback until a funded schedule is dispatched successfully and emits the Ping event. |
-| P6 | Partial | MaxTransactionSize 8,388,608 bytes; MaxBlockTransactions 512; ByteFee 10 native units; EntryFee 1000; RetentionPeriod 100800 blocks. A signed 1 KiB store and any thumbnail upload remain unverified. App remains hash-only until verified. |
+| P4 | Passed, funded | Native 14 decimals; `NativeToEthRatio = 10000`; EVM amounts have 18 decimals. Actual value movement verified the factor at block 213573. See funded-probe.json for the transaction and Ping event. |
+| P5 | Signed origin unavailable | The real schedule_after request finalized with BadOrigin at block 213576. Keeper mode is selected. No native Scheduler.Dispatched success is claimed. |
+| P6 | Passed, funded | A signed 1 KiB store succeeded at block 213579. Max size 8,388,608 bytes, ByteFee 10 native units, EntryFee 1000, retention 100800 blocks. Enable native evidence with a persistent application backup; larger images have not yet been stored live. |
 | P7 | Not run | No EOA transaction; MetaMask writes remain disabled. Default writes use Substrate signatures. |
 
 Verified endpoints: `wss://test-node-v3.portaldot.dev` and `https://test-evm-rpc-v3.portaldot.dev`. Genesis `0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd`; runtime `:code` hash `0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2`. No legacy mainnet endpoint is used for the build.
