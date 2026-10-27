@@ -18,6 +18,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 22.23.4
+          package-manager-cache: false
       - run: forge build --sizes
         working-directory: contracts
       - run: node scripts/build-contracts.mjs --check
