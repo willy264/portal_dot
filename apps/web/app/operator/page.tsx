@@ -1,24 +1,527 @@
 "use client";
 import Link from "next/link";
-import {useEffect,useState} from "react";
-import {ArrowRight,Plus,Wrench} from "lucide-react";
-import {useApp} from "@/components/providers";
-import {Badge,ChainStatus,Countdown,EmptyState,Money,PageHeading,ReserveMeter,ActionButton} from "@/components/ui";
-import {EvidenceField} from "@/components/evidence";
-import {ItemQR} from "@/components/qr";
-import {Field,Form,accountAddress,text} from "@/components/forms";
-import {amount,exactAmount,parseAmount,sameAddress} from "@/lib/format";
-import {request} from "@/lib/request";
-import type {Hex,Item,Rental} from "@/lib/types";
+import { useEffect, useState } from "react";
+import { ArrowRight, Plus, Wrench } from "lucide-react";
+import { useApp } from "@/components/providers";
+import {
+  Badge,
+  ChainStatus,
+  Countdown,
+  EmptyState,
+  Money,
+  PageHeading,
+  ReserveMeter,
+  ActionButton,
+} from "@/components/ui";
+import { EvidenceField } from "@/components/evidence";
+import { ItemQR } from "@/components/qr";
+import { Field, Form, accountAddress, text } from "@/components/forms";
+import { amount, exactAmount, parseAmount, sameAddress } from "@/lib/format";
+import { request } from "@/lib/request";
+import type { Hex, Item, Rental } from "@/lib/types";
 
-export default function Operator(){const{ledger,wallet}=useApp();const[tab,setTab]=useState("equipment");const owned=(ledger?.items??[]).filter(item=>sameAddress(item.operator,wallet?.h160));const rentals=(ledger?.rentals??[]).filter(r=>owned.some(i=>i.id===r.itemId)&&r.status!==4);return <div className="container page-space"><PageHeading eyebrow="THE OPERATOR’S WORKBENCH" title="Keep good things working." description="Set the terms, record returns and turn a little of every rental into a longer life for your equipment."/><ChainStatus/><div className="segmented operator-tabs">{[["equipment","Equipment"],["returns","Returns & deposits"],["repairs","Repairs"],["income","Rental income"]].map(([key,label])=><button key={key} className={tab===key?"selected":""} onClick={()=>setTab(key)}>{label}</button>)}</div>{!wallet&&<div className="callout">Connect your operator wallet to see equipment you manage and approve actions.</div>}
-  {tab==="equipment"&&<div className="operator-grid"><section className="panel"><span className="eyebrow"><Plus size={13}/> ADD TO THE WORKSHOP</span><h2>Register equipment</h2><p className="muted">Choose a different person as arbiter. They approve repair payments and help resolve deposit deductions.</p><RegisterItem/></section><section><div className="section-heading"><h2>Your equipment</h2><span className="mono small">{owned.length} ITEMS</span></div>{owned.length?owned.map(item=><OwnedItem key={item.id} item={item}/>):<EmptyState title="Your shelf is ready." description="Equipment registered by this connected account appears here."/>}</section></div>}
-  {tab==="returns"&&<div className="operator-grid">{rentals.length?rentals.map(rental=><ReturnCard key={rental.id} rental={rental} item={owned.find(i=>i.id===rental.itemId)!}/>):<EmptyState title="No open rentals to handle." description="When someone rents your equipment, confirm their physical return here."/>}</div>}
-  {tab==="repairs"&&<div className="operator-grid"><section className="panel"><span className="eyebrow"><Wrench size={14}/> PUT THE RESERVE TO WORK</span><h2>Propose a repair</h2><p className="muted">An arbiter must approve the receipt and amount. The payment comes only from this item’s reserve.</p><RepairProposal items={owned}/></section><section><h2>Repair proposals</h2>{(ledger?.repairs??[]).filter(r=>owned.some(i=>i.id===r.itemId)).map(repair=><div className="panel compact-panel" key={repair.id}><Badge tone={repair.paid?"green":repair.rejected?"neutral":"orange"}>{repair.paid?"Paid":repair.rejected?"Rejected":"Awaiting arbiter"}</Badge><h3>{owned.find(i=>i.id===repair.itemId)?.name}</h3><Money value={repair.amount}/><p className="mono small">REPAIR #{repair.id}</p></div>)}</section></div>}
-  {tab==="income"&&<IncomePanel/>}
-  </div>;}
-function RegisterItem(){const{execute}=useApp();const[photo,setPhoto]=useState<Hex|null>(null);return <Form submit="Register item" onSubmit={data=>{const bps=Number(parseAmount(text(data,"reserve"),2));const window=Number(text(data,"window"))*60;if(!Number.isInteger(bps)||bps<0||bps>5000)throw new Error("Reserve share must be between 0% and 50% in whole basis points.");if(!Number.isInteger(window)||window<60||window>2592000)throw new Error("The dispute window must be 1 minute to 30 days.");const meta={name:text(data,"name"),description:text(data,"description"),...(photo?{image:`/api/evidence/${photo.slice(2)}`}:{})};return execute("registerItem",[accountAddress(text(data,"arbiter")),parseAmount(text(data,"fee")),parseAmount(text(data,"deposit")),bps,window,`data:application/json,${encodeURIComponent(JSON.stringify(meta))}`]);}}><Field label="Item name" name="name" placeholder="Canon EOS camera"/><Field label="Description" name="description" placeholder="What’s included, and how to look after it" required={false}/><div className="form-row"><Field label="Rental fee · tPOT" name="fee" type="number" min="0" step="any" placeholder="1"/><Field label="Refundable deposit · tPOT" name="deposit" type="number" min="0" step="any" placeholder="5"/></div><div className="form-row"><Field label="Repair reserve share · %" name="reserve" type="number" min="0" max="50" step="0.01" value="20"/><Field label="Dispute window · minutes" name="window" type="number" min="1" max="43200" value="1440" help="Default: 24 hours after return."/></div><Field label="Arbiter’s mapped address" name="arbiter" placeholder="0x…" help="Ask the arbiter to copy the contract address from their connected wallet panel."/><details className="form-details"><summary>Add an equipment photo</summary><EvidenceField label="Equipment photo (optional)" onChange={setPhoto} nativeRequired={false}/></details></Form>;}
-function OwnedItem({item}:{item:Item}){const{ledger,execute}=useApp();const unsettled=ledger?.rentals.some(r=>r.itemId===item.id&&r.status!==4);return <article className="panel owned-item"><div className="section-heading"><h3><Link href={`/items/${item.id}`}>{item.name}</Link></h3><Badge tone={item.rented?"orange":"green"}>{item.rented?"In use":item.active?"Available":"Paused"}</Badge></div><ReserveMeter item={item}/><details className="form-details"><summary>QR label</summary><ItemQR id={item.id} name={item.name}/></details><details className="form-details"><summary>Update rental terms</summary><Form submit="Update terms" disabled={item.rented} onSubmit={data=>execute("updateItem",[BigInt(item.id),parseAmount(text(data,"fee")),parseAmount(text(data,"deposit")),data.get("active")==="on"])}><div className="form-row"><Field label="Rental fee · tPOT" name="fee" value={exactAmount(item.fee)} type="number" min="0" step="any"/><Field label="Deposit · tPOT" name="deposit" value={exactAmount(item.deposit)} type="number" min="0" step="any"/></div><label className="checkbox-field"><input name="active" type="checkbox" defaultChecked={item.active}/> Accept new rentals</label>{item.rented&&<p className="small muted">Terms can be updated after the item is returned.</p>}</Form></details><details className="form-details"><summary>Transfer stewardship</summary><p className="small muted">The repair reserve and full history stay with this item. Your earned rental income remains yours. All rental deposits must be settled first.</p><Form submit="Transfer item" disabled={!!unsettled} onSubmit={data=>execute("transferItem",[BigInt(item.id),accountAddress(text(data,"newOperator"))])}><Field label="New operator’s mapped address" name="newOperator" placeholder="0x…"/>{unsettled&&<p className="small muted">A rental is still financially open.</p>}</Form></details></article>;}
-function ReturnCard({rental,item}:{rental:Rental;item:Item}){const{ledger,execute}=useApp();const[evidence,setEvidence]=useState<Hex|null>(null);return <section className="panel"><div className="section-heading"><span className="eyebrow">RENTAL #{rental.id}</span><Link href={`/rentals/${rental.id}`} className="text-button">Record <ArrowRight size={14}/></Link></div><h2>{item.name}</h2><Countdown rental={rental}/>{rental.status===1?<><p className="muted">Confirm the equipment is physically back, then attach a return photo. This starts the dispute window.</p><EvidenceField onChange={setEvidence}/><p className="small muted">You pay the executor tip separately: {ledger?.config.cronTip?<Money value={ledger.config.cronTip}/>:"not yet verified"}. It is never taken from the renter’s deposit.</p><ActionButton disabled={!evidence||ledger?.config.cronTip===null} onAction={()=>{if(!evidence||!ledger?.config.cronTip)throw new Error("Evidence and a verified executor tip are required.");return execute("markReturned",[BigInt(rental.id),evidence],BigInt(ledger.config.cronTip));}}>Confirm physical return</ActionButton></>:rental.status===2?<><p className="muted">Only propose a deduction for documented damage before the deadline. The amount goes to this item’s repair reserve if approved.</p><EvidenceField label="Damage evidence" onChange={setEvidence}/><Form submit="Propose deduction" disabled={!evidence||(ledger?.blockTimestamp??Infinity)>=rental.refundAt} onSubmit={data=>{if(!evidence)throw new Error("Attach evidence first.");const claim=parseAmount(text(data,"amount"));if(claim<=0n||claim>BigInt(rental.deposit))throw new Error("The deduction must be positive and no greater than the deposit.");return execute("openDispute",[BigInt(rental.id),claim,evidence]);}}><Field label="Proposed deduction · tPOT" name="amount" type="number" min="0" step="any"/><p className="small muted">Deposit held: <Money value={rental.deposit}/></p></Form></>:<p className="muted">The renter or arbiter must approve this proposal, or both must reject it. There is no automatic dispute timeout.</p>}</section>;}
-function RepairProposal({items}:{items:Item[]}){const{execute}=useApp();const[evidence,setEvidence]=useState<Hex|null>(null);return <Form submit="Send repair for approval" disabled={!items.length||!evidence} onSubmit={data=>{const id=text(data,"item");const item=items.find(i=>i.id===id);const value=parseAmount(text(data,"amount"));if(!item||value<=0n||value>BigInt(item.reserve))throw new Error("The repair must be positive and fit within this item’s current reserve.");if(!evidence)throw new Error("Attach the repair receipt first.");return execute("proposeRepair",[BigInt(id),accountAddress(text(data,"repairer")),value,evidence]);}}><label className="field">Equipment<select name="item" required><option value="">Choose an item</option>{items.map(i=><option key={i.id} value={i.id}>{i.name} · {amount(i.reserve)} tPOT reserve</option>)}</select></label><Field label="Repairer’s mapped address" name="repairer" placeholder="0x…"/><Field label="Repair amount · tPOT" name="amount" type="number" min="0" step="any"/><EvidenceField label="Repair receipt" onChange={setEvidence}/></Form>;}
-function IncomePanel(){const{wallet,ledger,execute}=useApp();const[income,setIncome]=useState<string|null>(null);const[error,setError]=useState<string|null>(null);useEffect(()=>{setIncome(null);setError(null);if(!wallet?.h160||ledger?.state!=="ready")return;const controller=new AbortController();request<{income:string}>(`/api/income?address=${wallet.h160}`,{signal:controller.signal}).then(data=>setIncome(data.income)).catch(e=>{if(!controller.signal.aborted)setError(e.message);});return()=>controller.abort();},[wallet?.h160,ledger?.observedAt]);return <section className="panel income-panel"><span className="eyebrow">EARNED FROM RENTALS</span><h2>Your withdrawable income</h2><div className="income-total">{income!==null?<Money value={income}/>:<span className="mono">—</span>}</div><p className="muted">This is your share of rental fees after each item’s repair allocation. Item reserves and renter deposits cannot be withdrawn as income.</p>{error&&<p className="field-error">{error}</p>}<ActionButton disabled={income===null||income==="0"} onAction={()=>execute("withdrawIncome",[])}>Withdraw rental income <ArrowRight size={17}/></ActionButton></section>;}
+export default function Operator() {
+  const { ledger, wallet } = useApp();
+  const [tab, setTab] = useState("equipment");
+  const owned = (ledger?.items ?? []).filter((item) =>
+    sameAddress(item.operator, wallet?.h160),
+  );
+  const rentals = (ledger?.rentals ?? []).filter(
+    (r) => owned.some((i) => i.id === r.itemId) && r.status !== 4,
+  );
+  return (
+    <div className="container page-space">
+      <PageHeading
+        eyebrow="THE OPERATOR’S WORKBENCH"
+        title="Keep good things working."
+        description="Set the terms, record returns and turn a little of every rental into a longer life for your equipment."
+      />
+      <ChainStatus />
+      <div className="segmented operator-tabs">
+        {[
+          ["equipment", "Equipment"],
+          ["returns", "Returns & deposits"],
+          ["repairs", "Repairs"],
+          ["income", "Rental income"],
+        ].map(([key, label]) => (
+          <button
+            key={key}
+            className={tab === key ? "selected" : ""}
+            onClick={() => setTab(key)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      {!wallet && (
+        <div className="callout">
+          Connect your operator wallet to see equipment you manage and approve
+          actions.
+        </div>
+      )}
+      {tab === "equipment" && (
+        <div className="operator-grid">
+          <section className="panel">
+            <span className="eyebrow">
+              <Plus size={13} /> ADD TO THE WORKSHOP
+            </span>
+            <h2>Register equipment</h2>
+            <p className="muted">
+              Choose a different person as arbiter. They approve repair payments
+              and help resolve deposit deductions.
+            </p>
+            <RegisterItem />
+          </section>
+          <section>
+            <div className="section-heading">
+              <h2>Your equipment</h2>
+              <span className="mono small">{owned.length} ITEMS</span>
+            </div>
+            {owned.length ? (
+              owned.map((item) => <OwnedItem key={item.id} item={item} />)
+            ) : (
+              <EmptyState
+                title="Your shelf is ready."
+                description="Equipment registered by this connected account appears here."
+              />
+            )}
+          </section>
+        </div>
+      )}
+      {tab === "returns" && (
+        <div className="operator-grid">
+          {rentals.length ? (
+            rentals.map((rental) => (
+              <ReturnCard
+                key={rental.id}
+                rental={rental}
+                item={owned.find((i) => i.id === rental.itemId)!}
+              />
+            ))
+          ) : (
+            <EmptyState
+              title="No open rentals to handle."
+              description="When someone rents your equipment, confirm their physical return here."
+            />
+          )}
+        </div>
+      )}
+      {tab === "repairs" && (
+        <div className="operator-grid">
+          <section className="panel">
+            <span className="eyebrow">
+              <Wrench size={14} /> PUT THE RESERVE TO WORK
+            </span>
+            <h2>Propose a repair</h2>
+            <p className="muted">
+              An arbiter must approve the receipt and amount. The payment comes
+              only from this item’s reserve.
+            </p>
+            <RepairProposal items={owned} />
+          </section>
+          <section>
+            <h2>Repair proposals</h2>
+            {(ledger?.repairs ?? [])
+              .filter((r) => owned.some((i) => i.id === r.itemId))
+              .map((repair) => (
+                <div className="panel compact-panel" key={repair.id}>
+                  <Badge
+                    tone={
+                      repair.paid
+                        ? "green"
+                        : repair.rejected
+                          ? "neutral"
+                          : "orange"
+                    }
+                  >
+                    {repair.paid
+                      ? "Paid"
+                      : repair.rejected
+                        ? "Rejected"
+                        : "Awaiting arbiter"}
+                  </Badge>
+                  <h3>{owned.find((i) => i.id === repair.itemId)?.name}</h3>
+                  <Money value={repair.amount} />
+                  <p className="mono small">REPAIR #{repair.id}</p>
+                </div>
+              ))}
+          </section>
+        </div>
+      )}
+      {tab === "income" && <IncomePanel />}
+    </div>
+  );
+}
+function RegisterItem() {
+  const { execute } = useApp();
+  const [photo, setPhoto] = useState<Hex | null>(null);
+  return (
+    <Form
+      submit="Register item"
+      onSubmit={(data) => {
+        const bps = Number(parseAmount(text(data, "reserve"), 2));
+        const window = Number(text(data, "window")) * 60;
+        if (!Number.isInteger(bps) || bps < 0 || bps > 5000)
+          throw new Error(
+            "Reserve share must be between 0% and 50% in whole basis points.",
+          );
+        if (!Number.isInteger(window) || window < 60 || window > 2592000)
+          throw new Error("The dispute window must be 1 minute to 30 days.");
+        const meta = {
+          name: text(data, "name"),
+          description: text(data, "description"),
+          ...(photo ? { image: `/api/evidence/${photo.slice(2)}` } : {}),
+        };
+        return execute("registerItem", [
+          accountAddress(text(data, "arbiter")),
+          parseAmount(text(data, "fee")),
+          parseAmount(text(data, "deposit")),
+          bps,
+          window,
+          `data:application/json,${encodeURIComponent(JSON.stringify(meta))}`,
+        ]);
+      }}
+    >
+      <Field label="Item name" name="name" placeholder="Canon EOS camera" />
+      <Field
+        label="Description"
+        name="description"
+        placeholder="What’s included, and how to look after it"
+        required={false}
+      />
+      <div className="form-row">
+        <Field
+          label="Rental fee · tPOT"
+          name="fee"
+          type="number"
+          min="0"
+          step="any"
+          placeholder="1"
+        />
+        <Field
+          label="Refundable deposit · tPOT"
+          name="deposit"
+          type="number"
+          min="0"
+          step="any"
+          placeholder="5"
+        />
+      </div>
+      <div className="form-row">
+        <Field
+          label="Repair reserve share · %"
+          name="reserve"
+          type="number"
+          min="0"
+          max="50"
+          step="0.01"
+          value="20"
+        />
+        <Field
+          label="Dispute window · minutes"
+          name="window"
+          type="number"
+          min="1"
+          max="43200"
+          value="1440"
+          help="Default: 24 hours after return."
+        />
+      </div>
+      <Field
+        label="Arbiter’s mapped address"
+        name="arbiter"
+        placeholder="0x…"
+        help="Ask the arbiter to copy the contract address from their connected wallet panel."
+      />
+      <details className="form-details">
+        <summary>Add an equipment photo</summary>
+        <EvidenceField
+          label="Equipment photo (optional)"
+          onChange={setPhoto}
+          nativeRequired={false}
+        />
+      </details>
+    </Form>
+  );
+}
+function OwnedItem({ item }: { item: Item }) {
+  const { ledger, execute } = useApp();
+  const unsettled = ledger?.rentals.some(
+    (r) => r.itemId === item.id && r.status !== 4,
+  );
+  return (
+    <article className="panel owned-item">
+      <div className="section-heading">
+        <h3>
+          <Link href={`/items/${item.id}`}>{item.name}</Link>
+        </h3>
+        <Badge tone={item.rented ? "orange" : "green"}>
+          {item.rented ? "In use" : item.active ? "Available" : "Paused"}
+        </Badge>
+      </div>
+      <ReserveMeter item={item} />
+      <details className="form-details">
+        <summary>QR label</summary>
+        <ItemQR id={item.id} name={item.name} />
+      </details>
+      <details className="form-details">
+        <summary>Update rental terms</summary>
+        <Form
+          submit="Update terms"
+          disabled={item.rented}
+          onSubmit={(data) =>
+            execute("updateItem", [
+              BigInt(item.id),
+              parseAmount(text(data, "fee")),
+              parseAmount(text(data, "deposit")),
+              data.get("active") === "on",
+            ])
+          }
+        >
+          <div className="form-row">
+            <Field
+              label="Rental fee · tPOT"
+              name="fee"
+              value={exactAmount(item.fee)}
+              type="number"
+              min="0"
+              step="any"
+            />
+            <Field
+              label="Deposit · tPOT"
+              name="deposit"
+              value={exactAmount(item.deposit)}
+              type="number"
+              min="0"
+              step="any"
+            />
+          </div>
+          <label className="checkbox-field">
+            <input name="active" type="checkbox" defaultChecked={item.active} />{" "}
+            Accept new rentals
+          </label>
+          {item.rented && (
+            <p className="small muted">
+              Terms can be updated after the item is returned.
+            </p>
+          )}
+        </Form>
+      </details>
+      <details className="form-details">
+        <summary>Transfer stewardship</summary>
+        <p className="small muted">
+          The repair reserve and full history stay with this item. Your earned
+          rental income remains yours. All rental deposits must be settled
+          first.
+        </p>
+        <Form
+          submit="Transfer item"
+          disabled={!!unsettled}
+          onSubmit={(data) =>
+            execute("transferItem", [
+              BigInt(item.id),
+              accountAddress(text(data, "newOperator")),
+            ])
+          }
+        >
+          <Field
+            label="New operator’s mapped address"
+            name="newOperator"
+            placeholder="0x…"
+          />
+          {unsettled && (
+            <p className="small muted">A rental is still financially open.</p>
+          )}
+        </Form>
+      </details>
+    </article>
+  );
+}
+function ReturnCard({ rental, item }: { rental: Rental; item: Item }) {
+  const { ledger, execute } = useApp();
+  const [evidence, setEvidence] = useState<Hex | null>(null);
+  return (
+    <section className="panel">
+      <div className="section-heading">
+        <span className="eyebrow">RENTAL #{rental.id}</span>
+        <Link href={`/rentals/${rental.id}`} className="text-button">
+          Record <ArrowRight size={14} />
+        </Link>
+      </div>
+      <h2>{item.name}</h2>
+      <Countdown rental={rental} />
+      {rental.status === 1 ? (
+        <>
+          <p className="muted">
+            Confirm the equipment is physically back, then attach a return
+            photo. This starts the dispute window.
+          </p>
+          <EvidenceField onChange={setEvidence} />
+          <p className="small muted">
+            You pay the executor tip separately:{" "}
+            {ledger?.config.cronTip ? (
+              <Money value={ledger.config.cronTip} />
+            ) : (
+              "not yet verified"
+            )}
+            . It is never taken from the renter’s deposit.
+          </p>
+          <ActionButton
+            disabled={!evidence || ledger?.config.cronTip === null}
+            onAction={() => {
+              if (!evidence || !ledger?.config.cronTip)
+                throw new Error(
+                  "Evidence and a verified executor tip are required.",
+                );
+              return execute(
+                "markReturned",
+                [BigInt(rental.id), evidence],
+                BigInt(ledger.config.cronTip),
+              );
+            }}
+          >
+            Confirm physical return
+          </ActionButton>
+        </>
+      ) : rental.status === 2 ? (
+        <>
+          <p className="muted">
+            Only propose a deduction for documented damage before the deadline.
+            The amount goes to this item’s repair reserve if approved.
+          </p>
+          <EvidenceField label="Damage evidence" onChange={setEvidence} />
+          <Form
+            submit="Propose deduction"
+            disabled={
+              !evidence ||
+              (ledger?.blockTimestamp ?? Infinity) >= rental.refundAt
+            }
+            onSubmit={(data) => {
+              if (!evidence) throw new Error("Attach evidence first.");
+              const claim = parseAmount(text(data, "amount"));
+              if (claim <= 0n || claim > BigInt(rental.deposit))
+                throw new Error(
+                  "The deduction must be positive and no greater than the deposit.",
+                );
+              return execute("openDispute", [
+                BigInt(rental.id),
+                claim,
+                evidence,
+              ]);
+            }}
+          >
+            <Field
+              label="Proposed deduction · tPOT"
+              name="amount"
+              type="number"
+              min="0"
+              step="any"
+            />
+            <p className="small muted">
+              Deposit held: <Money value={rental.deposit} />
+            </p>
+          </Form>
+        </>
+      ) : (
+        <p className="muted">
+          The renter or arbiter must approve this proposal, or both must reject
+          it. There is no automatic dispute timeout.
+        </p>
+      )}
+    </section>
+  );
+}
+function RepairProposal({ items }: { items: Item[] }) {
+  const { execute } = useApp();
+  const [evidence, setEvidence] = useState<Hex | null>(null);
+  return (
+    <Form
+      submit="Send repair for approval"
+      disabled={!items.length || !evidence}
+      onSubmit={(data) => {
+        const id = text(data, "item");
+        const item = items.find((i) => i.id === id);
+        const value = parseAmount(text(data, "amount"));
+        if (!item || value <= 0n || value > BigInt(item.reserve))
+          throw new Error(
+            "The repair must be positive and fit within this item’s current reserve.",
+          );
+        if (!evidence) throw new Error("Attach the repair receipt first.");
+        return execute("proposeRepair", [
+          BigInt(id),
+          accountAddress(text(data, "repairer")),
+          value,
+          evidence,
+        ]);
+      }}
+    >
+      <label className="field">
+        Equipment
+        <select name="item" required>
+          <option value="">Choose an item</option>
+          {items.map((i) => (
+            <option key={i.id} value={i.id}>
+              {i.name} · {amount(i.reserve)} tPOT reserve
+            </option>
+          ))}
+        </select>
+      </label>
+      <Field
+        label="Repairer’s mapped address"
+        name="repairer"
+        placeholder="0x…"
+      />
+      <Field
+        label="Repair amount · tPOT"
+        name="amount"
+        type="number"
+        min="0"
+        step="any"
+      />
+      <EvidenceField label="Repair receipt" onChange={setEvidence} />
+    </Form>
+  );
+}
+function IncomePanel() {
+  const { wallet, ledger, execute } = useApp();
+  const [income, setIncome] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    setIncome(null);
+    setError(null);
+    if (!wallet?.h160 || ledger?.state !== "ready") return;
+    const controller = new AbortController();
+    request<{ income: string }>(`/api/income?address=${wallet.h160}`, {
+      signal: controller.signal,
+    })
+      .then((data) => setIncome(data.income))
+      .catch((e) => {
+        if (!controller.signal.aborted) setError(e.message);
+      });
+    return () => controller.abort();
+  }, [wallet?.h160, ledger?.observedAt]);
+  return (
+    <section className="panel income-panel">
+      <span className="eyebrow">EARNED FROM RENTALS</span>
+      <h2>Your withdrawable income</h2>
+      <div className="income-total">
+        {income !== null ? (
+          <Money value={income} />
+        ) : (
+          <span className="mono">—</span>
+        )}
+      </div>
+      <p className="muted">
+        This is your share of rental fees after each item’s repair allocation.
+        Item reserves and renter deposits cannot be withdrawn as income.
+      </p>
+      {error && <p className="field-error">{error}</p>}
+      <ActionButton
+        disabled={income === null || income === "0"}
+        onAction={() => execute("withdrawIncome", [])}
+      >
+        Withdraw rental income <ArrowRight size={17} />
+      </ActionButton>
+    </section>
+  );
+}

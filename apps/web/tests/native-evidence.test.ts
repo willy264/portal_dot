@@ -1,24 +1,218 @@
-import {describe,expect,it,vi} from "vitest";
-import {encodeThumbnail} from "../lib/prepare-image";
-import {hashBytes} from "../lib/evidence";
-import {nativeEvidenceCapability} from "../lib/evidence-capability";
-import {submitNativeEvidence,UncertainEvidenceError,type EvidenceJournal,type EvidenceJournalEntry,type NativeEvidenceProof} from "../lib/native-evidence";
-import type {Hex} from "../lib/types";
-const hash=`0x${"a".repeat(64)}` as Hex;const txHash=`0x${"b".repeat(64)}` as Hex;const blockHash=`0x${"c".repeat(64)}` as Hex;
-const proof:NativeEvidenceProof={txHash,block:101,blockHash,extrinsicIndex:2,storageIndex:0,bytes:1024,retentionBlocks:100800};
-function journal(){const values=new Map<Hex,EvidenceJournalEntry>();const storage:EvidenceJournal={read:id=>values.get(id)??null,write:entry=>{values.set(entry.hash,structuredClone(entry));}};return storage;}
-function jpeg(size:number){const bytes=new Uint8Array(size);bytes.set([255,216,255]);return new Blob([bytes],{type:"image/jpeg"});}
-describe("bounded final-image preparation",()=>{
- it("shrinks dimensions after quality options fail and hashes only the accepted JPEG",async()=>{const calls:Array<[number,number,number]>=[];const result=await encodeThumbnail(2400,1200,async(w,h,q)=>{calls.push([w,h,q]);return jpeg(w>1000?70000:42000);});expect(result.type).toBe("image/jpeg");expect(result.size).toBe(42000);expect(calls[0]?.slice(0,2)).toEqual([1280,640]);expect(calls.length).toBe(5);expect(await hashBytes(await result.arrayBuffer())).not.toBe(await hashBytes(await jpeg(70000).arrayBuffer()));});
- it("rejects an image when no encoded output fits rather than returning oversized bytes",async()=>{await expect(encodeThumbnail(1000,1000,async()=>jpeg(65537))).rejects.toThrow("could not fit");});
- it("does not treat metadata presence or an unsigned simulation as verified native storage",()=>{expect(nativeEvidenceCapability({checks:{P6:{status:"passed",maximum:8388608,retentionPeriod:100800}}})).toBeNull();});
- it("enables bounded thumbnails only from a real funded Stored event and transaction evidence",()=>{const capability=nativeEvidenceCapability({network:"portaldot-v3-testnet",mode:"funded-writes",checks:{P6:{status:"passed",maximum:8388608,retentionPeriod:100800,bytes:1024,evidence:{txHash,blockHash},stored:{event:{type:"TransactionStorage",value:{type:"Stored",value:{index:0}}}}}}});expect(capability).toMatchObject({maxBytes:65536,probeBytes:1024,retentionBlocks:100800});});
+import { describe, expect, it, vi } from "vitest";
+import { encodeThumbnail } from "../lib/prepare-image";
+import { hashBytes } from "../lib/evidence";
+import { nativeEvidenceCapability } from "../lib/evidence-capability";
+import {
+  submitNativeEvidence,
+  UncertainEvidenceError,
+  type EvidenceJournal,
+  type EvidenceJournalEntry,
+  type NativeEvidenceProof,
+} from "../lib/native-evidence";
+import type { Hex } from "../lib/types";
+const hash = `0x${"a".repeat(64)}` as Hex;
+const txHash = `0x${"b".repeat(64)}` as Hex;
+const blockHash = `0x${"c".repeat(64)}` as Hex;
+const proof: NativeEvidenceProof = {
+  txHash,
+  block: 101,
+  blockHash,
+  extrinsicIndex: 2,
+  storageIndex: 0,
+  bytes: 1024,
+  retentionBlocks: 100800,
+};
+function journal() {
+  const values = new Map<Hex, EvidenceJournalEntry>();
+  const storage: EvidenceJournal = {
+    read: (id) => values.get(id) ?? null,
+    write: (entry) => {
+      values.set(entry.hash, structuredClone(entry));
+    },
+  };
+  return storage;
+}
+function jpeg(size: number) {
+  const bytes = new Uint8Array(size);
+  bytes.set([255, 216, 255]);
+  return new Blob([bytes], { type: "image/jpeg" });
+}
+describe("bounded final-image preparation", () => {
+  it("shrinks dimensions after quality options fail and hashes only the accepted JPEG", async () => {
+    const calls: Array<[number, number, number]> = [];
+    const result = await encodeThumbnail(2400, 1200, async (w, h, q) => {
+      calls.push([w, h, q]);
+      return jpeg(w > 1000 ? 70000 : 42000);
+    });
+    expect(result.type).toBe("image/jpeg");
+    expect(result.size).toBe(42000);
+    expect(calls[0]?.slice(0, 2)).toEqual([1280, 640]);
+    expect(calls.length).toBe(5);
+    expect(await hashBytes(await result.arrayBuffer())).not.toBe(
+      await hashBytes(await jpeg(70000).arrayBuffer()),
+    );
+  });
+  it("rejects an image when no encoded output fits rather than returning oversized bytes", async () => {
+    await expect(
+      encodeThumbnail(1000, 1000, async () => jpeg(65537)),
+    ).rejects.toThrow("could not fit");
+  });
+  it("does not treat metadata presence or an unsigned simulation as verified native storage", () => {
+    expect(
+      nativeEvidenceCapability({
+        checks: {
+          P6: { status: "passed", maximum: 8388608, retentionPeriod: 100800 },
+        },
+      }),
+    ).toBeNull();
+  });
+  it("enables bounded thumbnails only from a real funded Stored event and transaction evidence", () => {
+    const capability = nativeEvidenceCapability({
+      network: "portaldot-v3-testnet",
+      mode: "funded-writes",
+      checks: {
+        P6: {
+          status: "passed",
+          maximum: 8388608,
+          retentionPeriod: 100800,
+          bytes: 1024,
+          evidence: { txHash, blockHash },
+          stored: {
+            event: {
+              type: "TransactionStorage",
+              value: { type: "Stored", value: { index: 0 } },
+            },
+          },
+        },
+      },
+    });
+    expect(capability).toMatchObject({
+      maxBytes: 65536,
+      probeBytes: 1024,
+      retentionBlocks: 100800,
+    });
+  });
 });
-describe("native evidence submission journal",()=>{
- it("records intent before invoking a write and retains finalized block/index proof",async()=>{const storage=journal();const submit=vi.fn(async(onHash:(hash:Hex)=>void)=>{expect(storage.read(hash)?.state).toBe("submitting");onHash(txHash);return proof;});await submitNativeEvidence({hash,account:"public-test-account",fromBlock:100,journal:storage,submit});expect(storage.read(hash)).toMatchObject({state:"finalized",txHash,proof:{block:101,storageIndex:0}});});
- it("locks an uncertain submission across a retry without broadcasting twice",async()=>{const storage=journal();const submit=vi.fn(async(onHash:(hash:Hex)=>void)=>{onHash(txHash);throw Object.assign(new Error("Disconnected after broadcast"),{ambiguous:true,txHash});});const input={hash,account:"public-test-account",fromBlock:100,journal:storage,submit};await expect(submitNativeEvidence(input)).rejects.toBeInstanceOf(UncertainEvidenceError);await expect(submitNativeEvidence(input)).rejects.toBeInstanceOf(UncertainEvidenceError);expect(submit).toHaveBeenCalledTimes(1);expect(storage.read(hash)).toMatchObject({state:"unknown",txHash});});
- it("also locks a stream failure after a retained hash when no explicit certainty flag exists",async()=>{const storage=journal();await expect(submitNativeEvidence({hash,account:"public-test-account",fromBlock:100,journal:storage,submit:async onHash=>{onHash(txHash);throw new Error("Connection ended");}})).rejects.toBeInstanceOf(UncertainEvidenceError);expect(storage.read(hash)?.state).toBe("unknown");});
- it("reuses a confirmed unexpired store without another payment",async()=>{const storage=journal();storage.write({hash,account:"public-test-account",state:"finalized",fromBlock:100,proof,txHash,updatedAt:"test"});const submit=vi.fn(async()=>proof);expect(await submitNativeEvidence({hash,account:"public-test-account",fromBlock:200,journal:storage,submit})).toEqual(proof);expect(submit).not.toHaveBeenCalled();});
- it("permits a deliberate new store after a known failure",async()=>{const storage=journal();const submit=vi.fn(async()=>{throw Object.assign(new Error("Wallet rejected"),{ambiguous:false});});const input={hash,account:"public-test-account",fromBlock:100,journal:storage,submit};await expect(submitNativeEvidence(input)).rejects.toThrow("Wallet rejected");await expect(submitNativeEvidence({...input,submit:async()=>proof})).resolves.toEqual(proof);});
- it("refuses a write when the pre-submit journal cannot be persisted",async()=>{const submit=vi.fn(async()=>proof);await expect(submitNativeEvidence({hash,account:"public-test-account",fromBlock:100,journal:{read:()=>null,write:()=>{throw new Error("Storage quota");}},submit})).rejects.toThrow("Storage quota");expect(submit).not.toHaveBeenCalled();});
+describe("native evidence submission journal", () => {
+  it("records intent before invoking a write and retains finalized block/index proof", async () => {
+    const storage = journal();
+    const submit = vi.fn(async (onHash: (hash: Hex) => void) => {
+      expect(storage.read(hash)?.state).toBe("submitting");
+      onHash(txHash);
+      return proof;
+    });
+    await submitNativeEvidence({
+      hash,
+      account: "public-test-account",
+      fromBlock: 100,
+      journal: storage,
+      submit,
+    });
+    expect(storage.read(hash)).toMatchObject({
+      state: "finalized",
+      txHash,
+      proof: { block: 101, storageIndex: 0 },
+    });
+  });
+  it("locks an uncertain submission across a retry without broadcasting twice", async () => {
+    const storage = journal();
+    const submit = vi.fn(async (onHash: (hash: Hex) => void) => {
+      onHash(txHash);
+      throw Object.assign(new Error("Disconnected after broadcast"), {
+        ambiguous: true,
+        txHash,
+      });
+    });
+    const input = {
+      hash,
+      account: "public-test-account",
+      fromBlock: 100,
+      journal: storage,
+      submit,
+    };
+    await expect(submitNativeEvidence(input)).rejects.toBeInstanceOf(
+      UncertainEvidenceError,
+    );
+    await expect(submitNativeEvidence(input)).rejects.toBeInstanceOf(
+      UncertainEvidenceError,
+    );
+    expect(submit).toHaveBeenCalledTimes(1);
+    expect(storage.read(hash)).toMatchObject({ state: "unknown", txHash });
+  });
+  it("also locks a stream failure after a retained hash when no explicit certainty flag exists", async () => {
+    const storage = journal();
+    await expect(
+      submitNativeEvidence({
+        hash,
+        account: "public-test-account",
+        fromBlock: 100,
+        journal: storage,
+        submit: async (onHash) => {
+          onHash(txHash);
+          throw new Error("Connection ended");
+        },
+      }),
+    ).rejects.toBeInstanceOf(UncertainEvidenceError);
+    expect(storage.read(hash)?.state).toBe("unknown");
+  });
+  it("reuses a confirmed unexpired store without another payment", async () => {
+    const storage = journal();
+    storage.write({
+      hash,
+      account: "public-test-account",
+      state: "finalized",
+      fromBlock: 100,
+      proof,
+      txHash,
+      updatedAt: "test",
+    });
+    const submit = vi.fn(async () => proof);
+    expect(
+      await submitNativeEvidence({
+        hash,
+        account: "public-test-account",
+        fromBlock: 200,
+        journal: storage,
+        submit,
+      }),
+    ).toEqual(proof);
+    expect(submit).not.toHaveBeenCalled();
+  });
+  it("permits a deliberate new store after a known failure", async () => {
+    const storage = journal();
+    const submit = vi.fn(async () => {
+      throw Object.assign(new Error("Wallet rejected"), { ambiguous: false });
+    });
+    const input = {
+      hash,
+      account: "public-test-account",
+      fromBlock: 100,
+      journal: storage,
+      submit,
+    };
+    await expect(submitNativeEvidence(input)).rejects.toThrow(
+      "Wallet rejected",
+    );
+    await expect(
+      submitNativeEvidence({ ...input, submit: async () => proof }),
+    ).resolves.toEqual(proof);
+  });
+  it("refuses a write when the pre-submit journal cannot be persisted", async () => {
+    const submit = vi.fn(async () => proof);
+    await expect(
+      submitNativeEvidence({
+        hash,
+        account: "public-test-account",
+        fromBlock: 100,
+        journal: {
+          read: () => null,
+          write: () => {
+            throw new Error("Storage quota");
+          },
+        },
+        submit,
+      }),
+    ).rejects.toThrow("Storage quota");
+    expect(submit).not.toHaveBeenCalled();
+  });
 });

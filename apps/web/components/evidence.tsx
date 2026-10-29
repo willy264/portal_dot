@@ -1,34 +1,361 @@
 "use client";
-import {useEffect,useState} from "react";
-import {Check,ImagePlus,LoaderCircle,ShieldCheck} from "lucide-react";
-import {hashBytes,normalizeHash} from "@/lib/evidence";
-import {request} from "@/lib/request";
-import {errorMessage,shortAddress} from "@/lib/format";
-import type {Hex} from "@/lib/types";
-import {prepareEvidenceImage} from "@/lib/prepare-image";
-import {browserEvidenceJournal,UncertainEvidenceError,type NativeEvidenceProof,type EvidenceJournalEntry} from "@/lib/native-evidence";
-import {consoleLink} from "@/lib/proof";
-import {useApp} from "./providers";
-import {chainAdapter} from "@/lib/wallet-chain";
+import { useEffect, useState } from "react";
+import { Check, ImagePlus, LoaderCircle, ShieldCheck } from "lucide-react";
+import { hashBytes, normalizeHash } from "@/lib/evidence";
+import { request } from "@/lib/request";
+import { errorMessage, shortAddress } from "@/lib/format";
+import type { Hex } from "@/lib/types";
+import { prepareEvidenceImage } from "@/lib/prepare-image";
+import {
+  browserEvidenceJournal,
+  UncertainEvidenceError,
+  type NativeEvidenceProof,
+  type EvidenceJournalEntry,
+} from "@/lib/native-evidence";
+import { consoleLink } from "@/lib/proof";
+import { useApp } from "./providers";
+import { chainAdapter } from "@/lib/wallet-chain";
 
-export function EvidenceField({label="Return photo",onChange,nativeRequired=true}:{label?:string;onChange:(hash:Hex|null)=>void;nativeRequired?:boolean}){
- const{ledger,wallet,storeNativeEvidence}=useApp();const[busy,setBusy]=useState(false);const[stage,setStage]=useState("");const[error,setError]=useState<string|null>(null);const[uploaded,setUploaded]=useState<{hash:Hex;url:string;size:number}|null>(null);const[proof,setProof]=useState<NativeEvidenceProof|null>(null);const[uncertain,setUncertain]=useState<EvidenceJournalEntry|null>(null);
- const native=nativeRequired&&!!ledger?.config.nativeEvidence;
- async function upload(file:File){setBusy(true);setError(null);setUploaded(null);setProof(null);setUncertain(null);onChange(null);try{
-  if(native&&!wallet)throw new Error("Connect a wallet before preparing native photo evidence.");
-  setStage("Preparing the final JPEG thumbnail…");const blob=await prepareEvidenceImage(file,ledger?.config.nativeEvidence?.maxBytes??65536);const bytes=await blob.arrayBuffer();const hash=await hashBytes(bytes);
-  const previous=browserEvidenceJournal.read(hash);if(native&&previous&&(previous.state==="unknown"||previous.state==="submitting"))throw new UncertainEvidenceError(previous);
-  setStage("Saving the persistent backup…");const result=await request<{hash:Hex;url:string;size:number}>("/api/evidence",{method:"POST",headers:{"Content-Type":blob.type,"X-Content-SHA256":hash},body:blob});if(result.hash!==hash)throw new Error("The stored photo hash does not match.");setUploaded(result);
-  if(native){setStage("Confirm photo storage in your wallet…");setProof(await storeNativeEvidence(hash,new Uint8Array(bytes)));}
-  onChange(hash);
- }catch(e){if(e instanceof UncertainEvidenceError)setUncertain(e.record);setError(errorMessage(e));}finally{setBusy(false);setStage("");}}
- async function reconcile(){if(!uncertain?.txHash||!ledger)return;setBusy(true);setError(null);setStage("Checking finalized storage history…");try{const chain=await chainAdapter(ledger.config);const result=await chain.reconcileEvidence({txHash:uncertain.txHash,fromBlock:uncertain.fromBlock});if(result.status==="confirmed"){const record={...uncertain,state:"finalized" as const,proof:result.evidence,updatedAt:new Date().toISOString()};browserEvidenceJournal.write(record);setProof(result.evidence);setUncertain(null);const response=await fetch(`/api/evidence/${normalizeHash(uncertain.hash)}`,{signal:AbortSignal.timeout(10000)});if(!response.ok||await hashBytes(await response.arrayBuffer())!==uncertain.hash)throw new Error("Native storage is confirmed, but the backup must be restored. Choose the original photo again.");setUploaded({hash:uncertain.hash,url:`/api/evidence/${normalizeHash(uncertain.hash)}`,size:result.evidence.bytes});onChange(uncertain.hash);setUncertain(null);}else if(result.status==="failed"){browserEvidenceJournal.write({...uncertain,state:"failed",updatedAt:new Date().toISOString(),error:"Original extrinsic finalized with a failure."});setUncertain(null);setError("The previous transaction definitively failed. Select the photo again to prepare a new storage attempt.");}else{const record={...uncertain,state:"unknown" as const,fromBlock:result.nextBlock,error:result.reason,updatedAt:new Date().toISOString()};browserEvidenceJournal.write(record);setUncertain(record);setError(result.reason);}}catch(e){setError(errorMessage(e));}finally{setBusy(false);setStage("");}}
- return <div className="evidence-field"><label className="upload-zone"><input type="file" accept="image/jpeg,image/png,image/webp" capture="environment" disabled={busy||!!uncertain} onChange={e=>{const file=e.target.files?.[0];if(file)void upload(file);e.target.value="";}}/>{busy?<LoaderCircle className="spin"/>:<ImagePlus/>}<strong>{busy?stage:label}</strong><span>Take a photo or choose a file · up to 5 MB</span></label><p className="small muted">{native?"A JPEG thumbnail of at most 64 KiB is backed up, then stored on Portaldot with your wallet approval. The contract uses the SHA-256 of those exact final bytes.":"A JPEG thumbnail is prepared before hashing and saved in persistent storage. The final bytes are verified before their hash is used."}</p>{native&&<p className="small muted">Native storage retention: {ledger?.config.nativeEvidence?.retentionBlocks.toLocaleString()} blocks. The persistent backup remains necessary. This is a separate transaction from the return or approval.</p>}{error&&<p className="field-error" role="alert">{error}</p>}{uncertain&&<div className="callout warning"><div><strong>Submission outcome needs checking.</strong><code className="hash">{uncertain.txHash??"A transaction hash was not retained."}</code><p className="small">Uploading again is blocked. Inspect the submitted transaction before another storage attempt.</p>{uncertain.txHash&&<button type="button" className="button" disabled={busy} onClick={()=>void reconcile()}>Check submitted transaction</button>}<a className="text-button" href={consoleLink(ledger?.config.wssUrl??"wss://test-node-v3.portaldot.dev")} target="_blank" rel="noreferrer">Open node console</a></div></div>}{uploaded&&<EvidencePreview hash={uploaded.hash}/>} {proof&&<NativeStorageRecord proof={proof} wss={ledger?.config.wssUrl??"wss://test-node-v3.portaldot.dev"}/>}</div>;
+export function EvidenceField({
+  label = "Return photo",
+  onChange,
+  nativeRequired = true,
+}: {
+  label?: string;
+  onChange: (hash: Hex | null) => void;
+  nativeRequired?: boolean;
+}) {
+  const { ledger, wallet, storeNativeEvidence } = useApp();
+  const [busy, setBusy] = useState(false);
+  const [stage, setStage] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [uploaded, setUploaded] = useState<{
+    hash: Hex;
+    url: string;
+    size: number;
+  } | null>(null);
+  const [proof, setProof] = useState<NativeEvidenceProof | null>(null);
+  const [uncertain, setUncertain] = useState<EvidenceJournalEntry | null>(null);
+  const native = nativeRequired && !!ledger?.config.nativeEvidence;
+  async function upload(file: File) {
+    setBusy(true);
+    setError(null);
+    setUploaded(null);
+    setProof(null);
+    setUncertain(null);
+    onChange(null);
+    try {
+      if (native && !wallet)
+        throw new Error(
+          "Connect a wallet before preparing native photo evidence.",
+        );
+      setStage("Preparing the final JPEG thumbnail…");
+      const blob = await prepareEvidenceImage(
+        file,
+        ledger?.config.nativeEvidence?.maxBytes ?? 65536,
+      );
+      const bytes = await blob.arrayBuffer();
+      const hash = await hashBytes(bytes);
+      const previous = browserEvidenceJournal.read(hash);
+      if (
+        native &&
+        previous &&
+        (previous.state === "unknown" || previous.state === "submitting")
+      )
+        throw new UncertainEvidenceError(previous);
+      setStage("Saving the persistent backup…");
+      const result = await request<{ hash: Hex; url: string; size: number }>(
+        "/api/evidence",
+        {
+          method: "POST",
+          headers: { "Content-Type": blob.type, "X-Content-SHA256": hash },
+          body: blob,
+        },
+      );
+      if (result.hash !== hash)
+        throw new Error("The stored photo hash does not match.");
+      setUploaded(result);
+      if (native) {
+        setStage("Confirm photo storage in your wallet…");
+        setProof(await storeNativeEvidence(hash, new Uint8Array(bytes)));
+      }
+      onChange(hash);
+    } catch (e) {
+      if (e instanceof UncertainEvidenceError) setUncertain(e.record);
+      setError(errorMessage(e));
+    } finally {
+      setBusy(false);
+      setStage("");
+    }
+  }
+  async function reconcile() {
+    if (!uncertain?.txHash || !ledger) return;
+    setBusy(true);
+    setError(null);
+    setStage("Checking finalized storage history…");
+    try {
+      const chain = await chainAdapter(ledger.config);
+      const result = await chain.reconcileEvidence({
+        txHash: uncertain.txHash,
+        fromBlock: uncertain.fromBlock,
+      });
+      if (result.status === "confirmed") {
+        const record = {
+          ...uncertain,
+          state: "finalized" as const,
+          proof: result.evidence,
+          updatedAt: new Date().toISOString(),
+        };
+        browserEvidenceJournal.write(record);
+        setProof(result.evidence);
+        setUncertain(null);
+        const response = await fetch(
+          `/api/evidence/${normalizeHash(uncertain.hash)}`,
+          { signal: AbortSignal.timeout(10000) },
+        );
+        if (
+          !response.ok ||
+          (await hashBytes(await response.arrayBuffer())) !== uncertain.hash
+        )
+          throw new Error(
+            "Native storage is confirmed, but the backup must be restored. Choose the original photo again.",
+          );
+        setUploaded({
+          hash: uncertain.hash,
+          url: `/api/evidence/${normalizeHash(uncertain.hash)}`,
+          size: result.evidence.bytes,
+        });
+        onChange(uncertain.hash);
+        setUncertain(null);
+      } else if (result.status === "failed") {
+        browserEvidenceJournal.write({
+          ...uncertain,
+          state: "failed",
+          updatedAt: new Date().toISOString(),
+          error: "Original extrinsic finalized with a failure.",
+        });
+        setUncertain(null);
+        setError(
+          "The previous transaction definitively failed. Select the photo again to prepare a new storage attempt.",
+        );
+      } else {
+        const record = {
+          ...uncertain,
+          state: "unknown" as const,
+          fromBlock: result.nextBlock,
+          error: result.reason,
+          updatedAt: new Date().toISOString(),
+        };
+        browserEvidenceJournal.write(record);
+        setUncertain(record);
+        setError(result.reason);
+      }
+    } catch (e) {
+      setError(errorMessage(e));
+    } finally {
+      setBusy(false);
+      setStage("");
+    }
+  }
+  return (
+    <div className="evidence-field">
+      <label className="upload-zone">
+        <input
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          capture="environment"
+          disabled={busy || !!uncertain}
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) void upload(file);
+            e.target.value = "";
+          }}
+        />
+        {busy ? <LoaderCircle className="spin" /> : <ImagePlus />}
+        <strong>{busy ? stage : label}</strong>
+        <span>Take a photo or choose a file · up to 5 MB</span>
+      </label>
+      <p className="small muted">
+        {native
+          ? "A JPEG thumbnail of at most 64 KiB is backed up, then stored on Portaldot with your wallet approval. The contract uses the SHA-256 of those exact final bytes."
+          : "A JPEG thumbnail is prepared before hashing and saved in persistent storage. The final bytes are verified before their hash is used."}
+      </p>
+      {native && (
+        <p className="small muted">
+          Native storage retention:{" "}
+          {ledger?.config.nativeEvidence?.retentionBlocks.toLocaleString()}{" "}
+          blocks. The persistent backup remains necessary. This is a separate
+          transaction from the return or approval.
+        </p>
+      )}
+      {error && (
+        <p className="field-error" role="alert">
+          {error}
+        </p>
+      )}
+      {uncertain && (
+        <div className="callout warning">
+          <div>
+            <strong>Submission outcome needs checking.</strong>
+            <code className="hash">
+              {uncertain.txHash ?? "A transaction hash was not retained."}
+            </code>
+            <p className="small">
+              Uploading again is blocked. Inspect the submitted transaction
+              before another storage attempt.
+            </p>
+            {uncertain.txHash && (
+              <button
+                type="button"
+                className="button"
+                disabled={busy}
+                onClick={() => void reconcile()}
+              >
+                Check submitted transaction
+              </button>
+            )}
+            <a
+              className="text-button"
+              href={consoleLink(
+                ledger?.config.wssUrl ?? "wss://test-node-v3.portaldot.dev",
+              )}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open node console
+            </a>
+          </div>
+        </div>
+      )}
+      {uploaded && <EvidencePreview hash={uploaded.hash} />}{" "}
+      {proof && (
+        <NativeStorageRecord
+          proof={proof}
+          wss={ledger?.config.wssUrl ?? "wss://test-node-v3.portaldot.dev"}
+        />
+      )}
+    </div>
+  );
 }
-function NativeStorageRecord({proof,wss}:{proof:NativeEvidenceProof;wss:string}){return <div className="native-storage-record"><span className="verification verified"><ShieldCheck size={15}/> Finalized native storage</span><dl className="detail-list"><div><dt>Block / storage index</dt><dd className="mono">{proof.block} / {proof.storageIndex}</dd></div><div><dt>Stored bytes</dt><dd className="mono">{proof.bytes.toLocaleString()}</dd></div><div><dt>Transaction</dt><dd className="hash">{proof.txHash}</dd></div></dl><a className="text-button" href={consoleLink(wss,proof.blockHash)} target="_blank" rel="noreferrer">Inspect storage block</a><p className="small muted">Block and index are retained in this browser. Native storage uses its own content hash; the image commitment above is SHA-256.</p></div>;}
+function NativeStorageRecord({
+  proof,
+  wss,
+}: {
+  proof: NativeEvidenceProof;
+  wss: string;
+}) {
+  return (
+    <div className="native-storage-record">
+      <span className="verification verified">
+        <ShieldCheck size={15} /> Finalized native storage
+      </span>
+      <dl className="detail-list">
+        <div>
+          <dt>Block / storage index</dt>
+          <dd className="mono">
+            {proof.block} / {proof.storageIndex}
+          </dd>
+        </div>
+        <div>
+          <dt>Stored bytes</dt>
+          <dd className="mono">{proof.bytes.toLocaleString()}</dd>
+        </div>
+        <div>
+          <dt>Transaction</dt>
+          <dd className="hash">{proof.txHash}</dd>
+        </div>
+      </dl>
+      <a
+        className="text-button"
+        href={consoleLink(wss, proof.blockHash)}
+        target="_blank"
+        rel="noreferrer"
+      >
+        Inspect storage block
+      </a>
+      <p className="small muted">
+        Block and index are retained in this browser. Native storage uses its
+        own content hash; the image commitment above is SHA-256.
+      </p>
+    </div>
+  );
+}
 
-export function EvidencePreview({hash}:{hash:Hex|string}){
-  const[state,setState]=useState<"loading"|"verified"|"mismatch"|"missing">("loading");const[url,setUrl]=useState<string|null>(null);
-  useEffect(()=>{const controller=new AbortController();let objectUrl:string|null=null;setState("loading");setUrl(null);async function verify(){try{const id=normalizeHash(hash);const response=await fetch(`/api/evidence/${id}`,{signal:controller.signal});if(!response.ok)throw new Error("Unavailable");const bytes=await response.arrayBuffer();if(controller.signal.aborted)return;const actual=await hashBytes(bytes);if(actual.slice(2)!==id){setState("mismatch");return;}objectUrl=URL.createObjectURL(new Blob([bytes],{type:response.headers.get("content-type")??"image/jpeg"}));setUrl(objectUrl);setState("verified");}catch{if(!controller.signal.aborted)setState("missing");}}void verify();return()=>{controller.abort();if(objectUrl)URL.revokeObjectURL(objectUrl);};},[hash]);
-  return <div className="evidence-preview">{url&&<a href={url} target="_blank" rel="noreferrer"><img src={url} alt="Stored evidence photograph"/></a>}<div><span className={`verification ${state==="verified"?"verified":""}`}>{state==="verified"?<><ShieldCheck size={15}/>Stored bytes match</>:state==="loading"?<><LoaderCircle className="spin" size={15}/>Checking stored bytes</>:state==="mismatch"?"Hash mismatch — do not rely on this file":"Evidence file is unavailable"}</span><code title={hash}>{shortAddress(hash,12)}</code>{state==="verified"&&<span className="small muted"><Check size={11}/> SHA-256 verified in this browser</span>}</div></div>;
+export function EvidencePreview({ hash }: { hash: Hex | string }) {
+  const [state, setState] = useState<
+    "loading" | "verified" | "mismatch" | "missing"
+  >("loading");
+  const [url, setUrl] = useState<string | null>(null);
+  useEffect(() => {
+    const controller = new AbortController();
+    let objectUrl: string | null = null;
+    setState("loading");
+    setUrl(null);
+    async function verify() {
+      try {
+        const id = normalizeHash(hash);
+        const response = await fetch(`/api/evidence/${id}`, {
+          signal: controller.signal,
+        });
+        if (!response.ok) throw new Error("Unavailable");
+        const bytes = await response.arrayBuffer();
+        if (controller.signal.aborted) return;
+        const actual = await hashBytes(bytes);
+        if (actual.slice(2) !== id) {
+          setState("mismatch");
+          return;
+        }
+        objectUrl = URL.createObjectURL(
+          new Blob([bytes], {
+            type: response.headers.get("content-type") ?? "image/jpeg",
+          }),
+        );
+        setUrl(objectUrl);
+        setState("verified");
+      } catch {
+        if (!controller.signal.aborted) setState("missing");
+      }
+    }
+    void verify();
+    return () => {
+      controller.abort();
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [hash]);
+  return (
+    <div className="evidence-preview">
+      {url && (
+        <a href={url} target="_blank" rel="noreferrer">
+          <img src={url} alt="Stored evidence photograph" />
+        </a>
+      )}
+      <div>
+        <span
+          className={`verification ${state === "verified" ? "verified" : ""}`}
+        >
+          {state === "verified" ? (
+            <>
+              <ShieldCheck size={15} />
+              Stored bytes match
+            </>
+          ) : state === "loading" ? (
+            <>
+              <LoaderCircle className="spin" size={15} />
+              Checking stored bytes
+            </>
+          ) : state === "mismatch" ? (
+            "Hash mismatch — do not rely on this file"
+          ) : (
+            "Evidence file is unavailable"
+          )}
+        </span>
+        <code title={hash}>{shortAddress(hash, 12)}</code>
+        {state === "verified" && (
+          <span className="small muted">
+            <Check size={11} /> SHA-256 verified in this browser
+          </span>
+        )}
+      </div>
+    </div>
+  );
 }
