@@ -37,6 +37,31 @@ let nativeClient: NativeClient | undefined;
 let evmClient: ReturnType<typeof makeEvmClient> | undefined;
 let verified: Promise<void> | undefined;
 
+/** Bounds read-only RPC work even when the provider never settles its promise. */
+async function boundedRead<T>(
+  label: string,
+  read: (signal: AbortSignal) => Promise<T>,
+): Promise<T> {
+  const controller = new AbortController();
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      Promise.resolve().then(() => read(controller.signal)),
+      new Promise<never>((_resolve, reject) => {
+        timer = setTimeout(() => {
+          const error = new Error(
+            `${label} timed out after ${settings.timeoutMs}ms`,
+          );
+          reject(error);
+          controller.abort(error);
+        }, settings.timeoutMs);
+      }),
+    ]);
+  } finally {
+    if (timer !== undefined) clearTimeout(timer);
+  }
+}
+
 function makeEvmClient() {
   return createPublicClient({
     transport: http(settings.evmRpcUrl, {
@@ -55,6 +80,10 @@ export function configureChain(options: Partial<typeof settings>): void {
     throw new Error("Legacy mainnet is prohibited");
   if (!/^wss:\/\//.test(next.wssUrl) || !/^https:\/\//.test(next.evmRpcUrl))
     throw new Error("Secure V3 endpoints are required");
+  if (!Number.isSafeInteger(next.timeoutMs) || next.timeoutMs < 1)
+    throw new RangeError(
+      "Network timeout must be a positive integer in milliseconds",
+    );
   settings = next;
 }
 
@@ -76,45 +105,61 @@ export function disconnectChain(): void {
 
 /** Every write calls this guard; upgraded metadata remains PAPI compatibility-checked. */
 export async function verifyNetwork(): Promise<void> {
-  await (verified ??= (async () => {
-    const api = getApi();
-    const [genesis, runtime, id, ratio, nativeChainId] = await Promise.all([
-      getClient()._request<string>("chain_getBlockHash", [0]),
-      getClient()._request<{ specName: string }>("state_getRuntimeVersion", []),
-      getEvmClient()
-        .getChainId()
-        .catch(() => null),
-      api.constants.Revive.NativeToEthRatio(),
-      api.constants.Revive.ChainId(),
-    ]);
-    if (
-      genesis !== GENESIS_HASH ||
-      runtime.specName !== "portaldot-v3" ||
-      (id !== null && id !== CHAIN_ID) ||
-      nativeChainId !== BigInt(CHAIN_ID)
-    ) {
-      throw new Error(
-        "Endpoint identity differs from the verified Portaldot V3 testnet",
-      );
-    }
+  try {
+    await (verified ??= boundedRead(
+      "V3 network identity verification",
+      async (signal) => {
+        const api = getApi();
+        const [genesis, runtime, id, ratio, nativeChainId] = await Promise.all([
+          getClient()._request<string>("chain_getBlockHash", [0]),
+          getClient()._request<{ specName: string }>(
+            "state_getRuntimeVersion",
+            [],
+          ),
+          getEvmClient()
+            .getChainId()
+            .catch(() => null),
+          api.constants.Revive.NativeToEthRatio({ signal }),
+          api.constants.Revive.ChainId({ signal }),
+        ]);
+        if (
+          genesis !== GENESIS_HASH ||
+          runtime.specName !== "portaldot-v3" ||
+          (id !== null && id !== CHAIN_ID) ||
+          nativeChainId !== BigInt(CHAIN_ID)
+        ) {
+          throw new Error(
+            "Endpoint identity differs from the verified Portaldot V3 testnet",
+          );
+        }
+        if (BigInt(ratio) !== NATIVE_TO_EVM_RATIO)
+          throw new Error(
+            "Native/EVM ratio changed; refresh probe and conversion policy before writing",
+          );
+      },
+    ).catch((error: unknown) => {
+      verified = undefined;
+      throw error;
+    }));
+    // Runtime upgrades can change denomination while a process keeps its connection open.
+    const ratio = await boundedRead(
+      "Runtime denomination verification",
+      (signal) => getApi().constants.Revive.NativeToEthRatio({ signal }),
+    );
     if (BigInt(ratio) !== NATIVE_TO_EVM_RATIO)
       throw new Error(
         "Native/EVM ratio changed; refresh probe and conversion policy before writing",
       );
-  })().catch((error: unknown) => {
+  } catch (error) {
     verified = undefined;
     throw error;
-  }));
-  // Runtime upgrades can change denomination while a process keeps its connection open.
-  const ratio = await getApi().constants.Revive.NativeToEthRatio();
-  if (BigInt(ratio) !== NATIVE_TO_EVM_RATIO)
-    throw new Error(
-      "Native/EVM ratio changed; refresh probe and conversion policy before writing",
-    );
+  }
 }
 
 export async function h160Of(address: string): Promise<Address> {
-  return (await getApi().apis.ReviveApi.address(address)) as Address;
+  return (await boundedRead("Revive address lookup", (signal) =>
+    getApi().apis.ReviveApi.address(address, { signal }),
+  )) as Address;
 }
 
 export async function getAccountState(address: string) {
