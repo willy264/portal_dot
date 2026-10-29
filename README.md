@@ -2,6 +2,8 @@
 
 **Every rental funds its next repair.**
 
+[Logo kit](docs/BRAND.md) · [Progress report](docs/PROGRESS_REPORT.md)
+
 Shared workshop equipment wears out without a repair budget.
 Deposits become disputes, and operators cannot show where the money went.
 MeterMend gives each item a protected repair reserve, recorded evidence and permissionless deposit refunds.
