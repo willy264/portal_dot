@@ -53,3 +53,9 @@ DeBox ordinary-bot rate limits can be stricter than1message/second: the document
 ## Git workflow
 
 Commit and push each completed verified feature separately, as requested. Root commits only the intended files; unfinished concurrent features remain unstaged. Preserve factual deployment timestamps and real progress history.
+
+## October 29 continuation
+
+An additional 380 tPOT reached the dedicated deployer, taking its free balance to 446.48817150285716 tPOT. V3 genesis, runtime spec 3002 and runtime code hash remain unchanged. Fresh unsigned simulations still estimate 383.4735 tPOT for Cronpot and 774.5265 tPOT for MeterMend. The guarded deployment has not submitted either contract because the available balance remains below its full-plan budget.
+
+The web app is published at https://metermend.vercel.app/ with Node 22 and the monorepo project root set to `apps/web`. Anonymous home, proof and public-configuration requests succeeded. The configuration retains verified P4/P6 data and reports missing application contracts and persistent evidence storage honestly. Persistent keeper/evidence hosting and notification credentials remain separate requirements.

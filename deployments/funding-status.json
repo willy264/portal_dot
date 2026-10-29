@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "network": "portaldot-v3-testnet",
+  "mode": "read-only",
+  "signedTransactions": 0,
+  "observedOn": "2026-10-29",
+  "recordedAt": "2026-10-29T13:03:42.088Z",
+  "endpoint": "https://test-node-v3.portaldot.dev",
+  "finalized": {
+    "number": 238486,
+    "hash": "0xba5042bed6dfdd25ee849175bacb828f8e9051d3a0a71220f9e213952c8663a5"
+  },
+  "identity": {
+    "verified": true,
+    "specName": "portaldot-v3",
+    "specVersion": 3002,
+    "transactionVersion": 2,
+    "chainId": 420420777,
+    "chainIdHex": "0x190f1ca9",
+    "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+    "runtimeCodeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2"
+  },
+  "nativeDecimals": 14,
+  "accounts": {
+    "deployer": {
+      "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+      "freeNative": "44648817150285716",
+      "freeTPOT": "446.48817150285716",
+      "frozenNative": "0",
+      "reservedNative": "0",
+      "nonce": 5
+    },
+    "participant": {
+      "address": "5Dttvxy9hkPHngYPfioratFH4iru9p1Lp1nwKoJJeMzHbC22",
+      "freeNative": "51996999008190506",
+      "freeTPOT": "519.96999008190506",
+      "frozenNative": "0",
+      "reservedNative": "0",
+      "nonce": 2
+    }
+  },
+  "deploymentPlan": {
+    "pendingContracts": ["Cronpot", "MeterMend"],
+    "artifactHashesMatchBudget": true,
+    "combinedStorageDepositTPOT": "1158",
+    "storageMarginPercent": 20,
+    "retainedBalanceTPOT": "25",
+    "minimumDeployerBalanceTPOT": "1414.6",
+    "deployerShortfallTPOT": "968.11182849714284",
+    "budgetGuardPassed": false,
+    "excludedCosts": ["Transaction fees", "Project role funding", "Item and rental storage", "Demo operations"],
+    "ping": "Already deployed; its historical or fresh code-sharing estimate is excluded from the remaining application deployment budget."
+  },
+  "method": {
+    "finality": "chain_getFinalizedHead followed by chain_getHeader for the same hash",
+    "balances": "state_getStorage(System.Account key, finalized hash), SCALE AccountInfo decoded using the unchanged spec 3002 layout",
+    "runtime": "state_getRuntimeVersion(finalized hash), chain_getBlockHash(0), state_getStorageHash(:code, finalized hash)",
+    "chainId": "Separate eth_chainId read at https://test-evm-rpc-v3.portaldot.dev",
+    "timing": "Balances and runtime were read at the fixed finalized snapshot on observedOn. recordedAt is the later header verification time, not the block production timestamp."
+  }
+}
