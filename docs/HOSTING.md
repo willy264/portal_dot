@@ -14,7 +14,7 @@ Compose supplies each service only the credentials it needs. It does not put dep
 
 ## Vercel web with a persistent worker host
 
-Use the repository root as the Vercel project root. Build command: `pnpm --filter web build`; output directory: `apps/web/.next`; framework: Next.js. Configure public network endpoints and the server-only `RELAYER_URL`, `CHAIN_INDEXER_URL`, `EVIDENCE_BACKEND_URL` and `EVIDENCE_BACKEND_TOKEN`. Deploy the relayer and bot from this Dockerfile on a persistent host, overriding the command as in Compose and mounting `/data`.
+The connected Vercel project is `willy264s-projects/metermend`, with root directory `apps/web`, framework Next.js, Node 22, build command `pnpm build`, and the default `.next` output directory. Include workspace sources outside the root directory. Run Vercel CLI from the repository root so it uploads the shared packages and committed deployment records. Configure public network endpoints and the server-only `RELAYER_URL`, `CHAIN_INDEXER_URL`, `EVIDENCE_BACKEND_URL` and `EVIDENCE_BACKEND_TOKEN`. Deploy the relayer and bot from this Dockerfile on a persistent host, overriding the command as in Compose and mounting `/data`.
 
 Vercel must proxy evidence to the persistent backend. A local `/public/evidence` directory or writable serverless `/tmp` is not a durable substitute. Browser bundles receive only the public configuration allowlist; the backend token and signing seeds are never public.
 
@@ -24,4 +24,4 @@ Vercel must proxy evidence to the persistent backend. A local `/public/evidence`
 
 ## Current external requirements
 
-Public hosting still requires an authenticated hosting project or a host supplied by the project owner. Live notifications require a DeBox App Key/group or Telegram token/chat. The software reports these missing states rather than claiming delivery or public availability.
+The web app is published at https://metermend.vercel.app/ and the permanent report at https://willy264.github.io/portal_dot/. The persistent refund worker and evidence backend still require a host; local execution can support a supervised demonstration. Live notifications require a DeBox App Key/group or Telegram token/chat. The software reports these missing states rather than claiming delivery or evidence persistence.

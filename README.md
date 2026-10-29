@@ -20,7 +20,7 @@ The **runtime probe is live; application deployment is pending additional test t
 
 Chain ID **420420777** (`0x190f1ca9`), runtime **3002**. [Deployment manifest](deployments/portaldot-v3.json) · [Funded probe evidence](deployments/funded-probe.json) · [Permanent proof report](https://willy264.github.io/portal_dot/) · [V3 node console](https://node-console.portaldot.dev/?rpc=wss%3A%2F%2Ftest-node-v3.portaldot.dev).
 
-The app's `/proof` page lists addresses, transaction hashes and block evidence. Public app hosting and the **two-minute demo video are pending**. The [keeper-mode recording script](docs/DEMO_VIDEO.md) lists the required live shots. For local review, run `pnpm dev` and open `http://localhost:3000/proof`.
+The [public web app](https://metermend.vercel.app/) and its [proof page](https://metermend.vercel.app/proof) are hosted on Vercel. They distinguish the live runtime probe from the application contracts still awaiting funding. The **two-minute demo video is pending**; the [keeper-mode recording script](docs/DEMO_VIDEO.md) lists the required live shots. For local review, run `pnpm dev` and open `http://localhost:3000/proof`.
 
 ## What is implemented
 
@@ -118,7 +118,7 @@ Humans assess damage. Missing dispute votes can leave deposits unresolved; a con
 
 The testnet prunes history, so the worker must stay online or report a gap. Native evidence expires unless renewed. DeBox wallet-chain support is separate from its bot API; notifications do not imply its embedded wallet can sign V3 transactions. Notification delivery is at-least-once across ambiguous provider responses.
 
-Additional test tokens, public hosting access and bot credentials are needed for the full live golden path, public QR demonstration and video. Reserve isolation passes in Foundry; `pnpm demo` will record its live proof. No submitted BUIDL or uploaded video is claimed yet.
+Additional test tokens, a persistent worker/evidence host and bot credentials are needed for the full live golden path, public QR rental demonstration and video. The web interface and permanent report are public. Reserve isolation passes in Foundry; `pnpm demo` will record its live proof. No submitted BUIDL or uploaded video is claimed yet.
 
 ## Research archive
 
