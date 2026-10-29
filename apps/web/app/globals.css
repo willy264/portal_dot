@@ -278,6 +278,25 @@ code {
   letter-spacing: -1.3px;
   line-height: 1;
 }
+.brand-image {
+  display: block;
+  width: 180px;
+  height: auto;
+}
+.brand-image-reversed {
+  display: none;
+}
+:root[data-theme="dark"] .brand-image {
+  display: none;
+}
+:root[data-theme="dark"] .brand-image-reversed {
+  display: block;
+}
+@media (max-width: 650px) {
+  .brand-image {
+    width: 152px;
+  }
+}
 .brand-light {
   font-weight: 400;
 }

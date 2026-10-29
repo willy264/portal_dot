@@ -23,15 +23,20 @@ import { amount, shortAddress } from "@/lib/format";
 export function Logo() {
   return (
     <Link href="/" className="brand" aria-label="MeterMend home">
-      <span className="brand-icon" aria-hidden="true">
-        <i />
-        <i />
-        <i />
-      </span>
-      <span>
-        meter<span className="brand-light">mend</span>
-        <sup>↗</sup>
-      </span>
+      <img
+        className="brand-image"
+        src="/brand/logo.svg"
+        width="787"
+        height="200"
+        alt="MeterMend"
+      />
+      <img
+        className="brand-image brand-image-reversed"
+        src="/brand/logo-reversed.svg"
+        width="787"
+        height="200"
+        alt="MeterMend"
+      />
     </Link>
   );
 }

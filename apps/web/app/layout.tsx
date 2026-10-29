@@ -9,6 +9,16 @@ export const metadata: Metadata = {
   },
   description:
     "A workshop ledger for shared equipment. Every rental builds an item’s repair reserve; deposits and human-approved repairs follow clear rules on Portaldot.",
+  icons: {
+    icon: [{ url: "/brand/favicon.svg", type: "image/svg+xml" }],
+    apple: [
+      {
+        url: "/brand/apple-touch-icon.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
+  },
 };
 export default function RootLayout({
   children,

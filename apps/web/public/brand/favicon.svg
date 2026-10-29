@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+<title id="title">MeterMend</title><desc id="desc">MeterMend app icon on an ink-black field.</desc>
+<rect width="256" height="256" rx="56" fill="#20251E"/><g fill="#FF6A13">
+  <path d="M208 104V168C208 190.091 190.091 208 168 208H88C65.909 208 48 190.091 48 168V88C48 65.909 65.909 48 88 48H166" fill="none" stroke="#FF6A13" stroke-width="18" stroke-linecap="round"/>
+  <path d="M162 28L190 48L162 68Z"/>
+  <rect x="83" y="136" width="22" height="36" rx="3"/>
+  <rect x="116" y="112" width="22" height="60" rx="3"/>
+  <rect x="149" y="88" width="22" height="84" rx="3"/>
+</g>
+</svg>
