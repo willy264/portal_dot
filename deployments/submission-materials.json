@@ -1,0 +1,58 @@
+{
+  "observedAt": "2026-10-31T15:02:33.214Z",
+  "status": "materials-prepared-live-demo-and-publication-pending",
+  "summary": "Ten-slide pitch deck exported and browser-checked. Cronpot is finalized; MeterMend deployment and the complete live application demo remain pending.",
+  "deadline": {
+    "internal": "2026-11-05T22:00:00+01:00",
+    "official": "2026-11-06T05:00:00+01:00",
+    "timezone": "Africa/Lagos"
+  },
+  "deck": {
+    "status": "generated",
+    "path": "apps/web/public/metermend-pitch.pdf",
+    "publicUrl": "https://metermend.vercel.app/metermend-pitch.pdf",
+    "publicLinkVerified": false,
+    "source": "docs/pitch/index.html",
+    "sha256": "d55ad2215c62aee91c714c1e99c508fa256656782dac30b3a1b721a9525ea375",
+    "bytes": 180940,
+    "slides": 10,
+    "layout": "16:9",
+    "exportedWith": "Chromium Page.printToPDF; CSS page size 1600px \u00c3\u2014 900px; vector text and SVG",
+    "validation": {
+      "overflowChecks": "passed",
+      "browserExceptions": 0,
+      "screenshots": "docs/pitch/previews/",
+      "visualReview": "passed",
+      "footerClearance": "passed",
+      "pdfPageCount": 10,
+      "pdfLinkAnnotations": 8,
+      "selectableText": true,
+      "reviewedAt": "2026-10-31T15:04:49.591720+00:00",
+      "pdfContactSheet": "docs/pitch/previews/pdf-contact-sheet.png",
+      "reviewNotes": "All ten pages were reviewed initially; updated Cronpot/MeterMend proof slide was visually checked after this export. No overflow or footer overlap."
+    }
+  },
+  "submission": {
+    "path": "docs/SUBMISSION.md",
+    "status": "draft-awaiting-live-evidence-and-links",
+    "sha256": "cf57fe8675d6e1a85abb685cbe8a4442aa8aabd4e07dd1ad72cd560ba88aba54"
+  },
+  "video": {
+    "status": "not-recorded",
+    "publicUrl": null
+  },
+  "caveats": [
+    "The proposed business model is not implemented platform-fee collection.",
+    "Test counts are engineering evidence, not live application settlement.",
+    "Public deck URL is the intended location; verify it after publishing before claiming availability."
+  ],
+  "phoneRehearsalPreparation": {
+    "status": "runbook-and-generator-ready-live-phone-run-pending",
+    "runbook": "docs/PHONE_REHEARSAL.md",
+    "generator": "scripts/print-qr.ts",
+    "labelEvidence": "deployments/qr-labels.json",
+    "validation": "3 QR evidence/ID regression tests and scripts typecheck passed",
+    "labelsRequire": "Finalized MeterMend deployment and matching ItemRegistered receipts in seed.json",
+    "actualPhoneRunRecorded": false
+  }
+}

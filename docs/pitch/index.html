@@ -1,0 +1,888 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MeterMend — Every rental funds its next repair</title>
+    <style>
+      :root {
+        --paper: #f8f7f2;
+        --ink: #20251e;
+        --orange: #ff6a13;
+        --muted: #697164;
+        --line: #dce0d5;
+        --green: #47684b;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #d9dcd3;
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .slide {
+        width: 1600px;
+        height: 900px;
+        padding: 62px 78px 78px;
+        position: relative;
+        background: var(--paper);
+        page-break-after: always;
+        break-after: page;
+      }
+      .slide:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+      .dark {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      .orange {
+        background: var(--orange);
+      }
+      .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 46px;
+      }
+      .wordmark {
+        width: 255px;
+        height: 70px;
+        object-fit: contain;
+        object-position: left center;
+      }
+      .eyebrow,
+      .tag,
+      .foot {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-size: 16px;
+      }
+      .eyebrow {
+        color: var(--muted);
+      }
+      .dark .eyebrow {
+        color: #b7c4b1;
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+      h1 {
+        font-size: 96px;
+        line-height: 1.04;
+        letter-spacing: -5px;
+        max-width: 1100px;
+      }
+      h2 {
+        font-size: 64px;
+        line-height: 1.07;
+        letter-spacing: -2.6px;
+        max-width: 1370px;
+      }
+      h3 {
+        font-size: 32px;
+        line-height: 1.13;
+        letter-spacing: -0.7px;
+      }
+      p {
+        font-size: 25px;
+        line-height: 1.43;
+      }
+      .intro {
+        color: var(--muted);
+        margin-top: 24px;
+        max-width: 1240px;
+        font-size: 27px;
+      }
+      .dark .intro,
+      .dark .muted {
+        color: #bbc7b6;
+      }
+      .accent {
+        color: var(--orange);
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .small {
+        font-size: 19px;
+        line-height: 1.45;
+      }
+      .tiny {
+        font-size: 16px;
+        line-height: 1.45;
+      }
+      .mono {
+        font-family: Consolas, "Courier New", monospace;
+        letter-spacing: -0.4px;
+      }
+      .tag {
+        display: inline-block;
+        border: 1px solid currentColor;
+        padding: 11px 16px;
+        border-radius: 100px;
+        letter-spacing: 1px;
+        font-size: 14px;
+      }
+      .foot {
+        position: absolute;
+        bottom: 30px;
+        left: 78px;
+        right: 78px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 13px;
+        letter-spacing: 1.2px;
+      }
+      .dark .foot {
+        color: #a6b29f;
+      }
+      .orange .foot,
+      .orange .eyebrow {
+        color: var(--ink);
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px solid currentColor;
+      }
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+      }
+      .grid3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 28px;
+      }
+      .grid4 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 24px;
+      }
+      .card {
+        padding: 32px;
+        border: 1px solid var(--line);
+        background: white;
+        border-radius: 18px;
+      }
+      .dark .card {
+        background: #2c3329;
+        border-color: #45503f;
+      }
+      .card p {
+        margin-top: 20px;
+      }
+      .number {
+        font-size: 84px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -5px;
+      }
+      .rule {
+        height: 1px;
+        background: var(--line);
+        margin: 28px 0;
+      }
+      .callout {
+        padding: 24px 28px;
+        border-left: 6px solid var(--orange);
+        background: #efeee6;
+      }
+      .dark .callout {
+        background: #323a2e;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 30px;
+      }
+      .label {
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1.6px;
+        font-weight: 700;
+      }
+      .pill {
+        display: inline-block;
+        color: var(--green);
+        background: #e7efdf;
+        margin-top: 9px;
+        padding: 6px 12px;
+        font-size: 15px;
+        line-height: 1.2;
+        border-radius: 40px;
+        font-weight: bold;
+      }
+      .pending {
+        color: #8b4719;
+        background: #ffeddd;
+      }
+      .stage {
+        padding: 26px 28px;
+        border-top: 4px solid var(--orange);
+        background: white;
+        min-height: 194px;
+      }
+      .stage .label {
+        margin-bottom: 15px;
+        color: var(--muted);
+      }
+      .stage p {
+        margin-top: 12px;
+        font-size: 21px;
+      }
+      .table {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        overflow: hidden;
+        margin-top: 32px;
+      }
+      .table-row {
+        display: grid;
+        grid-template-columns: 235px 1fr 190px;
+        align-items: center;
+        gap: 24px;
+        padding: 18px 26px;
+        border-bottom: 1px solid var(--line);
+      }
+      .table-row:last-child {
+        border-bottom: 0;
+      }
+      .table-row p {
+        font-size: 21px;
+      }
+      .table-row .mono {
+        font-size: 18px;
+        overflow-wrap: anywhere;
+      }
+      .hero-mark {
+        width: 410px;
+        position: absolute;
+        right: 90px;
+        top: 245px;
+        opacity: 0.95;
+      }
+      .repair-line {
+        height: 14px;
+        background: #dce0d5;
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 26px 0 13px;
+      }
+      .repair-line span {
+        display: block;
+        background: var(--orange);
+        height: 100%;
+      }
+      .chip {
+        display: inline-block;
+        padding: 9px 13px;
+        background: #eeeee6;
+        border-radius: 5px;
+        font-size: 17px;
+        margin-right: 8px;
+      }
+      .dark .chip {
+        background: #394232;
+      }
+      #slide-5 .card {
+        padding: 24px;
+      }
+      #slide-5 .card h3 {
+        font-size: 30px;
+      }
+      #slide-5 .card p {
+        font-size: 23px;
+        line-height: 1.38;
+        margin-top: 16px;
+      }
+      @page {
+        size: 1600px 900px;
+        margin: 0;
+      }
+      @media print {
+        html,
+        body {
+          background: var(--paper);
+        }
+        * {
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="slide dark" id="slide-1">
+      <div class="top">
+        <img
+          class="wordmark"
+          src="../../apps/web/public/brand/logo-reversed.svg"
+          alt="MeterMend"
+        /><span class="eyebrow"
+          >Portaldot Hacker House 2026 · Ecosystem DApps</span
+        >
+      </div>
+      <div
+        style="
+          margin-top: 60px;
+          position: relative;
+          z-index: 1;
+          max-width: 1020px;
+        "
+      >
+        <span class="tag" style="color: #bbc7b6; margin-bottom: 28px"
+          >Shared equipment. Protected repair reserves.</span
+        >
+        <h1>
+          Every rental<br />funds its<br /><span class="accent"
+            >next repair.</span
+          >
+        </h1>
+        <p class="intro" style="max-width: 850px; margin-top: 34px">
+          A workshop ledger that separates rental income, refundable deposits,
+          and the money that keeps each item working.
+        </p>
+      </div>
+      <img
+        class="hero-mark"
+        src="../../apps/web/public/brand/mark.svg"
+        alt="Repair loop and growing reserve bars"
+      />
+      <div class="foot">
+        <span
+          >31 October 2026 · Cronpot finalized; application demo pending</span
+        ><span>01 / 10</span>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-2">
+      <div class="top">
+        <span class="eyebrow">01 / The problem</span
+        ><span class="tag">Makerspaces · Campus hubs · Tool libraries</span>
+      </div>
+      <h2>The tool is shared.<br />The repair budget usually isn’t.</h2>
+      <p class="intro">
+        Repeated use creates wear. The workshop needs a clear answer to three
+        practical questions.
+      </p>
+      <div class="grid3" style="margin-top: 44px">
+        <div class="card">
+          <span class="number accent">01</span>
+          <h3 style="margin-top: 26px">Who pays for<br />the next repair?</h3>
+          <p>
+            Rental revenue can be spent before a tool breaks. Maintenance needs
+            its own protected balance.
+          </p>
+        </div>
+        <div class="card">
+          <span class="number accent">02</span>
+          <h3 style="margin-top: 26px">What happened<br />to the deposit?</h3>
+          <p>
+            Damage claims need recorded evidence, clear approval rules, and a
+            visible refund deadline.
+          </p>
+        </div>
+        <div class="card">
+          <span class="number accent">03</span>
+          <h3 style="margin-top: 26px">Can members<br />check the record?</h3>
+          <p>
+            Operators need a history that connects payments, returns, decisions,
+            and repairs to an item.
+          </p>
+        </div>
+      </div>
+      <div class="foot">
+        <span
+          >Design premise · Pilot interviews and demand validation remain
+          ahead</span
+        ><span>02 / 10</span>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-3">
+      <div class="top">
+        <span class="eyebrow">02 / How MeterMend works</span
+        ><span class="tag">One item. One continuing repair reserve.</span>
+      </div>
+      <h2>Scan. Rent. Return.<br />Keep the equipment in use.</h2>
+      <div class="grid3" style="margin-top: 38px; gap: 20px">
+        <div class="stage">
+          <div class="label">01 / Register</div>
+          <h3>Give each tool a QR</h3>
+          <p>Set its fee, deposit, reserve share, and distinct arbiter.</p>
+        </div>
+        <div class="stage">
+          <div class="label">02 / Rent</div>
+          <h3>Fund the next repair</h3>
+          <p>The fee splits into operator income and this item’s reserve.</p>
+        </div>
+        <div class="stage">
+          <div class="label">03 / Return</div>
+          <h3>Record the evidence</h3>
+          <p>A photo commitment starts the dispute window and Cronpot job.</p>
+        </div>
+        <div class="stage">
+          <div class="label">04 / Refund</div>
+          <h3>Close the deposit</h3>
+          <p>
+            The keeper executes the due job; contract rules enforce eligibility.
+          </p>
+        </div>
+        <div class="stage">
+          <div class="label">05 / Resolve</div>
+          <h3>Review a damage claim</h3>
+          <p>The operator’s proposal needs renter or arbiter approval.</p>
+        </div>
+        <div class="stage">
+          <div class="label">06 / Repair</div>
+          <h3>Pay from the reserve</h3>
+          <p>An arbiter-approved repair spends the item’s own repair funds.</p>
+        </div>
+      </div>
+      <div class="foot">
+        <span>Implemented flow · Full live rehearsal pending</span
+        ><span>03 / 10</span>
+      </div>
+    </section>
+
+    <section class="slide dark" id="slide-4">
+      <div class="top">
+        <span class="eyebrow">03 / The accounting promise</span
+        ><span class="tag" style="color: #bbc7b6"
+          >Three balances. Different permissions.</span
+        >
+      </div>
+      <h2>
+        A deposit is not income.<br />A repair reserve stays with its item.
+      </h2>
+      <div class="grid3" style="margin-top: 42px">
+        <div class="card">
+          <div class="label muted">Operator income</div>
+          <div class="number" style="margin-top: 28px">80%</div>
+          <p>
+            Of the rental fee in the demo configuration. Withdrawable by the
+            operator.
+          </p>
+          <div class="repair-line">
+            <span style="width: 80%; background: #b8c8aa"></span>
+          </div>
+        </div>
+        <div class="card" style="border-color: var(--orange)">
+          <div class="label accent">Item repair reserve</div>
+          <div class="number accent" style="margin-top: 28px">20%</div>
+          <p>
+            Of the rental fee in the demo configuration. Spent only on approved
+            repairs.
+          </p>
+          <div class="repair-line"><span style="width: 20%"></span></div>
+        </div>
+        <div class="card">
+          <div class="label muted">Refundable deposit</div>
+          <div
+            style="
+              font-size: 58px;
+              font-weight: bold;
+              margin-top: 28px;
+              line-height: 1.2;
+            "
+          >
+            Separate
+          </div>
+          <p>
+            Held as a rental liability. Returned in full or reduced by an
+            approved claim.
+          </p>
+          <div class="repair-line">
+            <span style="width: 100%; background: #879480"></span>
+          </div>
+        </div>
+      </div>
+      <p class="small muted" style="margin-top: 28px">
+        Illustrative split, not a completed live payment. Human assessment still
+        determines damage; unresolved votes can delay settlement.
+      </p>
+      <div class="foot">
+        <span
+          >Reserve isolation is covered by contract tests · Live withdrawal
+          proof pending</span
+        ><span>04 / 10</span>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-5">
+      <div class="top">
+        <span class="eyebrow">04 / Why Portaldot is essential</span
+        ><span class="tag">Runtime primitives, with measured behavior</span>
+      </div>
+      <h2>Solidity rules.<br />Native accounts and evidence.</h2>
+      <div class="grid2" style="margin-top: 38px; gap: 22px">
+        <div class="card">
+          <span class="label accent">pallet-revive + Substrate signing</span>
+          <h3 style="margin-top: 15px">Use community wallets</h3>
+          <p>
+            Substrate-signed Revive calls run Solidity accounting and
+            permissions. V3 funding automatically maps native accounts to H160.
+          </p>
+        </div>
+        <div class="card">
+          <span class="label accent">14 native / 18 EVM decimals</span>
+          <h3 style="margin-top: 15px">Keep value exact</h3>
+          <p>
+            The funded P4 probe measured a 10,000 conversion factor. Integer
+            conversions reject fractional native-unit dust.
+          </p>
+        </div>
+        <div class="card">
+          <span class="label accent">TransactionStorage</span>
+          <h3 style="margin-top: 15px">Commit the final photo bytes</h3>
+          <p>
+            A signed 1 KiB store succeeded in P6. SHA-256 checks the displayed
+            bytes; a persistent backup outlives native retention.
+          </p>
+        </div>
+        <div class="card">
+          <span class="label accent">Cronpot + finalized native events</span>
+          <h3 style="margin-top: 15px">Reusable timed execution</h3>
+          <p>
+            MeterMend integrates a generic timed-call registry that other
+            contracts can reuse. SQLite retains finalized history beyond node
+            pruning.
+          </p>
+        </div>
+      </div>
+      <div class="foot">
+        <span>Chain 420420777 · Runtime 3002 · Verified V3 genesis</span
+        ><span>05 / 10</span>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-6">
+      <div class="top">
+        <span class="eyebrow">05 / Honest automation</span
+        ><span class="tag">Keeper mode selected on V3</span>
+      </div>
+      <h2>Automatic execution.<br />Contract-enforced refund authority.</h2>
+      <p class="intro" style="max-width: 1370px; color: var(--ink)">
+        “refunds execute automatically via Cronpot; execution is permissionless
+        and our keeper runs it.”
+      </p>
+      <div class="grid4" style="margin-top: 38px">
+        <div class="stage">
+          <div class="label">01</div>
+          <h3>Return</h3>
+          <p>MeterMend records the deadline and schedules a Cronpot job.</p>
+        </div>
+        <div class="stage">
+          <div class="label">02</div>
+          <h3>Wait</h3>
+          <p>The configured keeper observes finalized chain time.</p>
+        </div>
+        <div class="stage">
+          <div class="label">03</div>
+          <h3>Execute</h3>
+          <p>Any eligible caller can execute the due Cronpot job.</p>
+        </div>
+        <div class="stage">
+          <div class="label">04</div>
+          <h3>Refund</h3>
+          <p>
+            MeterMend checks status and deadline before releasing a deposit.
+          </p>
+        </div>
+      </div>
+      <div class="callout" style="margin-top: 30px">
+        <p class="small">
+          <strong>What the funded probe found:</strong> the native Scheduler
+          rejected our signed origin with
+          <span class="mono">BadOrigin</span> (P5, block 213576). It is not the
+          refund executor in this deployment. Cronpot supplies liveness; the
+          contract retains authority.
+        </p>
+      </div>
+      <div class="foot">
+        <span
+          >Keeper timing: 120-second demo window + 30-second grace +
+          finality</span
+        ><span>06 / 10</span>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-7">
+      <div class="top">
+        <span class="eyebrow">06 / What actually ran live</span
+        ><a class="tag" href="https://metermend.vercel.app/proof"
+          >metermend.vercel.app/proof ↗</a
+        >
+      </div>
+      <h2>Real runtime receipts.<br />Cronpot finalized. Demo pending.</h2>
+      <div class="table">
+        <div class="table-row">
+          <div>
+            <strong>Ping contract</strong><br /><span class="pill"
+              >Finalized · 213570</span
+            >
+          </div>
+          <div>
+            <p class="mono">0x96ee88d272550530b518cbaa15a80cf5d38cdcfd</p>
+            <p class="small muted">
+              Runtime deployment and signed value movement verified
+            </p>
+          </div>
+          <a
+            class="mono"
+            href="https://github.com/willy264/portal_dot/blob/main/deployments/portaldot-v3.json"
+            >tx 0x5003af97…24a011c ↗</a
+          >
+        </div>
+        <div class="table-row">
+          <div>
+            <strong>P4 / P6 probes</strong><br /><span class="pill"
+              >Finalized</span
+            >
+          </div>
+          <div>
+            <p>Exact 14/18 value movement; signed 1 KiB native store</p>
+            <p class="small muted">
+              Blocks 213573 and 213579 · Full receipts retained
+            </p>
+          </div>
+          <a
+            class="small"
+            href="https://github.com/willy264/portal_dot/blob/main/deployments/funded-probe.json"
+            >Funded evidence ↗</a
+          >
+        </div>
+        <div class="table-row">
+          <div>
+            <strong>Cronpot</strong><br /><span class="pill"
+              >Finalized · 265131</span
+            >
+          </div>
+          <div>
+            <p class="mono">0x41635a685448cfa86da1600656f103a211e398f4</p>
+            <p class="small muted">
+              Original deployment transaction finalized after the node resumed.
+            </p>
+          </div>
+          <a
+            class="mono"
+            href="https://github.com/willy264/portal_dot/blob/main/deployments/deploy-journal.json"
+            >tx 0xd60b3e13…1a0df93 ↗</a
+          >
+        </div>
+        <div class="table-row">
+          <div>
+            <strong>MeterMend + demo</strong><br /><span class="pill pending"
+              >Awaiting finality</span
+            >
+          </div>
+          <div>
+            <p class="mono">
+              0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782
+            </p>
+            <p class="small muted">
+              MeterMend broadcast; live rental, refund, dispute and repair proof
+              pending.
+            </p>
+          </div>
+          <a class="small" href="https://willy264.github.io/portal_dot/"
+            >Permanent report ↗</a
+          >
+        </div>
+      </div>
+      <div class="foot">
+        <span
+          >Snapshot: 31 October 2026 · No simulated or queued result is claimed
+          as settlement</span
+        ><span>07 / 10</span>
+      </div>
+    </section>
+
+    <section class="slide dark" id="slide-8">
+      <div class="top">
+        <span class="eyebrow">07 / Engineering evidence</span
+        ><a class="tag" href="https://github.com/willy264/portal_dot"
+          >Open source · MIT ↗</a
+        >
+      </div>
+      <h2>Built to preserve the record<br />when a connection fails.</h2>
+      <div class="grid3" style="margin-top: 42px">
+        <div class="card">
+          <div class="number accent">43</div>
+          <h3 style="margin-top: 24px">Contract tests</h3>
+          <p>
+            Accounting, reserve isolation, dispute votes, callback failures, and
+            fuzzed fee splits.
+          </p>
+          <p class="tiny muted">
+            Unchanged Foundry suite; previously passed in CI.
+          </p>
+        </div>
+        <div class="card">
+          <div class="number accent">137</div>
+          <h3 style="margin-top: 24px">TypeScript tests</h3>
+          <p>
+            Chain handling, durable services, transaction recovery, web flows,
+            and deployment scripts.
+          </p>
+          <p class="tiny muted">Local package and script checks passed.</p>
+        </div>
+        <div class="card">
+          <div class="number accent">29</div>
+          <h3 style="margin-top: 24px">Browser checks</h3>
+          <p>
+            Desktop/mobile layout, wallet states, photo integrity, and recovery
+            after reload.
+          </p>
+          <p class="tiny muted">
+            Synthetic recovery fixtures; no payment was submitted.
+          </p>
+        </div>
+      </div>
+      <div style="margin-top: 30px">
+        <span class="chip">Durable transaction hashes</span
+        ><span class="chip">Account locks across tabs</span
+        ><span class="chip">Offline retained history</span
+        ><span class="chip">Production build passes</span>
+      </div>
+      <div class="foot">
+        <span
+          >Tests support the implementation; they do not replace the pending
+          live golden path</span
+        ><span>08 / 10</span>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-9">
+      <div class="top">
+        <span class="eyebrow">08 / Business model</span
+        ><span class="tag">Proposed model · Pilot validation ahead</span>
+      </div>
+      <h2>Earn when shared equipment<br />is used and maintained.</h2>
+      <div
+        class="grid2"
+        style="margin-top: 42px; grid-template-columns: 1.05fr 0.95fr"
+      >
+        <div
+          class="card"
+          style="background: var(--orange); border-color: var(--orange)"
+        >
+          <span class="label">Proposed revenue</span>
+          <h3 style="font-size: 48px; margin-top: 28px">
+            A small service fee<br />per completed rental.
+          </h3>
+          <p style="margin-top: 26px">
+            Price for the workshop’s operating budget. Keep refundable deposits
+            and protected repair money separate.
+          </p>
+          <p class="small" style="margin-top: 30px">
+            The current testnet contract does not collect a MeterMend platform
+            fee. Pricing and collection are future product work.
+          </p>
+        </div>
+        <div style="display: grid; gap: 18px">
+          <div class="card" style="padding: 25px 30px">
+            <h3>Makerspaces</h3>
+            <p class="small">
+              Shared tools, membership communities, and repair accountability.
+            </p>
+          </div>
+          <div class="card" style="padding: 25px 30px">
+            <h3>Campus hubs</h3>
+            <p class="small">
+              Student equipment, shared media kits, and transparent handovers.
+            </p>
+          </div>
+          <div class="card" style="padding: 25px 30px">
+            <h3>Tool libraries</h3>
+            <p class="small">
+              Repeated lending with a visible item-by-item maintenance history.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="foot">
+        <span
+          >Validate willingness to pay, repeat rental use, and repair coverage
+          in pilots</span
+        ><span>09 / 10</span>
+      </div>
+    </section>
+
+    <section class="slide orange" id="slide-10">
+      <div class="top">
+        <img
+          class="wordmark"
+          src="../../apps/web/public/brand/logo-mono.svg"
+          alt="MeterMend"
+        /><span class="eyebrow">09 / Roadmap + continued support</span>
+      </div>
+      <h2 style="font-size: 75px; max-width: 1350px">
+        Make the next repair<br />part of every rental.
+      </h2>
+      <div class="grid3" style="margin-top: 40px; gap: 20px">
+        <div class="card" style="background: #fff8ed; border-color: #fff8ed">
+          <span class="label">Now / Submission</span>
+          <h3 style="margin-top: 16px">Finish the live proof</h3>
+          <p class="small">
+            Confirm deployment, run the golden path, activate persistent
+            services, deliver Telegram updates, and record the actual demo.
+          </p>
+        </div>
+        <div class="card" style="background: #fff8ed; border-color: #fff8ed">
+          <span class="label">Next / Pilot</span>
+          <h3 style="margin-top: 16px">Learn in workshops</h3>
+          <p class="small">
+            Test onboarding, dispute handling, reserve adequacy, evidence
+            retention, and willingness to pay with real operators.
+          </p>
+        </div>
+        <div class="card" style="background: #fff8ed; border-color: #fff8ed">
+          <span class="label">Then / Ecosystem</span>
+          <h3 style="margin-top: 16px">Reuse Cronpot</h3>
+          <p class="small">
+            Document timed-call integration, improve keeper operations, and
+            pursue DeBox as the target community integration.
+          </p>
+        </div>
+      </div>
+      <p style="margin-top: 30px; font-size: 25px">
+        <strong>Support needed:</strong> reliable testnet access, a persistent
+        operations host, and pilot workshop partners.
+      </p>
+      <div class="row" style="margin-top: 24px">
+        <a
+          style="font-size: 23px; font-weight: bold"
+          href="https://metermend.vercel.app/"
+          >metermend.vercel.app ↗</a
+        ><a
+          style="font-size: 23px; font-weight: bold"
+          href="https://github.com/willy264/portal_dot"
+          >github.com/willy264/portal_dot ↗</a
+        >
+      </div>
+      <div class="foot">
+        <span
+          >Internal submission target: 5 November 2026, 22:00 WAT · Video and
+          final BUIDL pending</span
+        ><span>10 / 10</span>
+      </div>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "observedAt": "2026-10-31T14:59:56.314Z",
+  "status": "blocked-awaiting-finalized-deployment-and-seeding",
+  "reason": "Finalized deployment and deployments/seed.json are required; no labels were generated.",
+  "artifact": null,
+  "phoneRehearsal": "not-yet-recorded"
+}
