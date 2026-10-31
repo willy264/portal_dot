@@ -22,6 +22,7 @@ import { Store, Scanner, json } from "@metermend/service-core";
 import { JobEngine } from "./engine.js";
 import { SubstrateSource } from "./source.js";
 import { evidenceRoutes } from "./evidence.js";
+import { eventRoutes } from "./events.js";
 
 const root = fileURLToPath(new URL("../../../", import.meta.url));
 loadEnv({ path: root + ".env", quiet: true });
@@ -191,44 +192,13 @@ app.get("/jobs", (c) =>
     { "Content-Type": "application/json" },
   ),
 );
-app.get("/events", async (c) => {
-  const cursor = store.cursor("chain") ?? null;
-  const supplied = c.req.query("fromBlock");
-  const from =
-    supplied === undefined
-      ? startBlock
-      : Math.max(startBlock, Number(supplied));
-  if (!Number.isSafeInteger(from) || from < 0)
-    return c.json(
-      { error: "Indexer deployment is not configured or fromBlock is invalid" },
-      503,
-    );
-  const through = cursor
-    ? supplied === undefined
-      ? cursor.block
-      : Math.min(cursor.block, from + 49)
-    : from - 1;
-  const events = through >= from ? store.eventRange(from, through) : [];
-  const throughHash =
-    through === cursor?.block
-      ? cursor.hash
-      : through >= from
-        ? await getApi().query.System.BlockHash.getValue(through)
-        : "";
-  return c.body(
-    json({
-      events,
-      cursor,
-      gap: scanner?.gap ?? lastError,
-      startBlock,
-      throughBlock: through,
-      throughHash,
-      automaticRefundCount: engine?.automaticRefundCount() ?? null,
-    }),
-    200,
-    { "Content-Type": "application/json" },
-  );
-});
+app.route(
+  "/events",
+  eventRoutes(store, startBlock, () => ({
+    gap: scanner?.gap ?? lastError,
+    automaticRefundCount: engine?.automaticRefundCount() ?? null,
+  })),
+);
 app.route(
   "/api/evidence",
   evidenceRoutes(

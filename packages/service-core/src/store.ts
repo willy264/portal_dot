@@ -43,6 +43,7 @@ export class Store {
     this.db = new DatabaseSync(path);
     this.db.exec(`PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;
       CREATE TABLE IF NOT EXISTS cursors(name TEXT PRIMARY KEY, block INTEGER NOT NULL, hash TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS finalized_blocks(block INTEGER PRIMARY KEY, hash TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS events(id TEXT PRIMARY KEY, block INTEGER NOT NULL, payload TEXT NOT NULL);
       CREATE INDEX IF NOT EXISTS events_block ON events(block);
       CREATE TABLE IF NOT EXISTS jobs(id TEXT PRIMARY KEY, payload TEXT NOT NULL);
@@ -55,6 +56,17 @@ export class Store {
     this.db.exec(
       "CREATE TABLE IF NOT EXISTS delivery_attempts(at INTEGER NOT NULL)",
     );
+    // Preserve a legacy cursor's evidence before the first new block advances it.
+    const retainBlock = this.db.prepare(
+      "INSERT OR IGNORE INTO finalized_blocks(block,hash) VALUES(?,?)",
+    );
+    for (const row of this.db
+      .prepare("SELECT DISTINCT block FROM cursors")
+      .all()) {
+      const block = Number(row.block);
+      const hash = this.blockHash(block);
+      if (hash) retainBlock.run(block, hash);
+    }
   }
   close(): void {
     this.db.close();
@@ -82,6 +94,28 @@ export class Store {
       .prepare("SELECT block,hash FROM cursors WHERE name=?")
       .get(name) as { block: number; hash: string } | undefined;
   }
+  /** Resolve only retained evidence, including records from databases predating block storage. */
+  blockHash(block: number): string | undefined {
+    const hashes = this.db
+      .prepare(
+        `SELECT hash FROM finalized_blocks WHERE block=?
+         UNION SELECT hash FROM cursors WHERE block=?
+         UNION SELECT json_extract(payload,'$.blockHash') AS hash FROM events WHERE block=?`,
+      )
+      .all(block, block, block)
+      .map((row) => row.hash);
+    if (hashes.length === 0) return undefined;
+    if (
+      hashes.length !== 1 ||
+      typeof hashes[0] !== "string" ||
+      !hashes[0] ||
+      /^0x0+$/i.test(hashes[0])
+    )
+      throw new Error(
+        `Retained block ${block} has conflicting or invalid hashes`,
+      );
+    return hashes[0];
+  }
   /** Commit a whole finalized block and its cursor atomically. */
   saveBlock(
     name: string,
@@ -91,11 +125,25 @@ export class Store {
   ): void {
     this.db.exec("BEGIN IMMEDIATE");
     try {
+      if (!hash || /^0x0+$/i.test(hash))
+        throw new Error(`Finalized block ${block} needs a real hash`);
+      const retained = this.blockHash(block);
+      if (retained && retained !== hash)
+        throw new Error(
+          `Finalized block ${block} conflicts with retained evidence`,
+        );
+      this.db
+        .prepare(
+          "INSERT OR IGNORE INTO finalized_blocks(block,hash) VALUES(?,?)",
+        )
+        .run(block, hash);
       const insert = this.db.prepare(
         "INSERT OR IGNORE INTO events(id,block,payload) VALUES(?,?,?)",
       );
       for (const event of events)
         insert.run(event.id, event.block, json(event));
+      if (this.blockHash(block) !== hash)
+        throw new Error(`Finalized block ${block} conflicts with its events`);
       this.db
         .prepare(
           "INSERT INTO cursors(name,block,hash) VALUES(?,?,?) ON CONFLICT(name) DO UPDATE SET block=excluded.block,hash=excluded.hash",

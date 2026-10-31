@@ -23,11 +23,17 @@ describe("durable ingestion and delivery", () => {
     };
     let store = new Store(path);
     store.saveBlock("meter", 42, "0x3", [event]);
+    store.saveBlock("meter", 43, "empty-block-hash", []);
     store.enqueue(event.id, { message: "rented" });
     store.sent(event.id, 100);
     store.close();
     store = new Store(path);
-    expect(store.cursor("meter")).toEqual({ block: 42, hash: "0x3" });
+    expect(store.cursor("meter")).toEqual({
+      block: 43,
+      hash: "empty-block-hash",
+    });
+    expect(store.blockHash(42)).toBe("0x3");
+    expect(store.blockHash(43)).toBe("empty-block-hash");
     store.saveBlock("meter", 42, "0x3", [event]);
     expect(store.events()).toHaveLength(1);
     expect(store.events()[0]?.args.fee).toBe("100");
@@ -42,5 +48,45 @@ describe("durable ingestion and delivery", () => {
     )
       throw new Error("Unexpected temporary directory");
     rmSync(directory, { recursive: true, force: true });
+  });
+  it("rolls back block hashes, events and cursor together after an event cannot be saved", () => {
+    const store = new Store(":memory:");
+    try {
+      store.saveBlock("chain", 40, "hash40", []);
+      const args: Record<string, unknown> = {};
+      args.circular = args;
+      expect(() =>
+        store.saveBlock("chain", 41, "hash41", [
+          {
+            id: "bad-event",
+            block: 41,
+            blockHash: "hash41",
+            args,
+          } as ChainEvent,
+        ]),
+      ).toThrow();
+      expect(store.blockHash(41)).toBeUndefined();
+      expect(store.events()).toHaveLength(0);
+      expect(store.cursor("chain")).toEqual({ block: 40, hash: "hash40" });
+    } finally {
+      store.close();
+    }
+  });
+  it("preserves original finalized evidence when replay supplies a conflicting hash", () => {
+    const store = new Store(":memory:");
+    try {
+      store.saveBlock("chain", 40, "hash40", []);
+      expect(() => store.saveBlock("chain", 40, "different-hash", [])).toThrow(
+        "conflicts with retained evidence",
+      );
+      expect(store.blockHash(40)).toBe("hash40");
+      expect(store.cursor("chain")).toEqual({ block: 40, hash: "hash40" });
+      expect(() =>
+        store.saveBlock("chain", 41, `0x${"0".repeat(64)}`, []),
+      ).toThrow("real hash");
+      expect(store.blockHash(41)).toBeUndefined();
+    } finally {
+      store.close();
+    }
   });
 });
