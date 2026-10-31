@@ -41,6 +41,7 @@ let verified: Promise<void> | undefined;
 async function boundedRead<T>(
   label: string,
   read: (signal: AbortSignal) => Promise<T>,
+  timeoutMs = settings.timeoutMs,
 ): Promise<T> {
   const controller = new AbortController();
   let timer: ReturnType<typeof setTimeout> | undefined;
@@ -49,12 +50,10 @@ async function boundedRead<T>(
       Promise.resolve().then(() => read(controller.signal)),
       new Promise<never>((_resolve, reject) => {
         timer = setTimeout(() => {
-          const error = new Error(
-            `${label} timed out after ${settings.timeoutMs}ms`,
-          );
+          const error = new Error(`${label} timed out after ${timeoutMs}ms`);
           reject(error);
           controller.abort(error);
-        }, settings.timeoutMs);
+        }, timeoutMs);
       }),
     ]);
   } finally {
@@ -62,10 +61,10 @@ async function boundedRead<T>(
   }
 }
 
-function makeEvmClient() {
+function makeEvmClient(timeoutMs = settings.timeoutMs) {
   return createPublicClient({
     transport: http(settings.evmRpcUrl, {
-      timeout: settings.timeoutMs,
+      timeout: timeoutMs,
       retryCount: 0,
     }),
   });
@@ -88,7 +87,9 @@ export function configureChain(options: Partial<typeof settings>): void {
 }
 
 export function getClient() {
-  return (nativeClient ??= createClient(getWsProvider(settings.wssUrl)));
+  return (nativeClient ??= createClient(
+    getWsProvider(settings.wssUrl, { timeout: settings.timeoutMs }),
+  ));
 }
 export function getApi() {
   return getClient().getTypedApi(portaldot);
@@ -110,15 +111,22 @@ export async function verifyNetwork(): Promise<void> {
       "V3 network identity verification",
       async (signal) => {
         const api = getApi();
+        // The optional HTTP facade must finish before the mandatory native guard.
+        const evmTimeout = Math.min(
+          10_000,
+          Math.max(1, Math.floor(settings.timeoutMs / 2)),
+        );
         const [genesis, runtime, id, ratio, nativeChainId] = await Promise.all([
           getClient()._request<string>("chain_getBlockHash", [0]),
           getClient()._request<{ specName: string }>(
             "state_getRuntimeVersion",
             [],
           ),
-          getEvmClient()
-            .getChainId()
-            .catch(() => null),
+          boundedRead(
+            "EVM RPC identity lookup",
+            () => makeEvmClient(evmTimeout).getChainId(),
+            evmTimeout,
+          ).catch(() => null),
           api.constants.Revive.NativeToEthRatio({ signal }),
           api.constants.Revive.ChainId({ signal }),
         ]);

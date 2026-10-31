@@ -4,6 +4,7 @@ import {
   configureChain,
   disconnectChain,
   GENESIS_HASH,
+  getClient,
   h160Of,
   verifyNetwork,
 } from "./client";
@@ -16,6 +17,7 @@ const mocks = vi.hoisted(() => ({
   evmChainId: vi.fn(),
   address: vi.fn(),
   destroy: vi.fn(),
+  wsProvider: vi.fn(),
 }));
 vi.mock("polkadot-api", async (importOriginal) => ({
   ...(await importOriginal<typeof import("polkadot-api")>()),
@@ -30,7 +32,7 @@ vi.mock("polkadot-api", async (importOriginal) => ({
     }),
   }),
 }));
-vi.mock("polkadot-api/ws", () => ({ getWsProvider: vi.fn() }));
+vi.mock("polkadot-api/ws", () => ({ getWsProvider: mocks.wsProvider }));
 vi.mock("viem", async (importOriginal) => ({
   ...(await importOriginal<typeof import("viem")>()),
   createPublicClient: () => ({ getChainId: mocks.evmChainId }),
@@ -114,4 +116,38 @@ it("bounds runtime address mapping without retrying an unresponsive provider", a
   expect(mocks.address).toHaveBeenCalledTimes(1);
   expect(mocks.address.mock.calls[0]![1].signal.aborted).toBe(true);
   expect(vi.getTimerCount()).toBe(0);
+});
+
+it("allows WebSocket connection establishment to use the configured network timeout", () => {
+  configureChain({ timeoutMs: 45_000 });
+  getClient();
+  expect(mocks.wsProvider).toHaveBeenCalledWith(
+    "wss://test-node-v3.portaldot.dev",
+    { timeout: 45_000 },
+  );
+});
+
+it("falls back to verified native identity when the optional EVM facade never answers", async () => {
+  mocks.evmChainId.mockImplementation(never);
+  const pending = verifyNetwork();
+  await vi.advanceTimersByTimeAsync(12);
+  await expect(pending).resolves.toBeUndefined();
+  expect(mocks.chainId).toHaveBeenCalled();
+  expect(mocks.ratio).toHaveBeenCalledTimes(2);
+  expect(vi.getTimerCount()).toBe(0);
+});
+
+it("still rejects a reachable EVM facade reporting another chain", async () => {
+  mocks.evmChainId.mockResolvedValue(1);
+  await expect(verifyNetwork()).rejects.toThrow("Endpoint identity differs");
+});
+
+it("does not accept an incorrect native identity when the EVM facade is unavailable", async () => {
+  mocks.evmChainId.mockImplementation(never);
+  mocks.chainId.mockResolvedValue(1n);
+  const pending = verifyNetwork().catch((error) => error);
+  await vi.advanceTimersByTimeAsync(12);
+  expect(await pending).toMatchObject({
+    message: "Endpoint identity differs from the verified Portaldot V3 testnet",
+  });
 });
