@@ -397,17 +397,17 @@ export type StoredEvidence = TransactionEvidence & {
   retentionBlocks: number;
 };
 
-/** Stores the final thumbnail bytes; callers hash and back up these exact bytes first. */
-export async function storeEvidence(
+/** Prepare native storage and check its budget before asking for a signature. */
+export async function buildEvidenceStore(
   input: {
     signer: ChainSigner;
     bytes: Uint8Array;
   } & SubmissionOptions,
-): Promise<StoredEvidence> {
+) {
   if (input.bytes.byteLength < 1 || input.bytes.byteLength > 64 * 1024)
     throw new RangeError("Evidence thumbnails must contain 1–65536 bytes");
   const bytes = Uint8Array.from(input.bytes);
-  await ensureMapped(input.signer, input);
+  await verifyNetwork();
   const api = getApi();
   const tx = api.tx.TransactionStorage.store({ data: bytes });
   const [
@@ -427,6 +427,10 @@ export async function storeEvidence(
     tx.getEstimatedFees(input.signer.txCreator),
     getAccountState(input.signer.address),
   ]);
+  if (!account.mapped)
+    throw new Error(
+      "Activate and fund this account before preparing native evidence storage",
+    );
   if (bytes.byteLength > maximum)
     throw new RangeError(`Runtime evidence limit is ${maximum} bytes`);
   if (byteFee === undefined || entryFee === undefined)
@@ -442,7 +446,15 @@ export async function storeEvidence(
     throw new Error(
       "Insufficient native balance for evidence storage, transaction fee and account survival",
     );
-  const evidence = await submitAndWatch(tx, input.signer, input);
+  return { tx, bytes: bytes.byteLength, retentionBlocks };
+}
+
+export async function submitEvidenceStore(
+  prepared: Awaited<ReturnType<typeof buildEvidenceStore>>,
+  signer: ChainSigner,
+  options: SubmissionOptions = {},
+): Promise<StoredEvidence> {
+  const evidence = await submitAndWatch(prepared.tx, signer, options);
   for (const event of evidence.events) {
     if (event.type === "TransactionStorage" && event.value.type === "Stored") {
       const stored = event.value.value as { index: number; content_hash: Hex };
@@ -450,14 +462,29 @@ export async function storeEvidence(
         ...evidence,
         storageIndex: stored.index,
         storageContentHash: stored.content_hash,
-        bytes: bytes.byteLength,
-        retentionBlocks,
+        bytes: prepared.bytes,
+        retentionBlocks: prepared.retentionBlocks,
       };
     }
   }
   throw new SubmissionUnknownError(
     "Storage finalized without TransactionStorage.Stored; reconcile the recorded transaction hash before retrying",
     evidence.txHash,
+  );
+}
+
+/** Stores the final thumbnail bytes; callers hash and back up these exact bytes first. */
+export async function storeEvidence(
+  input: { signer: ChainSigner; bytes: Uint8Array } & SubmissionOptions,
+): Promise<StoredEvidence> {
+  if (input.bytes.byteLength < 1 || input.bytes.byteLength > 64 * 1024)
+    throw new RangeError("Evidence thumbnails must contain 1–65536 bytes");
+  const bytes = Uint8Array.from(input.bytes);
+  await ensureMapped(input.signer, input);
+  return submitEvidenceStore(
+    await buildEvidenceStore({ ...input, bytes }),
+    input.signer,
+    input,
   );
 }
 

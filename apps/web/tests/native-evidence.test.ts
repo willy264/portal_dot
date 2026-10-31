@@ -13,6 +13,7 @@ import type { Hex } from "../lib/types";
 const hash = `0x${"a".repeat(64)}` as Hex;
 const txHash = `0x${"b".repeat(64)}` as Hex;
 const blockHash = `0x${"c".repeat(64)}` as Hex;
+const account = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY";
 const proof: NativeEvidenceProof = {
   txHash,
   block: 101,
@@ -25,6 +26,7 @@ const proof: NativeEvidenceProof = {
 function journal() {
   const values = new Map<Hex, EvidenceJournalEntry>();
   const storage: EvidenceJournal = {
+    list: () => [...values.values()],
     read: (id) => values.get(id) ?? null,
     write: (entry) => {
       values.set(entry.hash, structuredClone(entry));
@@ -103,7 +105,7 @@ describe("native evidence submission journal", () => {
     });
     await submitNativeEvidence({
       hash,
-      account: "public-test-account",
+      account,
       fromBlock: 100,
       journal: storage,
       submit,
@@ -125,7 +127,7 @@ describe("native evidence submission journal", () => {
     });
     const input = {
       hash,
-      account: "public-test-account",
+      account,
       fromBlock: 100,
       journal: storage,
       submit,
@@ -144,7 +146,7 @@ describe("native evidence submission journal", () => {
     await expect(
       submitNativeEvidence({
         hash,
-        account: "public-test-account",
+        account,
         fromBlock: 100,
         journal: storage,
         submit: async (onHash) => {
@@ -159,7 +161,7 @@ describe("native evidence submission journal", () => {
     const storage = journal();
     storage.write({
       hash,
-      account: "public-test-account",
+      account,
       state: "finalized",
       fromBlock: 100,
       proof,
@@ -170,7 +172,7 @@ describe("native evidence submission journal", () => {
     expect(
       await submitNativeEvidence({
         hash,
-        account: "public-test-account",
+        account,
         fromBlock: 200,
         journal: storage,
         submit,
@@ -185,7 +187,7 @@ describe("native evidence submission journal", () => {
     });
     const input = {
       hash,
-      account: "public-test-account",
+      account,
       fromBlock: 100,
       journal: storage,
       submit,
@@ -202,9 +204,10 @@ describe("native evidence submission journal", () => {
     await expect(
       submitNativeEvidence({
         hash,
-        account: "public-test-account",
+        account,
         fromBlock: 100,
         journal: {
+          list: () => [],
           read: () => null,
           write: () => {
             throw new Error("Storage quota");

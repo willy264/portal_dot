@@ -14,7 +14,6 @@ import {
 } from "@/lib/native-evidence";
 import { consoleLink } from "@/lib/proof";
 import { useApp } from "./providers";
-import { chainAdapter } from "@/lib/wallet-chain";
 
 export function EvidenceField({
   label = "Return photo",
@@ -25,7 +24,7 @@ export function EvidenceField({
   onChange: (hash: Hex | null) => void;
   nativeRequired?: boolean;
 }) {
-  const { ledger, wallet, storeNativeEvidence } = useApp();
+  const { ledger, wallet, storeNativeEvidence, recheckEvidence } = useApp();
   const [busy, setBusy] = useState(false);
   const [stage, setStage] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -94,20 +93,10 @@ export function EvidenceField({
     setError(null);
     setStage("Checking finalized storage history…");
     try {
-      const chain = await chainAdapter(ledger.config);
-      const result = await chain.reconcileEvidence({
-        txHash: uncertain.txHash,
-        fromBlock: uncertain.fromBlock,
-      });
-      if (result.status === "confirmed") {
-        const record = {
-          ...uncertain,
-          state: "finalized" as const,
-          proof: result.evidence,
-          updatedAt: new Date().toISOString(),
-        };
-        browserEvidenceJournal.write(record);
-        setProof(result.evidence);
+      const record = await recheckEvidence(uncertain.hash);
+      if (!record) return;
+      if (record.state === "finalized" && record.proof) {
+        setProof(record.proof);
         setUncertain(null);
         const response = await fetch(
           `/api/evidence/${normalizeHash(uncertain.hash)}`,
@@ -123,32 +112,20 @@ export function EvidenceField({
         setUploaded({
           hash: uncertain.hash,
           url: `/api/evidence/${normalizeHash(uncertain.hash)}`,
-          size: result.evidence.bytes,
+          size: record.proof.bytes,
         });
         onChange(uncertain.hash);
         setUncertain(null);
-      } else if (result.status === "failed") {
-        browserEvidenceJournal.write({
-          ...uncertain,
-          state: "failed",
-          updatedAt: new Date().toISOString(),
-          error: "Original extrinsic finalized with a failure.",
-        });
+      } else if (record.state === "failed") {
         setUncertain(null);
         setError(
           "The previous transaction definitively failed. Select the photo again to prepare a new storage attempt.",
         );
       } else {
-        const record = {
-          ...uncertain,
-          state: "unknown" as const,
-          fromBlock: result.nextBlock,
-          error: result.reason,
-          updatedAt: new Date().toISOString(),
-        };
-        browserEvidenceJournal.write(record);
         setUncertain(record);
-        setError(result.reason);
+        setError(
+          record.error ?? "The original storage outcome is still uncertain.",
+        );
       }
     } catch (e) {
       setError(errorMessage(e));

@@ -8,7 +8,10 @@ export function TransactionRecovery() {
   const records = app.pendingIntents.filter(
     (record) => !app.busy || record.state === "unknown",
   );
-  if (!records.length && !app.journalError) return null;
+  const evidence = app.pendingEvidence.filter(
+    (record) => !app.busy || record.state === "unknown",
+  );
+  if (!records.length && !evidence.length && !app.journalError) return null;
   return (
     <aside
       className="container transaction-recovery"
@@ -89,6 +92,52 @@ export function TransactionRecovery() {
                 Node console <ArrowUpRight size={13} />
               </a>
             </div>
+          </div>
+        </section>
+      ))}
+      {evidence.map((record) => (
+        <section className="callout warning" key={record.hash}>
+          <div>
+            <strong>Check the previous photo storage transaction</strong>
+            <p className="small">
+              Further writes from {shortAddress(record.account, 8)} are blocked
+              until its original outcome is known. Rechecking only reads
+              finalized blocks.
+            </p>
+            <dl className="recovery-details">
+              <div>
+                <dt>Transaction</dt>
+                <dd className="hash">
+                  {record.txHash ?? "No transaction hash was retained."}
+                </dd>
+              </div>
+              <div>
+                <dt>Photo SHA-256</dt>
+                <dd className="hash">{record.hash}</dd>
+              </div>
+              <div>
+                <dt>Started at block</dt>
+                <dd className="mono">{record.fromBlock}</dd>
+              </div>
+            </dl>
+            {record.error && <p className="small muted">{record.error}</p>}
+            {!record.txHash && (
+              <p className="small">
+                Keep the pending record and inspect your wallet history; the app
+                cannot prove this outcome without its hash. Do not repeat the
+                upload.
+              </p>
+            )}
+            <button
+              type="button"
+              className="button"
+              disabled={!!app.busy || !record.txHash}
+              onClick={() =>
+                void app.recheckEvidence(record.hash).catch(() => {})
+              }
+            >
+              <RefreshCw size={14} /> Recheck photo storage
+            </button>
           </div>
         </section>
       ))}

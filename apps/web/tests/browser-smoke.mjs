@@ -295,6 +295,97 @@ try {
   );
   checks.push({ missingHashRemainsBlocked: true });
   await evaluate(`localStorage.removeItem(${JSON.stringify(recoveryKey)})`);
+  // Native storage uses its own retained record, but the same global recovery UI.
+  // These bytes and hashes are synthetic; do not invoke either recheck action.
+  const nativeEvidence = {
+    hash: "0x" + "e".repeat(64),
+    account: pendingIntent.account,
+    state: "unknown",
+    fromBlock: 1,
+    nextBlock: 1,
+    txHash: "0x" + "f".repeat(64),
+    updatedAt: new Date().toISOString(),
+    error: "Synthetic native storage recovery fixture; no photo was submitted.",
+  };
+  const nativeRecoveryKey =
+    "metermend-native-evidence-v2:" + nativeEvidence.hash;
+  await evaluate(
+    `localStorage.setItem(${JSON.stringify(nativeRecoveryKey)},${JSON.stringify(JSON.stringify(nativeEvidence))})`,
+  );
+  await navigate("/");
+  await delay(600);
+  assert(
+    await evaluate(
+      "document.body.innerText.includes('Check the previous photo storage transaction') && document.body.innerText.includes('Further writes from') && document.body.innerText.includes('are blocked until its original outcome is known')",
+    ),
+    "Native storage uncertainty must appear globally after a reload without reopening the upload form",
+  );
+  assert(
+    await evaluate(
+      `document.querySelector('[aria-label="Transaction recovery"]')?.textContent.includes(${JSON.stringify(nativeEvidence.hash)})`,
+    ),
+    "Native recovery must identify the retained photo commitment",
+  );
+  assert(
+    await evaluate(
+      "Array.from(document.querySelectorAll('button')).some(b=>b.textContent.includes('Recheck photo storage')&&!b.disabled)",
+    ),
+    "A retained native transaction hash must expose read-only reconciliation",
+  );
+  await screenshot("native-recovery-mobile");
+  checks.push({
+    nativeEvidenceReload: true,
+    globalRecoveryVisible: true,
+    readOnlyRecoveryButton: true,
+    fixture: "synthetic; never submitted or reconciled",
+  });
+  delete nativeEvidence.txHash;
+  nativeEvidence.state = "submitting";
+  await evaluate(
+    `localStorage.setItem(${JSON.stringify(nativeRecoveryKey)},${JSON.stringify(JSON.stringify(nativeEvidence))})`,
+  );
+  await navigate("/");
+  await delay(600);
+  assert(
+    await evaluate(
+      "document.body.innerText.includes('Do not repeat the upload') && Array.from(document.querySelectorAll('button')).some(b=>b.textContent.includes('Recheck photo storage')&&b.disabled)",
+    ),
+    "An interrupted native upload without a retained hash must remain blocked",
+  );
+  checks.push({ nativeMissingHashRemainsBlocked: true });
+  await evaluate(
+    `localStorage.setItem(${JSON.stringify(nativeRecoveryKey)},'synthetic-invalid-json')`,
+  );
+  await navigate("/");
+  await delay(600);
+  assert(
+    await evaluate(
+      "document.body.innerText.includes('Transaction storage needs attention') && document.body.innerText.includes('Browser evidence storage is unavailable or damaged. Writes are blocked')",
+    ),
+    "Damaged native storage must surface a blocking recovery error instead of appearing empty",
+  );
+  assert(
+    await evaluate(
+      "Array.from(document.querySelectorAll('button')).some(b=>b.textContent.includes('Recheck browser storage')&&!b.disabled)",
+    ),
+    "Damaged browser storage must expose the storage verification action",
+  );
+  checks.push({ nativeCorruptJournalBlocksWrites: true });
+  // Only remove this smoke test's synthetic record from its isolated profile.
+  await evaluate(
+    `localStorage.removeItem(${JSON.stringify(nativeRecoveryKey)})`,
+  );
+  await evaluate(
+    "Array.from(document.querySelectorAll('button')).find(b=>b.textContent.includes('Recheck browser storage')).click()",
+  );
+  await delay(600);
+  assert(
+    await evaluate(
+      "!document.querySelector('[aria-label=\"Transaction recovery\"]')",
+    ),
+    "Storage verification must clear the recovery warning after the synthetic corruption is removed",
+  );
+  checks.push({ nativeJournalStorageRecheck: true });
   assert.equal(
     errors.length,
     0,

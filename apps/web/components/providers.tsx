@@ -32,7 +32,12 @@ import {
 } from "@/lib/transaction-journal";
 import {
   browserEvidenceJournal,
+  assertEvidenceAccountClear,
+  applyEvidenceReconciliation,
+  isPendingEvidence,
+  UncertainEvidenceError,
   submitNativeEvidence,
+  type EvidenceJournalEntry,
   type NativeEvidenceProof,
 } from "@/lib/native-evidence";
 import { hashBytes } from "@/lib/evidence";
@@ -74,6 +79,8 @@ type AppContextValue = {
     bytes: Uint8Array,
   ) => Promise<NativeEvidenceProof>;
   pendingIntents: ContractIntent[];
+  pendingEvidence: EvidenceJournalEntry[];
+  recheckEvidence: (hash: Hex) => Promise<EvidenceJournalEntry | null>;
   journalError: string | null;
   writesBlocked: boolean;
   checkStorage: () => void;
@@ -97,6 +104,9 @@ export function Providers({ children }: { children: ReactNode }) {
   const [failure, setFailure] = useState<string | null>(null);
   const [lastReceipt, setLastReceipt] = useState<TxReceipt | null>(null);
   const [intents, setIntents] = useState<ContractIntent[]>([]);
+  const [evidenceEntries, setEvidenceEntries] = useState<
+    EvidenceJournalEntry[]
+  >([]);
   const [journalError, setJournalError] = useState<string | null>(null);
   const syncJournal = useCallback(() => {
     try {
@@ -109,6 +119,15 @@ export function Providers({ children }: { children: ReactNode }) {
             : record;
         }),
       );
+      const evidence = browserEvidenceJournal.list();
+      setEvidenceEntries((previous) =>
+        evidence.map((record) => {
+          const memory = previous.find((item) => item.hash === record.hash);
+          return isPendingEvidence(record) && !record.txHash && memory?.txHash
+            ? memory
+            : record;
+        }),
+      );
     } catch (error) {
       setJournalError(errorMessage(error));
     }
@@ -116,6 +135,12 @@ export function Providers({ children }: { children: ReactNode }) {
   const updateIntent = useCallback((record: ContractIntent) => {
     setIntents((previous) => [
       ...previous.filter((item) => item.id !== record.id),
+      record,
+    ]);
+  }, []);
+  const updateEvidence = useCallback((record: EvidenceJournalEntry) => {
+    setEvidenceEntries((previous) => [
+      ...previous.filter((entry) => entry.hash !== record.hash),
       record,
     ]);
   }, []);
@@ -249,24 +274,37 @@ export function Providers({ children }: { children: ReactNode }) {
     if (account) await loadAccount(account);
   }
   async function activate() {
+    if (busy || transactionLocked.current)
+      throw new Error("Wait for the current transaction to finish.");
     if (!currentAccount.current || !ledger)
       throw new Error("Connect a wallet first.");
+    const account = currentAccount.current;
+    transactionLocked.current = true;
     setBusy("Confirm account activation in your wallet");
     setFailure(null);
     try {
-      assertAccountClear(
-        browserIntentJournal,
-        canonicalAccount(currentAccount.current.address),
-        ledger.config.chainId,
-      );
+      if (journalError) throw new Error(journalError);
       verifyBrowserTransactionStorage();
-      const chain = await chainAdapter(ledger.config);
-      await chain.ensureMapped(chainSigner(currentAccount.current));
-      await loadAccount(currentAccount.current);
+      await withAccountWriteLock(
+        canonicalAccount(account.address),
+        async () => {
+          assertAccountClear(
+            browserIntentJournal,
+            canonicalAccount(account.address),
+            ledger.config.chainId,
+          );
+          assertEvidenceAccountClear(browserEvidenceJournal, account.address);
+          const chain = await chainAdapter(ledger.config);
+          await chain.ensureMapped(chainSigner(account));
+        },
+      );
+      if (currentAccount.current?.address === account.address)
+        await loadAccount(account);
       setNotice("Account activation confirmed on Portaldot.");
     } catch (error) {
       setFailure(errorMessage(error));
     } finally {
+      transactionLocked.current = false;
       setBusy(null);
     }
   }
@@ -298,10 +336,19 @@ export function Providers({ children }: { children: ReactNode }) {
     setBusy("Check the transaction in your wallet");
     try {
       const key = canonicalAccount(submittingAccount.address);
+      if (journalError) throw new Error(journalError);
       assertAccountClear(browserIntentJournal, key, ledger.config.chainId);
+      assertEvidenceAccountClear(
+        browserEvidenceJournal,
+        submittingAccount.address,
+      );
       verifyBrowserTransactionStorage();
       const receipt = await withAccountWriteLock(key, async () => {
         assertAccountClear(browserIntentJournal, key, ledger.config.chainId);
+        assertEvidenceAccountClear(
+          browserEvidenceJournal,
+          submittingAccount.address,
+        );
         const chain = await chainAdapter(ledger.config);
         const head = await chain.getFinalizedHead();
         const data = encodeFunctionData({
@@ -380,15 +427,21 @@ export function Providers({ children }: { children: ReactNode }) {
     const account = currentAccount.current;
     if (!account || !wallet)
       throw new Error("Connect a wallet before storing evidence on Portaldot.");
+    if (journalError) throw new Error(journalError);
     assertAccountClear(
       browserIntentJournal,
       canonicalAccount(account.address),
       ledger?.config.chainId ?? 420420777,
     );
     verifyBrowserTransactionStorage();
+    assertEvidenceAccountClear(browserEvidenceJournal, account.address);
     if (!ledger?.config.nativeEvidence)
       throw new Error(
         "Native evidence storage has not passed its funded probe.",
+      );
+    if (wallet.mapped !== true)
+      throw new Error(
+        "Activate and fund this account before storing evidence on Portaldot.",
       );
     if (
       bytes.length > ledger.config.nativeEvidence.maxBytes ||
@@ -403,31 +456,47 @@ export function Providers({ children }: { children: ReactNode }) {
     setFailure(null);
     setBusy("Approve storing this photo on Portaldot");
     try {
-      const chain = await chainAdapter(ledger.config);
-      const head = await chain.getFinalizedHead();
-      const proof = await submitNativeEvidence({
-        hash,
-        account: account.address,
-        fromBlock: head.number,
-        journal: browserEvidenceJournal,
-        submit: async (onHash) => {
-          const result = await chain.storeEvidence({
-            signer: chainSigner(account),
-            bytes,
-            onStatus: (event) => {
-              onHash(event.txHash as Hex);
-              retainTransaction({
-                txHash: event.txHash,
-                action: "TransactionStorage.store",
-                account: account.address,
-                status: event.type,
-              });
-              setBusy("Photo submitted; waiting for finalized storage");
+      const proof = await withAccountWriteLock(
+        canonicalAccount(account.address),
+        async () => {
+          assertAccountClear(
+            browserIntentJournal,
+            canonicalAccount(account.address),
+            ledger.config.chainId,
+          );
+          assertEvidenceAccountClear(browserEvidenceJournal, account.address);
+          const chain = await chainAdapter(ledger.config);
+          const head = await chain.getFinalizedHead();
+          return submitNativeEvidence({
+            hash,
+            account: account.address,
+            fromBlock: head.number,
+            journal: browserEvidenceJournal,
+            onRecord: updateEvidence,
+            prepare: () =>
+              chain.buildEvidenceStore({ signer: chainSigner(account), bytes }),
+            submit: async (onHash, prepared) => {
+              const result = await chain.submitEvidenceStore(
+                prepared,
+                chainSigner(account),
+                {
+                  onStatus: (event) => {
+                    onHash(event.txHash as Hex);
+                    retainTransaction({
+                      txHash: event.txHash,
+                      action: "TransactionStorage.store",
+                      account: account.address,
+                      status: event.type,
+                    });
+                    setBusy("Photo submitted; waiting for finalized storage");
+                  },
+                },
+              );
+              return result;
             },
           });
-          return result;
         },
-      });
+      );
       retainTransaction({
         ...proof,
         action: "TransactionStorage.store",
@@ -439,9 +508,11 @@ export function Providers({ children }: { children: ReactNode }) {
       );
       return proof;
     } catch (error) {
+      if (error instanceof UncertainEvidenceError) updateEvidence(error.record);
       setFailure(errorMessage(error));
       throw error;
     } finally {
+      syncJournal();
       transactionLocked.current = false;
       setBusy(null);
     }
@@ -449,6 +520,7 @@ export function Providers({ children }: { children: ReactNode }) {
   function checkStorage() {
     try {
       verifyBrowserTransactionStorage();
+      browserEvidenceJournal.list();
       for (const record of intents) {
         if (!record.txHash) continue;
         const stored = browserIntentJournal
@@ -456,6 +528,16 @@ export function Providers({ children }: { children: ReactNode }) {
           .find((item) => item.id === record.id);
         if (stored && isPendingIntent(stored) && !stored.txHash)
           browserIntentJournal.put(record);
+      }
+      for (const record of evidenceEntries) {
+        const stored = browserEvidenceJournal.read(record.hash);
+        if (
+          record.txHash &&
+          stored &&
+          isPendingEvidence(stored) &&
+          !stored.txHash
+        )
+          browserEvidenceJournal.write(record);
       }
       setJournalError(null);
       syncJournal();
@@ -510,6 +592,59 @@ export function Providers({ children }: { children: ReactNode }) {
     }
   }
   const pendingIntents = intents.filter(isPendingIntent);
+  const pendingEvidence = evidenceEntries.filter(isPendingEvidence);
+  async function recheckEvidence(
+    hash: Hex,
+  ): Promise<EvidenceJournalEntry | null> {
+    if (busy || transactionLocked.current) return null;
+    const record =
+      evidenceEntries.find((entry) => entry.hash === hash) ??
+      browserEvidenceJournal.read(hash);
+    if (!record?.txHash || !ledger) {
+      setFailure(
+        "A retained transaction hash and network configuration are required to check storage finality.",
+      );
+      return null;
+    }
+    transactionLocked.current = true;
+    setBusy("Checking the original photo storage transaction");
+    setFailure(null);
+    try {
+      const next = await withAccountWriteLock(
+        canonicalAccount(record.account),
+        async () => {
+          const stored = browserEvidenceJournal.read(hash);
+          if (stored && !isPendingEvidence(stored)) return stored;
+          const latest = stored?.txHash ? stored : record;
+          if (stored && !stored.txHash) browserEvidenceJournal.write(latest);
+          const chain = await chainAdapter(ledger.config);
+          const result = await chain.reconcileEvidence({
+            txHash: latest.txHash!,
+            fromBlock: latest.nextBlock ?? latest.fromBlock,
+          });
+          return applyEvidenceReconciliation(
+            browserEvidenceJournal,
+            latest,
+            result,
+          );
+        },
+      );
+      updateEvidence(next);
+      setNotice(
+        isPendingEvidence(next)
+          ? "The original storage outcome is still uncertain. Further writes remain blocked for this account."
+          : "The original storage outcome is finalized. Review the photo before continuing.",
+      );
+      return next;
+    } catch (error) {
+      setFailure(errorMessage(error));
+      throw error;
+    } finally {
+      syncJournal();
+      transactionLocked.current = false;
+      setBusy(null);
+    }
+  }
   let writesBlocked = !!journalError;
   if (wallet) {
     try {
@@ -518,6 +653,9 @@ export function Providers({ children }: { children: ReactNode }) {
         (intent) =>
           intent.accountKey === key &&
           intent.chainId === (ledger?.config.chainId ?? 420420777),
+      );
+      writesBlocked ||= pendingEvidence.some(
+        (entry) => canonicalAccount(entry.account) === key,
       );
     } catch {
       writesBlocked = true;
@@ -541,6 +679,8 @@ export function Providers({ children }: { children: ReactNode }) {
         execute,
         storeNativeEvidence,
         pendingIntents,
+        pendingEvidence,
+        recheckEvidence,
         journalError,
         writesBlocked,
         checkStorage,

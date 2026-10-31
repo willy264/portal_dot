@@ -5,7 +5,10 @@ import {
   FinalizedDispatchError,
   SubmissionUnknownError,
   submitAndWatch,
+  buildEvidenceStore,
+  submitEvidenceStore,
 } from "./revive";
+import { getAccountState, getApi } from "./client";
 
 vi.mock("./client", () => ({
   verifyNetwork: vi.fn(async () => undefined),
@@ -37,6 +40,71 @@ async function subscribed() {
 afterEach(() => vi.useRealTimers());
 
 describe("submission finality and durable uncertainty", () => {
+  it("prepares native storage without signing and preserves Stored proof when submitted", async () => {
+    const { events, tx, createSubmitAndWatch } = fixture();
+    const nativeTx = Object.assign(tx, {
+      getEstimatedFees: vi.fn(async () => 10n),
+    });
+    vi.mocked(getAccountState).mockResolvedValue({
+      mapped: true,
+      nativeBalance: 10000n,
+      nativeFrozen: 0n,
+    } as Awaited<ReturnType<typeof getAccountState>>);
+    vi.mocked(getApi).mockReturnValue({
+      tx: { TransactionStorage: { store: () => nativeTx } },
+      constants: {
+        TransactionStorage: { MaxTransactionSize: async () => 65536 },
+        Balances: { ExistentialDeposit: async () => 1n },
+      },
+      query: {
+        TransactionStorage: {
+          ByteFee: { getValue: async () => 1n },
+          EntryFee: { getValue: async () => 1n },
+          RetentionPeriod: { getValue: async () => 100800 },
+        },
+      },
+    } as unknown as ReturnType<typeof getApi>);
+    const prepared = await buildEvidenceStore({
+      signer,
+      bytes: new Uint8Array(1024),
+    });
+    expect(createSubmitAndWatch).not.toHaveBeenCalled();
+    const pending = submitEvidenceStore(prepared, signer);
+    await subscribed();
+    events.next({
+      type: "finalized",
+      txHash,
+      ok: true,
+      block,
+      events: [
+        {
+          type: "TransactionStorage",
+          value: {
+            type: "Stored",
+            value: { index: 7, content_hash: blockHash },
+          },
+        },
+      ],
+    } as unknown as TxEvent);
+    await expect(pending).resolves.toMatchObject({
+      txHash,
+      block: 42,
+      storageIndex: 7,
+      storageContentHash: blockHash,
+      bytes: 1024,
+      retentionBlocks: 100800,
+    });
+    expect(createSubmitAndWatch).toHaveBeenCalledTimes(1);
+    vi.mocked(getAccountState).mockResolvedValue({
+      mapped: true,
+      nativeBalance: 10n,
+      nativeFrozen: 0n,
+    } as Awaited<ReturnType<typeof getAccountState>>);
+    await expect(
+      buildEvidenceStore({ signer, bytes: new Uint8Array(1024) }),
+    ).rejects.toThrow("Insufficient native balance");
+    expect(createSubmitAndWatch).toHaveBeenCalledTimes(1);
+  });
   it("journals the hash immediately and resolves only finalized inclusion with one subscription", async () => {
     const { events, tx, createSubmitAndWatch } = fixture();
     const journal: string[] = [];
