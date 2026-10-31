@@ -1,0 +1,66 @@
+# Always-on services: $14/month compute + $0.50/month for two 1GB disks.
+# Provision only after the account owner approves the estimate in docs/HOSTING.md.
+services:
+  - type: web
+    name: metermend-relayer
+    runtime: docker
+    region: frankfurt
+    plan: 0.5c-512mb
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    dockerCommand: pnpm --filter @metermend/cronpot-relayer start
+    autoDeployTrigger: "off"
+    healthCheckPath: /health
+    disk:
+      name: metermend-keeper-evidence
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: PORT
+        value: "8787"
+      - key: MODE
+        value: keeper
+      - key: WSS_URL
+        value: wss://test-node-v3.portaldot.dev
+      - key: EVM_RPC_URL
+        value: https://test-evm-rpc-v3.portaldot.dev
+      - key: DB_PATH
+        value: /data/cronpot.sqlite
+      - key: EVIDENCE_DIR
+        value: /data/evidence
+      - key: EVIDENCE_BACKEND_TOKEN
+        generateValue: true
+      - key: RELAYER_SEED
+        sync: false
+  - type: worker
+    name: metermend-telegram
+    runtime: docker
+    region: frankfurt
+    plan: 0.5c-512mb
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    dockerCommand: >-
+      sh -c 'export CHAIN_INDEXER_URL="http://${CHAIN_INDEXER_HOSTPORT}"; exec pnpm --filter @metermend/debox-bot start'
+    autoDeployTrigger: "off"
+    disk:
+      name: metermend-notifications
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: CHAIN_INDEXER_HOSTPORT
+        fromService:
+          type: web
+          name: metermend-relayer
+          property: hostport
+      - key: APP_URL
+        value: https://metermend.vercel.app
+      - key: EVM_DECIMALS
+        value: "18"
+      - key: BOT_DB_PATH
+        value: /data/debox.sqlite
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false

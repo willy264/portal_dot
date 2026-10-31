@@ -1,0 +1,76 @@
+{
+  "observedAt": "2026-10-31T15:03:23Z",
+  "status": "prepared-awaiting-authorization-and-cost-decision",
+  "summary": "Render Blueprint prepared and schema-validated. Persistent keeper/evidence and Telegram services are not provisioned; renewed CLI authorization and the hosting cost decision are pending.",
+  "provider": "Render",
+  "publicUrl": null,
+  "persistenceVerified": false,
+  "webApp": "https://metermend.vercel.app",
+  "blueprint": {
+    "path": "render.yaml",
+    "sha256": "8d30c321a779509c9dedc90899555e7d69038fd512773a9a1cd166ed775537f5",
+    "schemaUrl": "https://render.com/schema/render.yaml.json",
+    "schemaValidation": "passed",
+    "schemaErrors": [],
+    "workspaceValidation": "pending: no Render workspace selected",
+    "credentialsInline": false
+  },
+  "services": [
+    {
+      "name": "metermend-relayer",
+      "type": "web",
+      "purpose": "Cronpot keeper, finalized event indexer and evidence backend",
+      "region": "frankfurt",
+      "plan": "0.5c-512mb",
+      "mode": "keeper",
+      "diskGB": 1,
+      "mountPath": "/data",
+      "databasePath": "/data/cronpot.sqlite",
+      "evidencePath": "/data/evidence",
+      "serviceId": null,
+      "deployId": null,
+      "publicUrl": null,
+      "status": "not-provisioned"
+    },
+    {
+      "name": "metermend-telegram",
+      "type": "worker",
+      "purpose": "Telegram event delivery and durable outbox",
+      "region": "frankfurt",
+      "plan": "0.5c-512mb",
+      "diskGB": 1,
+      "mountPath": "/data",
+      "databasePath": "/data/debox.sqlite",
+      "indexerConnection": "Render private network service reference",
+      "serviceId": null,
+      "deployId": null,
+      "status": "not-provisioned"
+    }
+  ],
+  "estimatedCost": {
+    "currency": "USD",
+    "monthlyBase": 14.5,
+    "webCompute": 7,
+    "workerCompute": 7,
+    "twoDisks": 0.5,
+    "assumption": "Free Hobby workspace; excludes workspace upgrades, excess usage and tax.",
+    "approved": false,
+    "pricingSource": "https://render.com/pricing",
+    "checkedAt": "2026-10-31"
+  },
+  "authentication": {
+    "status": "renewed-browser-authorization-needed",
+    "cliVersion": "2.34.0",
+    "finding": "The official CLI returned slow_down before saving credentials and does not persist its device grant. The displayed user code cannot recover that terminated grant.",
+    "workaround": "Ignored local helper persists its own device grant and honors polling interval and slow_down backoff; simulated checks passed. No new grant created during preflight.",
+    "source": "https://github.com/render-oss/cli/blob/v2.34.0/pkg/tui/views/login.go"
+  },
+  "verification": {
+    "publicHealth": "pending",
+    "publicJobs": "pending",
+    "webAppConnection": "pending",
+    "relayerRestartPersistence": "pending",
+    "evidenceRestartPersistence": "pending",
+    "notificationOutboxPersistence": "pending"
+  }
+}
