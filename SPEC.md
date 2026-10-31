@@ -39,7 +39,7 @@ The final demo MUST use real V3 testnet interactions and preserve real transacti
 3. Immediately allocate `fee * reserveBps / 10000` to the item's ring-fenced reserve and the remainder to its operator's withdrawable income.
 4. Operator confirms physical return and supplies a photo evidence hash. Bytes use native transaction storage when verified practical, otherwise application storage.
 5. Set `refundAt = block.timestamp + disputeWindow`; schedule a Cronpot call to `finalizeRefund(rentalId)`. Operator pays exactly `cronTip` separately from renter funds.
-6. Without a dispute, at/after the deadline native scheduling or the keeper triggers refund and the community receives a notification.
+6. Without a dispute, at/after the deadline refunds execute automatically via Cronpot; execution is permissionless and our keeper runs it. Telegram is the selected notification channel. P5 returned `BadOrigin`; native Scheduler is not the selected execution path.
 7. Before the deadline, operator may propose a positive deduction no greater than the deposit. That is the operator's approval. One approval from renter or arbiter resolves the deduction into the item's reserve and refunds the remainder. Both renter and arbiter rejecting resolves a full refund. Each party votes once.
 8. Operator proposes a repair payment; only arbiter approval pays the repairer from that item's reserve. No operator withdrawal path may spend reserves.
 9. Transfer keeps the reserve and complete event history attached to the item.
@@ -261,6 +261,8 @@ Mapping is idempotent and uses the actual runtime mapping storage/API. Deploy/ca
 
 ## 8. Cronpot relayer
 
+Current V3 execution uses the keeper: refunds execute automatically via Cronpot; execution is permissionless and our keeper runs it. P5 rejected the signed native Scheduler origin with `BadOrigin`. The conditional native-mode design below is retained for future compatible runtimes and is not enabled or claimed for this submission.
+
 On each new finalized block, read unseen JobScheduled logs, persist them in SQLite, then in verified native mode submit the generated scheduler call with relayer Signed origin. Delay estimate is `ceil((executeAfter-nowSeconds)/blockTimeSeconds)+2`, priority127, no periodic repetition. Use actual call type variants from metadata. Relayer must be mapped/funded. Persist scheduler task location and transaction evidence.
 
 Both modes have a 10-second safety loop: once current time >= executeAfter+30s grace, re-read status and directly execute jobs still Scheduled. Derive time from chain observations for transaction readiness; never send blindly from stale wall-clock estimates. Record Scheduler.Scheduled/Dispatched evidence. Missing events during a pruning gap must be surfaced rather than fabricated.
@@ -321,7 +323,7 @@ Record block hashes and transaction success as well as identifiers. Preserve fai
 
 ## 12. Judge-facing README
 
-Required: pitch plus three-line problem; real V3 deployment status/addresses/chainID; `/proof` and Pages links; Mermaid architecture web→PAPI→Revive→MeterMend↔Cronpot→relayer→scheduler plus community bot; Why Portaldot primitive responsibilities and Cronpot explanation; quickstart `pnpm i`, recursive build, env example, `pnpm deploy`, `pnpm seed`, `pnpm demo`, `pnpm dev`; Phase0 findings; human judgment/pruning/wallet limitations; real demo video link when produced; MIT license and accurate statement of code provenance during the Hacker House window. Missing deployments/hosting/video must be visibly marked pending, not invented.
+Required: pitch plus three-line problem; real V3 deployment status/addresses/chainID; `/proof` and Pages links; Mermaid architecture web→PAPI→Revive→MeterMend↔Cronpot→keeper→Revive plus community bot; Why Portaldot primitive responsibilities and Cronpot explanation; quickstart `pnpm i`, recursive build, env example, `pnpm run deploy`, `pnpm seed`, `pnpm demo`, `pnpm dev`; Phase0 findings; human judgment/pruning/wallet limitations; real demo video link when produced; MIT license and accurate statement of code provenance during the Hacker House window. Missing deployments/hosting/video must be visibly marked pending, not invented.
 
 ## 13. CI and GitHub Pages
 
@@ -374,9 +376,9 @@ Target two minutes maximum, 1080p footage with separate voice-over. Use120-secon
 “Ada scans the QR code on a camera and rents it. One transaction pays the fee and a refundable deposit. Watch the split: twenty percent of the fee goes straight into this camera's repair reserve. It can't be spent on anything else.”
 
 **0:42–1:05 — return photo → countdown → actual scheduling evidence → refund → message:**
-“When she brings it back, the operator marks it returned with a photo. Now the dispute window starts. Here's the Portaldot-native part: our Cronpot module hands the refund to Portaldot's built-in on-chain scheduler. No one presses a button. When the window closes, the chain itself executes the refund, and the community gets notified in DeBox.”
+“When she brings it back, the operator records the return with a photo and starts the dispute window. Refunds execute automatically via Cronpot; execution is permissionless and our keeper runs it. The contract checks the deadline and rental status before returning the deposit.”
 
-In keeper mode, this section MUST instead state that execution is permissionless and the relayer executes the due job. Name Telegram if that is what delivered the notification. Never use native-scheduler footage/claims without actual successful evidence.
+The signed native Scheduler probe returned `BadOrigin`; the current demo uses keeper execution. Show and name Telegram only after actual delivered notifications are recorded. Native Scheduler refund execution must not be claimed.
 
 **1:05–1:25 — second rental → damage claim30% → arbiter approval → reserve growth:**
 “If something is damaged, the operator opens a claim with evidence. It needs two of three: operator, renter, or a neutral arbiter. The arbiter approves, the deduction goes into the camera's repair fund, and the rest returns to the renter.”

@@ -1,5 +1,7 @@
 import { ArrowUpRight, FileCheck2, Radio } from "lucide-react";
 import { isAddress } from "viem";
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { Badge, EmptyState, PageHeading } from "@/components/ui";
 import { publicConfig, readDeployment } from "@/lib/server-config";
 import {
@@ -9,6 +11,12 @@ import {
   transactionsFrom,
   type ProofTransaction,
 } from "@/lib/proof";
+import {
+  KEEPER_EXPLANATION,
+  hasGeneratedDeck,
+  executorJobs,
+  operationalCards,
+} from "@/lib/operational-proof";
 export const dynamic = "force-dynamic";
 export default async function Proof() {
   const [config, probe, deployment, demo, funded] = await Promise.all([
@@ -18,21 +26,53 @@ export default async function Proof() {
     readDeployment("demo-run.json"),
     readDeployment("funded-probe.json"),
   ]);
+  const [
+    deploymentStatus,
+    chainStatus,
+    rpcDiscovery,
+    hosting,
+    notifications,
+    submission,
+  ] = await Promise.all([
+    readDeployment("deployment-status.json"),
+    readDeployment("chain-status-2026-10-31.json"),
+    readDeployment("rpc-discovery.json"),
+    readDeployment("hosting-status.json"),
+    readDeployment("notification-status.json"),
+    readDeployment("submission-materials.json"),
+  ]);
   let jobs: unknown = null;
   let jobsError: string | null = null;
+  let executorHealth: Record<string, any> | null = null;
   const base = process.env.CHAIN_INDEXER_URL ?? process.env.RELAYER_URL;
   if (base) {
-    try {
-      const response = await fetch(new URL("/jobs", base), {
+    const readExecutor = async (route: string) => {
+      const response = await fetch(new URL(route, base), {
         cache: "no-store",
         signal: AbortSignal.timeout(6000),
       });
       if (!response.ok)
         throw new Error(`Executor service returned ${response.status}.`);
-      jobs = await response.json();
-    } catch {
-      jobsError = "The executor evidence service is currently unavailable.";
-    }
+      const body = await response.json();
+      if (!body || typeof body !== "object" || Array.isArray(body))
+        throw new Error("Invalid executor response");
+      return body;
+    };
+    const [jobResponse, healthResponse] = await Promise.allSettled([
+      readExecutor("/jobs"),
+      readExecutor("/health"),
+    ]);
+    if (jobResponse.status === "fulfilled") jobs = jobResponse.value;
+    else jobsError = "The executor evidence service is currently unavailable.";
+    executorHealth =
+      healthResponse.status === "fulfilled"
+        ? { ...healthResponse.value, observedAt: new Date().toISOString() }
+        : {
+            status: "Unavailable",
+            observedAt: new Date().toISOString(),
+            error:
+              "The configured keeper health endpoint could not be reached.",
+          };
   }
   const deployTransactions = transactionsFrom(deployment, "Deployment");
   const demoTransactions = transactionsFrom(demo, "Demonstration");
@@ -41,6 +81,20 @@ export default async function Proof() {
     ...transactionsFrom(funded, "Funded Phase 0"),
   ];
   const schedulerTransactions = transactionsFrom(jobs, "Executor");
+  const jobList = executorJobs(jobs);
+  const operations = operationalCards({
+    deploymentStatus,
+    chainStatus,
+    rpcDiscovery,
+    hosting,
+    notifications,
+    submission,
+    executorHealth,
+  });
+  const deckAvailable = hasGeneratedDeck(
+    submission,
+    existsSync(path.join(process.cwd(), "public/metermend-pitch.pdf")),
+  );
   const rows = probeRows({
     ...probe,
     checks: { ...probe?.checks, ...funded?.checks },
@@ -110,13 +164,12 @@ export default async function Proof() {
           <span className="eyebrow">
             <Radio size={14} /> EXECUTION & STORAGE
           </span>
-          <h2 style={{ marginTop: 16 }}>
-            {config.cronpotMode === "native"
-              ? "Native scheduler"
-              : config.cronpotMode === "keeper"
-                ? "Permissionless keeper"
-                : "Execution mode unverified"}
-          </h2>
+          <h2 style={{ marginTop: 16 }}>Permissionless keeper</h2>
+          <p>{KEEPER_EXPLANATION}</p>
+          <p className="small muted">
+            The signed native Scheduler probe returned BadOrigin (P5). No native
+            Scheduler refund execution is claimed.
+          </p>
           <dl className="detail-list">
             <div>
               <dt>Funded units check</dt>
@@ -176,6 +229,46 @@ export default async function Proof() {
           </dl>
         </section>
       </div>
+      <section className="proof-section">
+        <div className="section-heading">
+          <h2>Submission readiness and operational evidence</h2>
+          <span className="eyebrow">TIMESTAMPED OBSERVATIONS</span>
+        </div>
+        <p>
+          These are retained observations, not a live guarantee of node health
+          or completed deployment. Pending transactions remain separate from
+          finalized receipts.
+        </p>
+        {operations.map((operation) => (
+          <article className="panel proof-transaction" key={operation.title}>
+            <div className="section-heading">
+              <h3>{operation.title}</h3>
+              <Badge>{operation.status}</Badge>
+            </div>
+            <p className="small muted">
+              Observed: {operation.observedAt ?? "Not recorded"}
+            </p>
+            <dl className="detail-list">
+              {operation.fields.map((field) => (
+                <div key={field.label}>
+                  <dt>{field.label}</dt>
+                  <dd className="hash">{field.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </article>
+        ))}
+        {deckAvailable && (
+          <a
+            className="button"
+            href="/metermend-pitch.pdf"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Open pitch deck PDF <ArrowUpRight size={16} />
+          </a>
+        )}
+      </section>
       <section className="proof-section">
         <div className="section-heading">
           <h2>Application contract addresses</h2>
@@ -314,7 +407,7 @@ export default async function Proof() {
         empty="No signed probe transaction identifier has been recorded."
       />
       <TransactionSection
-        title="Scheduler & keeper evidence"
+        title="Cronpot keeper execution evidence"
         records={schedulerTransactions}
         wss={config.wssUrl}
         empty={
@@ -322,13 +415,51 @@ export default async function Proof() {
           "No executor transaction evidence is available from the persisted service."
         }
       />
+      <section className="proof-section">
+        <div className="section-heading">
+          <h2>Keeper job list</h2>
+          <span className="eyebrow">{jobList.length} JOBS</span>
+        </div>
+        {jobList.length ? (
+          <div className="proof-table-wrap">
+            <table className="proof-table">
+              <thead>
+                <tr>
+                  <th>JOB</th>
+                  <th>STATE</th>
+                  <th>EXECUTION</th>
+                  <th>DUE AT (UNIX SECONDS)</th>
+                  <th>ATTEMPTS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {jobList.map((job) => (
+                  <tr key={job.id}>
+                    <td>{job.id}</td>
+                    <td>{job.state}</td>
+                    <td>{job.scheduling}</td>
+                    <td>{job.executeAfter}</td>
+                    <td>{job.attempts}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="callout">
+            {jobsError ??
+              (base
+                ? "No jobs were returned by the configured keeper."
+                : "The persistent keeper service has not been configured.")}
+          </p>
+        )}
+      </section>
       <p className="proof-note">
-        Native scheduler execution can occur at block initialization without an
-        extrinsic hash. Those records retain their block hash and event
-        position. Testnet history may be pruned; the persisted event ledger and
-        permanent proof report retain observations. A manual refund may leave a
-        later scheduled job that safely fails because the deposit is already
-        closed.
+        Refunds execute automatically via Cronpot; execution is permissionless
+        and our keeper runs it. Testnet history may be pruned; the persisted
+        event ledger and permanent proof report retain observations. A manual
+        refund may leave a later scheduled job that safely fails because the
+        deposit is already closed.
       </p>
     </div>
   );

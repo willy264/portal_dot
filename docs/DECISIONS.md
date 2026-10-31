@@ -59,3 +59,17 @@ Commit and push each completed verified feature separately, as requested. Root c
 An additional 380 tPOT reached the dedicated deployer, taking its free balance to 446.48817150285716 tPOT. V3 genesis, runtime spec 3002 and runtime code hash remain unchanged. Fresh unsigned simulations still estimate 383.4735 tPOT for Cronpot and 774.5265 tPOT for MeterMend. The guarded deployment has not submitted either contract because the available balance remains below its full-plan budget.
 
 The web app is published at https://metermend.vercel.app/ with Node 22 and the monorepo project root set to `apps/web`. Anonymous home, proof and public-configuration requests succeeded. The configuration retains verified P4/P6 data and reports missing application contracts and persistent evidence storage honestly. Persistent keeper/evidence hosting and notification credentials remain separate requirements.
+
+## October 31 submission deadline and chain recovery
+
+The internal submission deadline is **November 5, 2026, 22:00 WAT** (21:00 UTC), ahead of the supplied official cutoff of **November 6, 05:00 WAT** (04:00 UTC). A blocker lasting more than 45 minutes is recorded here, reported to the user, and work moves to the next unblocked submission item.
+
+Cronpot deployment was broadcast at approximately 13:38 UTC on October 31 while the connected V3 node's finalized head remained at block 265122. At 13:46 UTC the node reported zero peers, best block 265130, and the original transaction still in its pending pool. No replacement was submitted. This blocked deployment for more than 45 minutes; work continued on keeper wording, the pitch PDF, submission answers, hosting preparation and proof reporting. The [retained status records](../deployments/chain-status-2026-10-31.json) distinguish each timestamped observation.
+
+The node later progressed. The original Cronpot transaction `0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93` was found at finalized block **265131**, extrinsic **2**, with `System.ExtrinsicSuccess` and `Revive.Instantiated`. The recovered address is **`0x41635a685448cfa86da1600656f103a211e398f4`**. The deployer's finalized nonce and `system_accountNextIndex` were both **7**, and the pending pool was empty before proceeding. The original journal was recovered, not replaced, and no duplicate Cronpot deployment was made.
+
+MeterMend deployment then used that confirmed Cronpot address and deployer nonce 7. Its transaction `0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782` remains subject to the same hash, pool, nonce and finalized-receipt checks before any retry. Later zero-peer observations show intermittent connectivity; a successful identity check is not a guarantee that finality will continue. The latest [deployment status](../deployments/deployment-status.json) is authoritative for the current pending operation.
+
+All application and submission copy uses: **“refunds execute automatically via Cronpot; execution is permissionless and our keeper runs it.”** The signed native Scheduler probe returned `BadOrigin`; it is a documented limitation, not live refund execution evidence. DeBox remains the target integration; Telegram is the selected delivered channel, with only actual event-derived messages counted as delivery proof.
+
+The user selected Render for persistent services and will handle the physical phone/printed-QR rehearsal. Account authentication and a concrete paid-service configuration are being prepared; a configured deployment is not claimed as a running host.

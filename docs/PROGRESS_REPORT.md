@@ -1,12 +1,22 @@
 # MeterMend progress report
 
-**October 29, 2026 · engineering baseline reviewed at `f54bb1b`; logo added in `0a93b70`**
+**Updated October 31, 2026 · previous committed baseline `7a76f70`**
 
-MeterMend's contracts, web interface, chain client, workers and deployment scripts are implemented and tested. The web app and permanent proof report are public. A small contract and funded runtime probes have genuinely run on Portaldot V3. **Cronpot and MeterMend themselves are not yet deployed; their live rental demonstration remains blocked by test-token funding.**
+MeterMend's contracts, web interface, chain client, workers and deployment scripts are implemented and tested. The web app and permanent proof report are public. **Cronpot is now deployed at `0x41635a685448cfa86da1600656f103a211e398f4`, finalized in block 265131. MeterMend's deployment has been broadcast and awaits finalization; the live rental demonstration remains pending.**
 
 [Public app](https://metermend.vercel.app/) · [Application proof page](https://metermend.vercel.app/proof) · [Permanent proof report](https://willy264.github.io/portal_dot/) · [Repository](https://github.com/willy264/portal_dot)
 
 All three public pages returned HTTP 200 during this review. Their current content distinguishes runtime verification from a completed application deployment.
+
+## October 31 continuation
+
+- Refreshed the finalized funding snapshot and verified the runtime identity and compiled artifact hashes. The deployer holds 1466.24 tPOT, above the 1414.60 tPOT deployment guard; the renter, arbiter and relayer accounts still need funding.
+- Fixed historical event pagination to retain finalized block hashes, including empty blocks. SQLite serves retained pages without contacting a pruned or unavailable node; older unverifiable page boundaries report an explicit gap.
+- Added durable native-photo submission recovery, validated per-photo storage, account locks across tabs, and global pending-upload recovery after reload. Preparation failures are distinguished from uncertain submissions.
+- Fixed the WebSocket provider's unintended five-second connection limit and bounded the optional EVM identity check so its timeout allows native verification to complete. Native chain identity and denomination checks remain mandatory.
+- Verified Telegram bot credentials and the configured destination using read-only requests. No message was sent; delivery remains pending.
+- Recovered the original Cronpot transaction after the node resumed, checking its exact hash, finalized dispatch result and account nonce. No replacement Cronpot was submitted. MeterMend uses the confirmed Cronpot address and has its own pending journal entry.
+- Prepared the ten-slide pitch PDF, submission answers, Render configuration and physical-phone rehearsal materials. Each artifact's publication and live verification status is recorded separately. Internal submission deadline: **November 5, 22:00 WAT**.
 
 ## Logo and brand files
 
@@ -61,36 +71,38 @@ The [deployment manifest](../deployments/portaldot-v3.json) and [funded probe ev
 
 ## Verification
 
-[CI passed for `f54bb1b`](https://github.com/willy264/portal_dot/actions/runs/40879526520), including contract checks, TypeScript checks and the production web build.
+[CI passed for the previous committed baseline `7a76f70`](https://github.com/willy264/portal_dot/actions/runs/40886332103), including contract checks, TypeScript checks and the production web build. The October 31 changes passed the affected package typechecks, script checks and production web build locally. The contract suite is unchanged.
 
 | Test suite                      |  Passed |
 | ------------------------------- | ------: |
 | Foundry contracts               |      43 |
-| Chain client                    |      26 |
-| Shared service code             |       6 |
-| Refund relayer                  |      10 |
+| Chain client                    |      31 |
+| Shared service code             |       8 |
+| Refund relayer                  |      16 |
 | Community bot                   |       5 |
-| Web                             |      53 |
+| Web                             |      62 |
 | Scripts                         |      15 |
-| **TypeScript/JavaScript total** | **115** |
+| **TypeScript/JavaScript total** | **137** |
 
 Contract tests cover accounting, permissions, disputes, refunds, callback failures and fuzzed fee splits. Browser recovery tests cover uncertain submissions, persistence failure and concurrent tabs.
 
-**22 public-browser checks** passed at desktop and mobile widths with no recorded browser exceptions. They cover navigation, responsive layout, dark mode, missing-wallet states, image-byte verification and recovery after reload. The image backend was intercepted in memory, and recovery used an explicitly synthetic transaction record; these checks did not submit a payment or prove live storage delivery. The [Pages publishing run](https://github.com/willy264/portal_dot/actions/runs/40879104792) also passed.
+**29 local production-browser checks** passed at desktop and mobile widths with no recorded browser exceptions. They cover navigation, responsive layout, dark mode, missing-wallet states, image-byte verification, contract and native-upload recovery after reload, missing hashes and corrupt browser storage. The image backend was intercepted in memory, and recovery used explicitly synthetic records in an isolated browser profile; these checks did not submit a payment or prove live storage delivery. The previous [Pages publishing run](https://github.com/willy264/portal_dot/actions/runs/40879104792) also passed.
 
 ## Funding and remaining work
 
-The latest [saved funding snapshot](../deployments/funding-status.json), taken October 29 at finalized block **238486**, records:
+The latest [saved funding snapshot](../deployments/funding-status.json), taken October 31 at finalized block **265063**, records:
 
-| Deployment budget                             |       tPOT |
-| --------------------------------------------- | ---------: |
-| Deployer balance                              |     446.49 |
-| Remaining application storage estimate        |    1158.00 |
-| Deployment guard: storage + 20% + 25 retained |    1414.60 |
-| **Shortfall to that guard**                   | **968.11** |
+| Deployment budget                             |     tPOT |
+| --------------------------------------------- | -------: |
+| Deployer balance                              |  1466.24 |
+| Remaining application storage estimate        |  1158.00 |
+| Deployment guard: storage + 20% + 25 retained |  1414.60 |
+| **Shortfall to that guard**                   | **0.00** |
 
-Transaction fees, role funding and further item/rental state require additional funds beyond that guard. No underfunded application deployment was submitted.
+This is the predeployment funding snapshot. Cronpot subsequently finalized in transaction `0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93`, block **265131**, extrinsic **2**. The [deployment journal](../deployments/deploy-journal.json) retains its original nonce 5 and recovered successful receipt. Before the next deployment, the finalized account nonce and `system_accountNextIndex` were both 7, and the pool was empty.
 
-Remaining work is to fund and deploy both application contracts; run and preserve the automatic refund, dispute, repair and unchanged-reserve proof; activate a persistent worker/evidence host; demonstrate delivered DeBox or Telegram messages; and record/upload the two-minute video before updating the hackathon BUIDL. The [recording plan](DEMO_VIDEO.md) is prepared. Public video and final submission remain pending.
+MeterMend deployment transaction `0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782` used nonce **7** and the confirmed Cronpot address. The latest [node status evidence](../deployments/deployment-status.json) records it in the pending pool, with finalized head **265321**, best head **265334**, and zero peers. Finalization has timed out again. These are timestamped observations of the connected node, not a claim about every V3 node. Resume only after rechecking the hash, account nonce and pool; retain the journal so the script reconciles the original outcome before any retry.
+
+Remaining work is to confirm MeterMend and fund the other roles; seed the equipment; run and preserve the automatic refund, dispute, repair, rejected reserve-access attempt and unchanged-reserve proof; activate persistent Render hosting; demonstrate delivered Telegram messages; and record/upload the video before updating the BUIDL. The [recording plan](DEMO_VIDEO.md) targets two minutes and stays under 2:30. Public video and final submission remain pending.
 
 Physical damage decisions still rely on people. Missing dispute votes can delay settlement; native evidence expires; pruned chain history requires retained records. Labeled demo-image fixtures test the workflow without claiming an actual physical rental or repair.

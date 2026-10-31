@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "network": "portaldot-v3-testnet",
+  "mode": "read-only",
+  "signedTransactions": 0,
+  "observations": [
+    {
+      "observedAt": "2026-10-31T13:46:36.2787294Z",
+      "network": "portaldot-v3-testnet",
+      "endpoint": "https://test-node-v3.portaldot.dev",
+      "operation": "Cronpot deployment",
+      "txHash": "0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93",
+      "journal": {
+        "path": "deployments/deploy-journal.json",
+        "step": "deploy-Cronpot",
+        "startBlock": 265122,
+        "nonce": 5,
+        "state": "unknown",
+        "startedAt": "2026-10-31T13:37:48.012Z"
+      },
+      "finalized": {
+        "number": 265122,
+        "hash": "0xc7ef0ad8561ec99f418a9a9a3707b1bf651e9c0b9ea1de3f17f518766a440b60"
+      },
+      "best": {
+        "number": 265130,
+        "hash": "0x5d50596e0f091e61f6aab83538d745668689db1b3dd233bbdcba1be5477bed09"
+      },
+      "health": {
+        "peers": 0,
+        "isSyncing": false,
+        "shouldHavePeers": true
+      },
+      "inclusion": {
+        "finalizedOutcome": "unknown",
+        "status": "observed-in-node-pending-pool",
+        "pendingPool": {
+          "matched": true,
+          "index": 1,
+          "totalExtrinsics": 2
+        },
+        "searchedBlocks": {
+          "from": 265122,
+          "through": 265130,
+          "total": 9,
+          "matchingExtrinsics": 0
+        },
+        "contractAddress": null
+      },
+      "methods": [
+        "chain_getFinalizedHead",
+        "chain_getHeader",
+        "chain_getBlockHash",
+        "chain_getBlock",
+        "system_health",
+        "author_pendingExtrinsics"
+      ],
+      "notes": [
+        "Read-only JSON-RPC calls via PowerShell Invoke-RestMethod. Each raw SCALE extrinsic was hashed with Blake2-256 and compared with the journal transaction hash.",
+        "Only block 265122 is finalized in the searched range; blocks 265123 through 265130 are unfinalized observations.",
+        "The transaction is present in this node's pending pool. Pool membership does not prove inclusion, deployment success or eventual finality.",
+        "The finalized head was unchanged across repeated reads. Do not resubmit or replace the uncertain deployment before authoritative reconciliation."
+      ],
+      "source": "Earlier preserved deployment-status snapshot"
+    },
+    {
+      "observedAt": "2026-10-31T14:50:32.528Z",
+      "startedAt": "2026-10-31T14:50:31.577Z",
+      "network": "portaldot-v3-testnet",
+      "endpoint": "wss://test-node-v3.portaldot.dev/",
+      "transport": "WebSocket",
+      "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+      "identityVerified": true,
+      "runtime": {
+        "specVersion": 3002,
+        "codeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2"
+      },
+      "operation": "Cronpot deployment reconciliation",
+      "txHash": "0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93",
+      "journal": {
+        "path": "deployments/deploy-journal.json",
+        "step": "deploy-Cronpot",
+        "startBlock": 265122,
+        "nonce": 5,
+        "state": "confirmed",
+        "startedAt": "2026-10-31T13:37:48.012Z"
+      },
+      "finalized": {
+        "number": 265321,
+        "hash": "0xce8592b611183d70df5271a610607d5980fcc1e5c1225adafb650451545ab411"
+      },
+      "best": {
+        "number": 265334,
+        "hash": "0x0bdc2a48d6ab29ac71f10f7645419f5403b025f0f14b7d89429955a75e82c2c6"
+      },
+      "health": {
+        "peers": 0,
+        "isSyncing": false,
+        "shouldHavePeers": true
+      },
+      "account": {
+        "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+        "submittedNonce": 5,
+        "finalizedNonce": 7,
+        "bestNonce": 7,
+        "nextIndex": 7,
+        "beforeInclusionNonce": 5,
+        "afterInclusionNonce": 7
+      },
+      "inclusion": {
+        "finalizedOutcome": "unknown",
+        "status": "included-finalized-awaiting-dispatch-decoding",
+        "included": true,
+        "finalized": true,
+        "block": 265131,
+        "blockHash": "0x11caa39423290913ceddd5ba7977e88cdc86f9bfeed463c95c8fa11cd70efbdd",
+        "extrinsicIndex": 2,
+        "pendingPool": {
+          "matched": false,
+          "index": -1,
+          "totalExtrinsics": 0
+        },
+        "searchedBlocks": {
+          "from": 265122,
+          "through": 265308,
+          "total": 187,
+          "matchingExtrinsics": 1
+        },
+        "contractAddress": null,
+        "rawEvidence": "deployments/cronpot-reconciliation.json"
+      },
+      "methods": [
+        "system_health",
+        "chain_getFinalizedHead",
+        "chain_getHeader",
+        "chain_getBlockHash",
+        "chain_getBlock",
+        "state_getStorage",
+        "state_getRuntimeVersion",
+        "state_getStorageHash",
+        "system_accountNextIndex",
+        "author_pendingExtrinsics"
+      ],
+      "notes": [
+        "Original transaction has finalized inclusion at265131. Dispatch outcome and address await decoded System.Events; no new transaction was submitted.",
+        "The canonical raw extrinsic and System.Events bytes are retained before node pruning.",
+        "Deployer nonce is7 on finalized and best state; pool is empty. Nonce advanced5 to7 in the same original deployment block, with one deployer-signed extrinsic in the scanned range.",
+        "This endpoint resumed after its earlier stall. Peer count is a point-in-time observation and is not alone a measure of block progress."
+      ]
+    },
+    {
+      "observedAt": "2026-10-31T14:55:59.274Z",
+      "startedAt": "2026-10-31T14:55:58.002Z",
+      "network": "portaldot-v3-testnet",
+      "endpoint": "wss://test-node-v3.portaldot.dev/",
+      "transport": "WebSocket",
+      "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+      "identityVerified": true,
+      "operation": "MeterMend deployment",
+      "txHash": "0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782",
+      "journal": {
+        "path": "deployments/deploy-journal.json",
+        "step": "deploy-MeterMend",
+        "startBlock": 265321,
+        "nonce": 7,
+        "state": "submitted",
+        "startedAt": "2026-10-31T14:53:39.505Z"
+      },
+      "finalized": {
+        "number": 265321,
+        "hash": "0xce8592b611183d70df5271a610607d5980fcc1e5c1225adafb650451545ab411"
+      },
+      "best": {
+        "number": 265334,
+        "hash": "0x0bdc2a48d6ab29ac71f10f7645419f5403b025f0f14b7d89429955a75e82c2c6"
+      },
+      "health": {
+        "peers": 0,
+        "isSyncing": false,
+        "shouldHavePeers": true
+      },
+      "account": {
+        "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+        "submittedNonce": 7,
+        "finalizedNonce": 7,
+        "bestNonce": 7,
+        "nextIndex": 8
+      },
+      "inclusion": {
+        "finalizedOutcome": "unknown",
+        "status": "observed-in-node-pending-pool",
+        "included": false,
+        "finalized": false,
+        "block": null,
+        "blockHash": null,
+        "extrinsicIndex": null,
+        "pendingPool": {
+          "matched": true,
+          "index": 1,
+          "totalExtrinsics": 2
+        },
+        "contractAddress": null
+      },
+      "confirmedContracts": {
+        "Cronpot": {
+          "address": "0x41635a685448cfa86da1600656f103a211e398f4",
+          "txHash": "0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93",
+          "block": 265131,
+          "blockHash": "0x11caa39423290913ceddd5ba7977e88cdc86f9bfeed463c95c8fa11cd70efbdd",
+          "statusEvidence": "deployments/cronpot-deployment-status.json"
+        }
+      },
+      "methods": [
+        "system_health",
+        "chain_getFinalizedHead",
+        "chain_getBlockHash",
+        "chain_getHeader",
+        "state_getStorage",
+        "state_getRuntimeVersion",
+        "state_getStorageHash",
+        "system_accountNextIndex",
+        "author_pendingExtrinsics"
+      ],
+      "notes": [
+        "Read-only WebSocket snapshot; pool entries matched by Blake2-256 of exact raw SCALE extrinsics.",
+        "Nonce from finalized and best System.Account is separate from pool-aware system_accountNextIndex.",
+        "No retry or replacement was submitted by this check. The journal remains authoritative for submission recovery."
+      ]
+    }
+  ],
+  "progress": {
+    "from": "2026-10-31T13:46:36.2787294Z",
+    "through": "2026-10-31T14:55:59.274Z",
+    "bestBlocksAdded": 204,
+    "finalizedBlocksAdded": 199,
+    "newBlocksObserved": true,
+    "finalityAdvanced": true
+  },
+  "recentWindow": {
+    "from": "2026-10-31T14:50:32.528Z",
+    "through": "2026-10-31T14:55:59.274Z",
+    "bestBlocksAdded": 0,
+    "finalizedBlocksAdded": 0
+  }
+}

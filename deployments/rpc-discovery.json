@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "network": "portaldot-v3-testnet",
+  "checkedOn": "2026-10-31",
+  "mode": "read-only",
+  "status": "no-verified-alternative",
+  "summary": "The original V3 endpoint resumed block production and finalized the original deployment transaction. Public documentation and participant source files did not identify a second verified native V3 RPC endpoint.",
+  "expectedGenesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+  "candidates": [
+    {
+      "endpoint": "wss://test-node-v3.portaldot.dev",
+      "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+      "verified": true,
+      "alternative": false,
+      "evidence": "deployments/chain-status-2026-10-31.json",
+      "status": "Original endpoint; resumed after the recorded stall. Peer count varies between observations."
+    },
+    {
+      "endpoint": "https://test-evm-rpc-v3.portaldot.dev",
+      "verified": false,
+      "alternative": false,
+      "status": "Known EVM facade, not established as a separate native Substrate RPC. No native endpoint switch was made."
+    },
+    {
+      "endpoint": "wss://portaldot.philotheephilix.in",
+      "verified": false,
+      "alternative": false,
+      "status": "Participant source explicitly targets the older rent-era pallet-contracts runtime. Not treated as a V3 alternative and not used."
+    },
+    {
+      "endpoint": "ws://portaldot.maxfugui.top/ws",
+      "verified": false,
+      "alternative": false,
+      "status": "Participant README explicitly identifies a hosted substrate-contracts-node development chain. Not treated as V3 and not used."
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://github.com/Venkat5599/portalcanary/blob/main/docs/TESTNET.md",
+      "finding": "Lists the same V3 native/EVM endpoints and matching V3 genesis; identifies earlier feso-apps.xyz endpoints as retired."
+    },
+    {
+      "url": "https://github.com/0xNana/RIFT/blob/main/lib/endpoints.js",
+      "finding": "Lists the same V3 native/EVM endpoints and the same expected genesis."
+    },
+    {
+      "url": "https://github.com/fazeli1977-dot/portapulse/blob/main/src/lib/endpoints.js",
+      "finding": "V3 configuration uses the original endpoint; other choices are old mainnet and localhost, not alternative V3 nodes."
+    },
+    {
+      "url": "https://portaldot-dev.readthedocs.io/en/latest/chain-info.html",
+      "finding": "Published developer documentation still lists old mainnet. It was excluded from V3 operations."
+    },
+    {
+      "url": "https://github.com/freedanjeremiah/portaldot-hackathon-2026-inkport-dmk",
+      "finding": "Participant README documents its rent-era pallet-contracts endpoint; its runtime scope differs from V3 revive."
+    },
+    {
+      "url": "https://github.com/MaxxxDong/portaldot-hackathon-2026-world-cup-copilot-max",
+      "finding": "Participant README labels its alternate host as a development contracts chain."
+    }
+  ],
+  "limitations": [
+    "Public search covered current endpoint references and participant source files; no exhaustive inventory of privately shared endpoints is claimed.",
+    "The Portaldot Discord invite and official X feed did not expose announcement contents to this environment. The user should check announcements or send the prepared Discord draft if reliability problems continue.",
+    "No old-mainnet, development-chain, or unverified endpoint was used for deployment or value movement. Any future alternative must match the expected genesis before use."
+  ],
+  "discordDraft": "docs/DISCORD_STATUS.md",
+  "messagesSent": 0
+}

@@ -1,0 +1,387 @@
+{
+  "schemaVersion": 1,
+  "network": "portaldot-v3-testnet",
+  "steps": {
+    "deploy-Cronpot": {
+      "intent": {
+        "name": "Cronpot",
+        "bytecodeSha256": "9e397e5e534f793100b95df5bc7a28633a3f28db7026ed498bd0c492a883d689",
+        "ctorData": "0x"
+      },
+      "intentHash": "62306137ba355a7aefebc6ce44559f8d9c4fc60c18feb9c4fcc628e39d0f6bc1",
+      "signer": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+      "startedAt": "2026-10-31T13:37:48.012Z",
+      "startBlock": 265122,
+      "nonce": 5,
+      "state": "confirmed",
+      "statuses": [
+        {
+          "type": "created",
+          "txHash": "0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93"
+        },
+        {
+          "type": "broadcasted",
+          "txHash": "0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93"
+        }
+      ],
+      "txHash": "0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93",
+      "error": "Finalization timed out. Reconcile this transaction hash before any retry.",
+      "evidence": {
+        "txHash": "0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93",
+        "block": 265131,
+        "blockHash": "0x11caa39423290913ceddd5ba7977e88cdc86f9bfeed463c95c8fa11cd70efbdd",
+        "extrinsicIndex": 2,
+        "events": [
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 2
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Withdraw",
+                "value": {
+                  "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "amount": "48590994135070"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Withdraw",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "amount": "48590994135070"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 2
+            },
+            "event": {
+              "type": "System",
+              "value": {
+                "type": "NewAccount",
+                "value": {
+                  "account": "5DYSV1UpVqo7tcJaaYGa4u5dRGxfbYdW8W7kcjmt52WjQ1DP"
+                }
+              }
+            },
+            "topics": [],
+            "type": "System",
+            "value": {
+              "type": "NewAccount",
+              "value": {
+                "account": "5DYSV1UpVqo7tcJaaYGa4u5dRGxfbYdW8W7kcjmt52WjQ1DP"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 2
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Endowed",
+                "value": {
+                  "account": "5DYSV1UpVqo7tcJaaYGa4u5dRGxfbYdW8W7kcjmt52WjQ1DP",
+                  "free_balance": "10000000000000"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Endowed",
+              "value": {
+                "account": "5DYSV1UpVqo7tcJaaYGa4u5dRGxfbYdW8W7kcjmt52WjQ1DP",
+                "free_balance": "10000000000000"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 2
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Minted",
+                "value": {
+                  "who": "5DYSV1UpVqo7tcJaaYGa4u5dRGxfbYdW8W7kcjmt52WjQ1DP",
+                  "amount": "10000000000000"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Minted",
+              "value": {
+                "who": "5DYSV1UpVqo7tcJaaYGa4u5dRGxfbYdW8W7kcjmt52WjQ1DP",
+                "amount": "10000000000000"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 2
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "TransferAndHold",
+                "value": {
+                  "reason": {
+                    "type": "Revive",
+                    "value": {
+                      "type": "CodeUploadDepositReserve"
+                    }
+                  },
+                  "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "dest": "5EYCAe5ijiYfhaAUBd6H9WGRTsvwFFc7GnhQkiHvBYxdvpbV",
+                  "transferred": "28614000000000000"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "TransferAndHold",
+              "value": {
+                "reason": {
+                  "type": "Revive",
+                  "value": {
+                    "type": "CodeUploadDepositReserve"
+                  }
+                },
+                "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "dest": "5EYCAe5ijiYfhaAUBd6H9WGRTsvwFFc7GnhQkiHvBYxdvpbV",
+                "transferred": "28614000000000000"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 2
+            },
+            "event": {
+              "type": "Revive",
+              "value": {
+                "type": "Instantiated",
+                "value": {
+                  "deployer": "0xa83014ba71476262795173fbbc06656546b57ec0",
+                  "contract": "0x41635a685448cfa86da1600656f103a211e398f4"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Revive",
+            "value": {
+              "type": "Instantiated",
+              "value": {
+                "deployer": "0xa83014ba71476262795173fbbc06656546b57ec0",
+                "contract": "0x41635a685448cfa86da1600656f103a211e398f4"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 2
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "TransferAndHold",
+                "value": {
+                  "reason": {
+                    "type": "Revive",
+                    "value": {
+                      "type": "StorageDepositReserve"
+                    }
+                  },
+                  "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "dest": "5DYSV1UpVqo7tcJaaYGa4u5dRGxfbYdW8W7kcjmt52WjQ1DP",
+                  "transferred": "9733350000000000"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "TransferAndHold",
+              "value": {
+                "reason": {
+                  "type": "Revive",
+                  "value": {
+                    "type": "StorageDepositReserve"
+                  }
+                },
+                "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "dest": "5DYSV1UpVqo7tcJaaYGa4u5dRGxfbYdW8W7kcjmt52WjQ1DP",
+                "transferred": "9733350000000000"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 2
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Deposit",
+                "value": {
+                  "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "amount": "17828464"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Deposit",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "amount": "17828464"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 2
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Deposit",
+                "value": {
+                  "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+                  "amount": "48590976306606"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Deposit",
+              "value": {
+                "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+                "amount": "48590976306606"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 2
+            },
+            "event": {
+              "type": "TransactionPayment",
+              "value": {
+                "type": "TransactionFeePaid",
+                "value": {
+                  "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "actual_fee": "48590976306606",
+                  "tip": "0"
+                }
+              }
+            },
+            "topics": [],
+            "type": "TransactionPayment",
+            "value": {
+              "type": "TransactionFeePaid",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "actual_fee": "48590976306606",
+                "tip": "0"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 2
+            },
+            "event": {
+              "type": "System",
+              "value": {
+                "type": "ExtrinsicSuccess",
+                "value": {
+                  "dispatch_info": {
+                    "weight": {
+                      "ref_time": "1792538736",
+                      "proof_size": "29264"
+                    },
+                    "class": {
+                      "type": "Normal"
+                    },
+                    "pays_fee": {
+                      "type": "Yes"
+                    }
+                  }
+                }
+              }
+            },
+            "topics": [],
+            "type": "System",
+            "value": {
+              "type": "ExtrinsicSuccess",
+              "value": {
+                "dispatch_info": {
+                  "weight": {
+                    "ref_time": "1792538736",
+                    "proof_size": "29264"
+                  },
+                  "class": {
+                    "type": "Normal"
+                  },
+                  "pays_fee": {
+                    "type": "Yes"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "deploy-MeterMend": {
+      "intent": {
+        "name": "MeterMend",
+        "bytecodeSha256": "45d0d5526febdb861df841afbaa0b9021e0f34306d5acf3fff5b169f9079d2be",
+        "ctorData": "0x00000000000000000000000041635a685448cfa86da1600656f103a211e398f400000000000000000000000000000000000000000000000000038d7ea4c68000"
+      },
+      "intentHash": "83de2e24a71bee72297c2c4fac69fc2720034cfe1352e6ad636e9516e7095602",
+      "signer": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+      "startedAt": "2026-10-31T14:53:39.505Z",
+      "startBlock": 265321,
+      "nonce": 7,
+      "state": "unknown",
+      "statuses": [
+        {
+          "type": "created",
+          "txHash": "0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782"
+        },
+        {
+          "type": "broadcasted",
+          "txHash": "0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782"
+        }
+      ],
+      "txHash": "0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782",
+      "error": "Finalization timed out. Reconcile this transaction hash before any retry."
+    }
+  }
+}

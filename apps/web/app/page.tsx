@@ -36,7 +36,7 @@ const steps = [
   ],
   [
     "Return the deposit",
-    "After the dispute window, the refund can be finalized by anyone or an executor.",
+    "Refunds execute automatically via Cronpot; execution is permissionless and our keeper runs it.",
   ],
   [
     "Keep it in use",

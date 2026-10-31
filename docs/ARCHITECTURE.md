@@ -9,10 +9,8 @@ flowchart LR
   MM --> Cron[Cronpot job registry]
   Cron --> Events[Finalized events]
   Events --> Relayer[Durable SQLite relayer]
-  Relayer --> Scheduler[Native scheduler if funded probe passes]
-  Scheduler --> Revive
-  Relayer -->|keeper fallback| Revive
-  Events --> Bot[Durable DeBox outbox]
+  Relayer -->|permissionless keeper| Revive
+  Events --> Bot[Durable Telegram outbox / DeBox target]
   Bot --> Group[Community group]
   Relayer --> Web
   Evidence[Persistent evidence bytes + SHA-256] --> Web
@@ -25,7 +23,7 @@ A rental atomically splits its fee into the item's reserve and the operator's wi
 
 The operator's damage proposal is one approval. Either the distinct renter or arbiter may supply the second approval. Both must reject to deny the deduction. Approved deductions replenish the item's reserve. A repair payout requires an operator proposal and arbiter approval; income withdrawal cannot access reserves.
 
-Cronpot changes liveness, not permission to receive funds. MeterMend checks rental status and chain timestamp on every finalization. Anybody can finalize directly when permitted. A cancelled, delayed or failed job cannot override a dispute. Cronpot uses a bounded target call, checks adequate outer gas and defers tips when an executor refuses payment.
+Refunds execute automatically via Cronpot; execution is permissionless and our keeper runs it. The signed native Scheduler probe returned `BadOrigin` (P5), so native Scheduler is not part of this application's refund execution path. MeterMend checks rental status and chain timestamp on every finalization. Anybody can finalize directly when permitted. A cancelled, delayed or failed job cannot override a dispute. Cronpot uses a bounded target call, checks adequate outer gas and defers tips when an executor refuses payment.
 
 ## Persistence and recovery
 

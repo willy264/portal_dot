@@ -15,6 +15,8 @@ Ready to paste into the Portaldot Discord support ticket:
 
 The Ping deployment and funded probes have now completed. The remaining application storage estimate is 1158 tPOT before fees and demo state. On October 29 the deployer holds 446.48817150285716 tPOT after an additional 380 tPOT arrived. The deployment guard requires 1414.6 tPOT (the two storage estimates plus 20% and 25 tPOT retained). Another 1500 tPOT was requested to cover the current shortfall and subsequent role/demo costs. No application deployment transaction has been submitted.
 
+The latest October 31 [funding snapshot](../deployments/funding-status.json), at finalized block **265063**, verifies **1466.24307150285716 tPOT** in the deployer. The **1414.6 tPOT deployment guard now passes**, with the compiled artifact hashes still matching the budget. The renter, arbiter and relayer accounts have not yet been funded. This snapshot does not establish deployment or cover an already-completed live demo; fees, role funding and subsequent contract storage remain separate costs. The older request text above is retained as history and should not be sent as a current shortfall claim.
+
 The table above preserves the October 27 predeployment estimate. The refreshed October 29 simulation in `budget.json` quotes 12.69 tPOT for another Ping instance because its code is already uploaded; it does not change either application's 1158 tPOT combined estimate.
 
 No recovery phrase or private key is needed for this request. The support message has been prepared, not sent by the build agent.

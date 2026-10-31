@@ -1,0 +1,85 @@
+{
+  "observedAt": "2026-10-31T14:50:32.528Z",
+  "startedAt": "2026-10-31T14:50:31.577Z",
+  "network": "portaldot-v3-testnet",
+  "endpoint": "wss://test-node-v3.portaldot.dev/",
+  "transport": "WebSocket",
+  "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+  "identityVerified": true,
+  "runtime": {
+    "specVersion": 3002,
+    "codeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2"
+  },
+  "operation": "Cronpot deployment",
+  "txHash": "0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93",
+  "journal": {
+    "path": "deployments/deploy-journal.json",
+    "step": "deploy-Cronpot",
+    "startBlock": 265122,
+    "nonce": 5,
+    "state": "confirmed",
+    "startedAt": "2026-10-31T13:37:48.012Z"
+  },
+  "finalized": {
+    "number": 265321,
+    "hash": "0xce8592b611183d70df5271a610607d5980fcc1e5c1225adafb650451545ab411"
+  },
+  "best": {
+    "number": 265334,
+    "hash": "0x0bdc2a48d6ab29ac71f10f7645419f5403b025f0f14b7d89429955a75e82c2c6"
+  },
+  "health": {
+    "peers": 0,
+    "isSyncing": false,
+    "shouldHavePeers": true
+  },
+  "account": {
+    "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+    "submittedNonce": 5,
+    "finalizedNonce": 7,
+    "bestNonce": 7,
+    "nextIndex": 7,
+    "beforeInclusionNonce": 5,
+    "afterInclusionNonce": 7
+  },
+  "inclusion": {
+    "finalizedOutcome": "success",
+    "status": "finalized-success",
+    "included": true,
+    "finalized": true,
+    "block": 265131,
+    "blockHash": "0x11caa39423290913ceddd5ba7977e88cdc86f9bfeed463c95c8fa11cd70efbdd",
+    "extrinsicIndex": 2,
+    "pendingPool": {
+      "matched": false,
+      "index": -1,
+      "totalExtrinsics": 0
+    },
+    "searchedBlocks": {
+      "from": 265122,
+      "through": 265308,
+      "total": 187,
+      "matchingExtrinsics": 1
+    },
+    "contractAddress": "0x41635a685448cfa86da1600656f103a211e398f4",
+    "rawEvidence": "deployments/cronpot-reconciliation.json"
+  },
+  "methods": [
+    "system_health",
+    "chain_getFinalizedHead",
+    "chain_getHeader",
+    "chain_getBlockHash",
+    "chain_getBlock",
+    "state_getStorage",
+    "state_getRuntimeVersion",
+    "state_getStorageHash",
+    "system_accountNextIndex",
+    "author_pendingExtrinsics"
+  ],
+  "notes": [
+    "Original Cronpot transaction finalized successfully at265131. The recovered manifest and journal preserve its decoded dispatch and Instantiated events.",
+    "No replacement Cronpot deployment was submitted. The peer/nonce fields retain their original timestamped observation."
+  ],
+  "recordedAt": "2026-10-31T14:56:44.207Z",
+  "receipt": "deployments/portaldot-v3.json#contracts.Cronpot"
+}

@@ -8,6 +8,8 @@ on:
         "docs/DECISIONS.md",
         "scripts/report.ts",
         "scripts/report-model.ts",
+        "apps/web/lib/operational-proof.ts",
+        "apps/web/public/metermend-pitch.pdf",
         "package.json",
         "pnpm-lock.yaml",
         "contracts/**",

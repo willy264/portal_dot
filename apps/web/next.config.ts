@@ -8,6 +8,13 @@ const config: NextConfig = {
       "../../deployments/funded-probe.json",
       "../../deployments/portaldot-v3.json",
       "../../deployments/demo-run.json",
+      "../../deployments/deployment-status.json",
+      "../../deployments/chain-status-2026-10-31.json",
+      "../../deployments/rpc-discovery.json",
+      "../../deployments/hosting-status.json",
+      "../../deployments/notification-status.json",
+      "../../deployments/submission-materials.json",
+      "./public/metermend-pitch.pdf",
     ],
   },
   outputFileTracingExcludes: {

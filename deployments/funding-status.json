@@ -3,12 +3,12 @@
   "network": "portaldot-v3-testnet",
   "mode": "read-only",
   "signedTransactions": 0,
-  "observedOn": "2026-10-29",
-  "recordedAt": "2026-10-29T13:03:42.088Z",
+  "observedOn": "2026-10-31",
+  "recordedAt": "2026-10-31T13:23:34.447Z",
   "endpoint": "https://test-node-v3.portaldot.dev",
   "finalized": {
-    "number": 238486,
-    "hash": "0xba5042bed6dfdd25ee849175bacb828f8e9051d3a0a71220f9e213952c8663a5"
+    "number": 265063,
+    "hash": "0xe25054082c6bcb34c60cd5a623102af884fa64551f04916a7b2bd03fded5a9fe"
   },
   "identity": {
     "verified": true,
@@ -24,31 +24,63 @@
   "accounts": {
     "deployer": {
       "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
-      "freeNative": "44648817150285716",
-      "freeTPOT": "446.48817150285716",
-      "frozenNative": "0",
+      "freeNative": "146624307150285716",
+      "freeTPOT": "1466.24307150285716",
       "reservedNative": "0",
+      "frozenNative": "0",
       "nonce": 5
+    },
+    "renter": {
+      "address": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+      "freeNative": "0",
+      "freeTPOT": "0",
+      "reservedNative": "0",
+      "frozenNative": "0",
+      "nonce": 0
+    },
+    "arbiter": {
+      "address": "5DjjjeBpydQRtt4wDHF9hq1xpKPDEWoeREbRkc4YbghL6fua",
+      "freeNative": "0",
+      "freeTPOT": "0",
+      "reservedNative": "0",
+      "frozenNative": "0",
+      "nonce": 0
+    },
+    "relayer": {
+      "address": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+      "freeNative": "0",
+      "freeTPOT": "0",
+      "reservedNative": "0",
+      "frozenNative": "0",
+      "nonce": 0
     },
     "participant": {
       "address": "5Dttvxy9hkPHngYPfioratFH4iru9p1Lp1nwKoJJeMzHbC22",
-      "freeNative": "51996999008190506",
-      "freeTPOT": "519.96999008190506",
-      "frozenNative": "0",
+      "freeNative": "17007603917939",
+      "freeTPOT": "0.17007603917939",
       "reservedNative": "0",
-      "nonce": 2
+      "frozenNative": "0",
+      "nonce": 5
     }
   },
   "deploymentPlan": {
-    "pendingContracts": ["Cronpot", "MeterMend"],
+    "pendingContracts": [
+      "Cronpot",
+      "MeterMend"
+    ],
     "artifactHashesMatchBudget": true,
     "combinedStorageDepositTPOT": "1158",
     "storageMarginPercent": 20,
     "retainedBalanceTPOT": "25",
     "minimumDeployerBalanceTPOT": "1414.6",
-    "deployerShortfallTPOT": "968.11182849714284",
-    "budgetGuardPassed": false,
-    "excludedCosts": ["Transaction fees", "Project role funding", "Item and rental storage", "Demo operations"],
+    "deployerShortfallTPOT": "0",
+    "budgetGuardPassed": true,
+    "excludedCosts": [
+      "Transaction fees",
+      "Project role funding",
+      "Item and rental storage",
+      "Demo operations"
+    ],
     "ping": "Already deployed; its historical or fresh code-sharing estimate is excluded from the remaining application deployment budget."
   },
   "method": {
@@ -56,6 +88,6 @@
     "balances": "state_getStorage(System.Account key, finalized hash), SCALE AccountInfo decoded using the unchanged spec 3002 layout",
     "runtime": "state_getRuntimeVersion(finalized hash), chain_getBlockHash(0), state_getStorageHash(:code, finalized hash)",
     "chainId": "Separate eth_chainId read at https://test-evm-rpc-v3.portaldot.dev",
-    "timing": "Balances and runtime were read at the fixed finalized snapshot on observedOn. recordedAt is the later header verification time, not the block production timestamp."
+    "timing": "Balances and runtime were read at the fixed finalized snapshot on observedOn. recordedAt is when the validated snapshot was saved, not the block production timestamp."
   }
 }

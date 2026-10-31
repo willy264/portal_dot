@@ -1,0 +1,79 @@
+{
+  "observedAt": "2026-10-31T14:55:59.274Z",
+  "startedAt": "2026-10-31T14:55:58.002Z",
+  "network": "portaldot-v3-testnet",
+  "endpoint": "wss://test-node-v3.portaldot.dev/",
+  "transport": "WebSocket",
+  "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+  "identityVerified": true,
+  "operation": "MeterMend deployment",
+  "txHash": "0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782",
+  "journal": {
+    "path": "deployments/deploy-journal.json",
+    "step": "deploy-MeterMend",
+    "startBlock": 265321,
+    "nonce": 7,
+    "state": "submitted",
+    "startedAt": "2026-10-31T14:53:39.505Z"
+  },
+  "finalized": {
+    "number": 265321,
+    "hash": "0xce8592b611183d70df5271a610607d5980fcc1e5c1225adafb650451545ab411"
+  },
+  "best": {
+    "number": 265334,
+    "hash": "0x0bdc2a48d6ab29ac71f10f7645419f5403b025f0f14b7d89429955a75e82c2c6"
+  },
+  "health": {
+    "peers": 0,
+    "isSyncing": false,
+    "shouldHavePeers": true
+  },
+  "account": {
+    "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+    "submittedNonce": 7,
+    "finalizedNonce": 7,
+    "bestNonce": 7,
+    "nextIndex": 8
+  },
+  "inclusion": {
+    "finalizedOutcome": "unknown",
+    "status": "observed-in-node-pending-pool",
+    "included": false,
+    "finalized": false,
+    "block": null,
+    "blockHash": null,
+    "extrinsicIndex": null,
+    "pendingPool": {
+      "matched": true,
+      "index": 1,
+      "totalExtrinsics": 2
+    },
+    "contractAddress": null
+  },
+  "confirmedContracts": {
+    "Cronpot": {
+      "address": "0x41635a685448cfa86da1600656f103a211e398f4",
+      "txHash": "0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93",
+      "block": 265131,
+      "blockHash": "0x11caa39423290913ceddd5ba7977e88cdc86f9bfeed463c95c8fa11cd70efbdd",
+      "statusEvidence": "deployments/cronpot-deployment-status.json"
+    }
+  },
+  "methods": [
+    "system_health",
+    "chain_getFinalizedHead",
+    "chain_getBlockHash",
+    "chain_getHeader",
+    "state_getStorage",
+    "state_getRuntimeVersion",
+    "state_getStorageHash",
+    "system_accountNextIndex",
+    "author_pendingExtrinsics"
+  ],
+  "notes": [
+    "Read-only WebSocket snapshot; pool entries matched by Blake2-256 of exact raw SCALE extrinsics.",
+    "Nonce from finalized and best System.Account is separate from pool-aware system_accountNextIndex.",
+    "No retry or replacement was submitted by this check. The journal remains authoritative for submission recovery."
+  ]
+}

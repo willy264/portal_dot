@@ -242,13 +242,11 @@ export function RentalDetail({ id }: { id: string }) {
                 <span className="eyebrow">
                   <Clock3 size={13} /> REFUND EXECUTOR
                 </span>
-                <h3>
-                  {ledger?.config.cronpotMode === "native"
-                    ? "Native scheduler"
-                    : ledger?.config.cronpotMode === "keeper"
-                      ? "Permissionless keeper"
-                      : "Mode not verified"}
-                </h3>
+                <h3>Permissionless keeper</h3>
+                <p>
+                  Refunds execute automatically via Cronpot; execution is
+                  permissionless and our keeper runs it.
+                </p>
                 {rental.cronJobId !== "0" ? (
                   <>
                     <p className="mono">JOB #{rental.cronJobId}</p>

@@ -13,7 +13,16 @@ export function deploymentDirectory() {
 }
 export async function readDeployment(
   name:
-    "probe.json" | "funded-probe.json" | "portaldot-v3.json" | "demo-run.json",
+    | "probe.json"
+    | "funded-probe.json"
+    | "portaldot-v3.json"
+    | "demo-run.json"
+    | "deployment-status.json"
+    | "chain-status-2026-10-31.json"
+    | "rpc-discovery.json"
+    | "hosting-status.json"
+    | "notification-status.json"
+    | "submission-materials.json",
 ): Promise<Record<string, any> | null> {
   try {
     return JSON.parse(

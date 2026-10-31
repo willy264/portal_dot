@@ -12,17 +12,17 @@ Built for **Portaldot Hacker House 2026 · Ecosystem DApps**. MeterMend implemen
 
 ## Live on Portaldot V3
 
-The **runtime probe is live; application deployment is pending additional test tokens**. The probe is not a completed MeterMend demo.
+**Cronpot and the runtime probe are deployed; MeterMend deployment is awaiting finality.** The original Cronpot transaction was recovered from finalized block 265131. MeterMend's transaction is retained in the [deployment journal](deployments/deploy-journal.json), with its [latest node observation](deployments/deployment-status.json) reported separately from finalized receipts. The complete live rental demonstration remains pending.
 
 | Contract           | V3 address                                   | Status                                        |
 | ------------------ | -------------------------------------------- | --------------------------------------------- |
 | Ping runtime probe | `0x96ee88d272550530b518cbaa15a80cf5d38cdcfd` | Deployed at block 213570                      |
-| Cronpot            | Pending                                      | Compiled and tested; storage funding required |
-| MeterMend          | Pending                                      | Compiled and tested; storage funding required |
+| Cronpot            | `0x41635a685448cfa86da1600656f103a211e398f4` | Finalized at block 265131                    |
+| MeterMend          | Pending                                      | Broadcast; awaiting finalized outcome         |
 
 Chain ID **420420777** (`0x190f1ca9`), runtime **3002**. [Deployment manifest](deployments/portaldot-v3.json) · [Funded probe evidence](deployments/funded-probe.json) · [Permanent proof report](https://willy264.github.io/portal_dot/) · [V3 node console](https://node-console.portaldot.dev/?rpc=wss%3A%2F%2Ftest-node-v3.portaldot.dev).
 
-The [public web app](https://metermend.vercel.app/) and its [proof page](https://metermend.vercel.app/proof) are hosted on Vercel. They distinguish the live runtime probe from the application contracts still awaiting funding. The **two-minute demo video is pending**; the [keeper-mode recording script](docs/DEMO_VIDEO.md) lists the required live shots. For local review, run `pnpm dev` and open `http://localhost:3000/proof`.
+The [public web app](https://metermend.vercel.app/) and its [proof page](https://metermend.vercel.app/proof) are hosted on Vercel. They distinguish the live runtime probe from the application contracts still awaiting finalized deployment. The **demo video is pending**; the [keeper-mode recording script](docs/DEMO_VIDEO.md) targets two minutes and stays under 2:30. For local review, run `pnpm dev` and open `http://localhost:3000/proof`.
 
 ## What is implemented
 
@@ -30,7 +30,7 @@ The [public web app](https://metermend.vercel.app/) and its [proof page](https:/
 - Cronpot's generic timed-call registry, with permissionless execution and bounded callbacks. Its keeper fallback is the selected V3 mode.
 - A persistent finalized-event indexer and refund worker, with transaction journals and recovery states.
 - Mobile web catalogue, operator dashboard, arbiter inbox, rental history, wallet activation, evidence verification, dark mode and proof pages.
-- Durable DeBox notifications and a Telegram fallback. Live delivery remains unconfigured until credentials and a destination are supplied.
+- Durable DeBox notifications and a Telegram fallback. Telegram credentials and destination passed read-only checks on October 31; delivered notifications remain pending.
 
 The Foundry suite has **43 passing tests**, including fee-split fuzzing, reserve isolation, dispute voting, callback failures and transfer restrictions. TypeScript tests cover conversion, transaction outcomes, durable services, scheduling, evidence integrity and web data handling. These checks are separate from the pending full live demonstration.
 
@@ -45,8 +45,6 @@ flowchart LR
   Cron --> Events[Finalized events / SQLite]
   Events --> Worker[Refund relayer]
   Worker -->|keeper: selected on V3| Revive
-  Worker -.->|requires successful permission probe| Scheduler[Native scheduler]
-  Scheduler -.-> Revive
   Events --> Bot[DeBox / Telegram outbox]
   Evidence[Native evidence + persistent copy] --> Web
   Files[Deployment / demo records] --> Proof[Web proof + GitHub Pages]
@@ -56,16 +54,16 @@ See [architecture and accounting flows](docs/ARCHITECTURE.md) and the authoritat
 
 ## Why Portaldot
 
-| Primitive              | MeterMend use                                  | Observed V3 behavior                                                           |
-| ---------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------ |
-| Revive EVM execution   | Solidity enforces deposits, reserves and votes | EVM bytecode and Substrate-signed value movement verified                      |
-| Native account mapping | Community wallets use Substrate accounts       | Funding automatically maps accounts; explicit mapping is disabled here         |
-| Scheduler              | Optional chain-native Cronpot execution        | A signed request returned `BadOrigin`; keeper mode is required for this origin |
-| TransactionStorage     | Return and repair evidence                     | Signed 1 KB store succeeded; retention is 100800 blocks                        |
-| Native events          | Item history and permanent proof               | Finalized events are persisted before public-node pruning                      |
-| DeBox OpenAPI          | Community equipment and repair updates         | Integration implemented; credentials and live delivery pending                 |
+| Primitive              | MeterMend use                                  | Observed V3 behavior                                                                  |
+| ---------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Revive EVM execution   | Solidity enforces deposits, reserves and votes | EVM bytecode and Substrate-signed value movement verified                             |
+| Native account mapping | Community wallets use Substrate accounts       | Funding automatically maps accounts; explicit mapping is disabled here                |
+| Scheduler finding      | Signed-origin permission probe                 | P5 returned `BadOrigin`; native Scheduler does not execute this application's refunds |
+| TransactionStorage     | Return and repair evidence                     | Signed 1 KB store succeeded; retention is 100800 blocks                               |
+| Native events          | Item history and permanent proof               | Finalized events are persisted before public-node pruning                             |
+| DeBox OpenAPI          | Community equipment and repair updates         | Integration implemented; credentials and live delivery pending                        |
 
-Cronpot supplies liveness, not refund authority. `finalizeRefund` independently checks rental status and the deadline. The operator's proposal plus either the distinct renter or arbiter approves a deduction; both other parties must reject to return the full deposit. Only an arbiter-approved repair can spend a reserve.
+Refunds execute automatically via Cronpot; execution is permissionless and our keeper runs it. This describes the selected execution mechanism; the completed live refund demonstration is still pending. `finalizeRefund` independently checks rental status and the deadline. The operator's proposal plus either the distinct renter or arbiter approves a deduction; both other parties must reject to return the full deposit. Only an arbiter-approved repair can spend a reserve.
 
 ## Quickstart
 
@@ -120,7 +118,7 @@ Humans assess damage. Missing dispute votes can leave deposits unresolved; a con
 
 The testnet prunes history, so the worker must stay online or report a gap. Native evidence expires unless renewed. DeBox wallet-chain support is separate from its bot API; notifications do not imply its embedded wallet can sign V3 transactions. Notification delivery is at-least-once across ambiguous provider responses.
 
-Additional test tokens, a persistent worker/evidence host and bot credentials are needed for the full live golden path, public QR rental demonstration and video. The web interface and permanent report are public. Reserve isolation passes in Foundry; `pnpm demo` will record its live proof. No submitted BUIDL or uploaded video is claimed yet.
+The deployment funding guard now passes. Reliable RPC access, application deployment, role funding and a persistent worker/evidence host are still needed for the full live golden path, public QR rental demonstration and video. The web interface and permanent report are public. Reserve isolation passes in Foundry; `pnpm demo` will record its live proof. No submitted BUIDL or uploaded video is claimed yet.
 
 ## Research archive
 
