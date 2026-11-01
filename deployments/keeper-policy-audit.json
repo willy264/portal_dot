@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-01T02:46:28.058Z",
+  "status": "fix-tested-runtime-restart-pending",
+  "summary": "Unknown submissions remain paused and are reconciled by hash. A known-failure retry policy gap was found and fixed in source; the original keeper process still runs until a safe approved restart.",
+  "finding": {
+    "unknownSubmissions": "No automatic rebroadcast; bounded finalized hash search, persisted progress, and pruned-history pause.",
+    "knownFailuresBeforeFix": "Automatic backoff/retry did not require explicit nonce reconciliation.",
+    "timing": "Finalized chain time is captured before each scan batch. Lag can delay execution; it cannot make the deadline check early."
+  },
+  "fix": {
+    "files": [
+      "services/cronpot-relayer/src/engine.ts",
+      "services/cronpot-relayer/test/engine.test.ts",
+      "services/cronpot-relayer/test/reconciliation.test.ts"
+    ],
+    "behavior": "Submitted known failures and reconciled finalized failures stop in manual-review. Direct failed receipt and dispatch error are retained. Unknown-submission behavior is unchanged.",
+    "retryRequirement": "Inspect original transaction hash, finalized outcome and system.account.nonce / account_nextIndex before a manually authorized new attempt."
+  },
+  "validation": {
+    "relayerTestsPassed": 17,
+    "typecheck": "passed"
+  },
+  "restart": {
+    "requested": true,
+    "performed": false,
+    "reason": "Automatic approval review rejected both the pre-execution stop/start and the later stop/start guarded by a finalized terminal job outcome. Both returned blocked by policy without additional reason. No further stop variants attempted.",
+    "runningPid": 35344,
+    "rejections": 2,
+    "currentJobStatus": "Job1 terminal Failed after finalized JobExecuted(success=false); no automatic retry of that job."
+  },
+  "signedTransactionsByAudit": 0
+}

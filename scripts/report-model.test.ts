@@ -66,3 +66,32 @@ it("renders expected rejections separately without increasing successful demo st
     "Revive.ContractReverted",
   );
 });
+it("retains a failed Cronpot callback without inventing an automatic refund", () => {
+  // Synthetic receipt used only to check report behavior.
+  const result = demoSteps({
+    transactions: { returned: { txHash: "return", block: 1 } },
+    failedTransactions: {
+      callback: {
+        label: "Cronpot callback failed",
+        txHash: "failed-callback",
+        block: 2,
+        event: "JobExecuted(success=false); no DepositRefunded event",
+        status: "Callback failed",
+      },
+    },
+  });
+  expect(result.map((row) => row.txHash)).toEqual([
+    "return",
+    "failed-callback",
+  ]);
+  expect(result[1]).toMatchObject({
+    outcome: "failed",
+    status: "Callback failed",
+  });
+  expect(
+    result.some((row) => String(row.step).startsWith("automatic-refund")),
+  ).toBe(false);
+  expect(eventSummary(result[1], {}, 18).events).toBe(
+    "JobExecuted(success=false); no DepositRefunded event",
+  );
+});

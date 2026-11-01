@@ -149,7 +149,9 @@ export function transactionsFrom(
           blockHash,
           block,
           status: status.slice(0, 120),
-          eventNames,
+          eventNames: scalar(item.event)
+            ? [scalar(item.event)!, ...eventNames]
+            : eventNames,
         });
       }
     }
@@ -177,6 +179,10 @@ export function demoTransactionsFrom(value: any): ProofTransaction[] {
     },
     "Demonstration",
   );
+}
+
+export function failedDemoTransactionsFrom(value: any): ProofTransaction[] {
+  return transactionsFrom(value?.failedTransactions, "Failed demonstration");
 }
 
 function dispatchErrorName(value: unknown, depth = 0): string | null {

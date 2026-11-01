@@ -21,6 +21,10 @@ services:
         value: "8787"
       - key: MODE
         value: keeper
+      - key: START_BLOCK
+        value: "271379"
+      - key: CHAIN_TIMEOUT_MS
+        value: "120000"
       - key: WSS_URL
         value: wss://test-node-v3.portaldot.dev
       - key: EVM_RPC_URL

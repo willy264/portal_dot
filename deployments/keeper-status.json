@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "network": "portaldot-v3-testnet",
+  "observedAt": "2026-11-01T02:35:12.184Z",
+  "status": "running-locally",
+  "summary": "Funded Cronpot keeper is running as a supervised local background process. Its SQLite cursor and retained event digest survived the read-only-indexer handoff. Always-on public hosting remains separate and pending.",
+  "execution": "Refunds execute automatically via Cronpot; execution is permissionless and our keeper runs it.",
+  "pid": 35344,
+  "serviceUrl": "http://127.0.0.1:8787",
+  "publiclyHosted": false,
+  "alwaysOnHostVerified": false,
+  "health": {
+    "network": "portaldot-v3-testnet",
+    "configured": true,
+    "mode": "keeper",
+    "requestedMode": "keeper",
+    "startBlock": 271379,
+    "signer": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+    "signerError": null,
+    "cursor": {
+      "block": 271477,
+      "hash": "0x68a7411273251ee7a479c00fabf11a829c2eae3c8ab553b9eb1f6e64e7afc17b"
+    },
+    "gap": null,
+    "error": null
+  },
+  "startup": {
+    "node": "22.23.4",
+    "command": "node --import tsx .tools/start-keeper.mjs",
+    "MODE": "keeper",
+    "START_BLOCK": 271379,
+    "CHAIN_TIMEOUT_MS": 120000,
+    "DB_PATH": "data/cronpot.sqlite",
+    "EVIDENCE_DIR": "data/evidence",
+    "bootstrapEvidence": "deployments/indexer-bootstrap.json"
+  },
+  "jobs": {
+    "count": 0,
+    "observedIds": []
+  },
+  "restartPersistence": {
+    "status": "passed",
+    "scope": "Local SQLite database and retained events; evidence-file persistence on a public host has not been verified.",
+    "before": {
+      "observedAt": "2026-11-01T02:34:31.238Z",
+      "throughBlock": 271463,
+      "retainedHash": "0x5e6d688c3d3ed6ae6f3d497f53aeda230d93db1e0f6ab3fac0286d5a08fef958",
+      "eventCount": 1,
+      "eventsSha256": "a3e2c6986b66d152389c4c439b0f577b1cbf356bfdb03a4b1b1e1b5c0b5603ec",
+      "currentCursor": {
+        "block": 271463,
+        "hash": "0x5e6d688c3d3ed6ae6f3d497f53aeda230d93db1e0f6ab3fac0286d5a08fef958"
+      }
+    },
+    "after": {
+      "observedAt": "2026-11-01T02:34:50.880Z",
+      "throughBlock": 271463,
+      "retainedHash": "0x5e6d688c3d3ed6ae6f3d497f53aeda230d93db1e0f6ab3fac0286d5a08fef958",
+      "eventCount": 1,
+      "eventsSha256": "a3e2c6986b66d152389c4c439b0f577b1cbf356bfdb03a4b1b1e1b5c0b5603ec",
+      "currentCursor": {
+        "block": 271466,
+        "hash": "0x51e8c3e06623c56842d1ada373875749b5b9db76c70dd8cf69bca9597df90ef4"
+      }
+    }
+  },
+  "validation": {
+    "relayerTypecheck": "passed",
+    "scannerTests": 2,
+    "scannerTestsResult": "passed"
+  },
+  "logs": {
+    "stdout": ".tools/keeper.out.log",
+    "stderr": ".tools/keeper.err.log"
+  },
+  "limitations": [
+    "The machine and process must stay running until the persistent host takes over.",
+    "A later history gap stops cursor advancement; never reset the cursor to hide it.",
+    "This startup does not establish that the live automatic refund has executed; that requires its actual finalized receipt."
+  ]
+}

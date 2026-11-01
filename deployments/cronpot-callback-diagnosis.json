@@ -1,0 +1,344 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-01T02:43:39.538Z",
+  "mode": "read-only",
+  "signedTransactions": 0,
+  "liveFailedTx": "0x2b9249a026b3f868527e6964de6bd5241f401942f28e247d82dfb0eac9d75e35",
+  "checks": [
+    {
+      "label": "direct-finalizeRefund-at-pre-execution-state",
+      "function": "finalizeRefund",
+      "origin": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+      "contract": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "raw": "0x000374ecef4df2a204000374ecef4df2a2040000fe5b4ae4615d0100000000000000000001005c4ae4615d0100000000000000000000000000000000000000000000000000000000000000",
+      "result": {
+        "weight_consumed": {
+          "ref_time": "1307569268",
+          "proof_size": "75964"
+        },
+        "weight_required": {
+          "ref_time": "1307569268",
+          "proof_size": "75964"
+        },
+        "storage_deposit": {
+          "type": "Refund",
+          "value": "384149999999998"
+        },
+        "max_storage_deposit": {
+          "type": "Charge",
+          "value": "384150000000000"
+        },
+        "gas_consumed": "0",
+        "result": {
+          "success": true,
+          "value": {
+            "flags": 0,
+            "data": "0x"
+          }
+        }
+      }
+    },
+    {
+      "label": "Cronpot-execute-at-pre-execution-state",
+      "function": "execute",
+      "origin": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+      "contract": "0x41635a685448cfa86da1600656f103a211e398f4",
+      "raw": "0x0003767e975cfe34050003767e975cfe34050000fe5b4ae4615d0100000000000000000001005c4ae4615d0100000000000000000000000000000000000000000000000000000000000000",
+      "result": {
+        "weight_consumed": {
+          "ref_time": "1553432182",
+          "proof_size": "85311"
+        },
+        "weight_required": {
+          "ref_time": "1553432182",
+          "proof_size": "85311"
+        },
+        "storage_deposit": {
+          "type": "Refund",
+          "value": "384149999999998"
+        },
+        "max_storage_deposit": {
+          "type": "Charge",
+          "value": "384150000000000"
+        },
+        "gas_consumed": "0",
+        "result": {
+          "success": true,
+          "value": {
+            "flags": 0,
+            "data": "0x"
+          }
+        }
+      }
+    },
+    {
+      "label": "rental-before-execution",
+      "function": "rentals",
+      "origin": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+      "contract": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "raw": "0x002a4cec5b0eba03002a4cec5b0ec0030001000000000000000000000000000000000100000000000000000000000000000000b54e4c020000000000000000000000000000000000810300000000000000000000000000000000000000000000000000000000000000010000000000000000000000005c8ce2c2987ea625ba9f60fe959b12e13574b40400000000000000000000000000000000000000000000000000b1a2bc2ec50000000000000000000000000000000000000000000000000000000000006ae6a584000000000000000000000000000000000000000000000000000000006ae6a62c00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001",
+      "result": {
+        "weight_consumed": {
+          "ref_time": "385553162",
+          "proof_size": "61059"
+        },
+        "weight_required": {
+          "ref_time": "385553162",
+          "proof_size": "61443"
+        },
+        "storage_deposit": {
+          "type": "Charge",
+          "value": "0"
+        },
+        "max_storage_deposit": {
+          "type": "Charge",
+          "value": "0"
+        },
+        "gas_consumed": "38555317",
+        "result": {
+          "success": true,
+          "value": {
+            "flags": 0,
+            "data": "0x00000000000000000000000000000000000000000000000000000000000000010000000000000000000000005c8ce2c2987ea625ba9f60fe959b12e13574b40400000000000000000000000000000000000000000000000000b1a2bc2ec50000000000000000000000000000000000000000000000000000000000006ae6a584000000000000000000000000000000000000000000000000000000006ae6a62c00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001"
+          }
+        }
+      }
+    },
+    {
+      "label": "Cronpot-job-before-execution",
+      "function": "getJob",
+      "origin": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+      "contract": "0x41635a685448cfa86da1600656f103a211e398f4",
+      "raw": "0x00f29fda71060e0400f29fda71061404000100000000000000000000000000000000010000000000000000000000000000000066aad80200000000000000000000000000000000000105000000000000000000000000000000000000000000000000000000000000002000000000000000000000000061382db168db646b899234cd707c7ba0142c407100000000000000000000000061382db168db646b899234cd707c7ba0142c4071000000000000000000000000000000000000000000000000000000006ae6a62c000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000038d7ea4c6800000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000024e6d6aedc000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000",
+      "result": {
+        "weight_consumed": {
+          "ref_time": "477538300",
+          "proof_size": "66433"
+        },
+        "weight_required": {
+          "ref_time": "477538300",
+          "proof_size": "66817"
+        },
+        "storage_deposit": {
+          "type": "Charge",
+          "value": "0"
+        },
+        "max_storage_deposit": {
+          "type": "Charge",
+          "value": "0"
+        },
+        "gas_consumed": "47753830",
+        "result": {
+          "success": true,
+          "value": {
+            "flags": 0,
+            "data": "0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000061382db168db646b899234cd707c7ba0142c407100000000000000000000000061382db168db646b899234cd707c7ba0142c4071000000000000000000000000000000000000000000000000000000006ae6a62c000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000038d7ea4c6800000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000024e6d6aedc000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000"
+          }
+        }
+      }
+    }
+  ],
+  "identity": {
+    "genesis": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+    "runtimeCodeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+    "specVersion": 3002
+  },
+  "at": {
+    "number": 271527,
+    "hash": "0x890a0b46fa3eca98deedf37731622fbb59f29983d6b321af58034f1fd4ad2172"
+  },
+  "traceMethods": [
+    "state_traceBlock"
+  ],
+  "timestampMs": "1793500770000",
+  "runtimeTraceApis": [
+    {
+      "name": "trace_block",
+      "inputs": [
+        {
+          "name": "block",
+          "type": 526
+        },
+        {
+          "name": "config",
+          "type": 1066
+        }
+      ],
+      "output": 1073
+    },
+    {
+      "name": "trace_tx",
+      "inputs": [
+        {
+          "name": "block",
+          "type": 526
+        },
+        {
+          "name": "tx_index",
+          "type": 4
+        },
+        {
+          "name": "config",
+          "type": 1066
+        }
+      ],
+      "output": 1099
+    },
+    {
+      "name": "trace_call",
+      "inputs": [
+        {
+          "name": "tx",
+          "type": 1037
+        },
+        {
+          "name": "config",
+          "type": 1066
+        }
+      ],
+      "output": 1100
+    },
+    {
+      "name": "trace_call_with_config",
+      "inputs": [
+        {
+          "name": "tx",
+          "type": 1037
+        },
+        {
+          "name": "tracer_type",
+          "type": 1066
+        },
+        {
+          "name": "config",
+          "type": 1101
+        }
+      ],
+      "output": 1100
+    },
+    {
+      "name": "trace_block_versioned",
+      "inputs": [
+        {
+          "name": "input",
+          "type": 1200
+        }
+      ],
+      "output": 1203
+    },
+    {
+      "name": "trace_tx_versioned",
+      "inputs": [
+        {
+          "name": "input",
+          "type": 1214
+        }
+      ],
+      "output": 1217
+    },
+    {
+      "name": "trace_call_versioned",
+      "inputs": [
+        {
+          "name": "input",
+          "type": 1221
+        }
+      ],
+      "output": 1224
+    }
+  ],
+  "transactionTrace": {
+    "at": "0x890a0b46fa3eca98deedf37731622fbb59f29983d6b321af58034f1fd4ad2172",
+    "block": 271528,
+    "extrinsicIndex": 1,
+    "raw": "0x0001007f68506cf7b6fd947b5539dcaeb6494977da23b60c1548cf4fa50000000000000000000041635a685448cfa86da1600656f103a211e398f490fe0d94c100000000000000000000000000000000000000000000000000000000000000010000000841635a685448cfa86da1600656f103a211e398f440420f0000000000000000000000000061382db168db646b899234cd707c7ba0142c407190e6d6aedc00000000000000000000000000000000000000000000000000000000000000010001204f75744f66476173000000010000000000000000000000000000000000000000000000000000000000000000000000000041635a685448cfa86da1600656f103a211e398f4000000000000000000000000000000007f68506cf7b6fd947b5539dcaeb6494977da23b6000000000000010080c6a47e8d030000000000000000000000000000000000000000000000000000000000000441635a685448cfa86da1600656f103a211e398f40cd46c4be72c8d417fb7bd3ed06c582786f0201b4c3460e1355364d010e822e93e00000000000000000000000000000000000000000000000000000000000000010000000000000000000000007f68506cf7b6fd947b5539dcaeb6494977da23b68101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000020000000100000000000000000000000000000000000000000000000000000000000000000002000000",
+    "decoded": {
+      "type": "V1",
+      "value": {
+        "type": "Call",
+        "value": {
+          "from": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+          "gas": "181762198607116",
+          "gas_used": "0",
+          "to": "0x41635a685448cfa86da1600656f103a211e398f4",
+          "input": "0xfe0d94c10000000000000000000000000000000000000000000000000000000000000001",
+          "output": "0x",
+          "calls": [
+            {
+              "from": "0x41635a685448cfa86da1600656f103a211e398f4",
+              "gas": "1000000",
+              "gas_used": "0",
+              "to": "0x61382db168db646b899234cd707c7ba0142c4071",
+              "input": "0xe6d6aedc0000000000000000000000000000000000000000000000000000000000000001",
+              "output": "0x",
+              "error": "OutOfGas",
+              "calls": [],
+              "logs": [],
+              "value": [
+                "0",
+                "0",
+                "0",
+                "0"
+              ],
+              "call_type": {
+                "type": "Call"
+              },
+              "child_call_count": 0
+            },
+            {
+              "from": "0x41635a685448cfa86da1600656f103a211e398f4",
+              "gas": "0",
+              "gas_used": "0",
+              "to": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+              "input": "0x",
+              "output": "0x",
+              "calls": [],
+              "logs": [],
+              "value": [
+                "1000000000000000",
+                "0",
+                "0",
+                "0"
+              ],
+              "call_type": {
+                "type": "Call"
+              },
+              "child_call_count": 0
+            }
+          ],
+          "logs": [
+            {
+              "address": "0x41635a685448cfa86da1600656f103a211e398f4",
+              "topics": [
+                "0xd46c4be72c8d417fb7bd3ed06c582786f0201b4c3460e1355364d010e822e93e",
+                "0x0000000000000000000000000000000000000000000000000000000000000001",
+                "0x0000000000000000000000007f68506cf7b6fd947b5539dcaeb6494977da23b6"
+              ],
+              "data": "0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000",
+              "position": 2
+            }
+          ],
+          "value": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "call_type": {
+            "type": "Call"
+          },
+          "child_call_count": 2
+        }
+      }
+    }
+  },
+  "status": "callback-gas-cap-failure-confirmed",
+  "finding": {
+    "cause": "The fixed Cronpot TARGET_GAS_LIMIT of 1,000,000 is insufficient on the observed V3 runtime.",
+    "evidence": "Actual finalized extrinsic replay with ReviveApi_trace_tx_versioned at its parent state shows Cronpot -> MeterMend.finalizeRefund(1) error OutOfGas with gas 1000000.",
+    "extrinsicOutcome": "Outer call succeeded and paid the relayer tip; JobExecuted reported success=false.",
+    "refundOutcome": "No DepositRefunded event; rental deposit remains unrefunded by this transaction.",
+    "crossContractCall": "The trace proves the nested call was attempted. A general cross-contract prohibition is not the observed error.",
+    "nextStep": "Measure an adequate runtime-specific callback allowance using read-only traces before proposing a contract replacement; preserve failed job and original deployments."
+  }
+}

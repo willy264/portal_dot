@@ -1,0 +1,395 @@
+{
+  "observedAt": "2026-11-01T02:35:31.485Z",
+  "status": "public-audit-complete-live-golden-path-and-physical-phone-run-pending",
+  "revision": "e2f0f75034c9ba0f30f9ad08d6b5e7de2d8375b6",
+  "ci": {
+    "checkedRevision": "e2f0f75034c9ba0f30f9ad08d6b5e7de2d8375b6",
+    "status": "passed",
+    "runs": [
+      {
+        "conclusion": "success",
+        "createdAt": "2026-11-01T02:32:27Z",
+        "databaseId": 41265622317,
+        "headSha": "e2f0f75034c9ba0f30f9ad08d6b5e7de2d8375b6",
+        "name": "proof-report",
+        "status": "completed",
+        "updatedAt": "2026-11-01T02:33:20Z",
+        "url": "https://github.com/willy264/portal_dot/actions/runs/41265622317"
+      },
+      {
+        "conclusion": "success",
+        "createdAt": "2026-11-01T02:32:27Z",
+        "databaseId": 41265622261,
+        "headSha": "e2f0f75034c9ba0f30f9ad08d6b5e7de2d8375b6",
+        "name": "ci",
+        "status": "completed",
+        "updatedAt": "2026-11-01T02:33:28Z",
+        "url": "https://github.com/willy264/portal_dot/actions/runs/41265622261"
+      }
+    ],
+    "testEvidence": {
+      "revision": "e2f0f75034c9ba0f30f9ad08d6b5e7de2d8375b6",
+      "runId": 41265622261,
+      "source": "GitHub Actions logs and downloaded foundry-results artifact",
+      "typescriptJavaScript": {
+        "passed": 171,
+        "failed": 0,
+        "breakdown": {
+          "serviceCore": 8,
+          "chain": 32,
+          "deboxBot": 13,
+          "cronpotRelayer": 16,
+          "web": 73,
+          "scripts": 29
+        }
+      },
+      "foundry": {
+        "passed": 43,
+        "failed": 0,
+        "breakdown": {
+          "Cronpot": 15,
+          "MeterMend": 28
+        },
+        "artifactSha256": "bfcd934282ea63c0aed419b891507bfef24d38a573ba46f23dcd5093fce639a0"
+      }
+    }
+  },
+  "readmeLinks": {
+    "source": "README.md",
+    "relativePathsChecked": true,
+    "publicUrlsFetched": true,
+    "results": [
+      {
+        "target": "docs/BRAND.md",
+        "kind": "relative",
+        "exists": true
+      },
+      {
+        "target": "docs/PROGRESS_REPORT.md",
+        "kind": "relative",
+        "exists": true
+      },
+      {
+        "target": "LICENSE",
+        "kind": "relative",
+        "exists": true
+      },
+      {
+        "target": "deployments/read-back.json",
+        "kind": "relative",
+        "exists": true
+      },
+      {
+        "target": "deployments/portaldot-v3.json",
+        "kind": "relative",
+        "exists": true
+      },
+      {
+        "target": "deployments/funded-probe.json",
+        "kind": "relative",
+        "exists": true
+      },
+      {
+        "target": "https://willy264.github.io/portal_dot/",
+        "kind": "public",
+        "status": 200,
+        "ok": true,
+        "checkedAt": "2026-11-01T02:35:07.557Z"
+      },
+      {
+        "target": "https://node-console.portaldot.dev/?rpc=wss%3A%2F%2Ftest-node-v3.portaldot.dev",
+        "kind": "public",
+        "status": 200,
+        "ok": true,
+        "checkedAt": "2026-11-01T02:35:09.008Z"
+      },
+      {
+        "target": "https://metermend.vercel.app/",
+        "kind": "public",
+        "status": 200,
+        "ok": true,
+        "checkedAt": "2026-11-01T02:35:07.309Z"
+      },
+      {
+        "target": "https://metermend.vercel.app/proof",
+        "kind": "public",
+        "status": 200,
+        "ok": true,
+        "checkedAt": "2026-11-01T02:35:07.645Z"
+      },
+      {
+        "target": "docs/DEMO_VIDEO.md",
+        "kind": "relative",
+        "exists": true
+      },
+      {
+        "target": "docs/ARCHITECTURE.md",
+        "kind": "relative",
+        "exists": true
+      },
+      {
+        "target": "SPEC.md",
+        "kind": "relative",
+        "exists": true
+      },
+      {
+        "target": ".env.example",
+        "kind": "relative",
+        "exists": true
+      },
+      {
+        "target": "scripts/README.md",
+        "kind": "relative",
+        "exists": true
+      },
+      {
+        "target": "docs/HOSTING.md",
+        "kind": "relative",
+        "exists": true
+      },
+      {
+        "target": "docs/DECISIONS.md",
+        "kind": "relative",
+        "exists": true
+      },
+      {
+        "target": "docs/FAUCET_REQUEST.md",
+        "kind": "relative",
+        "exists": true
+      },
+      {
+        "target": "PORTALDOT_RESEARCH_AND_IDEAS.md",
+        "kind": "relative",
+        "exists": true
+      },
+      {
+        "target": "research/",
+        "kind": "relative",
+        "exists": true
+      }
+    ]
+  },
+  "deck": {
+    "localPath": "apps/web/public/metermend-pitch.pdf",
+    "localSha256": "31b14f906f0bb3781096ca9d54e889e74e412d8cdf48a791bda64137f6a11b85",
+    "publicLinks": [
+      {
+        "url": "https://metermend.vercel.app/metermend-pitch.pdf",
+        "status": 200,
+        "contentType": "application/pdf",
+        "bytes": 180852,
+        "sha256": "31b14f906f0bb3781096ca9d54e889e74e412d8cdf48a791bda64137f6a11b85",
+        "matchesLocal": true,
+        "verifiedAt": "2026-11-01T02:35:28.165Z"
+      },
+      {
+        "url": "https://willy264.github.io/portal_dot/metermend-pitch.pdf",
+        "status": 200,
+        "contentType": "application/pdf",
+        "bytes": 180852,
+        "sha256": "31b14f906f0bb3781096ca9d54e889e74e412d8cdf48a791bda64137f6a11b85",
+        "matchesLocal": true,
+        "verifiedAt": "2026-11-01T02:35:28.442Z"
+      }
+    ]
+  },
+  "publicMobile": {
+    "method": "Automated Microsoft Edge headless at 390 x 844 CSS pixels; actual public pages, read-only; no wallet injection, signatures or transactions.",
+    "physicalPhoneRun": false,
+    "printedQrScan": false,
+    "transactionCount": 0,
+    "pages": [
+      {
+        "route": "/",
+        "url": "https://metermend.vercel.app/",
+        "title": "MeterMend — Every rental funds its next repair",
+        "h1": "Borrow today.Build for tomorrow.",
+        "width": 390,
+        "scrollWidth": 390,
+        "noHorizontalOverflow": true,
+        "screenshot": "docs/evidence/automated-public/2026-11-01-home-390px.png",
+        "sha256": "d92a64d660370cf0038dd34ebd6801016807068258ad699e081520c2c7138101",
+        "capturedAt": "2026-11-01T02:35:13.608Z",
+        "visibleState": {
+          "ledgerLoading": false,
+          "contractAddressVisible": false,
+          "keeperWordingVisible": true
+        },
+        "mobileNavigation": {
+          "present": true,
+          "opened": true,
+          "closed": true
+        }
+      },
+      {
+        "route": "/items",
+        "url": "https://metermend.vercel.app/items",
+        "title": "MeterMend — Every rental funds its next repair",
+        "h1": "Pick a tool. Make something.",
+        "width": 390,
+        "scrollWidth": 390,
+        "noHorizontalOverflow": true,
+        "screenshot": "docs/evidence/automated-public/2026-11-01-items-390px.png",
+        "sha256": "94fcc6f817b3a3f74efc61b272d0081a06b4cbcdefa9853bf67fe24f0813359e",
+        "capturedAt": "2026-11-01T02:36:58.218Z",
+        "visibleState": {
+          "ledgerLoading": false,
+          "contractAddressVisible": false,
+          "keeperWordingVisible": false
+        },
+        "additionalScreenshots": [
+          {
+            "path": "docs/evidence/automated-public/2026-11-01-items-cards-390px.png",
+            "sha256": "049225f2d158b56bba943b2b0ed21e9527b501ef4328b7244ad17828f6fd929f",
+            "capturedAt": "2026-11-01T02:36:58.786Z",
+            "purpose": "Actual registered item cards at mobile viewport; scrolled page capture."
+          }
+        ],
+        "captureMode": "390 x 844 viewport; full-page compositor capture was malformed and replaced"
+      },
+      {
+        "route": "/operator",
+        "url": "https://metermend.vercel.app/operator",
+        "title": "MeterMend — Every rental funds its next repair",
+        "h1": "Keep good things working.",
+        "width": 390,
+        "scrollWidth": 390,
+        "noHorizontalOverflow": true,
+        "screenshot": "docs/evidence/automated-public/2026-11-01-operator-390px.png",
+        "sha256": "50324475ba111c639f6803b5bbdfe3feab63dd0307fe1020ccfd23820112138f",
+        "capturedAt": "2026-11-01T02:35:19.817Z",
+        "visibleState": {
+          "ledgerLoading": false,
+          "contractAddressVisible": false,
+          "keeperWordingVisible": false
+        }
+      },
+      {
+        "route": "/arbiter",
+        "url": "https://metermend.vercel.app/arbiter",
+        "title": "MeterMend — Every rental funds its next repair",
+        "h1": "A fair decision keeps things moving.",
+        "width": 390,
+        "scrollWidth": 390,
+        "noHorizontalOverflow": true,
+        "screenshot": "docs/evidence/automated-public/2026-11-01-arbiter-390px.png",
+        "sha256": "7fb7dca3456eeef9e97e2847bbdde857078cd7998f8d069cd064e80f78b9f744",
+        "capturedAt": "2026-11-01T02:35:22.812Z",
+        "visibleState": {
+          "ledgerLoading": false,
+          "contractAddressVisible": false,
+          "keeperWordingVisible": false
+        }
+      },
+      {
+        "route": "/proof",
+        "url": "https://metermend.vercel.app/proof",
+        "title": "MeterMend — Every rental funds its next repair",
+        "h1": "Good records. No guesswork.",
+        "width": 390,
+        "scrollWidth": 390,
+        "noHorizontalOverflow": true,
+        "screenshot": "docs/evidence/automated-public/2026-11-01-proof-390px.png",
+        "sha256": "986fca7086aa450ec8c6cbbbead501d1184e46d8c2c9da339807dbb37c5f2364",
+        "capturedAt": "2026-11-01T02:35:27.709Z",
+        "visibleState": {
+          "ledgerLoading": false,
+          "contractAddressVisible": true,
+          "keeperWordingVisible": true
+        }
+      }
+    ],
+    "browserExceptions": [],
+    "visualReview": "passed",
+    "ledger": {
+      "url": "https://metermend.vercel.app/api/ledger",
+      "httpStatus": 200,
+      "state": "ready",
+      "observedAt": "2026-11-01T02:35:31.243Z",
+      "block": "271484",
+      "config": {
+        "meterMend": "0x61382db168db646b899234cd707c7ba0142c4071",
+        "cronpot": "0x41635a685448cfa86da1600656f103a211e398f4"
+      },
+      "itemCount": 2,
+      "historyStatus": "The history service is not configured."
+    },
+    "visualReviewedAt": "2026-11-01T02:37:55.561Z",
+    "findings": [
+      "No horizontal overflow in five checked public routes at 390px.",
+      "Mobile navigation opened and closed after React state updates.",
+      "No unhandled browser exceptions observed.",
+      "Actual item catalogue reads succeeded; persistent history service remained unconfigured."
+    ]
+  },
+  "limitations": [
+    "This browser audit does not satisfy the physical-phone printed-QR rental flow.",
+    "The deployed page may lack live history until the external persistent service is configured.",
+    "CI status applies only to the explicitly checked commit."
+  ],
+  "publicQr": {
+    "verifiedAt": "2026-11-01T02:37:55.557Z",
+    "url": "https://metermend.vercel.app/metermend-qr.html",
+    "status": 200,
+    "contentType": "text/html; charset=utf-8",
+    "sha256": "c225ef2f151f1094a432e9aed7a4537825af60ac582e904e301d488353378fec",
+    "matchesLocal": true,
+    "matchesLabelEvidence": true,
+    "items": [
+      {
+        "itemId": "1",
+        "name": "Canon EOS camera",
+        "url": "https://metermend.vercel.app/items/1",
+        "httpStatus": 200,
+        "printedUrlPresent": true,
+        "matchesSeed": true,
+        "registration": {
+          "txHash": "0xd4789155d530d6cebb38af2072ba99af42c16cda91efd7f880ffe31a8249476c",
+          "block": 271442,
+          "blockHash": "0xb90c6f9d81641c286b98cf8d2764d177590283d4dadfdfed9f69262f2e4a04c8"
+        }
+      },
+      {
+        "itemId": "2",
+        "name": "3D printer",
+        "url": "https://metermend.vercel.app/items/2",
+        "httpStatus": 200,
+        "printedUrlPresent": true,
+        "matchesSeed": true,
+        "registration": {
+          "txHash": "0x5c7711c3be7aa5c23b641f2365e579ba03f422fc6c9c9dce1b7208d2c9feb43d",
+          "block": 271469,
+          "blockHash": "0x130d61ee222fd57a02c4eeef5c8c919c85cb31a7f631357c5d8a9a4e8b4a3a5d"
+        }
+      }
+    ],
+    "physicalScanPerformed": false
+  },
+  "subsequentCI": {
+    "checkedAt": "2026-11-01T02:37:57.291Z",
+    "checkedRevision": "30a6490b99fb6ed3d53547e9c5004664a0593cf0",
+    "runs": [
+      {
+        "conclusion": "success",
+        "createdAt": "2026-11-01T02:35:39Z",
+        "databaseId": 41265845866,
+        "headSha": "30a6490b99fb6ed3d53547e9c5004664a0593cf0",
+        "name": "proof-report",
+        "status": "completed",
+        "updatedAt": "2026-11-01T02:36:14Z",
+        "url": "https://github.com/willy264/portal_dot/actions/runs/41265845866"
+      },
+      {
+        "conclusion": "success",
+        "createdAt": "2026-11-01T02:35:39Z",
+        "databaseId": 41265845828,
+        "headSha": "30a6490b99fb6ed3d53547e9c5004664a0593cf0",
+        "name": "ci",
+        "status": "completed",
+        "updatedAt": "2026-11-01T02:36:37Z",
+        "url": "https://github.com/willy264/portal_dot/actions/runs/41265845828"
+      }
+    ]
+  },
+  "finalizedAt": "2026-11-01T02:37:57.355Z"
+}

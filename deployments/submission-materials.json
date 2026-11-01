@@ -1,7 +1,7 @@
 {
-  "observedAt": "2026-11-01T02:29:24.683Z",
-  "status": "materials-prepared-live-demo-and-publication-pending",
-  "summary": "Ten-slide pitch deck exported and browser-checked. Finalized deployments and runtime probes are distinguished from the pending live golden path, notifications and video. This revised PDF requires publication verification.",
+  "observedAt": "2026-11-01T02:43:23.481Z",
+  "status": "live-demo-blocked-refund-callback-failed",
+  "summary": "Both application deployments and read-backs, role funding, two item registrations, the first rental/reserve split and return/evidence scheduling ran live. The keeper transaction finalized but its callback failed without DepositRefunded; the complete golden path and video remain pending. The existing public deck is retained until the diagnosis is resolved.",
   "deadline": {
     "internal": "2026-11-05T22:00:00+01:00",
     "official": "2026-11-06T05:00:00+01:00",
@@ -11,7 +11,7 @@
     "status": "generated",
     "path": "apps/web/public/metermend-pitch.pdf",
     "publicUrl": "https://metermend.vercel.app/metermend-pitch.pdf",
-    "publicLinkVerified": false,
+    "publicLinkVerified": true,
     "source": "docs/pitch/index.html",
     "sha256": "31b14f906f0bb3781096ca9d54e889e74e412d8cdf48a791bda64137f6a11b85",
     "bytes": 180852,
@@ -54,21 +54,43 @@
         ],
         "verifiedAt": "2026-11-01T02:21:03.627Z"
       }
-    ]
+    ],
+    "publicLinks": [
+      {
+        "url": "https://metermend.vercel.app/metermend-pitch.pdf",
+        "status": 200,
+        "contentType": "application/pdf",
+        "bytes": 180852,
+        "sha256": "31b14f906f0bb3781096ca9d54e889e74e412d8cdf48a791bda64137f6a11b85",
+        "matchesLocal": true,
+        "verifiedAt": "2026-11-01T02:35:28.165Z"
+      },
+      {
+        "url": "https://willy264.github.io/portal_dot/metermend-pitch.pdf",
+        "status": 200,
+        "contentType": "application/pdf",
+        "bytes": 180852,
+        "sha256": "31b14f906f0bb3781096ca9d54e889e74e412d8cdf48a791bda64137f6a11b85",
+        "matchesLocal": true,
+        "verifiedAt": "2026-11-01T02:35:28.442Z"
+      }
+    ],
+    "verifiedAt": "2026-11-01T02:35:28.442Z"
   },
   "submission": {
     "path": "docs/SUBMISSION.md",
     "status": "draft-awaiting-live-evidence-and-links",
-    "sha256": "af8e693375d9100d82182a3712ec54fa5b280f5282f83ca26c1dc33308fd5819"
+    "sha256": "44b07a4fd7c06ff8f9e2c14d9acb36d6c34e2096f1ccefe784eeedf1d263f5fe"
   },
   "video": {
     "status": "not-recorded",
-    "publicUrl": null
+    "publicUrl": null,
+    "recordingPlan": "docs/DEMO_VIDEO.md",
+    "recordingPlanSha256": "618c793bfc7efde69ccc413dc461def1c08c7f2eae60e59bd5184df838627110"
   },
   "caveats": [
     "The proposed business model is not implemented platform-fee collection.",
-    "Test counts are engineering evidence, not live application settlement.",
-    "Public deck URL is the intended location; verify it after publishing before claiming availability."
+    "Test counts are engineering evidence, not live application settlement."
   ],
   "phoneRehearsalPreparation": {
     "status": "runbook-and-generator-ready-live-phone-run-pending",
@@ -78,5 +100,56 @@
     "validation": "3 QR evidence/ID regression tests and scripts typecheck passed",
     "labelsRequire": "Finalized MeterMend deployment and matching ItemRegistered receipts in seed.json",
     "actualPhoneRunRecorded": false
+  },
+  "liveDemo": {
+    "status": "blocked-refund-callback-failed",
+    "evidence": "deployments/demo-run.json",
+    "failureEvidence": "deployments/keeper-refund-observation.json",
+    "completedTransactions": {
+      "rent-first": {
+        "txHash": "0xb5485a043aa46e182a6511163a1716711262a5be98d437b42c1cf8fd13d13b67",
+        "block": 271490,
+        "blockHash": "0xc7355710805a2cc75f388950b550a875268dd12866548e6f4823c75e145b5afe"
+      },
+      "store-evidence-return-first": {
+        "txHash": "0x958a2258295503cb547704b8c41a1f5b23ac06a64a7632808fd5a7d325c59226",
+        "block": 271494,
+        "blockHash": "0x3744c06411f5ce2cfe0b261048cf22f11f50116c531eed8192678a45296889e4"
+      },
+      "return-first": {
+        "txHash": "0x826d77cd7a5ee1c7133f57051ae96d8e6593c3234b39de397f7ef16029c4ce4b",
+        "block": 271498,
+        "blockHash": "0xa168b7fc4bc2857652f914d1b411f1f2861b8ad4f4a386b7c2ae44ca0d7e8bdd"
+      }
+    },
+    "reserveAssertion": {
+      "passed": true,
+      "observedAt": "2026-11-01T02:36:01.854Z",
+      "at": {
+        "number": 271490,
+        "hash": "0xc7355710805a2cc75f388950b550a875268dd12866548e6f4823c75e145b5afe",
+        "timestamp": "1793500548"
+      },
+      "values": {
+        "fee": "10000000000000000",
+        "contribution": "2000000000000000",
+        "reserve": "2000000000000000",
+        "expected": "2000000000000000",
+        "rentalId": "1"
+      }
+    },
+    "blocker": {
+      "observedAt": "2026-11-01T02:42:00.187Z",
+      "jobId": "1",
+      "txHash": "0x2b9249a026b3f868527e6964de6bd5241f401942f28e247d82dfb0eac9d75e35",
+      "block": 271528,
+      "blockHash": "0x4c48aacbf687fba94bb09d227c9b96ec840b4c7c3f96ba3a3b9e502994e19ab5",
+      "outerDispatch": "success",
+      "cronpotJobExecutedSuccess": false,
+      "returnData": "0x",
+      "depositRefunded": false,
+      "evidence": "deployments/keeper-refund-observation.json",
+      "action": "No retry or manual refund submitted. Investigating with read-only simulations."
+    }
   }
 }

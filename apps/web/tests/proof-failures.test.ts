@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { demoTransactionsFrom, expectedFailuresFrom } from "../lib/proof";
+import {
+  demoTransactionsFrom,
+  failedDemoTransactionsFrom,
+  expectedFailuresFrom,
+} from "../lib/proof";
 
 // Synthetic model fixtures only; never written to deployments/ or claimed live.
 const failureHash = `0x${"f".repeat(64)}`;
@@ -26,6 +30,31 @@ const receipt = {
 };
 
 describe("expected rejection proof", () => {
+  it("separates a real-failure-shaped callback receipt from successful demo evidence", () => {
+    const demo = {
+      transactions: { rent: { txHash: successHash, block: 20 } },
+      failedTransactions: {
+        callback: {
+          txHash: failureHash,
+          blockHash,
+          block: 24,
+          label: "Cronpot callback failed",
+          status: "Callback failed; no refund",
+          event: "JobExecuted(success=false); no DepositRefunded event",
+        },
+      },
+    };
+    expect(demoTransactionsFrom(demo).map((row) => row.txHash)).toEqual([
+      successHash,
+    ]);
+    expect(failedDemoTransactionsFrom(demo)[0]).toMatchObject({
+      txHash: failureHash,
+      label: "Cronpot callback failed",
+      status: "Callback failed; no refund",
+      eventNames: ["JobExecuted(success=false); no DepositRefunded event"],
+    });
+    expect(expectedFailuresFrom(demo)).toEqual([]);
+  });
   it("keeps rejection receipts and their assertions out of the successful flow", () => {
     const demo = {
       transactions: { rent: { txHash: successHash, block: 20 } },

@@ -217,24 +217,55 @@ export class JobEngine {
             : undefined;
         const unknown =
           flag === true || (submittedHash !== undefined && flag !== false);
+        const failedReceipt =
+          flag === false &&
+          error &&
+          typeof error === "object" &&
+          "evidence" in error &&
+          error.evidence &&
+          typeof error.evidence === "object" &&
+          "txHash" in error.evidence
+            ? (error.evidence as ExecutionReceipt)
+            : undefined;
+        const submittedFailure =
+          !unknown && (submittedHash !== undefined || !!failedReceipt);
         job.lastError = error instanceof Error ? error.message : String(error);
         job.scheduling = unknown
           ? native
             ? "native-unknown"
             : "execution-unknown"
-          : native
-            ? "keeper-fallback"
-            : "pending";
+          : submittedFailure
+            ? "manual-review"
+            : native
+              ? "keeper-fallback"
+              : "pending";
         const txHash =
           error && typeof error === "object" && "txHash" in error
             ? error.txHash
-            : submittedHash;
+            : (submittedHash ?? failedReceipt?.txHash);
         job.nextAttemptAt = (
           chainTime + BigInt(Math.min(300, 10 * 2 ** Math.min(job.attempts, 5)))
         ).toString();
         job.evidence = {
           ...((job.evidence as object) ?? {}),
           lastError: { ambiguous: unknown, txHash, message: job.lastError },
+          ...(failedReceipt
+            ? {
+                failedSubmission: {
+                  ...failedReceipt,
+                dispatchError:
+                  error && typeof error === "object" && "dispatchError" in error
+                    ? error.dispatchError
+                    : undefined,
+                },
+              }
+            : {}),
+          ...(submittedFailure
+            ? {
+                retryPolicy:
+                  "Manual review required: reconcile the original transaction hash and account nonce before any new signed attempt.",
+              }
+            : {}),
         };
         this.store.observation("execution-error", {
           jobId: job.id,
@@ -320,12 +351,14 @@ export class JobEngine {
       reconciledSubmission: result.receipt,
     };
     if (result.status === "failed") {
-      job.scheduling =
-        pending.operation === "schedule" ? "keeper-fallback" : "pending";
+      // A finalized failure is evidence, not permission to create a new nonce.
+      job.scheduling = "manual-review";
       job.lastError = result.reason;
-      job.nextAttemptAt = (
-        chainTime + BigInt(Math.min(300, 10 * 2 ** Math.min(job.attempts, 5)))
-      ).toString();
+      job.evidence = {
+        ...((job.evidence as object) ?? {}),
+        retryPolicy:
+          "Manual review required: reconcile the original transaction hash and account nonce before any new signed attempt.",
+      };
     } else {
       job.lastError = undefined;
       if (pending.operation === "schedule") {

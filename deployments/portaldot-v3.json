@@ -1834,6 +1834,167 @@
             }
           }
         ]
+      },
+      "fund-ARBITER-1200000000000000-initial": {
+        "role": "ARBITER",
+        "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+        "destination": "5DjjjeBpydQRtt4wDHF9hq1xpKPDEWoeREbRkc4YbghL6fua",
+        "targetNative": "1200000000000000",
+        "txHash": "0x9fad471d16d7bb57faa3fc23256b9b094665abe5932af61398e6abbc9dcf7336",
+        "block": 271533,
+        "blockHash": "0x38e0b1a8b519746c57bf7c1793a728677a4ac99ac08b7dbf9342cdfa56911d53",
+        "extrinsicIndex": 1,
+        "events": [
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Withdraw",
+                "value": {
+                  "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "amount": "1500441124524"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Withdraw",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "amount": "1500441124524"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Transfer",
+                "value": {
+                  "from": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "to": "5DjjjeBpydQRtt4wDHF9hq1xpKPDEWoeREbRkc4YbghL6fua",
+                  "amount": "700000000000000"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Transfer",
+              "value": {
+                "from": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "to": "5DjjjeBpydQRtt4wDHF9hq1xpKPDEWoeREbRkc4YbghL6fua",
+                "amount": "700000000000000"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Deposit",
+                "value": {
+                  "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+                  "amount": "1500441124524"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Deposit",
+              "value": {
+                "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+                "amount": "1500441124524"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "TransactionPayment",
+              "value": {
+                "type": "TransactionFeePaid",
+                "value": {
+                  "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "actual_fee": "1500441124524",
+                  "tip": "0"
+                }
+              }
+            },
+            "topics": [],
+            "type": "TransactionPayment",
+            "value": {
+              "type": "TransactionFeePaid",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "actual_fee": "1500441124524",
+                "tip": "0"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "System",
+              "value": {
+                "type": "ExtrinsicSuccess",
+                "value": {
+                  "dispatch_info": {
+                    "weight": {
+                      "ref_time": "764602000",
+                      "proof_size": "15777"
+                    },
+                    "class": {
+                      "type": "Normal"
+                    },
+                    "pays_fee": {
+                      "type": "Yes"
+                    }
+                  }
+                }
+              }
+            },
+            "topics": [],
+            "type": "System",
+            "value": {
+              "type": "ExtrinsicSuccess",
+              "value": {
+                "dispatch_info": {
+                  "weight": {
+                    "ref_time": "764602000",
+                    "proof_size": "15777"
+                  },
+                  "class": {
+                    "type": "Normal"
+                  },
+                  "pays_fee": {
+                    "type": "Yes"
+                  }
+                }
+              }
+            }
+          }
+        ]
       }
     },
     "items": {
@@ -2336,13 +2497,13 @@
       "mapped": true,
       "autoMap": true,
       "h160": "0xd5653aa4ad6fd3e1df19beb8b5eb8c1c92f088d6",
-      "nativeBalance": "500000000000000",
+      "nativeBalance": "1200000000000000",
       "nativeFrozen": "0",
       "nativeReserved": "0",
       "nonce": 0,
-      "block": 271423,
-      "blockHash": "0x8c3afba346be32aca6f90441db32a76f9a0f2180aedc00e9d813c939da98484f",
-      "observedAt": "2026-11-01T02:29:20.040Z"
+      "block": 271533,
+      "blockHash": "0x38e0b1a8b519746c57bf7c1793a728677a4ac99ac08b7dbf9342cdfa56911d53",
+      "observedAt": "2026-11-01T02:40:19.563Z"
     },
     "relayer": {
       "ss58": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",

@@ -7,6 +7,7 @@ import { publicConfig, readDeployment } from "@/lib/server-config";
 import {
   demoStatus,
   demoTransactionsFrom,
+  failedDemoTransactionsFrom,
   expectedFailuresFrom,
   consoleLink,
   probeRows,
@@ -78,6 +79,7 @@ export default async function Proof() {
   }
   const deployTransactions = transactionsFrom(deployment, "Deployment");
   const demoTransactions = demoTransactionsFrom(demo);
+  const failedDemoTransactions = failedDemoTransactionsFrom(demo);
   const rejectedTransactions = expectedFailuresFrom(demo);
   const probeTransactions = [
     ...transactionsFrom(probe, "Phase 0"),
@@ -403,6 +405,21 @@ export default async function Proof() {
         wss={config.wssUrl}
         empty="No live rental, refund, dispute or repair transaction has been recorded."
       />
+      {failedDemoTransactions.length > 0 && (
+        <>
+          <p className="callout">
+            The keeper's outer transaction finalized, but its Cronpot callback
+            failed. No DepositRefunded event was emitted, so this attempt does
+            not establish an automatic refund.
+          </p>
+          <TransactionSection
+            title="Failed live demonstration attempts"
+            records={failedDemoTransactions}
+            wss={config.wssUrl}
+            empty="No failed live attempt has been recorded."
+          />
+        </>
+      )}
       <section className="proof-section">
         <div className="section-heading">
           <h2>Expected rejection evidence</h2>

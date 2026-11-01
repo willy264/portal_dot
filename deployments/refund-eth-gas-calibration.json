@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-01T02:46:54.544Z",
+  "mode": "read-only-runtime-simulation",
+  "signedTransactions": 0,
+  "contractsDeployed": 0,
+  "genesis": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+  "runtimeCodeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+  "at": {
+    "number": 271595,
+    "hash": "0x3ce2a64010b5c550ef591b652b9ab8a5bfa44ec995f7338b27095426cb257794"
+  },
+  "target": "0x61382db168db646b899234cd707c7ba0142c4071",
+  "rentalId": "1",
+  "origin": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+  "direct": {
+    "role": "relayer",
+    "function": "finalizeRefund",
+    "args": [
+      "1"
+    ],
+    "valueNative": "0",
+    "at": {
+      "number": 271595,
+      "hash": "0x3ce2a64010b5c550ef591b652b9ab8a5bfa44ec995f7338b27095426cb257794"
+    },
+    "raw": "0x000374ecef4df2a204000374ecef4df2a2040000fe5b4ae4615d0100000000000000000001005c4ae4615d0100000000000000000000000000000000000000000000000000000000000000",
+    "decoded": {
+      "weight_consumed": {
+        "ref_time": "1307569268",
+        "proof_size": "75964"
+      },
+      "weight_required": {
+        "ref_time": "1307569268",
+        "proof_size": "75964"
+      },
+      "storage_deposit": {
+        "type": "Refund",
+        "value": "384149999999998"
+      },
+      "max_storage_deposit": {
+        "type": "Charge",
+        "value": "384150000000000"
+      },
+      "gas_consumed": "0",
+      "result": {
+        "success": true,
+        "value": {
+          "flags": 0,
+          "data": "0x"
+        }
+      }
+    }
+  },
+  "probe": {
+    "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.28; contract RefundCallProbe { error Probe(bool success, bytes result, uint256 beforeGas, uint256 afterGas); constructor(address target, bytes memory payload, uint256 limit) payable { uint256 beforeGas = gasleft(); (bool ok, bytes memory result) = target.call{gas: limit}(payload); revert Probe(ok, result, beforeGas, gasleft()); } }",
+    "solcVersion": "0.8.30+commit.73712a01.Emscripten.clang",
+    "method": "payable constructor always reverts Probe outcome; zero endowment, finite outer Ethereum gas10,000,000,000,000,000 via read-only trace_call_versioned; no persistent deployment",
+    "probes": [
+      {
+        "name": "MeterMend.cronpot-view",
+        "requestedCallbackGas": "1000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271595,
+          "hash": "0x3ce2a64010b5c550ef591b652b9ab8a5bfa44ec995f7338b27095426cb257794"
+        },
+        "raw": "0x0101cd02696e73756666696369656e742066756e647320666f7220676173202a207072696365202b2076616c756520283235333535303030303030303030303030293a20616464726573732030786138333031346261373134373632363237393531373366626263303636353635343662353765633020686176652038333338363635383132373839303939303030302028737570706c6965642067617320536f6d652831303030303030303030303030303030302929",
+        "result": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "insufficient funds for gas * price + value (25355000000000000): address 0xa83014ba71476262795173fbbc06656546b57ec0 have 83386658127890990000 (supplied gas Some(10000000000000000))"
+          }
+        },
+        "outcome": null
+      },
+      {
+        "name": "MeterMend.cronpot-view",
+        "requestedCallbackGas": "10000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271595,
+          "hash": "0x3ce2a64010b5c550ef591b652b9ab8a5bfa44ec995f7338b27095426cb257794"
+        },
+        "raw": "0x0101cd02696e73756666696369656e742066756e647320666f7220676173202a207072696365202b2076616c756520283235333535303030303030303030303030293a20616464726573732030786138333031346261373134373632363237393531373366626263303636353635343662353765633020686176652038333338363635383132373839303939303030302028737570706c6965642067617320536f6d652831303030303030303030303030303030302929",
+        "result": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "insufficient funds for gas * price + value (25355000000000000): address 0xa83014ba71476262795173fbbc06656546b57ec0 have 83386658127890990000 (supplied gas Some(10000000000000000))"
+          }
+        },
+        "outcome": null
+      },
+      {
+        "name": "MeterMend.cronpot-view",
+        "requestedCallbackGas": "100000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271595,
+          "hash": "0x3ce2a64010b5c550ef591b652b9ab8a5bfa44ec995f7338b27095426cb257794"
+        },
+        "raw": "0x0101cd02696e73756666696369656e742066756e647320666f7220676173202a207072696365202b2076616c756520283235333535303030303030303030303030293a20616464726573732030786138333031346261373134373632363237393531373366626263303636353635343662353765633020686176652038333338363635383132373839303939303030302028737570706c6965642067617320536f6d652831303030303030303030303030303030302929",
+        "result": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "insufficient funds for gas * price + value (25355000000000000): address 0xa83014ba71476262795173fbbc06656546b57ec0 have 83386658127890990000 (supplied gas Some(10000000000000000))"
+          }
+        },
+        "outcome": null
+      },
+      {
+        "name": "MeterMend.cronpot-view",
+        "requestedCallbackGas": "1000000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271595,
+          "hash": "0x3ce2a64010b5c550ef591b652b9ab8a5bfa44ec995f7338b27095426cb257794"
+        },
+        "raw": "0x0101cd02696e73756666696369656e742066756e647320666f7220676173202a207072696365202b2076616c756520283235333535303030303030303030303030293a20616464726573732030786138333031346261373134373632363237393531373366626263303636353635343662353765633020686176652038333338363635383132373839303939303030302028737570706c6965642067617320536f6d652831303030303030303030303030303030302929",
+        "result": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "insufficient funds for gas * price + value (25355000000000000): address 0xa83014ba71476262795173fbbc06656546b57ec0 have 83386658127890990000 (supplied gas Some(10000000000000000))"
+          }
+        },
+        "outcome": null
+      },
+      {
+        "name": "Cronpot.nextJobId-view",
+        "requestedCallbackGas": "1000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271595,
+          "hash": "0x3ce2a64010b5c550ef591b652b9ab8a5bfa44ec995f7338b27095426cb257794"
+        },
+        "raw": "0x0101cd02696e73756666696369656e742066756e647320666f7220676173202a207072696365202b2076616c756520283235333535303030303030303030303030293a20616464726573732030786138333031346261373134373632363237393531373366626263303636353635343662353765633020686176652038333338363635383132373839303939303030302028737570706c6965642067617320536f6d652831303030303030303030303030303030302929",
+        "result": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "insufficient funds for gas * price + value (25355000000000000): address 0xa83014ba71476262795173fbbc06656546b57ec0 have 83386658127890990000 (supplied gas Some(10000000000000000))"
+          }
+        },
+        "outcome": null
+      },
+      {
+        "name": "Cronpot.nextJobId-view",
+        "requestedCallbackGas": "10000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271595,
+          "hash": "0x3ce2a64010b5c550ef591b652b9ab8a5bfa44ec995f7338b27095426cb257794"
+        },
+        "raw": "0x0101cd02696e73756666696369656e742066756e647320666f7220676173202a207072696365202b2076616c756520283235333535303030303030303030303030293a20616464726573732030786138333031346261373134373632363237393531373366626263303636353635343662353765633020686176652038333338363635383132373839303939303030302028737570706c6965642067617320536f6d652831303030303030303030303030303030302929",
+        "result": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "insufficient funds for gas * price + value (25355000000000000): address 0xa83014ba71476262795173fbbc06656546b57ec0 have 83386658127890990000 (supplied gas Some(10000000000000000))"
+          }
+        },
+        "outcome": null
+      },
+      {
+        "name": "Cronpot.nextJobId-view",
+        "requestedCallbackGas": "100000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271595,
+          "hash": "0x3ce2a64010b5c550ef591b652b9ab8a5bfa44ec995f7338b27095426cb257794"
+        },
+        "raw": "0x0101cd02696e73756666696369656e742066756e647320666f7220676173202a207072696365202b2076616c756520283235333535303030303030303030303030293a20616464726573732030786138333031346261373134373632363237393531373366626263303636353635343662353765633020686176652038333338363635383132373839303939303030302028737570706c6965642067617320536f6d652831303030303030303030303030303030302929",
+        "result": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "insufficient funds for gas * price + value (25355000000000000): address 0xa83014ba71476262795173fbbc06656546b57ec0 have 83386658127890990000 (supplied gas Some(10000000000000000))"
+          }
+        },
+        "outcome": null
+      },
+      {
+        "name": "Cronpot.nextJobId-view",
+        "requestedCallbackGas": "1000000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271595,
+          "hash": "0x3ce2a64010b5c550ef591b652b9ab8a5bfa44ec995f7338b27095426cb257794"
+        },
+        "raw": "0x0101cd02696e73756666696369656e742066756e647320666f7220676173202a207072696365202b2076616c756520283235333535303030303030303030303030293a20616464726573732030786138333031346261373134373632363237393531373366626263303636353635343662353765633020686176652038333338363635383132373839303939303030302028737570706c6965642067617320536f6d652831303030303030303030303030303030302929",
+        "result": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "insufficient funds for gas * price + value (25355000000000000): address 0xa83014ba71476262795173fbbc06656546b57ec0 have 83386658127890990000 (supplied gas Some(10000000000000000))"
+          }
+        },
+        "outcome": null
+      },
+      {
+        "name": "MeterMend.finalizeRefund",
+        "requestedCallbackGas": "1000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271595,
+          "hash": "0x3ce2a64010b5c550ef591b652b9ab8a5bfa44ec995f7338b27095426cb257794"
+        },
+        "raw": "0x0101cd02696e73756666696369656e742066756e647320666f7220676173202a207072696365202b2076616c756520283235333535303030303030303030303030293a20616464726573732030786138333031346261373134373632363237393531373366626263303636353635343662353765633020686176652038333338363635383132373839303939303030302028737570706c6965642067617320536f6d652831303030303030303030303030303030302929",
+        "result": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "insufficient funds for gas * price + value (25355000000000000): address 0xa83014ba71476262795173fbbc06656546b57ec0 have 83386658127890990000 (supplied gas Some(10000000000000000))"
+          }
+        },
+        "outcome": null
+      },
+      {
+        "name": "MeterMend.finalizeRefund",
+        "requestedCallbackGas": "10000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271595,
+          "hash": "0x3ce2a64010b5c550ef591b652b9ab8a5bfa44ec995f7338b27095426cb257794"
+        },
+        "raw": "0x0101cd02696e73756666696369656e742066756e647320666f7220676173202a207072696365202b2076616c756520283235333535303030303030303030303030293a20616464726573732030786138333031346261373134373632363237393531373366626263303636353635343662353765633020686176652038333338363635383132373839303939303030302028737570706c6965642067617320536f6d652831303030303030303030303030303030302929",
+        "result": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "insufficient funds for gas * price + value (25355000000000000): address 0xa83014ba71476262795173fbbc06656546b57ec0 have 83386658127890990000 (supplied gas Some(10000000000000000))"
+          }
+        },
+        "outcome": null
+      },
+      {
+        "name": "MeterMend.finalizeRefund",
+        "requestedCallbackGas": "100000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271595,
+          "hash": "0x3ce2a64010b5c550ef591b652b9ab8a5bfa44ec995f7338b27095426cb257794"
+        },
+        "raw": "0x0101cd02696e73756666696369656e742066756e647320666f7220676173202a207072696365202b2076616c756520283235333535303030303030303030303030293a20616464726573732030786138333031346261373134373632363237393531373366626263303636353635343662353765633020686176652038333338363635383132373839303939303030302028737570706c6965642067617320536f6d652831303030303030303030303030303030302929",
+        "result": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "insufficient funds for gas * price + value (25355000000000000): address 0xa83014ba71476262795173fbbc06656546b57ec0 have 83386658127890990000 (supplied gas Some(10000000000000000))"
+          }
+        },
+        "outcome": null
+      },
+      {
+        "name": "MeterMend.finalizeRefund",
+        "requestedCallbackGas": "1000000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271595,
+          "hash": "0x3ce2a64010b5c550ef591b652b9ab8a5bfa44ec995f7338b27095426cb257794"
+        },
+        "raw": "0x0101cd02696e73756666696369656e742066756e647320666f7220676173202a207072696365202b2076616c756520283235333535303030303030303030303030293a20616464726573732030786138333031346261373134373632363237393531373366626263303636353635343662353765633020686176652038333338363635383132373839303939303030302028737570706c6965642067617320536f6d652831303030303030303030303030303030302929",
+        "result": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "insufficient funds for gas * price + value (25355000000000000): address 0xa83014ba71476262795173fbbc06656546b57ec0 have 83386658127890990000 (supplied gas Some(10000000000000000))"
+          }
+        },
+        "outcome": null
+      }
+    ]
+  }
+}

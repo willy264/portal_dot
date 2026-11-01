@@ -2,7 +2,7 @@
 
 **Updated October 31, 2026 · previous committed baseline `7a76f70`**
 
-MeterMend's contracts, web interface, chain client, workers and deployment scripts are implemented and tested. The web app and permanent proof report are public. **Cronpot and MeterMend are finalized at blocks 265131 and 271379. Both contracts passed read-back checks at block 271384. The full live rental demonstration remains pending.**
+MeterMend's contracts, web interface, chain client, workers and deployment scripts are implemented and tested. The web app and permanent proof report are public. **Cronpot and MeterMend are finalized at blocks 265131 and 271379. Both contracts passed read-back checks at block 271384. The live rental and return passed, but Cronpot's refund callback ran out of gas. The full golden path is blocked pending correction.**
 
 [Public app](https://metermend.vercel.app/) · [Application proof page](https://metermend.vercel.app/proof) · [Permanent proof report](https://willy264.github.io/portal_dot/) · [Repository](https://github.com/willy264/portal_dot)
 
@@ -14,6 +14,7 @@ The public app and report are published from committed evidence. A successful co
 - Verified Cronpot `nextJobId=1`, MeterMend `cronpot()` and `cronTip()` against one finalized block.
 - Funded and mapped the renter, arbiter and keeper. Registered camera item 1 at block 271442 and printer item 2 at block 271469, both with 120-second dispute windows. Generated printable QR labels from their finalized receipts.
 - Started the local keeper from the validated deployment block and preserved SQLite records across the handoff from read-only indexing. Telegram acknowledged the first actual item-registration message. Persistent hosting and the six required rental-event notifications remain separate milestones.
+- Ran the first rental, verified the 0.002 tPOT reserve increase, stored the labeled evidence image in TransactionStorage, and scheduled job 1 on return. The keeper's outer transaction finalized at block 271528, but its nested callback failed with `OutOfGas`; no deposit was refunded. The partial demo and exact trace are preserved. No failed job was retried.
 - Verified public pitch PDFs on Vercel and GitHub Pages. Render service creation still awaits account authentication and approval for the proposed $14.50/month base cost.
 
 ## October 31 continuation

@@ -69,7 +69,7 @@
   },
   "localIndexer": {
     "observedAt": "2026-11-01T02:31:36.574Z",
-    "status": "indexing",
+    "status": "handed-off-to-funded-keeper",
     "pid": 11320,
     "signingEnabled": false,
     "health": {
@@ -86,6 +86,12 @@
       },
       "gap": null,
       "error": null
+    },
+    "stoppedAt": "2026-11-01T02:34:31.238Z",
+    "finalCursor": {
+      "block": 271463,
+      "hash": "0x5e6d688c3d3ed6ae6f3d497f53aeda230d93db1e0f6ab3fac0286d5a08fef958"
     }
-  }
+  },
+  "keeperEvidence": "deployments/keeper-status.json"
 }

@@ -104,7 +104,7 @@ const transactionRows = steps
       deployment?.contracts,
       deployment?.units?.verified ? deployment.units.evmDecimals : undefined,
     );
-    return `<tr><td>${escape(s.step ?? s.name)}</td><td><code>${escape(s.txHash ?? "Native block initialization; no extrinsic hash")}</code></td><td>${blockEvidence(s.blockHash, s.block)}</td><td>${escape(summary.events)}</td><td>${escape(summary.amounts)}</td></tr>`;
+    return `<tr><td>${escape(s.step ?? s.name)}${s.outcome === "failed" ? `<br><strong>${escape(s.status)}; no automatic refund established</strong>` : ""}</td><td><code>${escape(s.txHash ?? "Native block initialization; no extrinsic hash")}</code></td><td>${blockEvidence(s.blockHash, s.block)}</td><td>${escape(summary.events)}</td><td>${escape(summary.amounts)}</td></tr>`;
   })
   .join("");
 const probeRows = Object.entries({ ...probe?.checks, ...funded?.checks })

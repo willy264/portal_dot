@@ -8,6 +8,8 @@ The web app, refund worker and notification worker are independently restartable
 
 Refunds execute automatically via Cronpot; execution is permissionless and our keeper runs it. The blueprint fixes `MODE=keeper`. P5 rejected the signed native Scheduler origin with `BadOrigin`; native scheduling is not part of the delivered flow.
 
+The explicit initial indexer start is block **271379**, MeterMend's finalized deployment. The [bootstrap evidence](../deployments/indexer-bootstrap.json) proves Cronpot had no earlier jobs, using `nextJobId=1` at finalized block 271384. Import the local retained SQLite database before starting the hosted worker so previously indexed events, job submissions and Telegram deliveries are not replayed. Existing cursors are never skipped or cleared. The blueprint allows 120 seconds for the observed slow typed RPC initialization.
+
 The estimated base cost, checked October 31, 2026, is **US$14.50/month**: $7 for the web service, $7 for the Telegram worker, and $0.25 per 1GB disk. This assumes the free Hobby workspace; workspace upgrades, excess usage and tax are additional. The account owner's cost approval is still pending, and no paid service has been provisioned. See [Render pricing](https://render.com/pricing), [compute plans](https://render.com/docs/compute-plans) and [persistent disks](https://render.com/docs/disks).
 
 ### Deploy after cost approval

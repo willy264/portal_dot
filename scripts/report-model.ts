@@ -10,6 +10,19 @@ export function demoSteps(demo: any): any[] {
         ...(value as object),
         step,
       }));
+  const failures = demo?.failedTransactions;
+  if (failures && typeof failures === "object") {
+    for (const [name, value] of Object.entries(failures)) {
+      if (!value || typeof value !== "object") continue;
+      const receipt = value as Record<string, unknown>;
+      steps.push({
+        ...receipt,
+        step: receipt.label ?? receipt.step ?? name,
+        outcome: "failed",
+        status: receipt.status ?? "Failed live attempt",
+      });
+    }
+  }
   const automatic = demo?.automaticRefund;
   if (automatic?.refund) {
     steps.push({

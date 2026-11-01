@@ -12,7 +12,7 @@ Built for **Portaldot Hacker House 2026 · Ecosystem DApps**. MeterMend implemen
 
 ## Live on Portaldot V3
 
-**Cronpot and MeterMend are deployed and finalized on V3.** Cronpot finalized at block 265131; MeterMend finalized at block 271379 after a deliberate nonce-7 replacement, with the original attempt preserved separately. Both contracts passed [finalized read-back checks](deployments/read-back.json). The complete live rental demonstration remains pending.
+**Cronpot and MeterMend are deployed and finalized on V3.** Cronpot finalized at block 265131; MeterMend finalized at block 271379 after a deliberate nonce-7 replacement, with the original attempt preserved separately. Both contracts passed [finalized read-back checks](deployments/read-back.json). The first live rent, reserve split, native evidence store and return passed; **the automatic refund failed because Cronpot's nested callback ran out of gas**. The complete golden path remains blocked. [Live trace and diagnosis](deployments/cronpot-callback-diagnosis.json).
 
 | Contract           | V3 address                                   | Status                                        |
 | ------------------ | -------------------------------------------- | --------------------------------------------- |
@@ -30,7 +30,7 @@ The [public web app](https://metermend.vercel.app/) and its [proof page](https:/
 - Cronpot's generic timed-call registry, with permissionless execution and bounded callbacks. Its keeper fallback is the selected V3 mode.
 - A persistent finalized-event indexer and refund worker, with transaction journals and recovery states.
 - Mobile web catalogue, operator dashboard, arbiter inbox, rental history, wallet activation, evidence verification, dark mode and proof pages.
-- Durable DeBox notifications and a Telegram fallback. Telegram credentials and destination passed read-only checks on October 31; delivered notifications remain pending.
+- Durable community notifications with Telegram as the selected delivery channel. Actual registration, rental and return updates have Telegram acknowledgements; the remaining required event types and group screenshots are pending. DeBox is the target integration and is not live.
 
 The Foundry suite has **43 passing tests**, including fee-split fuzzing, reserve isolation, dispute voting, callback failures and transfer restrictions. TypeScript tests cover conversion, transaction outcomes, durable services, scheduling, evidence integrity and web data handling. These checks are separate from the pending full live demonstration.
 
@@ -63,7 +63,7 @@ See [architecture and accounting flows](docs/ARCHITECTURE.md) and the authoritat
 | Native events          | Item history and permanent proof               | Finalized events are persisted before public-node pruning                             |
 | DeBox OpenAPI          | Community equipment and repair updates         | Integration implemented; credentials and live delivery pending                        |
 
-Refunds execute automatically via Cronpot; execution is permissionless and our keeper runs it. This describes the selected execution mechanism; the completed live refund demonstration is still pending. `finalizeRefund` independently checks rental status and the deadline. The operator's proposal plus either the distinct renter or arbiter approves a deduction; both other parties must reject to return the full deposit. Only an arbiter-approved repair can spend a reserve.
+Refunds execute automatically via Cronpot; execution is permissionless and our keeper runs it. This describes the selected execution mechanism; the first live callback exhausted its fixed gas allowance, so successful automatic refund delivery is not yet proven. `finalizeRefund` independently checks rental status and the deadline. The operator's proposal plus either the distinct renter or arbiter approves a deduction; both other parties must reject to return the full deposit. Only an arbiter-approved repair can spend a reserve.
 
 ## Quickstart
 

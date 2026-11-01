@@ -91,7 +91,7 @@ it("reopens a persisted database, finds a finalized scheduling hash and avoids d
   }
 });
 
-it("retries an uncertain keeper call only after a proven finalized failure and backoff", async () => {
+it("requires manual hash and nonce review after a reconciled finalized failure", async () => {
   const store = new Store(":memory:");
   let calls = 0;
   const adapter: ExecutionAdapter = {
@@ -118,12 +118,23 @@ it("retries an uncertain keeper call only after a proven finalized failure and b
     expect(calls).toBe(1);
     await engine.tick(132n, 12);
     expect(calls).toBe(1);
-    expect(store.job("1")?.scheduling).toBe("pending");
+    expect(store.job("1")?.scheduling).toBe("manual-review");
     await engine.tick(151n, 15);
     expect(calls).toBe(1);
     await engine.tick(152n, 16);
-    expect(calls).toBe(2);
-    expect(store.job("1")?.state).toBe("FinalizedAwaitingEvents");
+    await new JobEngine(store, adapter, "keeper", address, 6000).tick(
+      1000n,
+      100,
+    );
+    expect(calls).toBe(1);
+    expect(store.job("1")).toMatchObject({
+      state: "Scheduled",
+      scheduling: "manual-review",
+      evidence: {
+        reconciledSubmission: { txHash, block: 12 },
+        retryPolicy: expect.stringContaining("account nonce"),
+      },
+    });
   } finally {
     store.close();
   }

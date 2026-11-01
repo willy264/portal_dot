@@ -1,0 +1,146 @@
+{
+  "observations": [
+    {
+      "observedAt": "2026-11-01T02:40:35.761Z",
+      "mode": "read-only",
+      "signedTransactions": 0,
+      "method": "state_call ReviveApi_call_versioned with checked-in metadata after exact genesis/spec/runtime code hash verification",
+      "genesis": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+      "runtimeCodeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+      "at": {
+        "number": 271535,
+        "hash": "0x2f728ea5c000e32153bde376f6f5a4ed54c31f12f254f8079650e0ce26c0afa5"
+      },
+      "checks": [
+        {
+          "role": "deployer",
+          "function": "openDispute",
+          "args": [
+            "1",
+            "15000000000000000",
+            "0x1111111111111111111111111111111111111111111111111111111111111111"
+          ],
+          "valueNative": "0",
+          "at": {
+            "number": 271535,
+            "hash": "0x2f728ea5c000e32153bde376f6f5a4ed54c31f12f254f8079650e0ce26c0afa5"
+          },
+          "raw": "0x006a6ddc778eb903006a6ddc778ebf0300010000000000000000000000000000000001005c4ae4615d01000000000000000000561cff020000000000000000000000000001000000102f23cfcd",
+          "decoded": {
+            "weight_consumed": {
+              "ref_time": "502733658",
+              "proof_size": "61027"
+            },
+            "weight_required": {
+              "ref_time": "502733658",
+              "proof_size": "61411"
+            },
+            "storage_deposit": {
+              "type": "Charge",
+              "value": "0"
+            },
+            "max_storage_deposit": {
+              "type": "Charge",
+              "value": "384150000000000"
+            },
+            "gas_consumed": "50273366",
+            "result": {
+              "success": true,
+              "value": {
+                "flags": 1,
+                "data": "0x2f23cfcd"
+              }
+            }
+          },
+          "storageCapNative": null,
+          "status": "reverted-not-cost-estimate"
+        },
+        {
+          "role": "renter",
+          "function": "rent",
+          "args": [
+            "1"
+          ],
+          "valueNative": "6000000000000",
+          "at": {
+            "number": 271535,
+            "hash": "0x2f728ea5c000e32153bde376f6f5a4ed54c31f12f254f8079650e0ce26c0afa5"
+          },
+          "raw": "0x00039577eb80f25d0900039577eb807264090001007029918775050000000000000000000100cc7375e9d2060000000000000000008572e7c10c27020000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000002",
+          "decoded": {
+            "weight_consumed": {
+              "ref_time": "2162915221",
+              "proof_size": "153468"
+            },
+            "weight_required": {
+              "ref_time": "2162915221",
+              "proof_size": "153884"
+            },
+            "storage_deposit": {
+              "type": "Charge",
+              "value": "1536600000000000"
+            },
+            "max_storage_deposit": {
+              "type": "Charge",
+              "value": "1920750000000000"
+            },
+            "gas_consumed": "605885699682949",
+            "result": {
+              "success": true,
+              "value": {
+                "flags": 0,
+                "data": "0x0000000000000000000000000000000000000000000000000000000000000002"
+              }
+            }
+          },
+          "storageCapNative": "2304900000000000",
+          "status": "simulated"
+        },
+        {
+          "role": "deployer",
+          "function": "proposeRepair",
+          "args": [
+            "1",
+            "0x5c8ce2c2987ea625ba9f60fe959b12e13574b404",
+            "1000000000000000",
+            "0x1111111111111111111111111111111111111111111111111111111111111111"
+          ],
+          "valueNative": "0",
+          "at": {
+            "number": 271535,
+            "hash": "0x2f728ea5c000e32153bde376f6f5a4ed54c31f12f254f8079650e0ce26c0afa5"
+          },
+          "raw": "0x000309a65b511e3a06000309a65b519e40060001007029918775050000000000000000000100cc7375e9d20600000000000000000091dd25bd0c27020000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000001",
+          "decoded": {
+            "weight_consumed": {
+              "ref_time": "1364960777",
+              "proof_size": "102023"
+            },
+            "weight_required": {
+              "ref_time": "1364960777",
+              "proof_size": "102439"
+            },
+            "storage_deposit": {
+              "type": "Charge",
+              "value": "1536600000000000"
+            },
+            "max_storage_deposit": {
+              "type": "Charge",
+              "value": "1920750000000000"
+            },
+            "gas_consumed": "605885619887505",
+            "result": {
+              "success": true,
+              "value": {
+                "flags": 0,
+                "data": "0x0000000000000000000000000000000000000000000000000000000000000001"
+              }
+            }
+          },
+          "storageCapNative": "2304900000000000",
+          "status": "simulated"
+        }
+      ]
+    }
+  ]
+}

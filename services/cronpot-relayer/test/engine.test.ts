@@ -73,6 +73,54 @@ it("persists an ambiguous keeper submission and avoids rebroadcasting after rest
   expect(store.job("1")?.scheduling).toBe("execution-unknown");
   store.close();
 });
+it("retains a finalized failed receipt and never retries it after restart", async () => {
+  const store = new Store(":memory:");
+  const receipt = {
+    txHash: `0x${"a".repeat(64)}`,
+    block: 12,
+    blockHash: `0x${"b".repeat(64)}`,
+    extrinsicIndex: 2,
+    events: [{ type: "System", value: { type: "ExtrinsicFailed" } }],
+  };
+  const dispatchError = {
+    type: "Module",
+    value: { type: "Revive", value: { type: "OutOfGas" } },
+  };
+  let executions = 0;
+  const adapter: ExecutionAdapter = {
+    readJob: async () => ({ status: 1, executeAfter: 100n }),
+    schedule: async () => ({ txHash: "unused", block: 1 }),
+    execute: async (_id, onStatus) => {
+      executions++;
+      onStatus({ type: "finalized", txHash: receipt.txHash, ok: false });
+      throw Object.assign(new Error("Finalized extrinsic failed"), {
+        ambiguous: false,
+        evidence: receipt,
+        dispatchError,
+      });
+    },
+  };
+  try {
+    const engine = new JobEngine(store, adapter, "keeper", address, 6000);
+    engine.ingest([scheduled]);
+    await engine.tick(131n, 10);
+    await new JobEngine(store, adapter, "keeper", address, 6000).tick(
+      1000n,
+      100,
+    );
+    expect(executions).toBe(1);
+    expect(store.job("1")).toMatchObject({
+      scheduling: "manual-review",
+      attempts: 1,
+      evidence: {
+        failedSubmission: { ...receipt, dispatchError },
+        retryPolicy: expect.stringContaining("account nonce"),
+      },
+    });
+  } finally {
+    store.close();
+  }
+});
 it("does not subsidize arbitrary jobs or count manual refunds as automatic", async () => {
   const store = new Store(":memory:");
   let executions = 0;

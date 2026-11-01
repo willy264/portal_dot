@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-01T02:43:03.466Z",
+  "mode": "read-only-runtime-simulation",
+  "signedTransactions": 0,
+  "contractsDeployed": 0,
+  "genesis": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+  "runtimeCodeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+  "at": {
+    "number": 271559,
+    "hash": "0xb526ed9fb88b2179958400ca35a1e5b3b59fd57c53777432bb64294ae29d27a2"
+  },
+  "target": "0x61382db168db646b899234cd707c7ba0142c4071",
+  "rentalId": "1",
+  "direct": {
+    "role": "relayer",
+    "function": "finalizeRefund",
+    "args": [
+      "1"
+    ],
+    "valueNative": "0",
+    "at": {
+      "number": 271559,
+      "hash": "0xb526ed9fb88b2179958400ca35a1e5b3b59fd57c53777432bb64294ae29d27a2"
+    },
+    "raw": "0x000374ecef4df2a204000374ecef4df2a2040000fe5b4ae4615d0100000000000000000001005c4ae4615d0100000000000000000000000000000000000000000000000000000000000000",
+    "decoded": {
+      "weight_consumed": {
+        "ref_time": "1307569268",
+        "proof_size": "75964"
+      },
+      "weight_required": {
+        "ref_time": "1307569268",
+        "proof_size": "75964"
+      },
+      "storage_deposit": {
+        "type": "Refund",
+        "value": "384149999999998"
+      },
+      "max_storage_deposit": {
+        "type": "Charge",
+        "value": "384150000000000"
+      },
+      "gas_consumed": "0",
+      "result": {
+        "success": true,
+        "value": {
+          "flags": 0,
+          "data": "0x"
+        }
+      }
+    }
+  },
+  "probe": {
+    "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.28; contract RefundGasProbe { error Probe(bool success, bytes result, uint256 gasUsed); constructor(address target, uint256 limit) { uint256 beforeGas = gasleft(); (bool ok, bytes memory result) = target.call{gas: limit}(abi.encodeWithSignature(\"finalizeRefund(uint256)\", 1)); revert Probe(ok, result, beforeGas - gasleft()); } }",
+    "solcVersion": "0.8.30+commit.73712a01.Emscripten.clang",
+    "settings": {
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "evmVersion": "prague"
+    },
+    "method": "ReviveApi_instantiate_versioned simulation; constructor always reverts Probe result so no persistent contract or state change",
+    "probes": [
+      {
+        "requestedCallbackGas": "1000000",
+        "at": {
+          "number": 271559,
+          "hash": "0xb526ed9fb88b2179958400ca35a1e5b3b59fd57c53777432bb64294ae29d27a2"
+        },
+        "raw": "0x00e22b5d4dd9dee22b5d4dd9de010000000000000000000000000000000001000000000000000000000000000000001921ef0100000000000000000000000000010000001102ab54ffaa0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e025f74f152f1b30594bf57f77c57d84e5aa96d7",
+        "result": {
+          "weight_consumed": {
+            "ref_time": "324487928",
+            "proof_size": "14262"
+          },
+          "weight_required": {
+            "ref_time": "324487928",
+            "proof_size": "14262"
+          },
+          "storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "max_storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "gas_consumed": "32448793",
+          "result": {
+            "success": true,
+            "value": {
+              "result": {
+                "flags": 1,
+                "data": "0xab54ffaa0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+              },
+              "addr": "0xe025f74f152f1b30594bf57f77c57d84e5aa96d7"
+            }
+          }
+        },
+        "outcome": {
+          "targetSucceeded": false,
+          "targetReturnData": "0x",
+          "gasUsedByTargetCall": "0"
+        }
+      },
+      {
+        "requestedCallbackGas": "2000000",
+        "at": {
+          "number": 271559,
+          "hash": "0xb526ed9fb88b2179958400ca35a1e5b3b59fd57c53777432bb64294ae29d27a2"
+        },
+        "raw": "0x00e22b5d4dd9dee22b5d4dd9de010000000000000000000000000000000001000000000000000000000000000000001921ef0100000000000000000000000000010000001102ab54ffaa0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e025f74f152f1b30594bf57f77c57d84e5aa96d7",
+        "result": {
+          "weight_consumed": {
+            "ref_time": "324487928",
+            "proof_size": "14262"
+          },
+          "weight_required": {
+            "ref_time": "324487928",
+            "proof_size": "14262"
+          },
+          "storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "max_storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "gas_consumed": "32448793",
+          "result": {
+            "success": true,
+            "value": {
+              "result": {
+                "flags": 1,
+                "data": "0xab54ffaa0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+              },
+              "addr": "0xe025f74f152f1b30594bf57f77c57d84e5aa96d7"
+            }
+          }
+        },
+        "outcome": {
+          "targetSucceeded": false,
+          "targetReturnData": "0x",
+          "gasUsedByTargetCall": "0"
+        }
+      },
+      {
+        "requestedCallbackGas": "10000000",
+        "at": {
+          "number": 271559,
+          "hash": "0xb526ed9fb88b2179958400ca35a1e5b3b59fd57c53777432bb64294ae29d27a2"
+        },
+        "raw": "0x00e22b5d4dd9dee22b5d4dd9de010000000000000000000000000000000001000000000000000000000000000000001921ef0100000000000000000000000000010000001102ab54ffaa0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e025f74f152f1b30594bf57f77c57d84e5aa96d7",
+        "result": {
+          "weight_consumed": {
+            "ref_time": "324487928",
+            "proof_size": "14262"
+          },
+          "weight_required": {
+            "ref_time": "324487928",
+            "proof_size": "14262"
+          },
+          "storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "max_storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "gas_consumed": "32448793",
+          "result": {
+            "success": true,
+            "value": {
+              "result": {
+                "flags": 1,
+                "data": "0xab54ffaa0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+              },
+              "addr": "0xe025f74f152f1b30594bf57f77c57d84e5aa96d7"
+            }
+          }
+        },
+        "outcome": {
+          "targetSucceeded": false,
+          "targetReturnData": "0x",
+          "gasUsedByTargetCall": "0"
+        }
+      },
+      {
+        "requestedCallbackGas": "100000000",
+        "at": {
+          "number": 271559,
+          "hash": "0xb526ed9fb88b2179958400ca35a1e5b3b59fd57c53777432bb64294ae29d27a2"
+        },
+        "raw": "0x00e22b5d4dd9dee22b5d4dd9de010000000000000000000000000000000001000000000000000000000000000000001921ef0100000000000000000000000000010000001102ab54ffaa0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e025f74f152f1b30594bf57f77c57d84e5aa96d7",
+        "result": {
+          "weight_consumed": {
+            "ref_time": "324487928",
+            "proof_size": "14262"
+          },
+          "weight_required": {
+            "ref_time": "324487928",
+            "proof_size": "14262"
+          },
+          "storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "max_storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "gas_consumed": "32448793",
+          "result": {
+            "success": true,
+            "value": {
+              "result": {
+                "flags": 1,
+                "data": "0xab54ffaa0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+              },
+              "addr": "0xe025f74f152f1b30594bf57f77c57d84e5aa96d7"
+            }
+          }
+        },
+        "outcome": {
+          "targetSucceeded": false,
+          "targetReturnData": "0x",
+          "gasUsedByTargetCall": "0"
+        }
+      },
+      {
+        "requestedCallbackGas": "1000000000",
+        "at": {
+          "number": 271559,
+          "hash": "0xb526ed9fb88b2179958400ca35a1e5b3b59fd57c53777432bb64294ae29d27a2"
+        },
+        "raw": "0x00e22b5d4dd9dee22b5d4dd9de010000000000000000000000000000000001000000000000000000000000000000001921ef0100000000000000000000000000010000001102ab54ffaa0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e025f74f152f1b30594bf57f77c57d84e5aa96d7",
+        "result": {
+          "weight_consumed": {
+            "ref_time": "324487928",
+            "proof_size": "14262"
+          },
+          "weight_required": {
+            "ref_time": "324487928",
+            "proof_size": "14262"
+          },
+          "storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "max_storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "gas_consumed": "32448793",
+          "result": {
+            "success": true,
+            "value": {
+              "result": {
+                "flags": 1,
+                "data": "0xab54ffaa0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+              },
+              "addr": "0xe025f74f152f1b30594bf57f77c57d84e5aa96d7"
+            }
+          }
+        },
+        "outcome": {
+          "targetSucceeded": false,
+          "targetReturnData": "0x",
+          "gasUsedByTargetCall": "0"
+        }
+      },
+      {
+        "requestedCallbackGas": "10000000000",
+        "at": {
+          "number": 271559,
+          "hash": "0xb526ed9fb88b2179958400ca35a1e5b3b59fd57c53777432bb64294ae29d27a2"
+        },
+        "raw": "0x00e22b5d4dd9dee22b5d4dd9de010000000000000000000000000000000001000000000000000000000000000000001921ef0100000000000000000000000000010000001102ab54ffaa0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e025f74f152f1b30594bf57f77c57d84e5aa96d7",
+        "result": {
+          "weight_consumed": {
+            "ref_time": "324487928",
+            "proof_size": "14262"
+          },
+          "weight_required": {
+            "ref_time": "324487928",
+            "proof_size": "14262"
+          },
+          "storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "max_storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "gas_consumed": "32448793",
+          "result": {
+            "success": true,
+            "value": {
+              "result": {
+                "flags": 1,
+                "data": "0xab54ffaa0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+              },
+              "addr": "0xe025f74f152f1b30594bf57f77c57d84e5aa96d7"
+            }
+          }
+        },
+        "outcome": {
+          "targetSucceeded": false,
+          "targetReturnData": "0x",
+          "gasUsedByTargetCall": "0"
+        }
+      }
+    ]
+  }
+}

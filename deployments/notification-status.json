@@ -1,0 +1,131 @@
+{
+  "observedAt": "2026-11-01T02:39:12.247Z",
+  "status": "live-delivery-in-progress",
+  "summary": "2 of 6 required live event types acknowledged by Telegram. The bot runs locally; group screenshots and persistent Render hosting remain pending.",
+  "channel": "telegram",
+  "deliveredEvents": [
+    "Rented",
+    "Returned"
+  ],
+  "missingEvents": [
+    "DepositRefunded",
+    "DisputeOpened",
+    "DisputeResolved",
+    "RepairPaid"
+  ],
+  "deliveryCount": 5,
+  "receipts": [
+    {
+      "observationId": 1,
+      "observedAt": "2026-11-01T02:33:31.374Z",
+      "eventId": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0xb90c6f9d81641c286b98cf8d2764d177590283d4dadfdfed9f69262f2e4a04c8:2",
+      "link": "https://metermend.vercel.app/items/1",
+      "receipt": {
+        "provider": "telegram",
+        "messageId": 5,
+        "providerSentAt": "2026-11-01T02:33:31.000Z",
+        "acknowledgedAt": "2026-11-01T02:33:31.372Z"
+      },
+      "eventName": "ItemRegistered",
+      "txHash": "0xd4789155d530d6cebb38af2072ba99af42c16cda91efd7f880ffe31a8249476c",
+      "block": 271442,
+      "blockHash": "0xb90c6f9d81641c286b98cf8d2764d177590283d4dadfdfed9f69262f2e4a04c8",
+      "network": "portaldot-v3-testnet",
+      "itemId": "1"
+    },
+    {
+      "observationId": 2,
+      "observedAt": "2026-11-01T02:34:55.160Z",
+      "eventId": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x130d61ee222fd57a02c4eeef5c8c919c85cb31a7f631357c5d8a9a4e8b4a3a5d:2",
+      "link": "https://metermend.vercel.app/items/2",
+      "receipt": {
+        "provider": "telegram",
+        "messageId": 6,
+        "providerSentAt": "2026-11-01T02:34:55.000Z",
+        "acknowledgedAt": "2026-11-01T02:34:55.160Z"
+      },
+      "eventName": "ItemRegistered",
+      "txHash": "0x5c7711c3be7aa5c23b641f2365e579ba03f422fc6c9c9dce1b7208d2c9feb43d",
+      "block": 271469,
+      "blockHash": "0x130d61ee222fd57a02c4eeef5c8c919c85cb31a7f631357c5d8a9a4e8b4a3a5d",
+      "network": "portaldot-v3-testnet",
+      "itemId": "2"
+    },
+    {
+      "observationId": 3,
+      "observedAt": "2026-11-01T02:36:08.952Z",
+      "eventId": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0xc7355710805a2cc75f388950b550a875268dd12866548e6f4823c75e145b5afe:3",
+      "link": "https://metermend.vercel.app/rentals/1",
+      "receipt": {
+        "provider": "telegram",
+        "messageId": 7,
+        "providerSentAt": "2026-11-01T02:36:09.000Z",
+        "acknowledgedAt": "2026-11-01T02:36:08.952Z"
+      },
+      "eventName": "Rented",
+      "txHash": "0xb5485a043aa46e182a6511163a1716711262a5be98d437b42c1cf8fd13d13b67",
+      "block": 271490,
+      "blockHash": "0xc7355710805a2cc75f388950b550a875268dd12866548e6f4823c75e145b5afe",
+      "network": "portaldot-v3-testnet",
+      "itemId": "1",
+      "rentalId": "1"
+    },
+    {
+      "observationId": 4,
+      "observedAt": "2026-11-01T02:36:59.434Z",
+      "eventId": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0xa168b7fc4bc2857652f914d1b411f1f2861b8ad4f4a386b7c2ae44ca0d7e8bdd:5",
+      "link": "https://metermend.vercel.app/rentals/1",
+      "receipt": {
+        "provider": "telegram",
+        "messageId": 8,
+        "providerSentAt": "2026-11-01T02:36:59.000Z",
+        "acknowledgedAt": "2026-11-01T02:36:59.433Z"
+      },
+      "eventName": "Returned",
+      "txHash": "0x826d77cd7a5ee1c7133f57051ae96d8e6593c3234b39de397f7ef16029c4ce4b",
+      "block": 271498,
+      "blockHash": "0xa168b7fc4bc2857652f914d1b411f1f2861b8ad4f4a386b7c2ae44ca0d7e8bdd",
+      "network": "portaldot-v3-testnet",
+      "itemId": "1",
+      "rentalId": "1"
+    },
+    {
+      "observationId": 5,
+      "observedAt": "2026-11-01T02:37:00.011Z",
+      "eventId": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0xa168b7fc4bc2857652f914d1b411f1f2861b8ad4f4a386b7c2ae44ca0d7e8bdd:5:available",
+      "link": "https://metermend.vercel.app/items/1",
+      "receipt": {
+        "provider": "telegram",
+        "messageId": 9,
+        "providerSentAt": "2026-11-01T02:37:00.000Z",
+        "acknowledgedAt": "2026-11-01T02:37:00.011Z"
+      },
+      "eventName": "Returned",
+      "txHash": "0x826d77cd7a5ee1c7133f57051ae96d8e6593c3234b39de397f7ef16029c4ce4b",
+      "block": 271498,
+      "blockHash": "0xa168b7fc4bc2857652f914d1b411f1f2861b8ad4f4a386b7c2ae44ca0d7e8bdd",
+      "network": "portaldot-v3-testnet",
+      "itemId": "1",
+      "rentalId": "1",
+      "variant": "available"
+    }
+  ],
+  "health": {
+    "configured": true,
+    "mode": "telegram",
+    "cursor": {
+      "block": 271520,
+      "hash": "0x5cbbbd7c159f115caafaf85da281ee3afbd468a766f1680db7ded8c7a77ad004"
+    },
+    "queued": 0,
+    "error": null
+  },
+  "screenshotsVerified": false,
+  "screenshotDirectory": "docs/evidence/telegram/",
+  "debox": {
+    "status": "target-integration-not-live"
+  },
+  "limits": [
+    "Provider acknowledgements are retained. No group screenshot or physical-phone rehearsal is claimed by this export."
+  ]
+}
