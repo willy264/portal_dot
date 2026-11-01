@@ -12,7 +12,8 @@ The public app and report are published from committed evidence. A successful co
 
 - Reconciled the dropped MeterMend transaction using its hash, canonical history, pool, account nonce and absent predicted contract. A deliberate replacement pinned the same nonce 7 and finalized once at block 271379. The original unknown attempt remains preserved.
 - Verified Cronpot `nextJobId=1`, MeterMend `cronpot()` and `cronTip()` against one finalized block.
-- Measured item storage and role-funding costs before seeding. The authorized two-item plan preserves more funds for the actual rental, dispute and repair proof.
+- Funded and mapped the renter, arbiter and keeper. Registered camera item 1 at block 271442 and printer item 2 at block 271469, both with 120-second dispute windows. Generated printable QR labels from their finalized receipts.
+- Started the local keeper from the validated deployment block and preserved SQLite records across the handoff from read-only indexing. Telegram acknowledged the first actual item-registration message. Persistent hosting and the six required rental-event notifications remain separate milestones.
 - Verified public pitch PDFs on Vercel and GitHub Pages. Render service creation still awaits account authentication and approval for the proposed $14.50/month base cost.
 
 ## October 31 continuation
@@ -110,6 +111,6 @@ This is the predeployment funding snapshot. Cronpot subsequently finalized in tr
 
 MeterMend is finalized at **`0x61382db168db646b899234cd707c7ba0142c4071`** in transaction `0x23b8aa6ffcb18dbbdf12f0d1c59a33b860a43d81362b2f253efdfd43262b8f17`, block **271379**. The [replacement journal](../deployments/deploy-replacement-journal.json) and [reconciliation](../deployments/metermend-reconciliation-2026-11-01.json) preserve the deliberate same-nonce replacement checks and original unknown attempt. The post-deployment balance was **306.74945 tPOT** at block 271383; [measured seed costs](../deployments/funding-seed-budget.json) guide the remaining allocations.
 
-Remaining work is to fund the roles; seed two equipment items; preserve the automatic refund, dispute, repair, rejected reserve-access attempt and unchanged-reserve proof; activate persistent Render hosting; demonstrate delivered Telegram messages; complete the physical-phone rehearsal; and record/upload the video before updating the BUIDL. The [recording plan](DEMO_VIDEO.md) stays under 2:30. Public video and final submission remain pending.
+Remaining work is to preserve the automatic refund, dispute, repair, rejected reserve-access attempt and unchanged-reserve proof; activate persistent Render hosting; demonstrate all six required Telegram event messages; complete the physical-phone rehearsal; and record/upload the video before updating the BUIDL. The [recording plan](DEMO_VIDEO.md) stays under 2:30. Public video and final submission remain pending.
 
 Physical damage decisions still rely on people. Missing dispute votes can delay settlement; native evidence expires; pruned chain history requires retained records. Labeled demo-image fixtures test the workflow without claiming an actual physical rental or repair.

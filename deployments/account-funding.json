@@ -25,6 +25,19 @@
       "block": 271427,
       "blockHash": "0x3a134610d9be96767d9a4f828cfb19e628624ab2fc847f08e1aaba1c7bad7279",
       "observedAt": "2026-11-01T02:29:44.060Z"
+    },
+    "renter": {
+      "ss58": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+      "mapped": true,
+      "autoMap": true,
+      "h160": "0x5c8ce2c2987ea625ba9f60fe959b12e13574b404",
+      "nativeBalance": "7500000000000000",
+      "nativeFrozen": "0",
+      "nativeReserved": "0",
+      "nonce": 0,
+      "block": 271480,
+      "blockHash": "0x85b762c9487571840ce2bb13f58512da84320f11bb0be0a10d815f8d969f8a92",
+      "observedAt": "2026-11-01T02:35:01.815Z"
     }
   }
 }

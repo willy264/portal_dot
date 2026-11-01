@@ -1,7 +1,35 @@
 {
-  "observedAt": "2026-10-31T14:59:56.314Z",
-  "status": "blocked-awaiting-finalized-deployment-and-seeding",
-  "reason": "Finalized deployment and deployments/seed.json are required; no labels were generated.",
-  "artifact": null,
+  "observedAt": "2026-11-01T02:34:36.570Z",
+  "status": "generated-phone-rehearsal-pending",
+  "network": "portaldot-v3-testnet",
+  "chainId": 420420777,
+  "origin": "https://metermend.vercel.app",
+  "contract": "0x61382db168db646b899234cd707c7ba0142c4071",
+  "labels": [
+    {
+      "name": "Canon EOS camera",
+      "itemId": "1",
+      "url": "https://metermend.vercel.app/items/1",
+      "registration": {
+        "txHash": "0xd4789155d530d6cebb38af2072ba99af42c16cda91efd7f880ffe31a8249476c",
+        "block": 271442,
+        "blockHash": "0xb90c6f9d81641c286b98cf8d2764d177590283d4dadfdfed9f69262f2e4a04c8"
+      }
+    },
+    {
+      "name": "3D printer",
+      "itemId": "2",
+      "url": "https://metermend.vercel.app/items/2",
+      "registration": {
+        "txHash": "0x5c7711c3be7aa5c23b641f2365e579ba03f422fc6c9c9dce1b7208d2c9feb43d",
+        "block": 271469,
+        "blockHash": "0x130d61ee222fd57a02c4eeef5c8c919c85cb31a7f631357c5d8a9a4e8b4a3a5d"
+      }
+    }
+  ],
+  "artifact": "apps/web/public/metermend-qr.html",
+  "sha256": "c225ef2f151f1094a432e9aed7a4537825af60ac582e904e301d488353378fec",
+  "publicUrl": "https://metermend.vercel.app/metermend-qr.html",
+  "publicLinkVerified": false,
   "phoneRehearsal": "not-yet-recorded"
 }

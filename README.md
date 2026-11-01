@@ -118,7 +118,7 @@ Humans assess damage. Missing dispute votes can leave deposits unresolved; a con
 
 The testnet prunes history, so the worker must stay online or report a gap. Native evidence expires unless renewed. DeBox wallet-chain support is separate from its bot API; notifications do not imply its embedded wallet can sign V3 transactions. Notification delivery is at-least-once across ambiguous provider responses.
 
-The application contracts are finalized. Demo role funding, equipment registration and a persistent worker/evidence host are being prepared for the full live golden path, public QR rental demonstration and video. The web interface and permanent report are public. Reserve isolation passes in Foundry; `pnpm demo` will record its live proof. No submitted BUIDL or uploaded video is claimed yet.
+The application contracts are finalized, all demo roles are funded and mapped, and two equipment items are registered with 120-second dispute windows. The [printable QR sheet](https://metermend.vercel.app/metermend-qr.html) uses those actual item IDs. The local keeper and Telegram bot are running; persistent Render hosting and the physical phone rehearsal remain pending. Reserve isolation passes in Foundry; `pnpm demo` will record its live proof. No submitted BUIDL or uploaded video is claimed yet.
 
 ## Research archive
 

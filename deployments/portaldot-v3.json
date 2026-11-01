@@ -1464,9 +1464,852 @@
             }
           }
         ]
+      },
+      "fund-RENTER-5000000000000000-initial": {
+        "role": "RENTER",
+        "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+        "destination": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+        "targetNative": "5000000000000000",
+        "txHash": "0x3b8c057f8dbf541596d8a660e8948d815a207b57cb0c171ecc3561c970e831b3",
+        "block": 271457,
+        "blockHash": "0x1e8f4e3fb1da1c760e477ce17791c105448c3de90fd365eb2777ce3addc39e8c",
+        "extrinsicIndex": 1,
+        "events": [
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Withdraw",
+                "value": {
+                  "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "amount": "1500441187763"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Withdraw",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "amount": "1500441187763"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "System",
+              "value": {
+                "type": "NewAccount",
+                "value": {
+                  "account": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R"
+                }
+              }
+            },
+            "topics": [],
+            "type": "System",
+            "value": {
+              "type": "NewAccount",
+              "value": {
+                "account": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Endowed",
+                "value": {
+                  "account": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+                  "free_balance": "5000000000000000"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Endowed",
+              "value": {
+                "account": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+                "free_balance": "5000000000000000"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Transfer",
+                "value": {
+                  "from": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "to": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+                  "amount": "5000000000000000"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Transfer",
+              "value": {
+                "from": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "to": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+                "amount": "5000000000000000"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Deposit",
+                "value": {
+                  "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+                  "amount": "1500441187763"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Deposit",
+              "value": {
+                "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+                "amount": "1500441187763"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "TransactionPayment",
+              "value": {
+                "type": "TransactionFeePaid",
+                "value": {
+                  "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "actual_fee": "1500441187763",
+                  "tip": "0"
+                }
+              }
+            },
+            "topics": [],
+            "type": "TransactionPayment",
+            "value": {
+              "type": "TransactionFeePaid",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "actual_fee": "1500441187763",
+                "tip": "0"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "System",
+              "value": {
+                "type": "ExtrinsicSuccess",
+                "value": {
+                  "dispatch_info": {
+                    "weight": {
+                      "ref_time": "764602000",
+                      "proof_size": "15777"
+                    },
+                    "class": {
+                      "type": "Normal"
+                    },
+                    "pays_fee": {
+                      "type": "Yes"
+                    }
+                  }
+                }
+              }
+            },
+            "topics": [],
+            "type": "System",
+            "value": {
+              "type": "ExtrinsicSuccess",
+              "value": {
+                "dispatch_info": {
+                  "weight": {
+                    "ref_time": "764602000",
+                    "proof_size": "15777"
+                  },
+                  "class": {
+                    "type": "Normal"
+                  },
+                  "pays_fee": {
+                    "type": "Yes"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "fund-RENTER-7500000000000000-initial": {
+        "role": "RENTER",
+        "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+        "destination": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+        "targetNative": "7500000000000000",
+        "txHash": "0x53707f6383f0139e9be30754c5258d03616a10937a583b57c454ff680ebaed6d",
+        "block": 271480,
+        "blockHash": "0x85b762c9487571840ce2bb13f58512da84320f11bb0be0a10d815f8d969f8a92",
+        "extrinsicIndex": 1,
+        "events": [
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Withdraw",
+                "value": {
+                  "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "amount": "1500441168623"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Withdraw",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "amount": "1500441168623"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Transfer",
+                "value": {
+                  "from": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "to": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+                  "amount": "2500000000000000"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Transfer",
+              "value": {
+                "from": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "to": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+                "amount": "2500000000000000"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Deposit",
+                "value": {
+                  "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+                  "amount": "1500441168623"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Deposit",
+              "value": {
+                "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+                "amount": "1500441168623"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "TransactionPayment",
+              "value": {
+                "type": "TransactionFeePaid",
+                "value": {
+                  "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "actual_fee": "1500441168623",
+                  "tip": "0"
+                }
+              }
+            },
+            "topics": [],
+            "type": "TransactionPayment",
+            "value": {
+              "type": "TransactionFeePaid",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "actual_fee": "1500441168623",
+                "tip": "0"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "System",
+              "value": {
+                "type": "ExtrinsicSuccess",
+                "value": {
+                  "dispatch_info": {
+                    "weight": {
+                      "ref_time": "764602000",
+                      "proof_size": "15777"
+                    },
+                    "class": {
+                      "type": "Normal"
+                    },
+                    "pays_fee": {
+                      "type": "Yes"
+                    }
+                  }
+                }
+              }
+            },
+            "topics": [],
+            "type": "System",
+            "value": {
+              "type": "ExtrinsicSuccess",
+              "value": {
+                "dispatch_info": {
+                  "weight": {
+                    "ref_time": "764602000",
+                    "proof_size": "15777"
+                  },
+                  "class": {
+                    "type": "Normal"
+                  },
+                  "pays_fee": {
+                    "type": "Yes"
+                  }
+                }
+              }
+            }
+          }
+        ]
       }
     },
-    "items": {}
+    "items": {
+      "camera": {
+        "itemId": "1",
+        "name": "Canon EOS camera",
+        "contract": "0x61382db168db646b899234cd707c7ba0142c4071",
+        "arbiter": "0xd5653aa4ad6fd3e1df19beb8b5eb8c1c92f088d6",
+        "disputeWindow": 120,
+        "reserveBps": 2000,
+        "metadataURI": "data:application/json,%7B%22name%22%3A%22Canon%20EOS%20camera%22%2C%22description%22%3A%22Shared%20makerspace%20camera.%20Physical%20returns%20are%20confirmed%20by%20the%20operator.%22%2C%22equipmentClass%22%3A%22camera%22%2C%22demo%22%3Atrue%7D",
+        "txHash": "0xd4789155d530d6cebb38af2072ba99af42c16cda91efd7f880ffe31a8249476c",
+        "block": 271442,
+        "blockHash": "0xb90c6f9d81641c286b98cf8d2764d177590283d4dadfdfed9f69262f2e4a04c8",
+        "extrinsicIndex": 1,
+        "events": [
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Withdraw",
+                "value": {
+                  "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "amount": "6332358330297"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Withdraw",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "amount": "6332358330297"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Revive",
+              "value": {
+                "type": "ContractEmitted",
+                "value": {
+                  "contract": "0x61382db168db646b899234cd707c7ba0142c4071",
+                  "data": "0x000000000000000000000000d5653aa4ad6fd3e1df19beb8b5eb8c1c92f088d6000000000000000000000000000000000000000000000000002386f26fc1000000000000000000000000000000000000000000000000000000b1a2bc2ec5000000000000000000000000000000000000000000000000000000000000000007d0000000000000000000000000000000000000000000000000000000000000007800000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000f5646174613a6170706c69636174696f6e2f6a736f6e2c2537422532326e616d6525323225334125323243616e6f6e253230454f5325323063616d6572612532322532432532326465736372697074696f6e2532322533412532325368617265642532306d616b6572737061636525323063616d6572612e253230506879736963616c25323072657475726e73253230617265253230636f6e6669726d656425323062792532307468652532306f70657261746f722e25323225324325323265717569706d656e74436c61737325323225334125323263616d65726125323225324325323264656d6f253232253341747275652537440000000000000000000000",
+                  "topics": [
+                    "0xc47cbfce61b837aba716d48116e6510446f3ec4d5af31ecf7c517a43f6410cfc",
+                    "0x0000000000000000000000000000000000000000000000000000000000000001",
+                    "0x000000000000000000000000a83014ba71476262795173fbbc06656546b57ec0"
+                  ]
+                }
+              }
+            },
+            "topics": [],
+            "type": "Revive",
+            "value": {
+              "type": "ContractEmitted",
+              "value": {
+                "contract": "0x61382db168db646b899234cd707c7ba0142c4071",
+                "data": "0x000000000000000000000000d5653aa4ad6fd3e1df19beb8b5eb8c1c92f088d6000000000000000000000000000000000000000000000000002386f26fc1000000000000000000000000000000000000000000000000000000b1a2bc2ec5000000000000000000000000000000000000000000000000000000000000000007d0000000000000000000000000000000000000000000000000000000000000007800000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000f5646174613a6170706c69636174696f6e2f6a736f6e2c2537422532326e616d6525323225334125323243616e6f6e253230454f5325323063616d6572612532322532432532326465736372697074696f6e2532322533412532325368617265642532306d616b6572737061636525323063616d6572612e253230506879736963616c25323072657475726e73253230617265253230636f6e6669726d656425323062792532307468652532306f70657261746f722e25323225324325323265717569706d656e74436c61737325323225334125323263616d65726125323225324325323264656d6f253232253341747275652537440000000000000000000000",
+                "topics": [
+                  "0xc47cbfce61b837aba716d48116e6510446f3ec4d5af31ecf7c517a43f6410cfc",
+                  "0x0000000000000000000000000000000000000000000000000000000000000001",
+                  "0x000000000000000000000000a83014ba71476262795173fbbc06656546b57ec0"
+                ]
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "TransferAndHold",
+                "value": {
+                  "reason": {
+                    "type": "Revive",
+                    "value": {
+                      "type": "StorageDepositReserve"
+                    }
+                  },
+                  "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "dest": "5EGBC11Lvt36nt1w7nPrgBupfRNpnj3MVN1QPsNKVEQcv8ZY",
+                  "transferred": "4993950000000000"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "TransferAndHold",
+              "value": {
+                "reason": {
+                  "type": "Revive",
+                  "value": {
+                    "type": "StorageDepositReserve"
+                  }
+                },
+                "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "dest": "5EGBC11Lvt36nt1w7nPrgBupfRNpnj3MVN1QPsNKVEQcv8ZY",
+                "transferred": "4993950000000000"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Deposit",
+                "value": {
+                  "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "amount": "290554717"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Deposit",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "amount": "290554717"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Deposit",
+                "value": {
+                  "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+                  "amount": "6332067775580"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Deposit",
+              "value": {
+                "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+                "amount": "6332067775580"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "TransactionPayment",
+              "value": {
+                "type": "TransactionFeePaid",
+                "value": {
+                  "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "actual_fee": "6332067775580",
+                  "tip": "0"
+                }
+              }
+            },
+            "topics": [],
+            "type": "TransactionPayment",
+            "value": {
+              "type": "TransactionFeePaid",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "actual_fee": "6332067775580",
+                "tip": "0"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "System",
+              "value": {
+                "type": "ExtrinsicSuccess",
+                "value": {
+                  "dispatch_info": {
+                    "weight": {
+                      "ref_time": "3970663855",
+                      "proof_size": "193667"
+                    },
+                    "class": {
+                      "type": "Normal"
+                    },
+                    "pays_fee": {
+                      "type": "Yes"
+                    }
+                  }
+                }
+              }
+            },
+            "topics": [],
+            "type": "System",
+            "value": {
+              "type": "ExtrinsicSuccess",
+              "value": {
+                "dispatch_info": {
+                  "weight": {
+                    "ref_time": "3970663855",
+                    "proof_size": "193667"
+                  },
+                  "class": {
+                    "type": "Normal"
+                  },
+                  "pays_fee": {
+                    "type": "Yes"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "printer": {
+        "itemId": "2",
+        "name": "3D printer",
+        "contract": "0x61382db168db646b899234cd707c7ba0142c4071",
+        "arbiter": "0xd5653aa4ad6fd3e1df19beb8b5eb8c1c92f088d6",
+        "disputeWindow": 120,
+        "reserveBps": 2000,
+        "metadataURI": "data:application/json,%7B%22name%22%3A%223D%20printer%22%2C%22description%22%3A%22Shared%20workshop%20printer%20with%20an%20item-specific%20maintenance%20reserve.%22%2C%22equipmentClass%22%3A%22printer%22%2C%22demo%22%3Atrue%7D",
+        "txHash": "0x5c7711c3be7aa5c23b641f2365e579ba03f422fc6c9c9dce1b7208d2c9feb43d",
+        "block": 271469,
+        "blockHash": "0x130d61ee222fd57a02c4eeef5c8c919c85cb31a7f631357c5d8a9a4e8b4a3a5d",
+        "extrinsicIndex": 1,
+        "events": [
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Withdraw",
+                "value": {
+                  "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "amount": "6332358173212"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Withdraw",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "amount": "6332358173212"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Revive",
+              "value": {
+                "type": "ContractEmitted",
+                "value": {
+                  "contract": "0x61382db168db646b899234cd707c7ba0142c4071",
+                  "data": "0x000000000000000000000000d5653aa4ad6fd3e1df19beb8b5eb8c1c92f088d600000000000000000000000000000000000000000000000000470de4df820000000000000000000000000000000000000000000000000000011c37937e08000000000000000000000000000000000000000000000000000000000000000007d0000000000000000000000000000000000000000000000000000000000000007800000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000e3646174613a6170706c69636174696f6e2f6a736f6e2c2537422532326e616d6525323225334125323233442532307072696e7465722532322532432532326465736372697074696f6e253232253341253232536861726564253230776f726b73686f702532307072696e74657225323077697468253230616e2532306974656d2d73706563696669632532306d61696e74656e616e6365253230726573657276652e25323225324325323265717569706d656e74436c6173732532322533412532327072696e74657225323225324325323264656d6f253232253341747275652537440000000000000000000000000000000000000000000000000000000000",
+                  "topics": [
+                    "0xc47cbfce61b837aba716d48116e6510446f3ec4d5af31ecf7c517a43f6410cfc",
+                    "0x0000000000000000000000000000000000000000000000000000000000000002",
+                    "0x000000000000000000000000a83014ba71476262795173fbbc06656546b57ec0"
+                  ]
+                }
+              }
+            },
+            "topics": [],
+            "type": "Revive",
+            "value": {
+              "type": "ContractEmitted",
+              "value": {
+                "contract": "0x61382db168db646b899234cd707c7ba0142c4071",
+                "data": "0x000000000000000000000000d5653aa4ad6fd3e1df19beb8b5eb8c1c92f088d600000000000000000000000000000000000000000000000000470de4df820000000000000000000000000000000000000000000000000000011c37937e08000000000000000000000000000000000000000000000000000000000000000007d0000000000000000000000000000000000000000000000000000000000000007800000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000e3646174613a6170706c69636174696f6e2f6a736f6e2c2537422532326e616d6525323225334125323233442532307072696e7465722532322532432532326465736372697074696f6e253232253341253232536861726564253230776f726b73686f702532307072696e74657225323077697468253230616e2532306974656d2d73706563696669632532306d61696e74656e616e6365253230726573657276652e25323225324325323265717569706d656e74436c6173732532322533412532327072696e74657225323225324325323264656d6f253232253341747275652537440000000000000000000000000000000000000000000000000000000000",
+                "topics": [
+                  "0xc47cbfce61b837aba716d48116e6510446f3ec4d5af31ecf7c517a43f6410cfc",
+                  "0x0000000000000000000000000000000000000000000000000000000000000002",
+                  "0x000000000000000000000000a83014ba71476262795173fbbc06656546b57ec0"
+                ]
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "TransferAndHold",
+                "value": {
+                  "reason": {
+                    "type": "Revive",
+                    "value": {
+                      "type": "StorageDepositReserve"
+                    }
+                  },
+                  "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "dest": "5EGBC11Lvt36nt1w7nPrgBupfRNpnj3MVN1QPsNKVEQcv8ZY",
+                  "transferred": "4993950000000000"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "TransferAndHold",
+              "value": {
+                "reason": {
+                  "type": "Revive",
+                  "value": {
+                    "type": "StorageDepositReserve"
+                  }
+                },
+                "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "dest": "5EGBC11Lvt36nt1w7nPrgBupfRNpnj3MVN1QPsNKVEQcv8ZY",
+                "transferred": "4993950000000000"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Deposit",
+                "value": {
+                  "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "amount": "290534236"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Deposit",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "amount": "290534236"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "Balances",
+              "value": {
+                "type": "Deposit",
+                "value": {
+                  "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+                  "amount": "6332067638976"
+                }
+              }
+            },
+            "topics": [],
+            "type": "Balances",
+            "value": {
+              "type": "Deposit",
+              "value": {
+                "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+                "amount": "6332067638976"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "TransactionPayment",
+              "value": {
+                "type": "TransactionFeePaid",
+                "value": {
+                  "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                  "actual_fee": "6332067638976",
+                  "tip": "0"
+                }
+              }
+            },
+            "topics": [],
+            "type": "TransactionPayment",
+            "value": {
+              "type": "TransactionFeePaid",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "actual_fee": "6332067638976",
+                "tip": "0"
+              }
+            }
+          },
+          {
+            "phase": {
+              "type": "ApplyExtrinsic",
+              "value": 1
+            },
+            "event": {
+              "type": "System",
+              "value": {
+                "type": "ExtrinsicSuccess",
+                "value": {
+                  "dispatch_info": {
+                    "weight": {
+                      "ref_time": "3970655215",
+                      "proof_size": "193667"
+                    },
+                    "class": {
+                      "type": "Normal"
+                    },
+                    "pays_fee": {
+                      "type": "Yes"
+                    }
+                  }
+                }
+              }
+            },
+            "topics": [],
+            "type": "System",
+            "value": {
+              "type": "ExtrinsicSuccess",
+              "value": {
+                "dispatch_info": {
+                  "weight": {
+                    "ref_time": "3970655215",
+                    "proof_size": "193667"
+                  },
+                  "class": {
+                    "type": "Normal"
+                  },
+                  "pays_fee": {
+                    "type": "Yes"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
   },
   "accounts": {
     "deployer": {
@@ -1475,7 +2318,17 @@
     },
     "renter": {
       "ss58": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
-      "publicKey": "0xea1988be081cacefbcbaa2673b6b967d924102a7540a7bf34c932179f6204b6e"
+      "publicKey": "0xea1988be081cacefbcbaa2673b6b967d924102a7540a7bf34c932179f6204b6e",
+      "mapped": true,
+      "autoMap": true,
+      "h160": "0x5c8ce2c2987ea625ba9f60fe959b12e13574b404",
+      "nativeBalance": "7500000000000000",
+      "nativeFrozen": "0",
+      "nativeReserved": "0",
+      "nonce": 0,
+      "block": 271480,
+      "blockHash": "0x85b762c9487571840ce2bb13f58512da84320f11bb0be0a10d815f8d969f8a92",
+      "observedAt": "2026-11-01T02:35:01.815Z"
     },
     "arbiter": {
       "ss58": "5DjjjeBpydQRtt4wDHF9hq1xpKPDEWoeREbRkc4YbghL6fua",

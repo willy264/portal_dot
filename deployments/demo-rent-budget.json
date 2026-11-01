@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-01T02:33:25.855Z",
+  "mode": "read-only",
+  "signedTransactions": 0,
+  "contract": "0x61382db168db646b899234cd707c7ba0142c4071",
+  "itemId": "1",
+  "renter": {
+    "ss58": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+    "mapped": true,
+    "autoMap": true,
+    "h160": "0x5c8ce2c2987ea625ba9f60fe959b12e13574b404",
+    "nativeBalance": "5000000000000000",
+    "nativeFrozen": "0",
+    "nativeReserved": "0",
+    "nonce": 0,
+    "block": 271464,
+    "blockHash": "0xf8340cd82b65567609684eea1da102c94283872e7dbbe2e38643b05228c76048"
+  },
+  "at": {
+    "number": 271464,
+    "hash": "0xf8340cd82b65567609684eea1da102c94283872e7dbbe2e38643b05228c76048",
+    "timestamp": "1793500392"
+  },
+  "status": "simulated",
+  "requiredNative": "3895741931626678",
+  "requiredTPOT": "38.95741931626678",
+  "callValueNative": "6000000000000",
+  "storageLimitNative": "3687840000000000",
+  "estimatedFeeNative": "1901931626678",
+  "retainedNative": "200000000000000",
+  "shortfallNative": "0",
+  "limits": [
+    "This is one first-rental simulation. A second rental creates further permanent rental state and is not yet simulated.",
+    "No transaction signed or submitted."
+  ]
+}

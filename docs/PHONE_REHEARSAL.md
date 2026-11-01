@@ -6,7 +6,7 @@ This is a runbook, not evidence that the phone rehearsal has already passed. The
 
 ## Prepare the real labels
 
-Wait for finalized Cronpot and MeterMend receipts in `deployments/portaldot-v3.json` and actual item registrations in `deployments/seed.json`. Then run:
+Both contracts are finalized and two items are registered: camera **1**, printer **2**, each with a 120-second dispute window. The generated labels and registration receipts are retained in `deployments/qr-labels.json`. Regenerate only from those verified records:
 
 ```sh
 pnpm exec tsx scripts/print-qr.ts
