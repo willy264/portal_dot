@@ -8,7 +8,7 @@ The ten-slide deck covers the problem, product flow, protected balances, Portald
 - [Export evidence](../../deployments/submission-materials.json)
 - Intended public PDF: https://metermend.vercel.app/metermend-pitch.pdf
 
-The deck is dated October 31, 2026. It explicitly distinguishes the finalized Ping/P4/P6 probes and Cronpot deployment from the pending MeterMend transaction and unfinished application demo. Update the live-proof slide from recorded receipts before using a later completed-run narrative. Business pricing is a proposal, not an implemented platform fee or proven customer demand.
+The deck is dated November 1, 2026. It explicitly distinguishes the finalized Ping/P4/P6 probes, both finalized application deployments and passing read-backs from the unfinished application demo. Update the live-proof slide from recorded receipts before using a later completed-run narrative. Business pricing is a proposal, not an implemented platform fee or proven customer demand.
 
 Run from the repository root with Node 22 and installed dependencies:
 

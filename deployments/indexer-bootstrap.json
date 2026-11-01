@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "network": "portaldot-v3-testnet",
+  "endpoint": "wss://test-node-v3.portaldot.dev",
+  "mode": "read-only",
+  "signedTransactions": 0,
+  "observedAt": "2026-11-01T02:28:52.521Z",
+  "status": "validated-explicit-start",
+  "defaultStartBlock": 265131,
+  "selectedStartBlock": 271379,
+  "contracts": {
+    "Cronpot": {
+      "address": "0x41635a685448cfa86da1600656f103a211e398f4",
+      "deploymentBlock": 265131,
+      "deploymentHash": "0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93"
+    },
+    "MeterMend": {
+      "address": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "deploymentBlock": 271379,
+      "deploymentHash": "0x23b8aa6ffcb18dbbdf12f0d1c59a33b860a43d81362b2f253efdfd43262b8f17"
+    }
+  },
+  "readBack": {
+    "path": "deployments/read-back.json",
+    "sha256": "38f3260ddbf29a453974aa493e00a8b419cc4622ae8595f7b5f4100c3e6e7b87",
+    "at": {
+      "number": 271384,
+      "hash": "0x08b8ff765ea1f8196e90217c745bff8670e90de65fa83d07da4d520a0e0b0925",
+      "timestamp": "1793499912"
+    },
+    "nextJobId": "1"
+  },
+  "justification": "MeterMend did not exist before its finalized deployment block. Cronpot.nextJobId remained 1 at a later finalized snapshot; the counter starts at 1 and increments on every created job, so no earlier Cronpot jobs are omitted. Scanning starts inclusively at MeterMend deployment. This does not assert retention of unrelated pre-deployment Scheduler events.",
+  "gapPolicy": "Existing cursors are never advanced or cleared. Any unavailable block at or after the selected start remains a blocking ingestion gap.",
+  "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+  "blockChecks": [
+    {
+      "number": 265131,
+      "hash": "0x11caa39423290913ceddd5ba7977e88cdc86f9bfeed463c95c8fa11cd70efbdd",
+      "bodyAvailable": true,
+      "eventsAvailable": true,
+      "eventStorageBytes": 1257
+    },
+    {
+      "number": 271379,
+      "hash": "0x27ef958241665a562c715d47aeccf61930931658dab81033856b37e505412b58",
+      "bodyAvailable": true,
+      "eventsAvailable": true,
+      "eventStorageBytes": 656
+    }
+  ],
+  "sdkInitialization": {
+    "status": "recovered-with-120000ms",
+    "attemptTimeoutsMs": [
+      12000,
+      45000
+    ],
+    "error": "V3 network identity verification timed out after 45000ms",
+    "nextAttemptTimeoutMs": 120000,
+    "note": "Read-only indexer initialized and is retaining finalized blocks; previous timeouts did not cause a history skip."
+  },
+  "historyFinding": "Both Cronpot and MeterMend deployment block bodies and System.Events storage are available. Starting at MeterMend avoids scanning 6248 earlier blocks proven to contain no Cronpot jobs; no pruning is claimed by this check.",
+  "startup": {
+    "MODE": "keeper",
+    "START_BLOCK": "271379",
+    "CHAIN_TIMEOUT_MS": "120000",
+    "DB_PATH": "data/cronpot.sqlite",
+    "command": "pnpm --filter @metermend/cronpot-relayer start"
+  },
+  "localIndexer": {
+    "observedAt": "2026-11-01T02:31:36.574Z",
+    "status": "indexing",
+    "pid": 11320,
+    "signingEnabled": false,
+    "health": {
+      "network": "portaldot-v3-testnet",
+      "configured": true,
+      "mode": "keeper",
+      "requestedMode": "keeper",
+      "startBlock": 271379,
+      "signer": null,
+      "signerError": null,
+      "cursor": {
+        "block": 271400,
+        "hash": "0xf1225f554a407a03eaf483dc9faf903f599b8cabaeefe23b6a95a1359eca00e9"
+      },
+      "gap": null,
+      "error": null
+    }
+  }
+}

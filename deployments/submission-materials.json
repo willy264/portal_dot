@@ -1,7 +1,7 @@
 {
-  "observedAt": "2026-10-31T15:02:33.214Z",
+  "observedAt": "2026-11-01T02:29:24.683Z",
   "status": "materials-prepared-live-demo-and-publication-pending",
-  "summary": "Ten-slide pitch deck exported and browser-checked. Cronpot is finalized; MeterMend deployment and the complete live application demo remain pending.",
+  "summary": "Ten-slide pitch deck exported and browser-checked. Finalized deployments and runtime probes are distinguished from the pending live golden path, notifications and video. This revised PDF requires publication verification.",
   "deadline": {
     "internal": "2026-11-05T22:00:00+01:00",
     "official": "2026-11-06T05:00:00+01:00",
@@ -13,29 +13,53 @@
     "publicUrl": "https://metermend.vercel.app/metermend-pitch.pdf",
     "publicLinkVerified": false,
     "source": "docs/pitch/index.html",
-    "sha256": "d55ad2215c62aee91c714c1e99c508fa256656782dac30b3a1b721a9525ea375",
-    "bytes": 180940,
+    "sha256": "31b14f906f0bb3781096ca9d54e889e74e412d8cdf48a791bda64137f6a11b85",
+    "bytes": 180852,
     "slides": 10,
     "layout": "16:9",
-    "exportedWith": "Chromium Page.printToPDF; CSS page size 1600px \u00c3\u2014 900px; vector text and SVG",
+    "exportedWith": "Chromium Page.printToPDF; CSS page size 1600px x 900px; vector text and SVG",
     "validation": {
       "overflowChecks": "passed",
       "browserExceptions": 0,
       "screenshots": "docs/pitch/previews/",
       "visualReview": "passed",
-      "footerClearance": "passed",
-      "pdfPageCount": 10,
-      "pdfLinkAnnotations": 8,
-      "selectableText": true,
-      "reviewedAt": "2026-10-31T15:04:49.591720+00:00",
-      "pdfContactSheet": "docs/pitch/previews/pdf-contact-sheet.png",
-      "reviewNotes": "All ten pages were reviewed initially; updated Cronpot/MeterMend proof slide was visually checked after this export. No overflow or footer overlap."
-    }
+      "reviewedAt": "2026-11-01T02:30:49.085Z",
+      "actualPdfPages": 10,
+      "clickableLinks": 8,
+      "selectableTextPages": 10,
+      "pdfContactSheet": "docs/pitch/previews/pdf-contact-sheet.png"
+    },
+    "previousPublications": [
+      {
+        "sha256": "d55ad2215c62aee91c714c1e99c508fa256656782dac30b3a1b721a9525ea375",
+        "publicLinks": [
+          {
+            "url": "https://metermend.vercel.app/metermend-pitch.pdf",
+            "status": 200,
+            "contentType": "application/pdf",
+            "bytes": 180940,
+            "sha256": "d55ad2215c62aee91c714c1e99c508fa256656782dac30b3a1b721a9525ea375",
+            "matchesLocal": true,
+            "verifiedAt": "2026-11-01T02:21:03.627Z"
+          },
+          {
+            "url": "https://willy264.github.io/portal_dot/metermend-pitch.pdf",
+            "status": 200,
+            "contentType": "application/pdf",
+            "bytes": 180940,
+            "sha256": "d55ad2215c62aee91c714c1e99c508fa256656782dac30b3a1b721a9525ea375",
+            "matchesLocal": true,
+            "verifiedAt": "2026-11-01T02:21:03.342Z"
+          }
+        ],
+        "verifiedAt": "2026-11-01T02:21:03.627Z"
+      }
+    ]
   },
   "submission": {
     "path": "docs/SUBMISSION.md",
     "status": "draft-awaiting-live-evidence-and-links",
-    "sha256": "cf57fe8675d6e1a85abb685cbe8a4442aa8aabd4e07dd1ad72cd560ba88aba54"
+    "sha256": "af8e693375d9100d82182a3712ec54fa5b280f5282f83ca26c1dc33308fd5819"
   },
   "video": {
     "status": "not-recorded",

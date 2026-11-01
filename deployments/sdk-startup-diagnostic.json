@@ -1,0 +1,58 @@
+{
+  "startedAt": "2026-11-01T02:29:37.535Z",
+  "observedAt": "2026-11-01T02:30:22.622Z",
+  "mode": "read-only",
+  "signedTransactions": 0,
+  "observations": [
+    {
+      "label": "rawGenesis",
+      "elapsedMs": 4569,
+      "status": "passed",
+      "result": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd"
+    },
+    {
+      "label": "rawRuntime",
+      "elapsedMs": 4570,
+      "status": "passed",
+      "result": {
+        "specName": "portaldot-v3",
+        "specVersion": 3002
+      }
+    },
+    {
+      "label": "finalizedSubscription",
+      "elapsedMs": 4911,
+      "status": "passed",
+      "result": {
+        "hash": "0xde8bd4636f9b36dd2aea93edfc5fa24de5f6a86ebe72de5bb6f1a9c4c8f5cbad",
+        "number": 271426,
+        "parent": "0x2da9bfe775ada5df7905ae6ffa1a0ae0a377f9d68019bba0c24380a3c4a11a9f",
+        "hasNewRuntime": false
+      }
+    },
+    {
+      "label": "typedConstantRatio",
+      "elapsedMs": 45014,
+      "status": "failed",
+      "error": "Abort Error"
+    },
+    {
+      "label": "typedConstantChainId",
+      "elapsedMs": 45011,
+      "status": "failed",
+      "error": "Abort Error"
+    },
+    {
+      "label": "typedFinalizedTimestamp",
+      "elapsedMs": 45010,
+      "status": "failed",
+      "error": "diagnostic deadline45000ms"
+    },
+    {
+      "label": "verifyNetworkCombined",
+      "elapsedMs": 45011,
+      "status": "failed",
+      "error": "V3 network identity verification timed out after 45000ms"
+    }
+  ]
+}

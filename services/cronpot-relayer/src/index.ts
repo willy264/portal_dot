@@ -29,6 +29,7 @@ loadEnv({ path: root + ".env", quiet: true });
 configureChain({
   wssUrl: process.env.WSS_URL ?? "wss://test-node-v3.portaldot.dev",
   evmRpcUrl: process.env.EVM_RPC_URL ?? "https://test-evm-rpc-v3.portaldot.dev",
+  timeoutMs: Number(process.env.CHAIN_TIMEOUT_MS ?? "45000"),
 });
 const store = new Store(process.env.DB_PATH ?? root + "data/cronpot.sqlite");
 let manifest: any = null;
@@ -178,6 +179,7 @@ app.get("/health", (c) =>
     configured: !!scanner,
     mode,
     requestedMode,
+    startBlock,
     signer: signer?.address ?? null,
     signerError,
     cursor: store.cursor("chain") ?? null,

@@ -9,6 +9,13 @@ import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const sourcePath = join(root, "docs/pitch/index.html");
 const pdfPath = join(root, "apps/web/public/metermend-pitch.pdf");
+const evidencePath = join(root, "deployments/submission-materials.json");
+let previousEvidence = {};
+try {
+  previousEvidence = JSON.parse(await readFile(evidencePath, "utf8"));
+} catch (error) {
+  if (error.code !== "ENOENT") throw error;
+}
 const previews = join(root, "docs/pitch/previews");
 const profile = join(root, ".tools", `pitch-browser-${Date.now()}`);
 await Promise.all([
@@ -195,10 +202,11 @@ try {
     .png()
     .toFile(join(previews, "contact-sheet.png"));
   const evidence = {
+    ...previousEvidence,
     observedAt: new Date().toISOString(),
     status: "materials-prepared-live-demo-and-publication-pending",
     summary:
-      "Ten-slide pitch deck exported and browser-checked. Live runtime probes are distinguished from pending application deployment, golden path, notifications and video.",
+      "Ten-slide pitch deck exported and browser-checked. Finalized deployments and runtime probes are distinguished from the pending live golden path, notifications and video. This revised PDF requires publication verification.",
     deadline: {
       internal: "2026-11-05T22:00:00+01:00",
       official: "2026-11-06T05:00:00+01:00",
@@ -215,19 +223,34 @@ try {
       slides: slides.length,
       layout: "16:9",
       exportedWith:
-        "Chromium Page.printToPDF; CSS page size 1600px × 900px; vector text and SVG",
+        "Chromium Page.printToPDF; CSS page size 1600px x 900px; vector text and SVG",
       validation: {
         overflowChecks: "passed",
         browserExceptions: 0,
         screenshots: "docs/pitch/previews/",
         visualReview: "pending",
       },
+      previousPublications: [
+        ...(previousEvidence.deck?.previousPublications ?? []),
+        ...(previousEvidence.deck?.publicLinkVerified
+          ? [
+              {
+                sha256: previousEvidence.deck.sha256,
+                publicLinks: previousEvidence.deck.publicLinks ?? [],
+                verifiedAt: previousEvidence.deck.publicLinkVerifiedAt,
+              },
+            ]
+          : []),
+      ],
     },
     submission: {
       path: "docs/SUBMISSION.md",
       status: "draft-awaiting-live-evidence-and-links",
     },
-    video: { status: "not-recorded", publicUrl: null },
+    video: previousEvidence.video ?? {
+      status: "not-recorded",
+      publicUrl: null,
+    },
     caveats: [
       "The proposed business model is not implemented platform-fee collection.",
       "Test counts are engineering evidence, not live application settlement.",
