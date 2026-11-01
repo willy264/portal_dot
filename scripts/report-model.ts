@@ -1,5 +1,6 @@
 import { decodeEventLog, formatUnits, toHex, type Abi, type Hex } from "viem";
 import { cronpotAbi, meterMendAbi, pingAbi } from "../packages/chain/src/abi";
+export { expectedFailuresFrom as demoExpectedFailures } from "../apps/web/lib/proof";
 
 export function demoSteps(demo: any): any[] {
   const input = demo?.steps ?? demo?.transactions ?? [];

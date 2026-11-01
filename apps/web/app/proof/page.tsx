@@ -6,6 +6,8 @@ import { Badge, EmptyState, PageHeading } from "@/components/ui";
 import { publicConfig, readDeployment } from "@/lib/server-config";
 import {
   demoStatus,
+  demoTransactionsFrom,
+  expectedFailuresFrom,
   consoleLink,
   probeRows,
   transactionsFrom,
@@ -75,7 +77,8 @@ export default async function Proof() {
           };
   }
   const deployTransactions = transactionsFrom(deployment, "Deployment");
-  const demoTransactions = transactionsFrom(demo, "Demonstration");
+  const demoTransactions = demoTransactionsFrom(demo);
+  const rejectedTransactions = expectedFailuresFrom(demo);
   const probeTransactions = [
     ...transactionsFrom(probe, "Phase 0"),
     ...transactionsFrom(funded, "Funded Phase 0"),
@@ -400,6 +403,77 @@ export default async function Proof() {
         wss={config.wssUrl}
         empty="No live rental, refund, dispute or repair transaction has been recorded."
       />
+      <section className="proof-section">
+        <div className="section-heading">
+          <h2>Expected rejection evidence</h2>
+          <span className="eyebrow">{rejectedTransactions.length} RECORDS</span>
+        </div>
+        <p>
+          These signed attempts exercise permission checks. The dispatch error
+          records the on-chain rejection; the decoded preflight error comes from
+          the live simulation before signing.
+        </p>
+        {rejectedTransactions.length ? (
+          rejectedTransactions.map((record) => (
+            <article className="panel proof-transaction" key={record.txHash}>
+              <div className="section-heading">
+                <h3>{record.label}</h3>
+                <Badge>{record.status}</Badge>
+              </div>
+              <code className="hash">{record.txHash}</code>
+              <dl className="detail-list">
+                <div>
+                  <dt>Block</dt>
+                  <dd>{record.block ?? "Not retained"}</dd>
+                </div>
+                <div>
+                  <dt>Block hash</dt>
+                  <dd className="hash">{record.blockHash ?? "Not retained"}</dd>
+                </div>
+                <div>
+                  <dt>On-chain dispatch error</dt>
+                  <dd>{record.dispatchError ?? "Not retained"}</dd>
+                </div>
+                <div>
+                  <dt>Preflight error</dt>
+                  <dd>
+                    {record.expectedError ?? "Not retained"} (
+                    {record.expectedErrorSource ?? "source not recorded"})
+                  </dd>
+                </div>
+                <div>
+                  <dt>Signed by</dt>
+                  <dd className="hash">{record.signedBy ?? "Not retained"}</dd>
+                </div>
+                <div>
+                  <dt>Call value (base units)</dt>
+                  <dd>{record.value ?? "Not retained"}</dd>
+                </div>
+                <div>
+                  <dt>Recorded events</dt>
+                  <dd>{record.eventNames.join(", ") || "Not retained"}</dd>
+                </div>
+                <div>
+                  <dt>State comparison</dt>
+                  <dd>{record.reserveAssertion}</dd>
+                </div>
+              </dl>
+              <a
+                className="text-button"
+                href={consoleLink(config.wssUrl, record.blockHash)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Inspect rejection receipt <ArrowUpRight size={14} />
+              </a>
+            </article>
+          ))
+        ) : (
+          <p className="callout">
+            No signed rejection receipt has been recorded.
+          </p>
+        )}
+      </section>
       <TransactionSection
         title="Funded probe transactions"
         records={probeTransactions}

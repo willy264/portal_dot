@@ -9,6 +9,7 @@ import {
 } from "../packages/chain/src/client";
 import {
   buildReviveCall,
+  simulateReviveCall,
   storeEvidence,
   submitAndWatch,
   type ChainSigner,
@@ -16,6 +17,11 @@ import {
 } from "../packages/chain/src/revive";
 import { NATIVE_TO_EVM_RATIO } from "../packages/chain/src/units";
 import { cronpotAbi, meterMendAbi } from "../packages/chain/src/abi";
+import {
+  expectFinalizedContractRevert,
+  requireNotArbiter,
+  requireUnchangedReserveAndRepair,
+} from "./expected-failure";
 import {
   Journal,
   amount,
@@ -66,6 +72,7 @@ type Report = {
   transactions: Record<string, TransactionEvidence>;
   assertions: Record<string, unknown>;
   automaticRefund?: unknown;
+  expectedFailures?: Record<string, unknown>;
 };
 
 await run(async () => {
@@ -513,6 +520,115 @@ await run(async () => {
       eventArgs(proposal, meterMendAbi, meter.address, "RepairProposed")
         .repairId as bigint,
     );
+    const rejectedKey = "operator-reserve-spending-approval-rejected";
+    if (!report.assertions[rejectedKey]) {
+      const snapshot = async () => {
+        const at = await getFinalizedHead();
+        const [item, repair] = await Promise.all([
+          readContract<Item>(meterMendAbi, meter.address, "items", [itemId], {
+            at,
+          }),
+          readContract<readonly unknown[]>(
+            meterMendAbi,
+            meter.address,
+            "repairs",
+            [repairId],
+            { at },
+          ),
+        ]);
+        return { at, state: { reserve: item[8], repair } };
+      };
+      if (!report.context.reserveRejection) {
+        report.context.reserveRejection = { before: await snapshot() };
+        save();
+      }
+      const data = encodeFunctionData({
+        abi: meterMendAbi,
+        functionName: "decideRepair",
+        args: [repairId, true],
+      });
+      const rejection = await expectFinalizedContractRevert({
+        journal,
+        key: rejectedKey,
+        intent: {
+          to: meter.address,
+          data,
+          value: "0",
+          expectedError: "NotArbiter",
+        },
+        account: operator,
+        action: async (options) => {
+          let preflight;
+          try {
+            await simulateReviveCall({
+              signer: operator,
+              to: meter.address,
+              data,
+              value: 0n,
+              abi: meterMendAbi,
+            });
+          } catch (error) {
+            preflight = requireNotArbiter(error);
+          }
+          if (!preflight)
+            throw new Error(
+              "Operator simulation did not reject reserve spending with NotArbiter; no transaction submitted",
+            );
+          report.context.reserveRejection.preflight = {
+            ...preflight,
+            observedAt: now(),
+          };
+          save();
+          // The authorized dry-run sizes the same zero-value call without signing as the arbiter.
+          const estimate = await buildReviveCall({
+            signer: arbiter,
+            to: meter.address,
+            data,
+            value: 0n,
+            abi: meterMendAbi,
+          });
+          if (estimate.value !== 0n)
+            throw new Error("Negative demonstration must transfer zero value");
+          const fee = await estimate.tx.getEstimatedFees(operator.txCreator);
+          await requireBudget(
+            operator,
+            estimate.storage_deposit_limit + fee,
+            amount("2", 14),
+          );
+          return submitAndWatch(estimate.tx, operator, options);
+        },
+      });
+      (report.expectedFailures ??= {})[rejectedKey] = {
+        label: "Operator reserve-spending approval rejected",
+        status: "finalized-rejected",
+        finalized: true,
+        expectedError: "NotArbiter",
+        expectedErrorSource: "live operator simulation before signing",
+        signedBy: operator.address,
+        value: "0",
+        preflight: report.context.reserveRejection.preflight,
+        dispatchError: rejection.dispatchError,
+        ...rejection.evidence,
+      };
+      save();
+      const after = await snapshot();
+      requireUnchangedReserveAndRepair(
+        report.context.reserveRejection.before.state,
+        after.state,
+      );
+      report.assertions[rejectedKey] = {
+        passed: true,
+        observedAt: now(),
+        at: after.at,
+        txHash: rejection.evidence.txHash,
+        values: {
+          before: report.context.reserveRejection.before,
+          after,
+          repairId: repairId.toString(),
+        },
+      };
+      save();
+    }
     const paid = await call("approve-repair", arbiter, "decideRepair", [
       repairId,
       true,

@@ -5,10 +5,24 @@ export type DeliveryConfig =
   | { mode: "debox"; key: string; group: string }
   | { mode: "telegram"; token: string; chat: string };
 
+export type DeliveryReceipt =
+  | {
+      provider: "telegram";
+      messageId: number;
+      providerSentAt: string;
+      acknowledgedAt: string;
+    }
+  | {
+      provider: "debox";
+      messageId: null;
+      providerSentAt: null;
+      acknowledgedAt: string;
+    };
+
 export async function deliver(
   config: DeliveryConfig,
   message: Notification,
-): Promise<void> {
+): Promise<DeliveryReceipt> {
   if (config.mode === "debox") {
     const body = await jsonRequest<{
       ok?: boolean;
@@ -30,9 +44,16 @@ export async function deliver(
         200,
         Math.max(0, body.retry_after ?? 0) * 1000,
       );
+    return {
+      provider: "debox",
+      messageId: null,
+      providerSentAt: null,
+      acknowledgedAt: new Date().toISOString(),
+    };
   } else {
     const body = await jsonRequest<{
       ok?: boolean;
+      result?: { message_id?: unknown; date?: unknown };
       parameters?: { retry_after?: number };
     }>(`https://api.telegram.org/bot${config.token}/sendMessage`, {
       method: "POST",
@@ -49,5 +70,26 @@ export async function deliver(
         200,
         (body.parameters?.retry_after ?? 0) * 1000,
       );
+    const id = body.result?.message_id;
+    const date = body.result?.date;
+    if (
+      typeof id !== "number" ||
+      !Number.isSafeInteger(id) ||
+      id <= 0 ||
+      typeof date !== "number" ||
+      !Number.isSafeInteger(date) ||
+      date <= 0 ||
+      !Number.isFinite(new Date(date * 1000).getTime())
+    )
+      throw new RemoteError(
+        "Telegram acknowledged the request without a valid delivered-message receipt; delivery may be ambiguous",
+        200,
+      );
+    return {
+      provider: "telegram",
+      messageId: id,
+      providerSentAt: new Date(date * 1000).toISOString(),
+      acknowledgedAt: new Date().toISOString(),
+    };
   }
 }

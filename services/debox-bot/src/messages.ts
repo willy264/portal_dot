@@ -9,6 +9,14 @@ export interface Notification {
   content: string;
   link: string;
   eventId: string;
+  eventName?: string;
+  txHash?: string | null;
+  block?: number;
+  blockHash?: string;
+  network?: string;
+  itemId?: string;
+  rentalId?: string;
+  variant?: "available";
 }
 
 export function itemName(uri: unknown, id: string): string {
@@ -82,14 +90,25 @@ export function notificationFor(
       content = `🛠 ${item.name} repaired. ${amount(a.amount)} paid from its reserve.`;
       break;
   }
+  const provenance = {
+    eventName: event.eventName,
+    txHash: event.txHash,
+    block: event.block,
+    blockHash: event.blockHash,
+    network: event.network,
+    ...(a.itemId === undefined ? {} : { itemId: String(a.itemId) }),
+    ...(a.rentalId === undefined ? {} : { rentalId: String(a.rentalId) }),
+  };
   const messages: Notification[] = content
-    ? [{ content, link, eventId: event.id }]
+    ? [{ ...provenance, content, link, eventId: event.id }]
     : [];
   if (event.eventName === "Returned")
     messages.push({
+      ...provenance,
       content: `${item.name} is available again. ${itemLink}`,
       link: itemLink,
       eventId: `${event.id}:available`,
+      variant: "available",
     });
   return { item, messages };
 }

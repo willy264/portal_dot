@@ -11,6 +11,7 @@ import {
   type ChainEvent,
 } from "@metermend/service-core";
 import { deliver, type DeliveryConfig } from "./delivery.js";
+import { recordDelivery, deliveryRoutes } from "./receipts.js";
 import {
   notificationFor,
   type ItemState,
@@ -121,8 +122,8 @@ async function tick(): Promise<void> {
     ) {
       store.recordDeliveryAttempt(now);
       try {
-        await deliver(config, message.payload as Notification);
-        store.sent(message.id, Date.now());
+        const receipt = await deliver(config, message.payload as Notification);
+        recordDelivery(store, message.id, receipt);
         lastError = null;
       } catch (error) {
         // Error details never contain keys, request URLs or provider response bodies.
@@ -152,6 +153,7 @@ async function tick(): Promise<void> {
 }
 
 const app = new Hono();
+app.route("/deliveries", deliveryRoutes(store));
 app.get("/health", (c) =>
   c.json({
     configured: !!config,

@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { demoSteps, eventSummary } from "./report-model";
+import { demoSteps, demoExpectedFailures, eventSummary } from "./report-model";
 import { encodeAbiParameters, encodeEventTopics } from "viem";
 import { meterMendAbi } from "../packages/chain/src/abi";
 it("accepts the resumable demo transaction map and includes the worker transaction in chronological order", () => {
@@ -41,4 +41,28 @@ it("decodes real contract event bytes instead of displaying only the Revive pall
   );
   expect(result.events).toBe("IncomeWithdrawn");
   expect(result.amounts).toBe("amount: 1 tPOT");
+});
+it("renders expected rejections separately without increasing successful demo step counts", () => {
+  // Synthetic model input, not a deployment artifact.
+  const demo = {
+    transactions: { rent: { txHash: "success", block: 1 } },
+    expectedFailures: {
+      "operator-reserve-spending-approval-rejected": {
+        label: "Operator reserve-spending approval rejected",
+        txHash: `0x${"a".repeat(64)}`,
+        blockHash: `0x${"b".repeat(64)}`,
+        block: 2,
+        finalized: true,
+        expectedError: "NotArbiter",
+        dispatchError: { type: "Revive", value: { type: "ContractReverted" } },
+        events: [{ type: "System", value: { type: "ExtrinsicFailed" } }],
+      },
+    },
+  };
+  expect(demoSteps(demo)).toHaveLength(1);
+  expect(demoExpectedFailures(demo)).toHaveLength(1);
+  expect(demoExpectedFailures(demo)[0].status).toBe("Finalized rejection");
+  expect(demoExpectedFailures(demo)[0].dispatchError).toBe(
+    "Revive.ContractReverted",
+  );
 });

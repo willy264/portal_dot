@@ -6,6 +6,14 @@ export type ProofTransaction = {
   status: string;
   eventNames: string[];
 };
+export type ExpectedFailureProof = ProofTransaction & {
+  expectedError: string | null;
+  expectedErrorSource: string | null;
+  dispatchError: string | null;
+  signedBy: string | null;
+  value: string | null;
+  reserveAssertion: string;
+};
 export type ProbeRow = {
   id: string;
   label: string;
@@ -157,6 +165,88 @@ export function transactionsFrom(
   }
   visit(value, source, 0);
   return results;
+}
+
+/** The successful flow excludes assertions and expected rejection receipts. */
+export function demoTransactionsFrom(value: any): ProofTransaction[] {
+  return transactionsFrom(
+    {
+      steps: value?.steps,
+      transactions: value?.transactions,
+      automaticRefund: value?.automaticRefund,
+    },
+    "Demonstration",
+  );
+}
+
+function dispatchErrorName(value: unknown, depth = 0): string | null {
+  if (depth > 8) return null;
+  if (typeof value === "string") return value.slice(0, 240);
+  if (!value || typeof value !== "object") return null;
+  const item = value as Record<string, unknown>;
+  if (item.dispatch_error)
+    return dispatchErrorName(item.dispatch_error, depth + 1);
+  const kind =
+    typeof item.type === "string" && /^[A-Za-z_][\w]*$/.test(item.type)
+      ? item.type
+      : null;
+  const nested = dispatchErrorName(item.value, depth + 1);
+  return [kind, nested].filter(Boolean).join(".") || null;
+}
+
+/** A simulation's decoded error is distinct from the finalized dispatch error. */
+export function expectedFailuresFrom(value: any): ExpectedFailureProof[] {
+  const input = value?.expectedFailures;
+  if (!input || typeof input !== "object") return [];
+  return Object.entries(input).flatMap(([key, entry]) => {
+    if (!entry || typeof entry !== "object") return [];
+    const item = entry as Record<string, any>;
+    const txHash = hash(item.txHash);
+    // A preflight alone is not a signed rejection transaction.
+    if (!txHash) return [];
+    const blockHash = hash(item.blockHash);
+    const block = scalar(item.block);
+    const events: string[] = Array.isArray(item.events)
+      ? item.events.flatMap((raw: any) => {
+          const event = raw?.event ?? raw;
+          if (typeof event === "string") return [event];
+          const pallet = scalar(event?.type);
+          const name = scalar(event?.value?.type);
+          return pallet ? [[pallet, name].filter(Boolean).join(".")] : [];
+        })
+      : [];
+    const finalized =
+      (item.finalized === true || item.status === "finalized-rejected") &&
+      blockHash &&
+      Number.isSafeInteger(item.block) &&
+      item.block >= 0 &&
+      events.filter((event) => event === "System.ExtrinsicFailed").length ===
+        1 &&
+      !events.includes("System.ExtrinsicSuccess");
+    const assertion = value?.assertions?.[key];
+    const reserveVerified =
+      finalized && assertion?.passed === true && assertion?.txHash === txHash;
+    return [
+      {
+        label: (scalar(item.label) ?? key).slice(0, 160),
+        txHash,
+        blockHash,
+        block,
+        status: finalized
+          ? "Finalized rejection"
+          : "Rejection finality not verified",
+        eventNames: events.slice(0, 20),
+        expectedError: scalar(item.expectedError),
+        expectedErrorSource: scalar(item.expectedErrorSource),
+        dispatchError: dispatchErrorName(item.dispatchError),
+        signedBy: scalar(item.signedBy),
+        value: scalar(item.value),
+        reserveAssertion: reserveVerified
+          ? "Reserve and repair unchanged (verified)"
+          : "Reserve and repair comparison pending",
+      },
+    ];
+  });
 }
 export function consoleLink(wssUrl: string, blockHash?: string | null) {
   const url = new URL("https://node-console.portaldot.dev/");

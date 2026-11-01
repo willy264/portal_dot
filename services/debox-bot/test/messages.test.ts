@@ -49,6 +49,20 @@ it("derives availability from physical return and does not call a manual refund 
   );
   expect(returned.messages).toHaveLength(2);
   expect(returned.messages[1]?.eventId).toBe("id:available");
+  expect(returned.messages[0]).toMatchObject({
+    eventName: "Returned",
+    txHash: "tx",
+    block: 1,
+    blockHash: "hash",
+    network: "v3",
+    itemId: "1",
+    rentalId: "2",
+  });
+  expect(returned.messages[1]).toMatchObject({
+    eventName: "Returned",
+    variant: "available",
+    rentalId: "2",
+  });
   const refund = notificationFor(
     event("DepositRefunded", { itemId: "1", amount: "100" }),
     undefined,

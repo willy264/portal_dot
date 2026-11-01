@@ -1,7 +1,7 @@
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
-import { demoSteps, eventSummary } from "./report-model";
+import { demoSteps, demoExpectedFailures, eventSummary } from "./report-model";
 import {
   KEEPER_EXPLANATION,
   hasGeneratedDeck,
@@ -90,6 +90,13 @@ const contractRows = Object.entries(deployment?.contracts ?? {})
   )
   .join("");
 const steps = demoSteps(demo);
+const expectedFailures = demoExpectedFailures(demo);
+const failureRows = expectedFailures
+  .map(
+    (failure) =>
+      `<tr><td>${escape(failure.label)}<br>${escape(failure.status)}</td><td><code>${escape(failure.txHash)}</code></td><td>${blockEvidence(failure.blockHash, failure.block)}<br><code>${escape(failure.blockHash)}</code></td><td>${escape(failure.dispatchError ?? "Not retained")}<br>${escape(failure.eventNames.join(", "))}</td><td>${escape(failure.expectedError ?? "Not retained")}<br>${escape(failure.expectedErrorSource ?? "Source not recorded")}</td><td>${escape(failure.reserveAssertion)}<br>Call value: ${escape(failure.value ?? "not retained")} base units<br>Signer: <code>${escape(failure.signedBy ?? "not retained")}</code></td></tr>`,
+  )
+  .join("");
 const transactionRows = steps
   .map((s) => {
     const summary = eventSummary(
@@ -126,6 +133,7 @@ ${deckAvailable ? '<p><a href="metermend-pitch.pdf">Open pitch deck PDF</a></p>'
 <h2>Contracts</h2>${contractRows ? `<div class="scroll"><table><thead><tr><th>Contract</th><th>Address</th><th>Deployment transaction</th><th>Block</th></tr></thead><tbody>${contractRows}</tbody></table></div>` : "<p>No contract addresses have been recorded.</p>"}
 <h2>Funded runtime probes</h2>${fundedRows ? `<div class="scroll"><table><thead><tr><th>Check</th><th>Result</th><th>Transaction</th><th>Block</th></tr></thead><tbody>${fundedRows}</tbody></table></div>` : "<p>No funded probe transactions recorded.</p>"}
 <h2>Live demonstration</h2><p>Status: ${escape(demo?.status ?? (demo?.completedAt ? "completed" : demo ? "in progress" : "not run"))}.</p>${transactionRows ? `<div class="scroll"><table><thead><tr><th>Step</th><th>Transaction hash</th><th>Block</th><th>Event</th><th>Amount</th></tr></thead><tbody>${transactionRows}</tbody></table></div>` : "<p>No live demo transactions have been recorded.</p>"}
+<h2>Expected rejection evidence</h2><p>These signed attempts exercise permission checks. The dispatch error records the on-chain rejection; the decoded preflight error comes from the live simulation before signing.</p>${failureRows ? `<div class="scroll"><table><thead><tr><th>Attempt / outcome</th><th>Transaction hash</th><th>Block</th><th>On-chain dispatch error</th><th>Preflight error / source</th><th>State comparison</th></tr></thead><tbody>${failureRows}</tbody></table></div>` : "<p>No signed rejection receipt has been recorded.</p>"}
 <h2>Refund execution</h2><p>${escape(KEEPER_EXPLANATION)} The signed native Scheduler probe returned BadOrigin (P5); native Scheduler does not execute these refunds.</p>${demo?.automaticRefund ? `<pre>${escape(JSON.stringify(demo.automaticRefund, null, 2))}</pre>` : "<p>Automatic keeper refund proof has not yet been recorded.</p>"}
 ${demo ? `<h2>Retained demonstration evidence</h2><details><summary>Full receipts, refund execution and reserve assertions</summary><pre>${escape(JSON.stringify(demo, null, 2))}</pre></details>` : ""}
 <h2>Phase 0 runtime probe</h2><p>Observed ${escape(probe?.observedAt ?? "not run")}. Probe mode: ${escape(probe?.mode ?? "unknown")}.</p><div class="scroll"><table><thead><tr><th>Check</th><th>Status</th><th>Evidence</th></tr></thead><tbody>${probeRows}</tbody></table></div>
