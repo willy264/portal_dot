@@ -1,55 +1,55 @@
 {
-  "observedAt": "2026-10-31T14:55:59.274Z",
-  "startedAt": "2026-10-31T14:55:58.002Z",
+  "observedAt": "2026-11-01T02:26:36.083Z",
+  "startedAt": "2026-11-01T02:26:35.395Z",
   "network": "portaldot-v3-testnet",
   "endpoint": "wss://test-node-v3.portaldot.dev/",
   "transport": "WebSocket",
   "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
   "identityVerified": true,
   "operation": "MeterMend deployment",
-  "txHash": "0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782",
+  "txHash": "0x23b8aa6ffcb18dbbdf12f0d1c59a33b860a43d81362b2f253efdfd43262b8f17",
   "journal": {
-    "path": "deployments/deploy-journal.json",
-    "step": "deploy-MeterMend",
-    "startBlock": 265321,
+    "path": "deployments/deploy-replacement-journal.json",
+    "step": "replace-0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782",
+    "startBlock": 271375,
     "nonce": 7,
-    "state": "submitted",
-    "startedAt": "2026-10-31T14:53:39.505Z"
+    "state": "confirmed",
+    "startedAt": "2026-11-01T02:24:34.740Z"
   },
   "finalized": {
-    "number": 265321,
-    "hash": "0xce8592b611183d70df5271a610607d5980fcc1e5c1225adafb650451545ab411"
+    "number": 271395,
+    "hash": "0x056f7d17bbfd87ec9aee44c8d8ebe5e5e435e4c55f2797c78a60ad657a2c994e"
   },
   "best": {
-    "number": 265334,
-    "hash": "0x0bdc2a48d6ab29ac71f10f7645419f5403b025f0f14b7d89429955a75e82c2c6"
+    "number": 271398,
+    "hash": "0xda87fe2c6ac904d15cfd2b4b6f7087cd4cb9bee9e6f8c614d3ab14572fe7f5f3"
   },
   "health": {
-    "peers": 0,
+    "peers": 1,
     "isSyncing": false,
     "shouldHavePeers": true
   },
   "account": {
     "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
     "submittedNonce": 7,
-    "finalizedNonce": 7,
-    "bestNonce": 7,
-    "nextIndex": 8
+    "finalizedNonce": 9,
+    "bestNonce": 9,
+    "nextIndex": 9
   },
   "inclusion": {
-    "finalizedOutcome": "unknown",
-    "status": "observed-in-node-pending-pool",
-    "included": false,
-    "finalized": false,
-    "block": null,
-    "blockHash": null,
-    "extrinsicIndex": null,
+    "finalizedOutcome": "success",
+    "status": "finalized-success",
+    "included": true,
+    "finalized": true,
+    "block": 271379,
+    "blockHash": "0x27ef958241665a562c715d47aeccf61930931658dab81033856b37e505412b58",
+    "extrinsicIndex": 1,
     "pendingPool": {
-      "matched": true,
-      "index": 1,
-      "totalExtrinsics": 2
+      "matched": false,
+      "index": -1,
+      "totalExtrinsics": 0
     },
-    "contractAddress": null
+    "contractAddress": "0x61382db168db646b899234cd707c7ba0142c4071"
   },
   "confirmedContracts": {
     "Cronpot": {
@@ -75,5 +75,13 @@
     "Read-only WebSocket snapshot; pool entries matched by Blake2-256 of exact raw SCALE extrinsics.",
     "Nonce from finalized and best System.Account is separate from pool-aware system_accountNextIndex.",
     "No retry or replacement was submitted by this check. The journal remains authoritative for submission recovery."
-  ]
+  ],
+  "originalAttempt": {
+    "txHash": "0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782",
+    "nonce": 7,
+    "state": "unknown",
+    "journal": "deployments/deploy-journal.json",
+    "outcome": "same-nonce replacement finalized; original has no finality receipt",
+    "reconciliationEvidence": "deployments/metermend-reconciliation-2026-11-01.json"
+  }
 }

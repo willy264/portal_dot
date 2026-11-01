@@ -32,6 +32,8 @@ export type SubmissionOptions = {
   /** Called synchronously: services should persist the created hash before returning. */
   onStatus?: (event: TxEvent) => void;
   timeoutMs?: number;
+  /** Explicit nonce for a deliberately reconciled replacement, never an automatic retry. */
+  nonce?: number;
 };
 export type TransactionEvidence = {
   txHash: Hex;
@@ -87,6 +89,8 @@ export async function submitAndWatch(
   signer: ChainSigner,
   options: SubmissionOptions = {},
 ): Promise<TransactionEvidence> {
+  if (options.nonce !== undefined && (!Number.isSafeInteger(options.nonce) || options.nonce < 0))
+    throw new RangeError("Explicit transaction nonce must be a nonnegative safe integer");
   await verifyNetwork();
   return await new Promise((resolve, reject) => {
     let txHash: Hex | undefined;
@@ -115,7 +119,13 @@ export async function submitAndWatch(
       options.timeoutMs ?? 180_000,
     );
     try {
-      subscription = tx.createSubmitAndWatch(signer.txCreator).subscribe({
+      const events = options.nonce === undefined
+        ? tx.createSubmitAndWatch(signer.txCreator)
+        : tx.createSubmitAndWatch(
+            signer.txCreator as ReturnType<typeof import("polkadot-api/tx-creator").getTxCreator>,
+            { nonce: options.nonce },
+          );
+      subscription = events.subscribe({
         next(event) {
           if (finished) return;
           txHash = event.txHash as Hex;

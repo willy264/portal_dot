@@ -2,11 +2,18 @@
 
 **Updated October 31, 2026 · previous committed baseline `7a76f70`**
 
-MeterMend's contracts, web interface, chain client, workers and deployment scripts are implemented and tested. The web app and permanent proof report are public. **Cronpot is now deployed at `0x41635a685448cfa86da1600656f103a211e398f4`, finalized in block 265131. MeterMend's deployment has been broadcast and awaits finalization; the live rental demonstration remains pending.**
+MeterMend's contracts, web interface, chain client, workers and deployment scripts are implemented and tested. The web app and permanent proof report are public. **Cronpot and MeterMend are finalized at blocks 265131 and 271379. Both contracts passed read-back checks at block 271384. The full live rental demonstration remains pending.**
 
 [Public app](https://metermend.vercel.app/) · [Application proof page](https://metermend.vercel.app/proof) · [Permanent proof report](https://willy264.github.io/portal_dot/) · [Repository](https://github.com/willy264/portal_dot)
 
-All three public pages returned HTTP 200 during this review. Their current content distinguishes runtime verification from a completed application deployment.
+The public app and report are published from committed evidence. A successful contract deployment is separate from completion of the live rental, refund, dispute and repair demonstration.
+
+## November 1 continuation
+
+- Reconciled the dropped MeterMend transaction using its hash, canonical history, pool, account nonce and absent predicted contract. A deliberate replacement pinned the same nonce 7 and finalized once at block 271379. The original unknown attempt remains preserved.
+- Verified Cronpot `nextJobId=1`, MeterMend `cronpot()` and `cronTip()` against one finalized block.
+- Measured item storage and role-funding costs before seeding. The authorized two-item plan preserves more funds for the actual rental, dispute and repair proof.
+- Verified public pitch PDFs on Vercel and GitHub Pages. Render service creation still awaits account authentication and approval for the proposed $14.50/month base cost.
 
 ## October 31 continuation
 
@@ -71,7 +78,7 @@ The [deployment manifest](../deployments/portaldot-v3.json) and [funded probe ev
 
 ## Verification
 
-[CI passed for the previous committed baseline `7a76f70`](https://github.com/willy264/portal_dot/actions/runs/40886332103), including contract checks, TypeScript checks and the production web build. The October 31 changes passed the affected package typechecks, script checks and production web build locally. The contract suite is unchanged.
+[CI passed for committed baseline `ccf123f`](https://github.com/willy264/portal_dot/actions/runs/41214043607), including contract checks, TypeScript checks and the production web build. The October 31 changes passed the affected package typechecks, script checks and production web build locally. The contract suite is unchanged.
 
 | Test suite                      |  Passed |
 | ------------------------------- | ------: |
@@ -101,8 +108,8 @@ The latest [saved funding snapshot](../deployments/funding-status.json), taken O
 
 This is the predeployment funding snapshot. Cronpot subsequently finalized in transaction `0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93`, block **265131**, extrinsic **2**. The [deployment journal](../deployments/deploy-journal.json) retains its original nonce 5 and recovered successful receipt. Before the next deployment, the finalized account nonce and `system_accountNextIndex` were both 7, and the pool was empty.
 
-MeterMend deployment transaction `0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782` used nonce **7** and the confirmed Cronpot address. The latest [node status evidence](../deployments/deployment-status.json) records it in the pending pool, with finalized head **265321**, best head **265334**, and zero peers. Finalization has timed out again. These are timestamped observations of the connected node, not a claim about every V3 node. Resume only after rechecking the hash, account nonce and pool; retain the journal so the script reconciles the original outcome before any retry.
+MeterMend is finalized at **`0x61382db168db646b899234cd707c7ba0142c4071`** in transaction `0x23b8aa6ffcb18dbbdf12f0d1c59a33b860a43d81362b2f253efdfd43262b8f17`, block **271379**. The [replacement journal](../deployments/deploy-replacement-journal.json) and [reconciliation](../deployments/metermend-reconciliation-2026-11-01.json) preserve the deliberate same-nonce replacement checks and original unknown attempt. The post-deployment balance was **306.74945 tPOT** at block 271383; [measured seed costs](../deployments/funding-seed-budget.json) guide the remaining allocations.
 
-Remaining work is to confirm MeterMend and fund the other roles; seed the equipment; run and preserve the automatic refund, dispute, repair, rejected reserve-access attempt and unchanged-reserve proof; activate persistent Render hosting; demonstrate delivered Telegram messages; and record/upload the video before updating the BUIDL. The [recording plan](DEMO_VIDEO.md) targets two minutes and stays under 2:30. Public video and final submission remain pending.
+Remaining work is to fund the roles; seed two equipment items; preserve the automatic refund, dispute, repair, rejected reserve-access attempt and unchanged-reserve proof; activate persistent Render hosting; demonstrate delivered Telegram messages; complete the physical-phone rehearsal; and record/upload the video before updating the BUIDL. The [recording plan](DEMO_VIDEO.md) stays under 2:30. Public video and final submission remain pending.
 
 Physical damage decisions still rely on people. Missing dispute votes can delay settlement; native evidence expires; pruned chain history requires retained records. Labeled demo-image fixtures test the workflow without claiming an actual physical rental or repair.

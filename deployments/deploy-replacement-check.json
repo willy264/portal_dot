@@ -1,0 +1,22 @@
+{
+  "observedAt": "2026-11-01T02:24:38.994Z",
+  "originalHash": "0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782",
+  "originalNonce": 7,
+  "finalized": {
+    "number": 271376,
+    "hash": "0x83ba13c8151c86bbc213d493a427cf430b827711848374dab1730140ee7a2b17",
+    "timestamp": "1793499864"
+  },
+  "bestHash": "0x8bb1af599d0435357fd094918f352ca74599bc48add3b272986a4977c299fcf4",
+  "finalizedNonce": 7,
+  "bestNonce": 7,
+  "nextIndex": 7,
+  "pendingPoolMatch": false,
+  "pendingPoolSize": 0,
+  "predictedAddress": "0x61382db168db646b899234cd707c7ba0142c4071",
+  "contractPresentAtFinalized": false,
+  "contractPresentAtBest": false,
+  "originalStartBlockHash": "0xce8592b611183d70df5271a610607d5980fcc1e5c1225adafb650451545ab411",
+  "historyEvidence": "deployments/metermend-reconciliation-2026-11-01.json",
+  "replacementNonce": 7
+}

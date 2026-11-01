@@ -2,14 +2,18 @@ import { Enum } from "polkadot-api";
 import { formatUnits } from "viem";
 import { getAccountState, getApi } from "../packages/chain/src/client";
 import { submitAndWatch } from "../packages/chain/src/revive";
+import { syncManifestOperations } from "./manifest-operations";
 import {
   Journal,
   amount,
   json,
+  now,
   option,
+  readJson,
   requireBudget,
   run,
   signer,
+  writeJson,
 } from "./lib";
 
 await run(async () => {
@@ -33,13 +37,47 @@ await run(async () => {
   const source = signer("DEPLOYER");
   const keep = amount(option("keep", "25")!, 14);
   const journal = new Journal("deployments/funding-journal.json");
+  const recordAccount = (
+    role: string,
+    ss58: string,
+    state: Awaited<ReturnType<typeof getAccountState>>,
+  ) => {
+    const report = readJson<{ accounts: Record<string, unknown> }>(
+      "deployments/account-funding.json",
+      { accounts: {} },
+    );
+    report.accounts[role.toLowerCase()] = {
+      ss58,
+      ...state,
+      nativeBalance: state.nativeBalance.toString(),
+      nativeFrozen: state.nativeFrozen.toString(),
+      nativeReserved: state.nativeReserved.toString(),
+      observedAt: now(),
+    };
+    writeJson("deployments/account-funding.json", report);
+    syncManifestOperations();
+  };
   try {
     for (const role of roles as ("RENTER" | "ARBITER" | "RELAYER")[]) {
       const destination = signer(role);
       if (destination.address === source.address)
         throw new Error("Funding role must differ from deployer");
+      const key = `fund-${role}-${target}-${option("attempt", "initial")}`;
+      const intent = {
+        role,
+        destination: destination.address,
+        targetNative: target.toString(),
+      };
+      const previous = journal.data.steps[key];
+      if (previous && previous.state !== "failed")
+        await journal.recover(key, intent, source);
       const state = await getAccountState(destination.address);
       if (state.nativeBalance >= target) {
+        if (!state.mapped)
+          throw new Error(
+            `${role} has sufficient balance but no confirmed address mapping`,
+          );
+        recordAccount(role, destination.address, state);
         console.log(
           json({
             role,
@@ -57,21 +95,15 @@ await run(async () => {
       });
       const fee = await tx.getEstimatedFees(source.txCreator);
       await requireBudget(source, transfer + fee, keep);
-      await journal.step(
-        `fund-${role}-${target}-${option("attempt", "initial")}`,
-        {
-          role,
-          destination: destination.address,
-          targetNative: target.toString(),
-        },
-        source,
-        (options) => submitAndWatch(tx, source, options),
+      await journal.step(key, intent, source, (options) =>
+        submitAndWatch(tx, source, options),
       );
       const final = await getAccountState(destination.address);
       if (final.nativeBalance < target || !final.mapped)
         throw new Error(
           `${role} transfer confirmed but expected funded AutoMap state is absent; inspect the journal before retrying`,
         );
+      recordAccount(role, destination.address, final);
       console.log(
         json({
           role,
@@ -84,5 +116,6 @@ await run(async () => {
     }
   } finally {
     journal.close();
+    syncManifestOperations();
   }
 });

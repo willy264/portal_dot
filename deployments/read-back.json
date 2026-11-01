@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "network": "portaldot-v3-testnet",
+  "chainId": 420420777,
+  "mode": "read-only",
+  "signedTransactions": 0,
+  "observedAt": "2026-11-01T02:25:32.436Z",
+  "at": {
+    "number": 271384,
+    "hash": "0x08b8ff765ea1f8196e90217c745bff8670e90de65fa83d07da4d520a0e0b0925",
+    "timestamp": "1793499912"
+  },
+  "status": "passed",
+  "contracts": {
+    "Cronpot": {
+      "status": "passed",
+      "address": "0x41635a685448cfa86da1600656f103a211e398f4",
+      "nextJobId": "1"
+    },
+    "MeterMend": {
+      "status": "passed",
+      "address": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "cronpot": "0x41635A685448cfa86DA1600656f103a211e398F4",
+      "cronTipEvm": "1000000000000000",
+      "expectedCronTipEvm": "1000000000000000"
+    }
+  }
+}

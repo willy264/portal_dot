@@ -2,12 +2,14 @@ import { encodeFunctionData, type Address } from "viem";
 import { h160Of } from "../packages/chain/src/client";
 import { buildReviveCall, submitAndWatch } from "../packages/chain/src/revive";
 import { meterMendAbi } from "../packages/chain/src/abi";
+import { syncManifestOperations } from "./manifest-operations";
 import {
   Journal,
   amount,
   eventArgs,
   json,
   now,
+  option,
   readJson,
   requireBudget,
   requireContract,
@@ -54,9 +56,23 @@ await run(async () => {
         "Shared drill. Each rental contributes 20% of its fee to future repairs.",
     },
   ];
+  const requested = option("items")
+    ?.split(",")
+    .map((key) => key.trim());
+  if (
+    requested &&
+    (new Set(requested).size !== requested.length ||
+      requested.some((key) => !definitions.some((item) => item.key === key)))
+  )
+    throw new Error(
+      "--items must be a nonempty unique subset of camera,printer,drill",
+    );
+  const selected = requested
+    ? definitions.filter((item) => requested.includes(item.key))
+    : definitions;
   const journal = new Journal("deployments/seed-journal.json");
   try {
-    for (const item of definitions) {
+    for (const item of selected) {
       const metadata = {
         name: item.name,
         description: item.description,
@@ -109,6 +125,7 @@ await run(async () => {
         ...evidence,
       };
       writeJson("deployments/seed.json", report);
+      syncManifestOperations();
       console.log(
         json({ item: item.key, itemId: args.itemId, txHash: evidence.txHash }),
       );

@@ -110,6 +110,9 @@ export function initialize(): void {
     wssUrl: process.env.WSS_URL ?? "wss://test-node-v3.portaldot.dev",
     evmRpcUrl:
       process.env.EVM_RPC_URL ?? "https://test-evm-rpc-v3.portaldot.dev",
+    ...(option("timeout-ms") === undefined
+      ? {}
+      : { timeoutMs: Number(option("timeout-ms")) }),
   });
 }
 

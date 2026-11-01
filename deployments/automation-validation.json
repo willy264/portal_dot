@@ -1,0 +1,25 @@
+{
+    "observedAt":  "2026-11-01T02:23:06.0636782Z",
+    "scope":  "Read-back, manifest operation capture, and negative reserve-spending demo preparation",
+    "chainTransactionsSubmitted":  0,
+    "checks":  [
+                   {
+                       "command":  "pnpm exec vitest run scripts/read-back.test.ts scripts/expected-failure.test.ts scripts/lib.test.ts",
+                       "passed":  true,
+                       "testFiles":  3,
+                       "tests":  17
+                   },
+                   {
+                       "command":  "pnpm exec tsc -p scripts/tsconfig.json",
+                       "passed":  true
+                   },
+                   {
+                       "command":  "git diff --check",
+                       "passed":  true
+                   }
+               ],
+    "limits":  [
+                   "Focused tests prove script behavior with mocks, not completion of the live demo.",
+                   "The signed negative demonstration remains pending until the live demo runs."
+               ]
+}

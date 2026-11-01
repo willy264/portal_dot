@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-01T02:25:32.906Z",
+  "mode": "read-only",
+  "signedTransactions": 0,
+  "contract": "0x61382db168db646b899234cd707c7ba0142c4071",
+  "at": {
+    "number": 271385,
+    "hash": "0x92804fc15a104fda26beb0ef171cf29287186baed01f50c98680da7746f2b75b",
+    "timestamp": "1793499918"
+  },
+  "accounts": {
+    "deployer": {
+      "ss58": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+      "publicKey": "0xd0895f0ce1e2f0e39d55ce5fabfbf47063558ef83484842ce445e68af40aa374",
+      "mapped": true,
+      "autoMap": true,
+      "h160": "0xa83014ba71476262795173fbbc06656546b57ec0",
+      "nativeBalance": "30674944981511446",
+      "nativeFrozen": "0",
+      "nativeReserved": "0",
+      "nonce": 9,
+      "block": 271383,
+      "blockHash": "0xc0f05190dc0d392c7894254bc1134314d9017e3b678cd8e2da70e6e2c7db95a0"
+    },
+    "renter": {
+      "ss58": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+      "publicKey": "0xea1988be081cacefbcbaa2673b6b967d924102a7540a7bf34c932179f6204b6e",
+      "mapped": false,
+      "autoMap": true,
+      "h160": "0x5c8ce2c2987ea625ba9f60fe959b12e13574b404",
+      "nativeBalance": "0",
+      "nativeFrozen": "0",
+      "nativeReserved": "0",
+      "nonce": 0,
+      "block": 271383,
+      "blockHash": "0xc0f05190dc0d392c7894254bc1134314d9017e3b678cd8e2da70e6e2c7db95a0"
+    },
+    "arbiter": {
+      "ss58": "5DjjjeBpydQRtt4wDHF9hq1xpKPDEWoeREbRkc4YbghL6fua",
+      "publicKey": "0x4a0121058e3ecc3c941c10066cd032768ea67f5c54da06e146652181bfd0361d",
+      "mapped": false,
+      "autoMap": true,
+      "h160": "0xd5653aa4ad6fd3e1df19beb8b5eb8c1c92f088d6",
+      "nativeBalance": "0",
+      "nativeFrozen": "0",
+      "nativeReserved": "0",
+      "nonce": 0,
+      "block": 271383,
+      "blockHash": "0xc0f05190dc0d392c7894254bc1134314d9017e3b678cd8e2da70e6e2c7db95a0"
+    },
+    "relayer": {
+      "ss58": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+      "publicKey": "0x506478042f11fb087203f528b13228a60613281137c098db88fc3c3c75911c58",
+      "mapped": false,
+      "autoMap": true,
+      "h160": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+      "nativeBalance": "0",
+      "nativeFrozen": "0",
+      "nativeReserved": "0",
+      "nonce": 0,
+      "block": 271383,
+      "blockHash": "0xc0f05190dc0d392c7894254bc1134314d9017e3b678cd8e2da70e6e2c7db95a0"
+    }
+  },
+  "funding": [
+    {
+      "role": "renter",
+      "destination": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+      "targetNative": "3000000000000000",
+      "deficitNative": "3000000000000000",
+      "estimatedFeeNative": "1500441247705"
+    },
+    {
+      "role": "arbiter",
+      "destination": "5DjjjeBpydQRtt4wDHF9hq1xpKPDEWoeREbRkc4YbghL6fua",
+      "targetNative": "3000000000000000",
+      "deficitNative": "3000000000000000",
+      "estimatedFeeNative": "1500441247705"
+    },
+    {
+      "role": "relayer",
+      "destination": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+      "targetNative": "3000000000000000",
+      "deficitNative": "3000000000000000",
+      "estimatedFeeNative": "1500441247705"
+    }
+  ],
+  "items": [
+    {
+      "key": "camera",
+      "metadataURI": "data:application/json,%7B%22name%22%3A%22Canon%20EOS%20camera%22%2C%22description%22%3A%22Shared%20makerspace%20camera.%20Physical%20returns%20are%20confirmed%20by%20the%20operator.%22%2C%22equipmentClass%22%3A%22camera%22%2C%22demo%22%3Atrue%7D",
+      "estimatedStorageNative": "6453720000000000",
+      "estimatedFeeNative": "6332358650952",
+      "estimatedTotalNative": "6460052358650952"
+    },
+    {
+      "key": "printer",
+      "metadataURI": "data:application/json,%7B%22name%22%3A%223D%20printer%22%2C%22description%22%3A%22Shared%20workshop%20printer%20with%20an%20item-specific%20maintenance%20reserve.%22%2C%22equipmentClass%22%3A%22printer%22%2C%22demo%22%3Atrue%7D",
+      "estimatedStorageNative": "6453720000000000",
+      "estimatedFeeNative": "6332358640065",
+      "estimatedTotalNative": "6460052358640065"
+    },
+    {
+      "key": "drill",
+      "metadataURI": "data:application/json,%7B%22name%22%3A%22Cordless%20drill%22%2C%22description%22%3A%22Shared%20drill.%20Each%20rental%20contributes%2020%25%20of%20its%20fee%20to%20future%20repairs.%22%2C%22equipmentClass%22%3A%22drill%22%2C%22demo%22%3Atrue%7D",
+      "estimatedStorageNative": "6453720000000000",
+      "estimatedFeeNative": "6332358645033",
+      "estimatedTotalNative": "6460052358645033"
+    }
+  ],
+  "plan": {
+    "targetPerRoleTPOT": "30",
+    "retainedDeployerTPOT": "25",
+    "fundingTotalNative": "9004501323743115",
+    "seedTotalNative": "19380157075936050",
+    "totalRequiredNative": "30884658399679165",
+    "availableNative": "30674944981511446",
+    "shortfallNative": "209713418167719",
+    "budgetMet": false
+  },
+  "limits": [
+    "Item registrations are independent live dry-runs at current chain state, not actual registrations.",
+    "Storage limits include the existing20% estimation margin. Later demo calls have not been included in this funding-and-seed budget."
+  ]
+}

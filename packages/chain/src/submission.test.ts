@@ -40,6 +40,16 @@ async function subscribed() {
 afterEach(() => vi.useRealTimers());
 
 describe("submission finality and durable uncertainty", () => {
+  it("pins a reconciled replacement to its original nonce", async () => {
+    const { events, tx, createSubmitAndWatch } = fixture();
+    const pending = submitAndWatch(tx, signer, { nonce: 7 });
+    await subscribed();
+    expect(createSubmitAndWatch).toHaveBeenCalledWith(signer.txCreator, { nonce: 7 });
+    events.next({ type: "finalized", txHash, ok: true, block, events: [] });
+    await expect(pending).resolves.toMatchObject({ txHash, block: 42 });
+    await expect(submitAndWatch(tx, signer, { nonce: -1 })).rejects.toThrow("nonnegative");
+    expect(createSubmitAndWatch).toHaveBeenCalledTimes(1);
+  });
   it("prepares native storage without signing and preserves Stored proof when submitted", async () => {
     const { events, tx, createSubmitAndWatch } = fixture();
     const nativeTx = Object.assign(tx, {

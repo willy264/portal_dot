@@ -12,17 +12,17 @@ Built for **Portaldot Hacker House 2026 · Ecosystem DApps**. MeterMend implemen
 
 ## Live on Portaldot V3
 
-**Cronpot and the runtime probe are deployed; MeterMend deployment is awaiting finality.** The original Cronpot transaction was recovered from finalized block 265131. MeterMend's transaction is retained in the [deployment journal](deployments/deploy-journal.json), with its [latest node observation](deployments/deployment-status.json) reported separately from finalized receipts. The complete live rental demonstration remains pending.
+**Cronpot and MeterMend are deployed and finalized on V3.** Cronpot finalized at block 265131; MeterMend finalized at block 271379 after a deliberate nonce-7 replacement, with the original attempt preserved separately. Both contracts passed [finalized read-back checks](deployments/read-back.json). The complete live rental demonstration remains pending.
 
 | Contract           | V3 address                                   | Status                                        |
 | ------------------ | -------------------------------------------- | --------------------------------------------- |
 | Ping runtime probe | `0x96ee88d272550530b518cbaa15a80cf5d38cdcfd` | Deployed at block 213570                      |
 | Cronpot            | `0x41635a685448cfa86da1600656f103a211e398f4` | Finalized at block 265131                    |
-| MeterMend          | Pending                                      | Broadcast; awaiting finalized outcome         |
+| MeterMend          | `0x61382db168db646b899234cd707c7ba0142c4071` | Finalized at block 271379                    |
 
 Chain ID **420420777** (`0x190f1ca9`), runtime **3002**. [Deployment manifest](deployments/portaldot-v3.json) · [Funded probe evidence](deployments/funded-probe.json) · [Permanent proof report](https://willy264.github.io/portal_dot/) · [V3 node console](https://node-console.portaldot.dev/?rpc=wss%3A%2F%2Ftest-node-v3.portaldot.dev).
 
-The [public web app](https://metermend.vercel.app/) and its [proof page](https://metermend.vercel.app/proof) are hosted on Vercel. They distinguish the live runtime probe from the application contracts still awaiting finalized deployment. The **demo video is pending**; the [keeper-mode recording script](docs/DEMO_VIDEO.md) targets two minutes and stays under 2:30. For local review, run `pnpm dev` and open `http://localhost:3000/proof`.
+The [public web app](https://metermend.vercel.app/) and its [proof page](https://metermend.vercel.app/proof) are hosted on Vercel. Their deployment evidence distinguishes finalized contracts from the full live demonstration. The **demo video is pending**; the [keeper-mode recording script](docs/DEMO_VIDEO.md) targets two minutes and stays under 2:30. For local review, run `pnpm dev` and open `http://localhost:3000/proof`.
 
 ## What is implemented
 
@@ -118,7 +118,7 @@ Humans assess damage. Missing dispute votes can leave deposits unresolved; a con
 
 The testnet prunes history, so the worker must stay online or report a gap. Native evidence expires unless renewed. DeBox wallet-chain support is separate from its bot API; notifications do not imply its embedded wallet can sign V3 transactions. Notification delivery is at-least-once across ambiguous provider responses.
 
-The deployment funding guard now passes. Reliable RPC access, application deployment, role funding and a persistent worker/evidence host are still needed for the full live golden path, public QR rental demonstration and video. The web interface and permanent report are public. Reserve isolation passes in Foundry; `pnpm demo` will record its live proof. No submitted BUIDL or uploaded video is claimed yet.
+The application contracts are finalized. Demo role funding, equipment registration and a persistent worker/evidence host are being prepared for the full live golden path, public QR rental demonstration and video. The web interface and permanent report are public. Reserve isolation passes in Foundry; `pnpm demo` will record its live proof. No submitted BUIDL or uploaded video is claimed yet.
 
 ## Research archive
 
