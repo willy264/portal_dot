@@ -1,5 +1,5 @@
 {
-  "observedAt": "2026-11-02T00:15:05.811Z",
+  "observedAt": "2026-11-02T00:26:57.814Z",
   "mode": "read-only-plan",
   "release": "v2",
   "pending": [
@@ -8,9 +8,9 @@
   ],
   "runtime": {
     "at": {
-      "number": 284406,
-      "hash": "0xce0906206bd0576d5a102b677e86af753e4b1fc5ab9f93048ef5c93491c71dc0",
-      "timestamp": "1793578488"
+      "number": 284523,
+      "hash": "0x5c44bab6070151e55a2a84493bdacd5a635339efe0a7510864c77e086d026127",
+      "timestamp": "1793579196"
     },
     "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
     "specName": "portaldot-v3",
@@ -20,13 +20,13 @@
     "nativeToEthRatio": "10000"
   },
   "budgetArtifact": "deployments/release-v2-budget.json",
-  "budgetSha256": "866ca029d89df0c94a2f8dcda4b8254422acd806491f89908d1acc66b7479d45",
+  "budgetSha256": "22e6a6e6fb575d496cb83122694d250eb5f8302aff5aafa5b418da22f0804e35",
   "storedEstimate": {
-    "deployment": "139604886237234877",
-    "required": "211224990954536781",
+    "deployment": "139651746236219464",
+    "required": "211271850953521368",
     "available": "8348665812789099",
     "funded": false,
-    "shortfall": "202876325141747682"
+    "shortfall": "202923185140732269"
   },
   "signedTransactions": 0,
   "activation": false,

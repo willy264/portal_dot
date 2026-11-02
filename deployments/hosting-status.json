@@ -1,9 +1,9 @@
 {
-  "observedAt": "2026-11-02T00:15:23.853Z",
-  "status": "free-preview-prepared",
-  "summary": "Render account authentication succeeded. Owner selected the free tier. A read-only public history preview is prepared; always-on keeper execution and persistent evidence uploads are not provided by this free service.",
+  "observedAt": "2026-11-02T00:27:55.983Z",
+  "status": "free-read-only-preview-live",
+  "summary": "Free Render preview is public and configured. Health and the retained failed Cronpot job were verified; indexing advanced beyond the bundled snapshot. Signing and evidence uploads are disabled. Durable always-on keeper/evidence hosting remains incomplete.",
   "provider": "Render",
-  "publicUrl": null,
+  "publicUrl": "https://metermend-preview.onrender.com",
   "persistenceVerified": false,
   "webApp": "https://metermend.vercel.app",
   "blueprint": {
@@ -21,12 +21,13 @@
       "type": "web",
       "plan": "free",
       "region": "frankfurt",
-      "serviceId": null,
-      "deployId": null,
-      "publicUrl": null,
-      "status": "prepared",
+      "serviceId": "srv-dbjtgpu7bikc738h3hc0",
+      "deployId": "dep-dbjtgqe7bikc738h3jog",
+      "publicUrl": "https://metermend-preview.onrender.com",
+      "status": "live",
       "writesEnabled": false,
-      "persistentDisk": false
+      "persistentDisk": false,
+      "sourceCommit": "5e687f56ebb9db642f28740efc79931c22eb8da6"
     }
   ],
   "estimatedCost": {
@@ -44,12 +45,15 @@
     "workspaceSelected": true
   },
   "verification": {
-    "publicHealth": "pending",
-    "publicJobs": "pending",
+    "publicHealth": "passed",
+    "publicJobs": "passed",
     "webAppConnection": "pending",
     "relayerRestartPersistence": "not-supported-on-free-plan",
     "evidenceRestartPersistence": "not-supported-on-free-plan",
-    "notificationOutboxPersistence": "local-only"
+    "notificationOutboxPersistence": "local-only",
+    "uploadsDisabled": "passed",
+    "indexingAdvancing": "passed",
+    "evidence": "deployments/render-free-verification.json"
   },
   "localRehearsal": {
     "keeper": "deployments/keeper-status.json",
@@ -69,5 +73,24 @@
     "signing": "disabled",
     "evidenceUploads": "disabled",
     "retainedHistory": "Bundled verified public chain snapshot plus read-only indexing"
+  },
+  "publicHealthSnapshot": {
+    "network": "portaldot-v3-testnet",
+    "configured": true,
+    "mode": "keeper",
+    "requestedMode": "keeper",
+    "startBlock": 271379,
+    "signer": null,
+    "signerError": "Keeper writes disabled: a verified manifest.executionProfile is required; keep indexing until calibrated deployment evidence is recorded",
+    "writesEnabled": false,
+    "readOnly": true,
+    "storageMode": "ephemeral-free-preview",
+    "executionProfile": null,
+    "cursor": {
+      "block": 274411,
+      "hash": "0xb2f9cfeb800137c7fc3999558e86f1dbfb16502eb9870e8e508ffa34a7f02c2c"
+    },
+    "gap": null,
+    "error": null
   }
 }

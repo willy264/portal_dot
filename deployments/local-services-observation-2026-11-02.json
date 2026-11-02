@@ -1,0 +1,52 @@
+{
+    "schemaVersion":  1,
+    "observedAt":  "2026-11-02T00:27:12.6948023Z",
+    "mode":  "read-only",
+    "signedTransactions":  0,
+    "processActions":  0,
+    "keeper":  {
+                   "process":  {
+                                   "ProcessId":  35344,
+                                   "ParentProcessId":  8976,
+                                   "Name":  "node.exe",
+                                   "CreationDate":  "2026-11-01T02:34:31.830Z"
+                               },
+                   "endpoint":  "http://127.0.0.1:8787/health",
+                   "health":  {
+                                  "network":  "portaldot-v3-testnet",
+                                  "configured":  true,
+                                  "mode":  "keeper",
+                                  "requestedMode":  "keeper",
+                                  "startBlock":  271379,
+                                  "signer":  "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+                                  "signerError":  null,
+                                  "cursor":  {
+                                                 "block":  274389,
+                                                 "hash":  "0x660794351db23b8b2a1d62a29ef8f2cbfef207bf81d556218e7c994046581c9a"
+                                             },
+                                  "gap":  null,
+                                  "error":  null
+                              },
+                   "status":  "running-locally-old-process",
+                   "updatedPreflightLoaded":  false
+               },
+    "telegramBot":  {
+                        "endpoint":  "http://127.0.0.1:8788/health",
+                        "health":  {
+                                       "configured":  true,
+                                       "mode":  "telegram",
+                                       "cursor":  {
+                                                      "block":  274389,
+                                                      "hash":  "0x660794351db23b8b2a1d62a29ef8f2cbfef207bf81d556218e7c994046581c9a"
+                                                  },
+                                       "queued":  0,
+                                       "error":  "History incomplete: Timeout has occurred"
+                                   },
+                        "error":  null
+                    },
+    "notes":  [
+                  "The existing keeper process was observed; no stop, restart, signing or notification-send action was performed.",
+                  "These loopback endpoints do not establish always-on public hosting.",
+                  "The keeper cursor remains at block 274389 while the chain finalized head was 284511 in the separate 00:25:39Z observation."
+              ]
+}

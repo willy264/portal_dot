@@ -28,5 +28,17 @@
     "These are local implementation checks, not a live corrected deployment or automatic refund.",
     "Candidate calibration used explicit code and balance overrides.",
     "Existing local keeper process has not loaded the new code."
-  ]
+  ],
+  "sourceCommit": "5e687f56ebb9db642f28740efc79931c22eb8da6",
+  "ci": {
+    "status": "passed",
+    "url": "https://github.com/willy264/portal_dot/actions/runs/41367031800"
+  },
+  "proofPublication": {
+    "status": "passed",
+    "url": "https://github.com/willy264/portal_dot/actions/runs/41367031858",
+    "publicReport": "https://willy264.github.io/portal_dot/",
+    "foundryPassed": 49,
+    "publicCorrectionCardVerified": true
+  }
 }

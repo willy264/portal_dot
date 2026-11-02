@@ -1,7 +1,7 @@
 {
-  "observedAt": "2026-11-01T02:43:23.481Z",
+  "observedAt": "2026-11-02T00:26:33.136295+00:00",
   "status": "live-demo-blocked-refund-callback-failed",
-  "summary": "Both application deployments and read-backs, role funding, two item registrations, the first rental/reserve split and return/evidence scheduling ran live. The keeper transaction finalized but its callback failed without DepositRefunded; the complete golden path and video remain pending. The existing public deck is retained until the diagnosis is resolved.",
+  "summary": "Original contracts, role funding, two registrations and the first rent/return ran live. The refund failed. A corrected contract passes 49 tests and an explicitly overridden historical simulation, but test-token funding, replacement deployment and the full live demo remain pending. The public ten-slide deck is retained; the owner will perform the phone rehearsal after the corrected scripted proof.",
   "deadline": {
     "internal": "2026-11-05T22:00:00+01:00",
     "official": "2026-11-06T05:00:00+01:00",
@@ -80,26 +80,29 @@
   "submission": {
     "path": "docs/SUBMISSION.md",
     "status": "draft-awaiting-live-evidence-and-links",
-    "sha256": "44b07a4fd7c06ff8f9e2c14d9acb36d6c34e2096f1ccefe784eeedf1d263f5fe"
+    "sha256": "518d433f2b68cee7da46903908c897a2547a1b8b68cd509a6d7e3eff8c0d30e9"
   },
   "video": {
     "status": "not-recorded",
     "publicUrl": null,
     "recordingPlan": "docs/DEMO_VIDEO.md",
-    "recordingPlanSha256": "618c793bfc7efde69ccc413dc461def1c08c7f2eae60e59bd5184df838627110"
+    "recordingPlanSha256": "2fb2efa6194727c323611633eca397189d9465496c4cee2490ef0b97c57779d4"
   },
   "caveats": [
     "The proposed business model is not implemented platform-fee collection.",
     "Test counts are engineering evidence, not live application settlement."
   ],
   "phoneRehearsalPreparation": {
-    "status": "runbook-and-generator-ready-live-phone-run-pending",
+    "status": "runbook-ready-waiting-for-corrected-release-and-live-scripted-proof",
     "runbook": "docs/PHONE_REHEARSAL.md",
     "generator": "scripts/print-qr.ts",
     "labelEvidence": "deployments/qr-labels.json",
     "validation": "3 QR evidence/ID regression tests and scripts typecheck passed",
     "labelsRequire": "Finalized MeterMend deployment and matching ItemRegistered receipts in seed.json",
-    "actualPhoneRunRecorded": false
+    "actualPhoneRunRecorded": false,
+    "originalLabelsStillPublic": true,
+    "runbookSha256": "ef59be7f8be294109150c52549742d8d1642d4e0d2e33212cb566847f79f73d8",
+    "blankTemplates": "docs/templates/README.md"
   },
   "liveDemo": {
     "status": "blocked-refund-callback-failed",

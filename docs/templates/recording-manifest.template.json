@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "template": true,
+  "status": "not-recorded",
+  "recordedAtUtc": null,
+  "repositoryCommit": null,
+  "release": {
+    "id": null,
+    "manifestPath": null,
+    "manifestSha256": null,
+    "genesisHash": null,
+    "Cronpot": null,
+    "MeterMend": null
+  },
+  "runs": {
+    "scriptedDemoEvidence": null,
+    "phoneRehearsalEvidence": null,
+    "notificationEvidence": null
+  },
+  "publicUrlsUsed": {
+    "app": null,
+    "proof": null,
+    "report": null,
+    "deck": null,
+    "repository": null
+  },
+  "sourceCaptures": [],
+  "shotMapFilename": null,
+  "imageProvenanceReferences": [],
+  "voiceoverFilename": null,
+  "captionFilename": null,
+  "executionExplanation": "refunds execute automatically via Cronpot; execution is permissionless and our keeper runs it.",
+  "export": {
+    "filename": null,
+    "sha256": null,
+    "durationSeconds": null,
+    "width": null,
+    "height": null,
+    "watchedInFullAtUtc": null,
+    "actualReceiptsMatchOverlays": null,
+    "timeJumpsLabeled": null,
+    "demoImageLabelsRetained": null,
+    "noSecretsVisible": null
+  },
+  "publication": {
+    "videoUrl": null,
+    "uploadedAtUtc": null,
+    "publicPlaybackVerifiedAtUtc": null,
+    "anonymousPlaybackPassed": null
+  }
+}

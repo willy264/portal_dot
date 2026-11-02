@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "v2",
-  "createdAt": "2026-11-02T00:15:04.271Z",
+  "createdAt": "2026-11-02T00:26:55.607Z",
   "status": "prepared-not-deployed",
   "intent": {
     "release": "v2",
@@ -18,20 +18,20 @@
       }
     },
     "compiled": {
-      "Cronpot": "f08b5d95cc3f2ec89114608302e26f2d449c88e28a04d46eddd8143436999710",
+      "Cronpot": "824d0f55abd5ac14cd9b9a6a3a3185a31b74c565b933afef0f6d086746c58c53",
       "MeterMend": "45d0d5526febdb861df841afbaa0b9021e0f34306d5acf3fff5b169f9079d2be"
     },
-    "profileSha256": "36677e99b5de5208494994ed53b5c88b407f43416f7a6eb2f0f951e421a163bd",
+    "profileSha256": "436654f706149f4daa5f8224fbf329303a974a01382f47ce4d1b84bbe370219f",
     "cronTipEvm": "1000000000000000",
     "signer": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB"
   },
-  "intentHash": "b7d07517c04b8adfd0aa2204c0ea3bae0b5b32024016bc8b16484b2a15745ead",
+  "intentHash": "a9a07fdc5be44494ab7e701f2447c7cfb051ea4d84d3a6e102a18293ae8a542a",
   "contracts": {},
   "candidateExecutionProfile": {
     "schemaVersion": 1,
     "id": "portaldot-v3-cronpot-v2-candidate",
     "verified": false,
-    "observedAt": "2026-11-02T00:14:16.399Z",
+    "observedAt": "2026-11-02T00:19:53.415Z",
     "runtime": {
       "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
       "specName": "portaldot-v3",
@@ -61,14 +61,14 @@
     },
     "verification": {
       "artifact": "deployments/cronpot-candidate-full-simulation.json",
-      "sha256": "d6e8471641a06ad5386717155ccb765cfd7696a15987d660b52314e922b33458",
+      "sha256": "374696e508b1adbddf875c8b93729cdbe15472752ae5accc1b9aca4faab1d382",
       "nativeBoundedSuccess": false,
       "ethereumTraceSuccess": true
     },
     "limitations": [
       "Predeployment candidate only; contracts are not deployed and the profile is not verified for operational use.",
       "The corrected full Ethereum-context trace used temporary code and balance overrides; it is simulation evidence only.",
-      "The native bounded full corrected-contract path must be proved against actual deployed addresses before activation.",
+      "Actual deployed code and addresses must be read back before an operational profile is reviewed; each due job must return true in its exact bounded native simulation before any broadcast.",
       "Gas price 25360 is the historical calibration observation, not a fresh live price; operational guards must reject changed pricing until recalibrated.",
       "The 1 tPOT fee reserve is a conservative reviewed cap, not a fee quote."
     ],
@@ -76,7 +76,12 @@
       "finalizedHash": "0x6ce48a4609f0843a1f57adcebec035d8fea334446909cd52aad2823214c865d9",
       "readOnly": true
     },
-    "sourceCreationBytecodeSha256": "f08b5d95cc3f2ec89114608302e26f2d449c88e28a04d46eddd8143436999710"
+    "sourceCreationBytecodeSha256": "824d0f55abd5ac14cd9b9a6a3a3185a31b74c565b933afef0f6d086746c58c53",
+    "code": {
+      "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+      "creationBytecodeSha256": "824d0f55abd5ac14cd9b9a6a3a3185a31b74c565b933afef0f6d086746c58c53",
+      "runtimeBytecodeSha256": "d432137146bce41e8017428ee7a52c29bcc7eed420317f32ef509db1f43c5644"
+    }
   },
   "active": false
 }

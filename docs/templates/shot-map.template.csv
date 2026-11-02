@@ -1,0 +1,1 @@
+shot_id,run_id,release_id,source_capture_filename,source_capture_sha256,captured_at_utc,source_in_seconds,source_out_seconds,export_in_seconds,export_out_seconds,public_url,item_id,rental_id,job_id,tx_hash,finalized_block,block_hash,proof_reference,overlay_text,image_provenance,time_jump_label,notes

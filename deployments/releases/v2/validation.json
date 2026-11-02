@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "observedAt": "2026-11-02T00:23:27.240Z",
-  "status": "local-safety-tests-passed-live-plan-read-timeout",
-  "summary": "Versioned release preserves v1 and refuses unresolved attempts. Simulation nonce is pinned through journal preparation and final broadcast guard. No replacement deployment has been submitted.",
+  "observedAt": "2026-11-02T00:27:43.326Z",
+  "status": "local-safety-tests-passed-live-plan-blocked-insufficient-funds",
+  "summary": "The 120-second read-only attempt verified the live V3 runtime, archived the untouched earlier draft, and refreshed the isolated v2 plan. The complete-plan funding guard stopped before signing or recording a deployment attempt.",
   "sourceHashes": {
     "scripts/release.ts": "73cf06419b8ffa6e7651af80690449f839163b122de8f8cc7ee1bfc6908d1059",
     "scripts/release-model.ts": "73577879cdb4c0b35bf54be3ea92fe7395da9c63199659b044603c2cffe41ec3",
@@ -57,9 +57,37 @@
       "outcome": "V3 network identity verification timed out after 15000ms",
       "journalOpened": false,
       "signedTransactions": 0
+    },
+    {
+      "command": "tsx scripts/release.ts --timeout-ms=120000",
+      "observedAt": "2026-11-02T00:27:43.326Z",
+      "outcome": "blocked-insufficient-full-plan-funds",
+      "planObservedAt": "2026-11-02T00:26:57.814Z",
+      "finalized": {
+        "number": 284523,
+        "hash": "0x5c44bab6070151e55a2a84493bdacd5a635339efe0a7510864c77e086d026127",
+        "timestamp": "1793579196"
+      },
+      "requiredNative": "211271850953521368",
+      "availableNative": "8348665812789099",
+      "shortfallNative": "202923185140732269",
+      "journalOpened": true,
+      "deploymentAttemptsRecorded": 0,
+      "signedTransactions": 0,
+      "firstObservedRunningAt": "2026-11-02T00:26:42Z"
     }
   ],
   "signedTransactions": 0,
   "contractsDeployed": 0,
-  "activeV1ManifestModified": false
+  "activeV1ManifestModified": false,
+  "currentPlan": {
+    "path": "deployments/releases/v2/plan.json",
+    "sha256": "0c7ac071bb671e92996ac84dd33f1ba3473eecd2f5aafd1574b6b976922c6453"
+  },
+  "currentManifest": {
+    "path": "deployments/releases/v2/manifest.json",
+    "sha256": "66804edb3911ee5109203fcacc6df535edc3751ff557a65fa507d444bb07253c",
+    "intentHash": "a9a07fdc5be44494ab7e701f2447c7cfb051ea4d84d3a6e102a18293ae8a542a",
+    "status": "prepared-not-deployed"
+  }
 }

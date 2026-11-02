@@ -1,51 +1,148 @@
 {
-    "schemaVersion":  1,
-    "network":  "portaldot-v3-testnet",
-    "endpoint":  "wss://test-node-v3.portaldot.dev/",
-    "mode":  "read-only",
-    "signedTransactions":  0,
-    "genesisHash":  "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
-    "runtimeCodeHash":  "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
-    "observations":  [
-                         {
-                             "observedAt":  "2026-11-02T00:05:21.060Z",
-                             "health":  {
-                                            "isSyncing":  false,
-                                            "peers":  1
-                                        },
-                             "finalized":  {
-                                               "hash":  "0x0bad7f42351601e9396045a53f179ca977a52831945c676f35653f6d4bd89820",
-                                               "number":  284308
-                                           },
-                             "best":  {
-                                          "number":  284311
-                                      },
-                             "nextIndex":  18,
-                             "pendingPoolCount":  0
-                         },
-                         {
-                             "observedAt":  "2026-11-02T00:07:26.671Z",
-                             "health":  {
-                                            "peers":  1,
-                                            "isSyncing":  false,
-                                            "shouldHavePeers":  true
-                                        },
-                             "finalized":  {
-                                               "hash":  "0x674665e3a1f93cc36b2675ce8f81342ee214cbc337b37b7fa1390e3c40f1f55e",
-                                               "number":  284330
-                                           },
-                             "best":  {
-                                          "hash":  "0xabb27f3b16ee74690868242f45164bd7c02c93d279e92fc82fa27bfc06ad645f",
-                                          "number":  284332
-                                      },
-                             "nextIndex":  18,
-                             "pendingPoolCount":  0
-                         }
-                     ],
-    "progress":  {
-                     "newBlocks":  21,
-                     "finalityAdvancing":  true,
-                     "producingBlocks":  true,
-                     "newFinalizedBlocks":  22
-                 }
+  "schemaVersion": 1,
+  "network": "portaldot-v3-testnet",
+  "endpoint": "wss://test-node-v3.portaldot.dev/",
+  "mode": "read-only",
+  "signedTransactions": 0,
+  "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+  "runtimeCodeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+  "observations": [
+    {
+      "observedAt": "2026-11-02T00:05:21.060Z",
+      "health": {
+        "isSyncing": false,
+        "peers": 1
+      },
+      "finalized": {
+        "hash": "0x0bad7f42351601e9396045a53f179ca977a52831945c676f35653f6d4bd89820",
+        "number": 284308
+      },
+      "best": {
+        "number": 284311
+      },
+      "nextIndex": 18,
+      "pendingPoolCount": 0
+    },
+    {
+      "observedAt": "2026-11-02T00:07:26.671Z",
+      "health": {
+        "peers": 1,
+        "isSyncing": false,
+        "shouldHavePeers": true
+      },
+      "finalized": {
+        "hash": "0x674665e3a1f93cc36b2675ce8f81342ee214cbc337b37b7fa1390e3c40f1f55e",
+        "number": 284330
+      },
+      "best": {
+        "hash": "0xabb27f3b16ee74690868242f45164bd7c02c93d279e92fc82fa27bfc06ad645f",
+        "number": 284332
+      },
+      "nextIndex": 18,
+      "pendingPoolCount": 0
+    },
+    {
+      "observedAt": "2026-11-02T00:25:39.814Z",
+      "startedAt": "2026-11-02T00:25:39.133Z",
+      "health": {
+        "peers": 1,
+        "isSyncing": false,
+        "shouldHavePeers": true
+      },
+      "finalized": {
+        "number": 284511,
+        "hash": "0x6bc3e172f34a527c6fe8d4289a7f5907c20f85e21ed9173991a490745babd3a1"
+      },
+      "best": {
+        "number": 284513,
+        "hash": "0x7e63580bf328802c9c8f6947241b9f0c98fdea716ec03870c0759d3987cb637d"
+      },
+      "nextIndex": 18,
+      "pendingPoolCount": 0,
+      "account": {
+        "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+        "finalized": {
+          "nonce": 18,
+          "freeNative": "8348665812789099",
+          "freeTPOT": "83.48665812789099",
+          "reservedNative": "0",
+          "frozenNative": "0"
+        },
+        "best": {
+          "nonce": 18,
+          "freeNative": "8348665812789099",
+          "freeTPOT": "83.48665812789099",
+          "reservedNative": "0",
+          "frozenNative": "0"
+        }
+      },
+      "methods": [
+        "system_health",
+        "chain_getFinalizedHead",
+        "chain_getBlockHash",
+        "chain_getHeader",
+        "state_getStorage",
+        "state_getRuntimeVersion",
+        "state_getStorageHash",
+        "system_accountNextIndex",
+        "author_pendingExtrinsics"
+      ]
+    }
+  ],
+  "progress": {
+    "from": "2026-11-02T00:07:26.671Z",
+    "through": "2026-11-02T00:25:39.814Z",
+    "newBlocks": 181,
+    "newFinalizedBlocks": 181,
+    "producingBlocks": true,
+    "finalityAdvancing": true
+  },
+  "observedAt": "2026-11-02T00:25:39.814Z",
+  "latest": {
+    "observedAt": "2026-11-02T00:25:39.814Z",
+    "startedAt": "2026-11-02T00:25:39.133Z",
+    "health": {
+      "peers": 1,
+      "isSyncing": false,
+      "shouldHavePeers": true
+    },
+    "finalized": {
+      "number": 284511,
+      "hash": "0x6bc3e172f34a527c6fe8d4289a7f5907c20f85e21ed9173991a490745babd3a1"
+    },
+    "best": {
+      "number": 284513,
+      "hash": "0x7e63580bf328802c9c8f6947241b9f0c98fdea716ec03870c0759d3987cb637d"
+    },
+    "nextIndex": 18,
+    "pendingPoolCount": 0,
+    "account": {
+      "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+      "finalized": {
+        "nonce": 18,
+        "freeNative": "8348665812789099",
+        "freeTPOT": "83.48665812789099",
+        "reservedNative": "0",
+        "frozenNative": "0"
+      },
+      "best": {
+        "nonce": 18,
+        "freeNative": "8348665812789099",
+        "freeTPOT": "83.48665812789099",
+        "reservedNative": "0",
+        "frozenNative": "0"
+      }
+    },
+    "methods": [
+      "system_health",
+      "chain_getFinalizedHead",
+      "chain_getBlockHash",
+      "chain_getHeader",
+      "state_getStorage",
+      "state_getRuntimeVersion",
+      "state_getStorageHash",
+      "system_accountNextIndex",
+      "author_pendingExtrinsics"
+    ]
+  }
 }

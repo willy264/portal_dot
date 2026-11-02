@@ -2,6 +2,8 @@
 
 This is a runbook, not evidence that the phone rehearsal has already passed. The owner has agreed to print the labels and run the phone flow. Do this after the scripted live golden path is recorded; keep its existing receipts and record the phone run as a separate rehearsal.
 
+**November 2 readiness:** the original release's automatic refund failed. The corrected release is awaiting test tokens and deployment. The existing public labels come from the original registrations; regenerate them from the corrected release's finalized records before the payment rehearsal. The free Render preview is read-only and does not provide the required keeper or persistent evidence uploads.
+
 **Submission target: November 5, 2026, 22:00 WAT.** Allow time for recording, voiceover and uploading after the phone checks.
 
 ## Prepare the real labels
@@ -63,6 +65,8 @@ The signed native Scheduler request returned `BadOrigin` in P5. Do not narrate i
 If a wallet operation times out, retain its original hash and browser recovery record. Recheck inclusion, finality and the account nonce/pool status before any retry. Never approve another payment just because the first screen stopped updating.
 
 ## Save the evidence and UI issues
+
+Start from the blank [phone-run template](templates/phone-run.template.json) and its [field guide](templates/README.md). Populate it only from the actual session; the template itself is not deployment or phone evidence.
 
 Keep uncropped originals outside the public repository. Copy shareable screenshots into `docs/evidence/phone/` and delivered-message screenshots into `docs/evidence/telegram/`; redact unrelated private conversations while retaining the matching event and message timestamp. Use filenames containing the actual run date, step and rental ID.
 
