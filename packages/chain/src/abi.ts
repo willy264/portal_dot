@@ -1065,6 +1065,27 @@ export const meterMendAbi = [
 ] as const;
 export const cronpotAbi = [
   {
+    "type": "constructor",
+    "inputs": [
+      {
+        "name": "targetGasLimit",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "postCallGasReserve",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "tipGasLimit",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
     "type": "function",
     "name": "MAX_RETURN_DATA",
     "inputs": [],
@@ -1152,7 +1173,13 @@ export const cronpotAbi = [
         "internalType": "uint256"
       }
     ],
-    "outputs": [],
+    "outputs": [
+      {
+        "name": "success",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
     "stateMutability": "nonpayable"
   },
   {
@@ -1492,6 +1519,11 @@ export const cronpotAbi = [
       }
     ],
     "anonymous": false
+  },
+  {
+    "type": "error",
+    "name": "BadGasConfiguration",
+    "inputs": []
   },
   {
     "type": "error",

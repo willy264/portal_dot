@@ -1,6 +1,6 @@
 {
-  "observedAt": "2026-11-01T02:26:36.083Z",
-  "startedAt": "2026-11-01T02:26:35.395Z",
+  "observedAt": "2026-11-02T00:07:26.671Z",
+  "startedAt": "2026-11-02T00:07:26.003Z",
   "network": "portaldot-v3-testnet",
   "endpoint": "wss://test-node-v3.portaldot.dev/",
   "transport": "WebSocket",
@@ -17,12 +17,12 @@
     "startedAt": "2026-11-01T02:24:34.740Z"
   },
   "finalized": {
-    "number": 271395,
-    "hash": "0x056f7d17bbfd87ec9aee44c8d8ebe5e5e435e4c55f2797c78a60ad657a2c994e"
+    "number": 284330,
+    "hash": "0x674665e3a1f93cc36b2675ce8f81342ee214cbc337b37b7fa1390e3c40f1f55e"
   },
   "best": {
-    "number": 271398,
-    "hash": "0xda87fe2c6ac904d15cfd2b4b6f7087cd4cb9bee9e6f8c614d3ab14572fe7f5f3"
+    "number": 284332,
+    "hash": "0xabb27f3b16ee74690868242f45164bd7c02c93d279e92fc82fa27bfc06ad645f"
   },
   "health": {
     "peers": 1,
@@ -32,9 +32,9 @@
   "account": {
     "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
     "submittedNonce": 7,
-    "finalizedNonce": 9,
-    "bestNonce": 9,
-    "nextIndex": 9
+    "finalizedNonce": 18,
+    "bestNonce": 18,
+    "nextIndex": 18
   },
   "inclusion": {
     "finalizedOutcome": "success",

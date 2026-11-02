@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-02T00:19:26.428Z",
+  "status": "implemented-and-tested-not-loaded",
+  "signedTransactions": 0,
+  "startedProcesses": 0,
+  "checks": {
+    "relayerTests": {
+      "passed": 58,
+      "command": "pnpm --filter @metermend/cronpot-relayer test"
+    },
+    "chainTests": {
+      "passed": 35,
+      "command": "pnpm --filter @metermend/chain test"
+    },
+    "relayerTypecheck": "passed",
+    "chainTypecheck": "passed",
+    "candidateRecordedTrace": {
+      "artifact": "deployments/cronpot-candidate-full-simulation.json",
+      "sha256": "374696e508b1adbddf875c8b93729cdbe15472752ae5accc1b9aca4faab1d382",
+      "status": "accepted",
+      "calibrationBinding": "passed",
+      "context": "Read-only corrected-code Ethereum simulation with ephemeral contract and balance overrides; not live execution",
+      "result": {
+        "jobExecuted": {
+          "jobId": "1",
+          "executor": "0x7F68506cf7b6FD947b5539dCAeB6494977Da23B6",
+          "success": true,
+          "returnData": "0x"
+        },
+        "depositRefunded": {
+          "rentalId": "1",
+          "itemId": "1",
+          "renter": "0x5C8ce2C2987Ea625BA9F60Fe959b12e13574B404",
+          "amount": "50000000000000000"
+        },
+        "callbackGas": "550000000000000"
+      }
+    },
+    "actualFailedTrace": {
+      "artifact": "deployments/cronpot-callback-diagnosis.json",
+      "sha256": "c81bfcd742b40dbee55550d7019106625eeace21b6aab3c230b4f0526068983b",
+      "status": "rejected",
+      "transaction": "0x2b9249a026b3f868527e6964de6bd5241f401942f28e247d82dfb0eac9d75e35",
+      "reason": "Keeper preflight: expected MeterMend refund callback is missing, duplicated or failed"
+    }
+  },
+  "policy": {
+    "verifiedManifestProfileRequired": true,
+    "allowlistedRuntimeAndContractReadbacksRequired": true,
+    "nativeSimulation": "Initial and bounded second pass at one finalized hash; bounded native execute must return ABI true for actual callback success. False or empty results prevent broadcast. Exact bounded prepared call submitted only after all checks.",
+    "ethereumSimulation": "Independent finite Ethereum-context trace at the same hash; actual balances, no state or timestamp overrides; exact JobExecuted(true) and DepositRefunded required",
+    "comparisonLimit": "The Ethereum check is not proof of native gas equivalence. Finalized on-chain callback and refund events remain required for live proof.",
+    "oldManifestEnablesWritesInNewBinary": false,
+    "oldRunningProcessLoadedNewPolicy": false,
+    "calibrationSemanticBindingRequired": true,
+    "actualRuntimeBytecodeMatchRequired": true,
+    "profileVerifiedMeaning": "Reviewed configuration and code; not live execution. Prior nativeBoundedSuccess may be false, but fresh actual bounded native bool=true is mandatory before every broadcast.",
+    "preBroadcastJournalRequired": true,
+    "runtimeRecheckedBeforeSigning": true
+  },
+  "outstanding": [
+    "Finalize a calibrated replacement deployment and bind the profile to its actual addresses and immutable getter readbacks.",
+    "Stop the original local keeper through the approved operator handoff before loading the new process.",
+    "Run the actual same-state, no-override preflight on a due job before any signed keeper execution."
+  ]
+}

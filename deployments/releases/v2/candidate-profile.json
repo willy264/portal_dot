@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "id": "portaldot-v3-cronpot-v2-candidate",
+  "verified": false,
+  "observedAt": "2026-11-02T00:19:53.415Z",
+  "runtime": {
+    "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+    "specName": "portaldot-v3",
+    "specVersion": 3002,
+    "transactionVersion": 2,
+    "codeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+    "nativeToEthRatio": "10000"
+  },
+  "contracts": null,
+  "contractGas": {
+    "targetGasLimit": "550000000000000",
+    "postCallGasReserve": "200000000000000",
+    "tipGasLimit": "30000",
+    "minCallGas": "758730158740159"
+  },
+  "native": {
+    "weightLimit": {
+      "ref_time": "10000000000",
+      "proof_size": "1048576"
+    },
+    "storageDepositLimit": "2500000000000000",
+    "feeReserve": "100000000000000"
+  },
+  "ethereum": {
+    "gasPriceMin": "25360",
+    "gasPriceMax": "25360"
+  },
+  "verification": {
+    "artifact": "deployments/cronpot-candidate-full-simulation.json",
+    "sha256": "374696e508b1adbddf875c8b93729cdbe15472752ae5accc1b9aca4faab1d382",
+    "nativeBoundedSuccess": false,
+    "ethereumTraceSuccess": true
+  },
+  "limitations": [
+    "Predeployment candidate only; contracts are not deployed and the profile is not verified for operational use.",
+    "The corrected full Ethereum-context trace used temporary code and balance overrides; it is simulation evidence only.",
+    "Actual deployed code and addresses must be read back before an operational profile is reviewed; each due job must return true in its exact bounded native simulation before any broadcast.",
+    "Gas price 25360 is the historical calibration observation, not a fresh live price; operational guards must reject changed pricing until recalibrated.",
+    "The 1 tPOT fee reserve is a conservative reviewed cap, not a fee quote."
+  ],
+  "runtimeObservation": {
+    "finalizedHash": "0x6ce48a4609f0843a1f57adcebec035d8fea334446909cd52aad2823214c865d9",
+    "readOnly": true
+  },
+  "sourceCreationBytecodeSha256": "824d0f55abd5ac14cd9b9a6a3a3185a31b74c565b933afef0f6d086746c58c53",
+  "code": {
+    "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+    "creationBytecodeSha256": "824d0f55abd5ac14cd9b9a6a3a3185a31b74c565b933afef0f6d086746c58c53",
+    "runtimeBytecodeSha256": "d432137146bce41e8017428ee7a52c29bcc7eed420317f32ef509db1f43c5644"
+  }
+}

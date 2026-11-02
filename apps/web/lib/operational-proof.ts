@@ -60,6 +60,7 @@ export function operationalCards(input: {
   hosting?: RecordValue;
   notifications?: RecordValue;
   submission?: RecordValue;
+  refundCalibration?: RecordValue;
   executorHealth?: RecordValue;
 }): OperationalCard[] {
   const pending = input.deploymentStatus;
@@ -98,6 +99,18 @@ export function operationalCards(input: {
         "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
       ],
     ]),
+    card("Refund correction (simulation only)", input.refundCalibration, [
+      ["Finding", input.refundCalibration?.summary],
+      [
+        "Transactions submitted by calibration",
+        input.refundCalibration?.signedTransactions,
+      ],
+      [
+        "Contracts deployed by calibration",
+        input.refundCalibration?.contractsDeployed,
+      ],
+      ["Live corrected refund", "Pending deployment and live demonstration"],
+    ]),
     card("Persistent worker and evidence hosting", input.hosting, [
       ["Finding", input.hosting?.summary],
       [
@@ -105,6 +118,9 @@ export function operationalCards(input: {
         publicUrl(input.hosting?.publicUrl ?? input.hosting?.endpoint),
       ],
       ["Persistent storage verified", input.hosting?.persistenceVerified],
+      ["Always on", input.hosting?.constraints?.alwaysOn],
+      ["Signing", input.hosting?.constraints?.signing],
+      ["Evidence uploads", input.hosting?.constraints?.evidenceUploads],
     ]),
     card("Telegram delivery", input.notifications, [
       ["Finding", input.notifications?.summary],
@@ -134,6 +150,12 @@ export function operationalCards(input: {
       card("Executor health response", input.executorHealth, [
         ["Configured", input.executorHealth.configured],
         ["Execution mode", input.executorHealth.mode],
+        [
+          "Writes enabled",
+          input.executorHealth.writesEnabled ?? "Not reported",
+        ],
+        ["Read only", input.executorHealth.readOnly ?? "Not reported"],
+        ["Storage", input.executorHealth.storageMode ?? "Not reported"],
         ["Indexed through block", input.executorHealth.cursor?.block],
         ["History gap", input.executorHealth.gap ?? "None reported"],
         ["Service error", input.executorHealth.error ?? "None reported"],

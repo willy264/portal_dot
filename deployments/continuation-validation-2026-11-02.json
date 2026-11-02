@@ -1,0 +1,32 @@
+{
+  "observedAt": "2026-11-02T00:24:55.129409+00:00",
+  "status": "local-validation-passed",
+  "liveDeployment": false,
+  "checks": {
+    "foundry": {
+      "passed": 49,
+      "failed": 0,
+      "artifact": "deployments/cronpot-gas-config-validation.json"
+    },
+    "typescript": {
+      "chain": 35,
+      "serviceCore": 8,
+      "relayer": 58,
+      "telegramBot": 13,
+      "web": 81,
+      "scripts": 43,
+      "total": 238,
+      "failed": 0,
+      "scriptsNote": "41 tests in full scripts run plus 2 newly added legacy-deploy tests passed separately"
+    },
+    "workspaceTypecheck": "passed",
+    "scriptsTypecheck": "passed",
+    "abiArtifactCheck": "passed",
+    "productionWebBuild": "passed"
+  },
+  "limitations": [
+    "These are local implementation checks, not a live corrected deployment or automatic refund.",
+    "Candidate calibration used explicit code and balance overrides.",
+    "Existing local keeper process has not loaded the new code."
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-02T00:19:55.085Z",
+  "mode": "read-only runtime simulation",
+  "signedTransactions": 0,
+  "contractsDeployed": 0,
+  "liveFailure": {
+    "txHash": "0x2b9249a026b3f868527e6964de6bd5241f401942f28e247d82dfb0eac9d75e35",
+    "block": 271528,
+    "result": "Cronpot job1 failed; outer extrinsic succeeded; no live DepositRefunded",
+    "traceEvidence": "deployments/cronpot-callback-diagnosis.json"
+  },
+  "target": "0x61382db168db646b899234cd707c7ba0142c4071",
+  "testedCall": "finalizeRefund(1)",
+  "findings": [
+    "The finalized original transaction trace reports OutOfGas in the callback with the deployed 1,000,000 gas cap.",
+    "Direct finalizeRefund succeeds in read-only simulation; the original rental remains unpaid on chain.",
+    "Native constructor dry-runs with undefined storage_deposit_limit report saturated uint64 gasleft; finite callback caps produced misleading failures in that context.",
+    "With finite native Weight and a 50 tPOT storage cap, the refined constructor probe failed at 250,000,000,000,000 callback gas and passed at 275,000,000,000,000. This brackets the threshold for the tested snapshot and probe; it does not establish an exact universal minimum.",
+    "The reviewed candidate uses target gas 550,000,000,000,000 (twice the lowest tested passing cap), post-call reserve 200,000,000,000,000, and tip gas 30,000.",
+    "The corrected execute(uint256) returns its actual callback success while retaining the same selector. Native bounded preflight can require a true return instead of accepting outer transaction success alone.",
+    "The full corrected candidate Ethereum-context trace uses finite outer gas 980,000,000,000,000, a temporary 30 tPOT relayer balance, and a temporary code override at the historical pre-execution state. It returned true and emitted the matching simulated refund and successful job events.",
+    "No signed transaction, deployment, funding transfer or actual refund occurred during calibration."
+  ],
+  "nativeCalibration": {
+    "weightLimit": {
+      "ref_time": "10000000000",
+      "proof_size": "1048576"
+    },
+    "storageDepositCapNative": "5000000000000000",
+    "storageDepositCapTPOT": "50",
+    "callbacksFailed": [
+      "150000000000000",
+      "160000000000000",
+      "200000000000000",
+      "225000000000000",
+      "250000000000000"
+    ],
+    "callbackSucceeded": "275000000000000",
+    "evidence": "deployments/refund-call-native-threshold-refined.json",
+    "otherPassingCaps": [
+      "300000000000000",
+      "400000000000000",
+      "1000000000000000"
+    ],
+    "thresholdAt": {
+      "number": 271649,
+      "hash": "0x9bcdc2156de35178035e6ba6237cb1ab39761cc1175ddc7fa07a68763a5b6373"
+    },
+    "earlierEvidence": [
+      "deployments/refund-call-native-threshold.json",
+      "deployments/refund-call-weight-and-deposit.json"
+    ],
+    "context": "Read-only, always-reverting constructor probe calling the existing MeterMend refund; not full native execution of deployed corrected Cronpot."
+  },
+  "ethereumCalibration": {
+    "outerGas": "10000000000000000",
+    "simulatedSenderBalanceTPOT": "100000",
+    "callbackSucceeded": "1000000000000000",
+    "evidence": "deployments/refund-eth-gas-calibration-funded-simulation.json"
+  },
+  "limitations": [
+    "No corrected contract exists on chain yet; the active v1 contracts, failed job and rental deposit remain unchanged.",
+    "The full candidate success used explicit temporary code and balance overrides. It is simulation evidence, not live deployment or a completed refund.",
+    "The complete corrected native call with exact finite Weight/Deposit caps and true callback result must still pass against actual deployed addresses and real balances before the keeper can sign.",
+    "The refined 275,000,000,000,000 bound is the lowest tested passing callback cap for this probe and snapshot; the precise threshold lies above the tested failure at 250,000,000,000,000.",
+    "The Ethereum trace is an independent check and does not establish equivalence with native Weight/Deposit accounting.",
+    "Upstream documentation explains the accounting model but is not proof that its current source exactly matches the Portaldot runtime."
+  ],
+  "upstreamReferences": [
+    {
+      "url": "https://paritytech.github.io/polkadot-sdk/master/pallet_revive/enum.TransactionLimits.html",
+      "relevance": "Distinguishes EthereumGas accounting from explicit WeightAndDeposit accounting."
+    },
+    {
+      "url": "https://paritytech.github.io/polkadot-sdk/master/src/pallet_revive/lib.rs.html",
+      "relevance": "GasScale documentation explains why hard-coded Ethereum gas assumptions can fail under runtime-specific gas scales."
+    }
+  ],
+  "initialObservedAt": "2026-11-01T02:51:05.1611317Z",
+  "status": "corrected-candidate-simulated-not-deployed",
+  "summary": "The original live Cronpot refund failed with OutOfGas. A corrected immutable gas profile now passes the complete read-only Ethereum-context simulation and returns true, with matching JobExecuted(success=true) and DepositRefunded events. That simulation used temporary code and balance overrides; no corrected contract was deployed and no live refund is claimed.",
+  "candidateSimulation": "deployments/cronpot-candidate-full-simulation.json",
+  "reviewedGasBounds": {
+    "targetGasLimit": "550000000000000",
+    "postCallGasReserve": "200000000000000",
+    "tipGasLimit": "30000",
+    "minCallGas": "758730158740159"
+  },
+  "correctedCandidate": {
+    "observedAt": "2026-11-02T00:17:50.735Z",
+    "artifact": "deployments/cronpot-candidate-full-simulation.json",
+    "artifactSha256": "374696e508b1adbddf875c8b93729cdbe15472752ae5accc1b9aca4faab1d382",
+    "creationBytecodeSha256": "824d0f55abd5ac14cd9b9a6a3a3185a31b74c565b933afef0f6d086746c58c53",
+    "patchedRuntimeSha256": "d432137146bce41e8017428ee7a52c29bcc7eed420317f32ef509db1f43c5644",
+    "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+    "executeReturnValue": true,
+    "ethereumTraceSuccess": true,
+    "nativeBoundedFullSuccess": false,
+    "outerEthereumGas": "980000000000000",
+    "temporaryRelayerBalanceTPOT": "30",
+    "codeOverride": true,
+    "balanceOverride": true,
+    "decodedEvents": [
+      {
+        "eventName": "JobExecuted",
+        "args": {
+          "jobId": "1",
+          "executor": "0x7F68506cf7b6FD947b5539dCAeB6494977Da23B6",
+          "success": true,
+          "returnData": "0x"
+        }
+      },
+      {
+        "eventName": "DepositRefunded",
+        "args": {
+          "rentalId": "1",
+          "itemId": "1",
+          "renter": "0x5C8ce2C2987Ea625BA9F60Fe959b12e13574B404",
+          "amount": "50000000000000000"
+        }
+      }
+    ]
+  },
+  "proposedNativeExecutionCaps": {
+    "weightLimit": {
+      "ref_time": "10000000000",
+      "proof_size": "1048576"
+    },
+    "storageDepositLimitNative": "2500000000000000",
+    "storageDepositLimitTPOT": "25",
+    "status": "must-pass-with-true-return-against-actual-deployed-candidate-before-signing"
+  },
+  "releaseBudget": {
+    "artifact": "deployments/release-v2-budget.json",
+    "complete": true,
+    "totalRequiredNative": "211271850953521368",
+    "totalRequiredTPOT": "2112.71850953521368",
+    "additionalFundingRequestedTPOT": "2200",
+    "actualFundingReceived": false
+  }
+}

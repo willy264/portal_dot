@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type {
@@ -37,6 +37,22 @@ afterEach(() => {
 });
 
 describe("transaction journal", () => {
+  it("rejects a changed deployment simulation nonce before recording or signing an attempt", async () => {
+    const path = destination();
+    const journal = new Journal(path);
+    const action = vi.fn(async () => evidence);
+    await expect(
+      journal.step("deploy", {}, account, action, { expectedNonce: 3 }),
+    ).rejects.toThrow("no journal entry written");
+    expect(action).not.toHaveBeenCalled();
+    expect(journal.data.steps).toEqual({});
+    expect(existsSync(path)).toBe(false);
+    await expect(
+      journal.step("deploy", {}, account, action, { expectedNonce: 4 }),
+    ).resolves.toEqual(evidence);
+    expect(action).toHaveBeenCalledTimes(1);
+    journal.close();
+  });
   it("persists a broadcast hash before returning and never resubmits a confirmed intent", async () => {
     const path = destination();
     const journal = new Journal(path);

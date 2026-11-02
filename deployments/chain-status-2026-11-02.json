@@ -1,0 +1,51 @@
+{
+    "schemaVersion":  1,
+    "network":  "portaldot-v3-testnet",
+    "endpoint":  "wss://test-node-v3.portaldot.dev/",
+    "mode":  "read-only",
+    "signedTransactions":  0,
+    "genesisHash":  "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+    "runtimeCodeHash":  "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+    "observations":  [
+                         {
+                             "observedAt":  "2026-11-02T00:05:21.060Z",
+                             "health":  {
+                                            "isSyncing":  false,
+                                            "peers":  1
+                                        },
+                             "finalized":  {
+                                               "hash":  "0x0bad7f42351601e9396045a53f179ca977a52831945c676f35653f6d4bd89820",
+                                               "number":  284308
+                                           },
+                             "best":  {
+                                          "number":  284311
+                                      },
+                             "nextIndex":  18,
+                             "pendingPoolCount":  0
+                         },
+                         {
+                             "observedAt":  "2026-11-02T00:07:26.671Z",
+                             "health":  {
+                                            "peers":  1,
+                                            "isSyncing":  false,
+                                            "shouldHavePeers":  true
+                                        },
+                             "finalized":  {
+                                               "hash":  "0x674665e3a1f93cc36b2675ce8f81342ee214cbc337b37b7fa1390e3c40f1f55e",
+                                               "number":  284330
+                                           },
+                             "best":  {
+                                          "hash":  "0xabb27f3b16ee74690868242f45164bd7c02c93d279e92fc82fa27bfc06ad645f",
+                                          "number":  284332
+                                      },
+                             "nextIndex":  18,
+                             "pendingPoolCount":  0
+                         }
+                     ],
+    "progress":  {
+                     "newBlocks":  21,
+                     "finalityAdvancing":  true,
+                     "producingBlocks":  true,
+                     "newFinalizedBlocks":  22
+                 }
+}

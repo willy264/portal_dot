@@ -23,14 +23,33 @@ import {
   signer,
   writeJson,
 } from "./lib";
+import { successfulReceipt } from "./release-model";
 
 await run(async () => {
-  const account = signer("DEPLOYER");
   const deployment = manifest();
+  if (
+    ["Cronpot", "MeterMend"].every((name) =>
+      successfulReceipt(deployment.contracts[name as "Cronpot" | "MeterMend"]),
+    )
+  ) {
+    console.log(
+      "Both confirmed deployments already exist; no transactions submitted.",
+    );
+    return;
+  }
+  const account = signer("DEPLOYER");
   const compiled = {
     Cronpot: artifact("Cronpot"),
     MeterMend: artifact("MeterMend"),
   };
+  if (
+    compiled.Cronpot.abi.some(
+      (entry) => entry.type === "constructor" && entry.inputs.length > 0,
+    )
+  )
+    throw new Error(
+      "The corrected Cronpot requires an isolated versioned release with explicit gas configuration. Use scripts/release.ts; the historical deployment intent is preserved.",
+    );
   const tip = amount(option("cron-tip", "0.001")!);
   evmToNative(tip); // Reject fractional native-unit dust before constructing immutable terms.
   const journal = new Journal("deployments/deploy-journal.json");

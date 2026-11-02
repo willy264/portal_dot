@@ -92,7 +92,11 @@ it("publishes only selected fields and strips URL credentials and query strings"
     "password",
   ])
     expect(rendered).not.toContain(secret);
-  expect(cards[3]?.fields).toContainEqual({
+  expect(
+    cards.find(
+      (card) => card.title === "Persistent worker and evidence hosting",
+    )?.fields,
+  ).toContainEqual({
     label: "Public service",
     value: "https://example.com/health",
   });
@@ -102,11 +106,15 @@ it("does not promote credentials or generated files to delivered messages or pub
     notifications: { status: "credentials-verified" },
     submission: { deck: { status: "generated" } },
   });
-  expect(cards[4]?.fields).toContainEqual({
+  expect(
+    cards.find((card) => card.title === "Telegram delivery")?.fields,
+  ).toContainEqual({
     label: "Delivered event types",
     value: "None recorded",
   });
-  expect(cards[5]?.fields).toContainEqual({
+  expect(
+    cards.find((card) => card.title === "Submission materials")?.fields,
+  ).toContainEqual({
     label: "Video",
     value: "Pending; no uploaded video recorded",
   });

@@ -4,10 +4,11 @@ import { snapshotReader } from "./snapshot-reader";
 import { publicConfig } from "./server-config";
 import { errorMessage, metadata } from "./format";
 import { normalizeEvents } from "./history";
+import { historyEndpoint } from "./history-endpoint";
 import type { Ledger, Rental } from "./types";
 
 async function backend(path: string): Promise<any> {
-  const base = process.env.CHAIN_INDEXER_URL ?? process.env.RELAYER_URL;
+  const base = await historyEndpoint();
   if (!base) throw new Error("The history service is not configured.");
   const response = await fetch(new URL(path, base), {
     cache: "no-store",

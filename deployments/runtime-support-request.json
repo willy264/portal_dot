@@ -1,0 +1,34 @@
+{
+  "observedAt": "2026-11-01T02:48:24.663Z",
+  "status": "draft-not-sent",
+  "channel": "Portaldot Discord support; owner sends manually",
+  "draft": "docs/DISCORD_STATUS.md",
+  "draftSha256": "2d96fe2af8c08109af27eca83e3802eec7911e5542bb46e3206d02189f070c24",
+  "subject": "Finite nested EVM CALL gas under native Revive.call on V3",
+  "runtime": {
+    "genesis": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+    "runtimeCodeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+    "specVersion": 3002
+  },
+  "liveFailure": {
+    "txHash": "0x2b9249a026b3f868527e6964de6bd5241f401942f28e247d82dfb0eac9d75e35",
+    "block": 271528,
+    "parentBlockHash": "0x890a0b46fa3eca98deedf37731622fbb59f29983d6b321af58034f1fd4ad2172",
+    "error": "OutOfGas",
+    "targetGas": "1000000",
+    "outerTraceGas": "181762198607116",
+    "depositRefunded": false
+  },
+  "readOnlyControls": [
+    "deployments/refund-call-controls.json",
+    "deployments/refund-call-finite-budget.json"
+  ],
+  "requestedInformation": [
+    "Supported gas units and finite-call configuration for native Revive.call",
+    "Differences from Ethereum-transaction execution context",
+    "Official V3 runtime/SDK fork and commit"
+  ],
+  "contractChangesMade": false,
+  "transactionsSubmitted": 0,
+  "messagesSent": 0
+}

@@ -392,20 +392,107 @@
         "outcome": "same-nonce replacement finalized; original has no finality receipt",
         "reconciliationEvidence": "deployments/metermend-reconciliation-2026-11-01.json"
       }
+    },
+    {
+      "observedAt": "2026-11-02T00:07:26.671Z",
+      "startedAt": "2026-11-02T00:07:26.003Z",
+      "network": "portaldot-v3-testnet",
+      "endpoint": "wss://test-node-v3.portaldot.dev/",
+      "transport": "WebSocket",
+      "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+      "identityVerified": true,
+      "operation": "MeterMend deployment",
+      "txHash": "0x23b8aa6ffcb18dbbdf12f0d1c59a33b860a43d81362b2f253efdfd43262b8f17",
+      "journal": {
+        "path": "deployments/deploy-replacement-journal.json",
+        "step": "replace-0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782",
+        "startBlock": 271375,
+        "nonce": 7,
+        "state": "confirmed",
+        "startedAt": "2026-11-01T02:24:34.740Z"
+      },
+      "finalized": {
+        "number": 284330,
+        "hash": "0x674665e3a1f93cc36b2675ce8f81342ee214cbc337b37b7fa1390e3c40f1f55e"
+      },
+      "best": {
+        "number": 284332,
+        "hash": "0xabb27f3b16ee74690868242f45164bd7c02c93d279e92fc82fa27bfc06ad645f"
+      },
+      "health": {
+        "peers": 1,
+        "isSyncing": false,
+        "shouldHavePeers": true
+      },
+      "account": {
+        "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+        "submittedNonce": 7,
+        "finalizedNonce": 18,
+        "bestNonce": 18,
+        "nextIndex": 18
+      },
+      "inclusion": {
+        "finalizedOutcome": "success",
+        "status": "finalized-success",
+        "included": true,
+        "finalized": true,
+        "block": 271379,
+        "blockHash": "0x27ef958241665a562c715d47aeccf61930931658dab81033856b37e505412b58",
+        "extrinsicIndex": 1,
+        "pendingPool": {
+          "matched": false,
+          "index": -1,
+          "totalExtrinsics": 0
+        },
+        "contractAddress": "0x61382db168db646b899234cd707c7ba0142c4071"
+      },
+      "confirmedContracts": {
+        "Cronpot": {
+          "address": "0x41635a685448cfa86da1600656f103a211e398f4",
+          "txHash": "0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93",
+          "block": 265131,
+          "blockHash": "0x11caa39423290913ceddd5ba7977e88cdc86f9bfeed463c95c8fa11cd70efbdd",
+          "statusEvidence": "deployments/cronpot-deployment-status.json"
+        }
+      },
+      "methods": [
+        "system_health",
+        "chain_getFinalizedHead",
+        "chain_getBlockHash",
+        "chain_getHeader",
+        "state_getStorage",
+        "state_getRuntimeVersion",
+        "state_getStorageHash",
+        "system_accountNextIndex",
+        "author_pendingExtrinsics"
+      ],
+      "notes": [
+        "Read-only WebSocket snapshot; pool entries matched by Blake2-256 of exact raw SCALE extrinsics.",
+        "Nonce from finalized and best System.Account is separate from pool-aware system_accountNextIndex.",
+        "No retry or replacement was submitted by this check. The journal remains authoritative for submission recovery."
+      ],
+      "originalAttempt": {
+        "txHash": "0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782",
+        "nonce": 7,
+        "state": "unknown",
+        "journal": "deployments/deploy-journal.json",
+        "outcome": "same-nonce replacement finalized; original has no finality receipt",
+        "reconciliationEvidence": "deployments/metermend-reconciliation-2026-11-01.json"
+      }
     }
   ],
   "progress": {
     "from": "2026-10-31T13:46:36.2787294Z",
-    "through": "2026-11-01T02:26:36.083Z",
-    "bestBlocksAdded": 6268,
-    "finalizedBlocksAdded": 6273,
+    "through": "2026-11-02T00:07:26.671Z",
+    "bestBlocksAdded": 19202,
+    "finalizedBlocksAdded": 19208,
     "newBlocksObserved": true,
     "finalityAdvanced": true
   },
   "recentWindow": {
-    "from": "2026-11-01T02:20:48.658Z",
-    "through": "2026-11-01T02:26:36.083Z",
-    "bestBlocksAdded": 59,
-    "finalizedBlocksAdded": 58
+    "from": "2026-11-01T02:26:36.083Z",
+    "through": "2026-11-02T00:07:26.671Z",
+    "bestBlocksAdded": 12934,
+    "finalizedBlocksAdded": 12935
   }
 }

@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-01T02:51:31.009Z",
+  "mode": "read-only-runtime-simulation",
+  "signedTransactions": 0,
+  "contractsDeployed": 0,
+  "genesis": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+  "runtimeCodeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+  "at": {
+    "number": 271644,
+    "hash": "0xc318d4907381d8c5db8a1c46f48429d6214d765c908eb8d922ebbe011a422ec1"
+  },
+  "target": "0x61382db168db646b899234cd707c7ba0142c4071",
+  "rentalId": "1",
+  "origin": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+  "direct": {
+    "role": "relayer",
+    "function": "finalizeRefund",
+    "args": [
+      "1"
+    ],
+    "valueNative": "0",
+    "at": {
+      "number": 271644,
+      "hash": "0xc318d4907381d8c5db8a1c46f48429d6214d765c908eb8d922ebbe011a422ec1"
+    },
+    "raw": "0x000374ecef4df2a204000374ecef4df2a2040000fe5b4ae4615d0100000000000000000001005c4ae4615d0100000000000000000000000000000000000000000000000000000000000000",
+    "decoded": {
+      "weight_consumed": {
+        "ref_time": "1307569268",
+        "proof_size": "75964"
+      },
+      "weight_required": {
+        "ref_time": "1307569268",
+        "proof_size": "75964"
+      },
+      "storage_deposit": {
+        "type": "Refund",
+        "value": "384149999999998"
+      },
+      "max_storage_deposit": {
+        "type": "Charge",
+        "value": "384150000000000"
+      },
+      "gas_consumed": "0",
+      "result": {
+        "success": true,
+        "value": {
+          "flags": 0,
+          "data": "0x"
+        }
+      }
+    }
+  },
+  "probe": {
+    "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.28; contract RefundCallProbe { error Probe(bool success, bytes result, uint256 beforeGas, uint256 afterGas); constructor(address target, bytes memory payload, uint256 limit) payable { uint256 beforeGas = gasleft(); (bool ok, bytes memory result) = target.call{gas: limit}(payload); revert Probe(ok, result, beforeGas, gasleft()); } }",
+    "solcVersion": "0.8.30+commit.73712a01.Emscripten.clang",
+    "method": "payable constructor always reverts Probe outcome; zero endowment, finite outerweight ref_time10,000,000,000/proof_size1,048,576; finite storage cap50tPOT; no persistent deployment",
+    "probes": [
+      {
+        "name": "MeterMend.finalizeRefund",
+        "requestedCallbackGas": "150000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271644,
+          "hash": "0xc318d4907381d8c5db8a1c46f48429d6214d765c908eb8d922ebbe011a422ec1"
+        },
+        "raw": "0x00ba80faf22e020400ba80faf22e080400010000000000000000000000000000000001005c4ae4615d0100000000000000000005101306000000000000000000000000000100000091020a6abf3400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000701920ecbaf9e0000000000000000000000000000000000000000000000000007019208c6a5da0000000000000000000000000000000000000000000000000000000000000000e025f74f152f1b30594bf57f77c57d84e5aa96d7",
+        "result": {
+          "weight_consumed": {
+            "ref_time": "1019125806",
+            "proof_size": "65675"
+          },
+          "weight_required": {
+            "ref_time": "1019125806",
+            "proof_size": "66059"
+          },
+          "storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "max_storage_deposit": {
+            "type": "Charge",
+            "value": "384150000000000"
+          },
+          "gas_consumed": "101912581",
+          "result": {
+            "success": true,
+            "value": {
+              "result": {
+                "flags": 1,
+                "data": "0x0a6abf3400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000701920ecbaf9e0000000000000000000000000000000000000000000000000007019208c6a5da0000000000000000000000000000000000000000000000000000000000000000"
+              },
+              "addr": "0xe025f74f152f1b30594bf57f77c57d84e5aa96d7"
+            }
+          }
+        },
+        "outcome": {
+          "targetSucceeded": false,
+          "targetReturnData": "0x",
+          "beforeGas": "1972051662057374",
+          "afterGas": "1972051561063898"
+        }
+      },
+      {
+        "name": "MeterMend.finalizeRefund",
+        "requestedCallbackGas": "160000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271644,
+          "hash": "0xc318d4907381d8c5db8a1c46f48429d6214d765c908eb8d922ebbe011a422ec1"
+        },
+        "raw": "0x00033479c6412e020400033479c6412e080400010000000000000000000000000000000001005c4ae4615d01000000000000000000ecd89306000000000000000000000000000100000091020a6abf3400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000701920ecbaf9e000000000000000000000000000000000000000000000000000701920845dcf30000000000000000000000000000000000000000000000000000000000000000e025f74f152f1b30594bf57f77c57d84e5aa96d7",
+        "result": {
+          "weight_consumed": {
+            "ref_time": "1103526196",
+            "proof_size": "65675"
+          },
+          "weight_required": {
+            "ref_time": "1103526196",
+            "proof_size": "66059"
+          },
+          "storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "max_storage_deposit": {
+            "type": "Charge",
+            "value": "384150000000000"
+          },
+          "gas_consumed": "110352620",
+          "result": {
+            "success": true,
+            "value": {
+              "result": {
+                "flags": 1,
+                "data": "0x0a6abf3400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000701920ecbaf9e000000000000000000000000000000000000000000000000000701920845dcf30000000000000000000000000000000000000000000000000000000000000000"
+              },
+              "addr": "0xe025f74f152f1b30594bf57f77c57d84e5aa96d7"
+            }
+          }
+        },
+        "outcome": {
+          "targetSucceeded": false,
+          "targetReturnData": "0x",
+          "beforeGas": "1972051662057374",
+          "afterGas": "1972051552623859"
+        }
+      },
+      {
+        "name": "MeterMend.finalizeRefund",
+        "requestedCallbackGas": "200000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271644,
+          "hash": "0xc318d4907381d8c5db8a1c46f48429d6214d765c908eb8d922ebbe011a422ec1"
+        },
+        "raw": "0x0003fe776346f2a2040003fe776346f2a80400010000000000000000000000000000000001005c4ae4615d0100000000000000000067f20907000000000000000000000000000100000091020a6abf3400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000701920ecbaf9e0000000000000000000000000000000000000000000000000007019207cfc3790000000000000000000000000000000000000000000000000000000000000000e025f74f152f1b30594bf57f77c57d84e5aa96d7",
+        "result": {
+          "weight_consumed": {
+            "ref_time": "1180923902",
+            "proof_size": "75964"
+          },
+          "weight_required": {
+            "ref_time": "1180923902",
+            "proof_size": "76348"
+          },
+          "storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "max_storage_deposit": {
+            "type": "Charge",
+            "value": "384150000000000"
+          },
+          "gas_consumed": "118092391",
+          "result": {
+            "success": true,
+            "value": {
+              "result": {
+                "flags": 1,
+                "data": "0x0a6abf3400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000701920ecbaf9e0000000000000000000000000000000000000000000000000007019207cfc3790000000000000000000000000000000000000000000000000000000000000000"
+              },
+              "addr": "0xe025f74f152f1b30594bf57f77c57d84e5aa96d7"
+            }
+          }
+        },
+        "outcome": {
+          "targetSucceeded": false,
+          "targetReturnData": "0x",
+          "beforeGas": "1972051662057374",
+          "afterGas": "1972051544884089"
+        }
+      },
+      {
+        "name": "MeterMend.finalizeRefund",
+        "requestedCallbackGas": "300000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271644,
+          "hash": "0xc318d4907381d8c5db8a1c46f48429d6214d765c908eb8d922ebbe011a422ec1"
+        },
+        "raw": "0x00031255036292eb0400031255036292eb0400010000000000000000000000000000000001005c4ae4615d010000000000000000001c22cd09000000000000000000000000000100000091020a6abf3400000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000701920ecbaf9e00000000000000000000000000000000000000000000000000078b5ecee02a660000000000000000000000000000000000000000000000000000000000000000e025f74f152f1b30594bf57f77c57d84e5aa96d7",
+        "result": {
+          "weight_consumed": {
+            "ref_time": "1644385554",
+            "proof_size": "80612"
+          },
+          "weight_required": {
+            "ref_time": "1644385554",
+            "proof_size": "80612"
+          },
+          "storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "max_storage_deposit": {
+            "type": "Charge",
+            "value": "384150000000000"
+          },
+          "gas_consumed": "164438556",
+          "result": {
+            "success": true,
+            "value": {
+              "result": {
+                "flags": 1,
+                "data": "0x0a6abf3400000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000701920ecbaf9e00000000000000000000000000000000000000000000000000078b5ecee02a660000000000000000000000000000000000000000000000000000000000000000"
+              },
+              "addr": "0xe025f74f152f1b30594bf57f77c57d84e5aa96d7"
+            }
+          }
+        },
+        "outcome": {
+          "targetSucceeded": true,
+          "targetReturnData": "0x",
+          "beforeGas": "1972051662057374",
+          "afterGas": "2123564150958694"
+        }
+      },
+      {
+        "name": "MeterMend.finalizeRefund",
+        "requestedCallbackGas": "400000000000000",
+        "endowmentNative": "0",
+        "at": {
+          "number": 271644,
+          "hash": "0xc318d4907381d8c5db8a1c46f48429d6214d765c908eb8d922ebbe011a422ec1"
+        },
+        "raw": "0x00031255036292eb0400031255036292eb0400010000000000000000000000000000000001005c4ae4615d010000000000000000001c22cd09000000000000000000000000000100000091020a6abf3400000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000701920ecbaf9e00000000000000000000000000000000000000000000000000078b5ecee02a660000000000000000000000000000000000000000000000000000000000000000e025f74f152f1b30594bf57f77c57d84e5aa96d7",
+        "result": {
+          "weight_consumed": {
+            "ref_time": "1644385554",
+            "proof_size": "80612"
+          },
+          "weight_required": {
+            "ref_time": "1644385554",
+            "proof_size": "80612"
+          },
+          "storage_deposit": {
+            "type": "Charge",
+            "value": "0"
+          },
+          "max_storage_deposit": {
+            "type": "Charge",
+            "value": "384150000000000"
+          },
+          "gas_consumed": "164438556",
+          "result": {
+            "success": true,
+            "value": {
+              "result": {
+                "flags": 1,
+                "data": "0x0a6abf3400000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000701920ecbaf9e00000000000000000000000000000000000000000000000000078b5ecee02a660000000000000000000000000000000000000000000000000000000000000000"
+              },
+              "addr": "0xe025f74f152f1b30594bf57f77c57d84e5aa96d7"
+            }
+          }
+        },
+        "outcome": {
+          "targetSucceeded": true,
+          "targetReturnData": "0x",
+          "beforeGas": "1972051662057374",
+          "afterGas": "2123564150958694"
+        }
+      }
+    ]
+  }
+}

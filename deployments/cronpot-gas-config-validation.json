@@ -1,0 +1,303 @@
+{
+  "observedAt": "2026-11-02T00:20:28.681Z",
+  "status": "local-validation-passed-runtime-profile-verification-pending",
+  "summary": "Cronpot has calibrated immutable gas allowances and execute returns the actual bounded callback bool. All 49 local contract tests pass. Failed jobs remain terminal; no replacement contract has been deployed.",
+  "sourceHashes": {
+    "contracts/src/Cronpot.sol": "6d4811fb79678fc3c5cc5731506e234234e9ce114f9d1b51777c664bffb2f9b6",
+    "contracts/test/Cronpot.t.sol": "874185e0b66531a27782cc30739f3e455dd222aff856c477d9401756a518bf5a",
+    "contracts/test/MeterMend.t.sol": "059b78958dd586da6ee3f70b24277aae3dba2e8d434f5270db30059a84fe8deb",
+    "SPEC.md": "16ee5d40ae1dded850a045cab9406a9da73a9c050217263194d660d6353d498d",
+    "packages/chain/src/abi.ts": "eb64db20eb0c050e89dcc77c0f16034023f20df40b4d1e0f1ebfd8245163efcf"
+  },
+  "validation": {
+    "foundryVersion": "1.8.6",
+    "solcVersion": "0.8.30",
+    "command": "forge test --root contracts --json",
+    "result": "passed",
+    "passed": 49,
+    "failed": 0,
+    "skipped": 0,
+    "suites": [
+      {
+        "name": "test/Cronpot.t.sol:CronpotTest",
+        "testResults": [
+          {
+            "name": "test_CallbackCannotCancelOrExecuteItsOwnJob()",
+            "status": "Success"
+          },
+          {
+            "name": "test_CancelOwnerOnlyAndRefunds()",
+            "status": "Success"
+          },
+          {
+            "name": "test_ConstructorAcceptsExactMinimumRuntimeCeiling()",
+            "status": "Success"
+          },
+          {
+            "name": "test_ConstructorExposesImmutableExecutionProfile()",
+            "status": "Success"
+          },
+          {
+            "name": "test_ConstructorRejectsInputsAboveRuntimeGasRange()",
+            "status": "Success"
+          },
+          {
+            "name": "test_ConstructorRejectsMinimumBeyondRuntimeGasRange()",
+            "status": "Success"
+          },
+          {
+            "name": "test_ConstructorRejectsZeroAllowancesAndNoPostTipReserve()",
+            "status": "Success"
+          },
+          {
+            "name": "test_CustomProfileRejectsLowOuterGasThenExecutesWithoutLosingTip()",
+            "status": "Success"
+          },
+          {
+            "name": "test_EarlyExecutionRevertsAndPreservesTip()",
+            "status": "Success"
+          },
+          {
+            "name": "test_ExecutesAndPaysExecutorExactlyOnce()",
+            "status": "Success"
+          },
+          {
+            "name": "test_FailedTargetMarksFailedWithoutReverting()",
+            "status": "Success"
+          },
+          {
+            "name": "test_GasBurningExecutorCannotUndoFailedTarget()",
+            "status": "Success"
+          },
+          {
+            "name": "test_GasBurningTargetIsTerminalFailure()",
+            "status": "Success"
+          },
+          {
+            "name": "test_GetJobPreservesDataAndDueState()",
+            "status": "Success"
+          },
+          {
+            "name": "test_HugeReturnDataIsCappedAndReported()",
+            "status": "Success"
+          },
+          {
+            "name": "test_HugeRevertDataIsCappedAndReported()",
+            "status": "Success"
+          },
+          {
+            "name": "test_NearMinimumGasStillSettlesExpensiveFailureAndRejectedTip()",
+            "status": "Success"
+          },
+          {
+            "name": "test_OversizedTipRejectedWithoutTruncation()",
+            "status": "Success"
+          },
+          {
+            "name": "test_RejectingExecutorGetsDeferredCreditWithoutUndoingTarget()",
+            "status": "Success"
+          },
+          {
+            "name": "test_ScheduledAndDeferredTipLiabilitiesStayFunded()",
+            "status": "Success"
+          },
+          {
+            "name": "test_UnderfundedExecutionCannotConsumeJobOrTip()",
+            "status": "Success"
+          }
+        ]
+      },
+      {
+        "name": "test/MeterMend.t.sol:MeterMendTest",
+        "testResults": [
+          {
+            "name": "testFuzz_SplitNeverLosesFunds(uint128,uint16)",
+            "status": "Success"
+          },
+          {
+            "name": "test_AnyoneCanFinalizeWithoutCronpot()",
+            "status": "Success"
+          },
+          {
+            "name": "test_CronpotExecutesRefundAfterWindow()",
+            "status": "Success"
+          },
+          {
+            "name": "test_DisputeAfterWindowReverts()",
+            "status": "Success"
+          },
+          {
+            "name": "test_DisputeApprovedByArbiter()",
+            "status": "Success"
+          },
+          {
+            "name": "test_DisputeApprovedByRenter()",
+            "status": "Success"
+          },
+          {
+            "name": "test_DisputeRejectedByBothRefundsFully()",
+            "status": "Success"
+          },
+          {
+            "name": "test_DisputeSurvivesFailedCronCancellation()",
+            "status": "Success"
+          },
+          {
+            "name": "test_FinalizeRefundBeforeWindowReverts()",
+            "status": "Success"
+          },
+          {
+            "name": "test_FullDeductionSkipsRejectingZeroValueRecipient()",
+            "status": "Success"
+          },
+          {
+            "name": "test_ItemCannotBeDoubleRented()",
+            "status": "Success"
+          },
+          {
+            "name": "test_MarkReturnedSchedulesCronJob()",
+            "status": "Success"
+          },
+          {
+            "name": "test_MaximumFeeAndDepositUseWideIntermediates()",
+            "status": "Success"
+          },
+          {
+            "name": "test_MultipleItemLiabilitiesAndCancellationSurplusStaySeparated()",
+            "status": "Success"
+          },
+          {
+            "name": "test_OldRentalClosureCannotClearNewOccupancy()",
+            "status": "Success"
+          },
+          {
+            "name": "test_OperatorCannotWithdrawReserve()",
+            "status": "Success"
+          },
+          {
+            "name": "test_RefundCallbackCannotReenterSettlement()",
+            "status": "Success"
+          },
+          {
+            "name": "test_RejectingRefundPreservesLiabilityAndTransferLock()",
+            "status": "Success"
+          },
+          {
+            "name": "test_RentSplitsFeeIntoReserve()",
+            "status": "Success"
+          },
+          {
+            "name": "test_RentWrongValueReverts()",
+            "status": "Success"
+          },
+          {
+            "name": "test_RenterCannotBeOperatorOrArbiter()",
+            "status": "Success"
+          },
+          {
+            "name": "test_RepairCannotExceedReserve()",
+            "status": "Success"
+          },
+          {
+            "name": "test_RepairPaysFromReserveOnly()",
+            "status": "Success"
+          },
+          {
+            "name": "test_RepairRequiresArbiter()",
+            "status": "Success"
+          },
+          {
+            "name": "test_ScheduledRefundCannotFireDuringDispute()",
+            "status": "Success"
+          },
+          {
+            "name": "test_TransferBlockedForReturnedAndDisputedRentals()",
+            "status": "Success"
+          },
+          {
+            "name": "test_TransferCarriesReserve()",
+            "status": "Success"
+          },
+          {
+            "name": "test_VoteOnceAndNoUnspecifiedDisputeTimeout()",
+            "status": "Success"
+          }
+        ]
+      }
+    ],
+    "rawReportSha256": "0790e992a9589b5af5ef73e8bb9db30a3eee13f3f241b5281f223af1b6cfbaed",
+    "formatCheck": "passed",
+    "abiGenerated": true,
+    "abiArtifactCheck": "passed",
+    "chainTypecheck": "passed"
+  },
+  "artifacts": {
+    "Cronpot": {
+      "path": "contracts/out/Cronpot.sol/Cronpot.json",
+      "creationBytecodeSha256": "824d0f55abd5ac14cd9b9a6a3a3185a31b74c565b933afef0f6d086746c58c53",
+      "runtimeTemplateSha256": "504fd4526e36a028edf5f586e6cc33cc07cc1f1917e16048d870bf151274d991",
+      "constructor": [
+        {
+          "name": "targetGasLimit",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "postCallGasReserve",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "tipGasLimit",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    "MeterMend": {
+      "path": "contracts/out/MeterMend.sol/MeterMend.json",
+      "creationBytecodeSha256": "45d0d5526febdb861df841afbaa0b9021e0f34306d5acf3fff5b169f9079d2be",
+      "runtimeTemplateSha256": "968c84e0795554cf3537e8331185dc00cebecc49a40aff8ff179087d730ac5f8",
+      "constructor": [
+        {
+          "name": "cronpot_",
+          "type": "address",
+          "internalType": "contract ICronpot"
+        },
+        {
+          "name": "cronTip_",
+          "type": "uint128",
+          "internalType": "uint128"
+        }
+      ]
+    }
+  },
+  "foundryProfile": {
+    "targetGasLimit": "1000000",
+    "postCallGasReserve": "100000",
+    "tipGasLimit": "30000"
+  },
+  "candidateV3Profile": {
+    "targetGasLimit": "550000000000000",
+    "postCallGasReserve": "200000000000000",
+    "tipGasLimit": "30000",
+    "minCallGas": "758730158740159",
+    "status": "full-ethereum-context-simulation-passed-native-due-job-proof-required",
+    "warning": "Simulation uses temporary code and balance overrides; no v2 deployment or live refund is claimed.",
+    "artifact": "deployments/cronpot-candidate-full-simulation.json",
+    "artifactSha256": "374696e508b1adbddf875c8b93729cdbe15472752ae5accc1b9aca4faab1d382"
+  },
+  "meterMendApiChanged": false,
+  "icCronpotInterfaceChanged": false,
+  "deploymentScriptChanged": true,
+  "deploymentManifestChanged": false,
+  "transactionsSubmitted": 0,
+  "contractsDeployed": 0,
+  "executeReturnValue": {
+    "type": "bool",
+    "successTest": "test_ExecutesAndPaysExecutorExactlyOnce()",
+    "failureTest": "test_FailedTargetMarksFailedWithoutReverting()",
+    "selectorUnchanged": true
+  },
+  "deploymentScriptChange": "Completed v1 deployment is a no-op; corrected constructor requires isolated release tooling."
+}

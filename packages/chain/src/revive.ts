@@ -317,6 +317,54 @@ export async function buildReviveCall(input: ReviveCallInput) {
   return { ...estimate, tx };
 }
 
+export type NativeCallCaps = {
+  weight_limit: { ref_time: bigint; proof_size: bigint };
+  storage_deposit_limit: bigint;
+};
+
+/**
+ * Read-only keeper preparation. Both passes use one finalized state; the second
+ * pass uses exactly the finite caps that the returned transaction will submit.
+ * A successful outer return still needs application-specific callback proof.
+ */
+export async function prepareBoundedReviveCall(
+  input: ReviveCallInput,
+  caps: NativeCallCaps,
+  at: { number: number; hash: string },
+) {
+  if (caps.weight_limit.ref_time <= 0n || caps.weight_limit.proof_size <= 0n ||
+      caps.storage_deposit_limit <= 0n)
+    throw new RangeError("Bounded native simulation requires positive weight and storage caps");
+  await verifyNetwork();
+  const head = await getFinalizedHead();
+  if (!Number.isSafeInteger(at.number) || at.number < 0 || at.number > head.number ||
+      await getClient()._request("chain_getBlockHash", [at.number]) !== at.hash)
+    throw new Error("Bounded native simulation requires a canonical finalized snapshot");
+  const api = getApi();
+  const value = evmToNative(input.value ?? 0n);
+  const simulate = async (bounded: boolean) => {
+    const response = await api.apis.ReviveApi.call_versioned(Enum("V1", {
+      origin: input.signer.address, dest: input.to, value,
+      gas_limit: bounded ? caps.weight_limit : undefined,
+      storage_deposit_limit: bounded ? caps.storage_deposit_limit : undefined,
+      input_data: Binary.fromHex(input.data),
+    }), { at: at.hash, signal: AbortSignal.timeout(input.timeoutMs ?? 45_000) });
+    const result = response.value;
+    if (!result.result.success)
+      throw new SimulationError(`Revive ${bounded ? "bounded" : "initial"} dry-run failed: ${stringify(result.result.value)}`, result);
+    assertNotReverted(result.result.value.flags, result.result.value.data, input.abi);
+    return { ...result, output: toHex(result.result.value.data) };
+  };
+  const initial = await simulate(false);
+  const bounded = await simulate(true);
+  if (bounded.weight_required.ref_time > caps.weight_limit.ref_time ||
+      bounded.weight_required.proof_size > caps.weight_limit.proof_size ||
+      (bounded.max_storage_deposit.type === "Charge" && bounded.max_storage_deposit.value > caps.storage_deposit_limit))
+    throw new SimulationError("Bounded native dry-run exceeds the exact submission caps", bounded);
+  const tx = api.tx.Revive.call({ dest: input.to, value, ...caps, data: Binary.fromHex(input.data) });
+  return { tx, value, caps, at, initial, bounded, output: bounded.output };
+}
+
 export type ReviveDeployInput = SubmissionOptions & {
   signer: ChainSigner;
   code: Hex;

@@ -1,0 +1,26 @@
+# Selected by the owner: no recurring paid service and no persistent disk.
+# Read-only public history preview; signing and evidence uploads are disabled.
+services:
+  - type: web
+    name: metermend-preview
+    runtime: docker
+    region: frankfurt
+    plan: free
+    branch: main
+    dockerfilePath: ./Dockerfile.preview
+    dockerContext: .
+    autoDeployTrigger: "off"
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: "8787"
+      - key: READ_ONLY
+        value: "1"
+      - key: PREVIEW_SNAPSHOT
+        value: "1"
+      - key: STORAGE_MODE
+        value: ephemeral-free-preview
+      - key: START_BLOCK
+        value: "271379"
+      - key: CHAIN_TIMEOUT_MS
+        value: "120000"

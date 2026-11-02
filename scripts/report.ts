@@ -55,6 +55,7 @@ const [
   hosting,
   notifications,
   submission,
+  refundCalibration,
 ] = await Promise.all([
   optional("deployments/deployment-status.json"),
   optional("deployments/chain-status-2026-10-31.json"),
@@ -62,6 +63,7 @@ const [
   optional("deployments/hosting-status.json"),
   optional("deployments/notification-status.json"),
   optional("deployments/submission-materials.json"),
+  optional("deployments/refund-calibration-summary.json"),
 ]);
 const operations = operationalCards({
   deploymentStatus,
@@ -70,6 +72,7 @@ const operations = operationalCards({
   hosting,
   notifications,
   submission,
+  refundCalibration,
 });
 const operationRows = operations
   .map(

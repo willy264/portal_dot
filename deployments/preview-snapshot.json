@@ -1,0 +1,20 @@
+{
+  "observedAt": "2026-11-02T00:11:22.915Z",
+  "status": "exported-real-finalized-history",
+  "path": "deployments/preview-chain.json",
+  "sha256": "a44de068b272e45139088514cde1b3cc60804fedfae96037a86b0c48151b3201",
+  "bytes": 381665,
+  "through": {
+    "block": 274389,
+    "hash": "0x660794351db23b8b2a1d62a29ef8f2cbfef207bf81d556218e7c994046581c9a"
+  },
+  "blocks": 3011,
+  "events": 6,
+  "jobs": 1,
+  "source": "Consistent read-only SQLite transaction from the actual local indexer",
+  "limitations": [
+    "A retained snapshot is not an always-on host or a successful automatic refund.",
+    "No outbox, credentials, arbitrary state or private evidence files are included.",
+    "The free preview cannot sign transactions or accept evidence uploads."
+  ]
+}

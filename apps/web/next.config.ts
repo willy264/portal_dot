@@ -14,6 +14,7 @@ const config: NextConfig = {
       "../../deployments/hosting-status.json",
       "../../deployments/notification-status.json",
       "../../deployments/submission-materials.json",
+      "../../deployments/refund-calibration-summary.json",
       "./public/metermend-pitch.pdf",
     ],
   },

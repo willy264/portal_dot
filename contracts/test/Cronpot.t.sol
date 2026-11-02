@@ -92,13 +92,86 @@ contract CronpotTest is TestBase {
     function setUp() public {
         vm.warp(1000);
         vm.deal(address(this), 10 ether);
-        cron = new Cronpot();
+        cron = new Cronpot(1_000_000, 100_000, 30_000);
         ping = new Ping();
         bad = new FailingTarget();
     }
 
     function _schedule(address target, bytes memory data, uint64 when) internal returns (uint256) {
         return cron.schedule{value: TIP}(target, data, when);
+    }
+
+    function test_ConstructorExposesImmutableExecutionProfile() public view {
+        assertEq(cron.TARGET_GAS_LIMIT(), 1_000_000);
+        assertEq(cron.POST_CALL_GAS_RESERVE(), 100_000);
+        assertEq(cron.TIP_GAS_LIMIT(), 30_000);
+        assertEq(cron.MIN_CALL_GAS(), 1_125_874);
+        assertEq(cron.MAX_RETURN_DATA(), 4096);
+    }
+
+    function test_ConstructorRejectsZeroAllowancesAndNoPostTipReserve() public {
+        vm.expectRevert(Cronpot.BadGasConfiguration.selector);
+        new Cronpot(0, 100_000, 30_000);
+        vm.expectRevert(Cronpot.BadGasConfiguration.selector);
+        new Cronpot(1_000_000, 100_000, 0);
+        vm.expectRevert(Cronpot.BadGasConfiguration.selector);
+        new Cronpot(1_000_000, 30_000, 30_000);
+        vm.expectRevert(Cronpot.BadGasConfiguration.selector);
+        new Cronpot(1_000_000, 29_999, 30_000);
+    }
+
+    function test_ConstructorRejectsInputsAboveRuntimeGasRange() public {
+        uint256 aboveMaximum = uint256(type(uint64).max) + 1;
+        vm.expectRevert(Cronpot.BadGasConfiguration.selector);
+        new Cronpot(aboveMaximum, 100_000, 30_000);
+        vm.expectRevert(Cronpot.BadGasConfiguration.selector);
+        new Cronpot(1_000_000, aboveMaximum, 30_000);
+        vm.expectRevert(Cronpot.BadGasConfiguration.selector);
+        new Cronpot(1_000_000, type(uint64).max, aboveMaximum);
+        vm.expectRevert(Cronpot.BadGasConfiguration.selector);
+        new Cronpot(type(uint256).max, type(uint256).max, 1);
+    }
+
+    function test_ConstructorRejectsMinimumBeyondRuntimeGasRange() public {
+        vm.expectRevert(Cronpot.BadGasConfiguration.selector);
+        new Cronpot(type(uint64).max, 100_000, 30_000);
+        vm.expectRevert(Cronpot.BadGasConfiguration.selector);
+        new Cronpot(1_000_000, type(uint64).max, 30_000);
+    }
+
+    function test_ConstructorAcceptsExactMinimumRuntimeCeiling() public {
+        uint256 maximum = type(uint64).max;
+        Cronpot boundary = new Cronpot(63, maximum - 63 - 1 - 10_000, 1);
+        assertEq(boundary.MIN_CALL_GAS(), maximum);
+    }
+
+    function test_CustomProfileRejectsLowOuterGasThenExecutesWithoutLosingTip() public {
+        Cronpot configured = new Cronpot(2_000_000, 200_000, 60_000);
+        uint256 id = configured.schedule{value: TIP}(
+            address(ping), abi.encodeCall(ping.ping, ()), uint64(block.timestamp)
+        );
+        vm.prank(KEEPER);
+        (bool ok, bytes memory reason) =
+            address(configured).call{gas: 1_200_000}(abi.encodeCall(configured.execute, (id)));
+        assertFalse(ok);
+        assertEq(
+            keccak256(reason),
+            keccak256(
+                abi.encodeWithSelector(Cronpot.InsufficientExecutionGas.selector, configured.MIN_CALL_GAS())
+            )
+        );
+        assertEq(uint256(configured.getJob(id).status), uint256(Cronpot.Status.Scheduled));
+        assertEq(configured.getJob(id).tip, TIP);
+        assertEq(address(configured).balance, TIP);
+        assertEq(KEEPER.balance, 0);
+        assertEq(ping.count(), 0);
+        vm.prank(KEEPER);
+        (ok,) = address(configured).call{gas: 2_400_000}(abi.encodeCall(configured.execute, (id)));
+        assertTrue(ok);
+        assertEq(uint256(configured.getJob(id).status), uint256(Cronpot.Status.Executed));
+        assertEq(configured.getJob(id).tip, 0);
+        assertEq(KEEPER.balance, TIP);
+        assertEq(ping.count(), 1);
     }
 
     function test_EarlyExecutionRevertsAndPreservesTip() public {
@@ -112,7 +185,7 @@ contract CronpotTest is TestBase {
     function test_ExecutesAndPaysExecutorExactlyOnce() public {
         uint256 id = _schedule(address(ping), abi.encodeCall(ping.ping, ()), 1000);
         vm.prank(KEEPER);
-        cron.execute(id);
+        assertTrue(cron.execute(id));
         assertEq(ping.count(), 1);
         assertEq(KEEPER.balance, TIP);
         assertEq(cron.getJob(id).tip, 0);
@@ -125,7 +198,7 @@ contract CronpotTest is TestBase {
     function test_FailedTargetMarksFailedWithoutReverting() public {
         uint256 id = _schedule(address(bad), abi.encodeCall(bad.fail, ()), 1000);
         vm.prank(KEEPER);
-        cron.execute(id);
+        assertFalse(cron.execute(id));
         assertEq(uint256(cron.getJob(id).status), uint256(Cronpot.Status.Failed));
         assertEq(KEEPER.balance, TIP);
         vm.expectRevert(Cronpot.NotScheduled.selector);

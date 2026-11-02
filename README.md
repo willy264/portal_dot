@@ -14,11 +14,11 @@ Built for **Portaldot Hacker House 2026 · Ecosystem DApps**. MeterMend implemen
 
 **Cronpot and MeterMend are deployed and finalized on V3.** Cronpot finalized at block 265131; MeterMend finalized at block 271379 after a deliberate nonce-7 replacement, with the original attempt preserved separately. Both contracts passed [finalized read-back checks](deployments/read-back.json). The first live rent, reserve split, native evidence store and return passed; **the automatic refund failed because Cronpot's nested callback ran out of gas**. The complete golden path remains blocked. [Live trace and diagnosis](deployments/cronpot-callback-diagnosis.json).
 
-| Contract           | V3 address                                   | Status                                        |
-| ------------------ | -------------------------------------------- | --------------------------------------------- |
-| Ping runtime probe | `0x96ee88d272550530b518cbaa15a80cf5d38cdcfd` | Deployed at block 213570                      |
-| Cronpot            | `0x41635a685448cfa86da1600656f103a211e398f4` | Finalized at block 265131                    |
-| MeterMend          | `0x61382db168db646b899234cd707c7ba0142c4071` | Finalized at block 271379                    |
+| Contract           | V3 address                                   | Status                    |
+| ------------------ | -------------------------------------------- | ------------------------- |
+| Ping runtime probe | `0x96ee88d272550530b518cbaa15a80cf5d38cdcfd` | Deployed at block 213570  |
+| Cronpot            | `0x41635a685448cfa86da1600656f103a211e398f4` | Finalized at block 265131 |
+| MeterMend          | `0x61382db168db646b899234cd707c7ba0142c4071` | Finalized at block 271379 |
 
 Chain ID **420420777** (`0x190f1ca9`), runtime **3002**. [Deployment manifest](deployments/portaldot-v3.json) · [Funded probe evidence](deployments/funded-probe.json) · [Permanent proof report](https://willy264.github.io/portal_dot/) · [V3 node console](https://node-console.portaldot.dev/?rpc=wss%3A%2F%2Ftest-node-v3.portaldot.dev).
 
@@ -118,7 +118,7 @@ Humans assess damage. Missing dispute votes can leave deposits unresolved; a con
 
 The testnet prunes history, so the worker must stay online or report a gap. Native evidence expires unless renewed. DeBox wallet-chain support is separate from its bot API; notifications do not imply its embedded wallet can sign V3 transactions. Notification delivery is at-least-once across ambiguous provider responses.
 
-The application contracts are finalized, all demo roles are funded and mapped, and two equipment items are registered with 120-second dispute windows. The [printable QR sheet](https://metermend.vercel.app/metermend-qr.html) uses those actual item IDs. The local keeper and Telegram bot are running; persistent Render hosting and the physical phone rehearsal remain pending. Reserve isolation passes in Foundry; `pnpm demo` will record its live proof. No submitted BUIDL or uploaded video is claimed yet.
+The first application release is finalized, all demo roles are funded and mapped, and two equipment items are registered with 120-second dispute windows. The [printable QR sheet](https://metermend.vercel.app/metermend-qr.html) uses those actual item IDs. The corrected Cronpot passes 49 contract tests and a historical runtime simulation; its isolated release still needs test tokens, deployment and a complete live demo. The local keeper and Telegram bot are running. The owner selected a free Render read-only preview; always-on keeper/evidence hosting and the physical phone rehearsal remain pending. Reserve isolation passes in Foundry; its live proof is outstanding. No submitted BUIDL or uploaded video is claimed yet.
 
 ## Research archive
 

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-02T00:18:31.708Z",
+  "mode": "read-only fee estimation",
+  "signedTransactions": 0,
+  "quotes": {
+    "Cronpot": {
+      "weight_limit": {
+        "ref_time": "3000000000",
+        "proof_size": "65536"
+      },
+      "storage_deposit_limit": "46522260000000000",
+      "estimatedFeeNative": "54472329688779",
+      "method": "Unsigned native extrinsic fee quote; conservative weight limits, no dry-run execution or submission",
+      "creationBytecodeSha256": "824d0f55abd5ac14cd9b9a6a3a3185a31b74c565b933afef0f6d086746c58c53",
+      "constructorData": "0x0000000000000000000000000000000000000000000000000001f438daa060000000000000000000000000000000000000000000000000000000b5e620f480000000000000000000000000000000000000000000000000000000000000007530"
+    },
+    "MeterMend": {
+      "weight_limit": {
+        "ref_time": "4000000000",
+        "proof_size": "131072"
+      },
+      "storage_deposit_limit": "92943180000000000",
+      "estimatedFeeNative": "100782867160774",
+      "method": "Unsigned native extrinsic fee quote; conservative weight limits, no dry-run execution or submission",
+      "creationBytecodeSha256": "45d0d5526febdb861df841afbaa0b9021e0f34306d5acf3fff5b169f9079d2be",
+      "constructorData": "0x000000000000000000000000111111111111111111111111111111111111111100000000000000000000000000000000000000000000000000038d7ea4c68000"
+    }
+  }
+}

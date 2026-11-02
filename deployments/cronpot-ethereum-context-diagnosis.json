@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-01T02:48:43.987Z",
+  "mode": "read-only",
+  "signedTransactions": 0,
+  "createdKeys": 0,
+  "stateOverrides": false,
+  "timestampOverride": false,
+  "checks": [
+    {
+      "method": "trace_call_versioned",
+      "raw": "0x010154496e76616c69642063616c6c3a205061796d656e74",
+      "decoded": {
+        "success": false,
+        "value": {
+          "type": "Message",
+          "value": "Invalid call: Payment"
+        }
+      }
+    },
+    {
+      "method": "eth_transact_versioned",
+      "raw": "0x010154496e76616c69642063616c6c3a205061796d656e74",
+      "decoded": {
+        "success": false,
+        "value": {
+          "type": "Message",
+          "value": "Invalid call: Payment"
+        }
+      }
+    }
+  ],
+  "at": {
+    "number": 271527,
+    "hash": "0x890a0b46fa3eca98deedf37731622fbb59f29983d6b321af58034f1fd4ad2172"
+  },
+  "identity": {
+    "genesis": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+    "specVersion": 3002,
+    "codeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2"
+  },
+  "gasPrice": [
+    "25360",
+    "0",
+    "0",
+    "0"
+  ],
+  "gasPriceSource": "ReviveApi_gas_price at the same historical block",
+  "transaction": {
+    "from": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+    "to": "0x41635a685448cfa86da1600656f103a211e398f4",
+    "gas": 2000000,
+    "gasPrice": [
+      "25360",
+      "0",
+      "0",
+      "0"
+    ],
+    "calldata": "0xfe0d94c10000000000000000000000000000000000000000000000000000000000000001"
+  },
+  "comparisons": [
+    {
+      "gas": "2000000",
+      "balanceChecks": false,
+      "note": "Read-only isolation with balance checks disabled; not a funded execution claim.",
+      "ethTransact": {
+        "raw": "0x010154496e76616c69642063616c6c3a205061796d656e74",
+        "decoded": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "Invalid call: Payment"
+          }
+        }
+      }
+    },
+    {
+      "gas": "200000000",
+      "balanceChecks": true,
+      "note": "Actual historical balance checks enabled.",
+      "ethTransact": {
+        "raw": "0x010154496e76616c69642063616c6c3a205061796d656e74",
+        "decoded": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "Invalid call: Payment"
+          }
+        }
+      },
+      "trace": {
+        "raw": "0x010154496e76616c69642063616c6c3a205061796d656e74",
+        "decoded": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "Invalid call: Payment"
+          }
+        }
+      }
+    },
+    {
+      "gas": "100000000000000",
+      "balanceChecks": true,
+      "note": "Actual historical balance checks enabled.",
+      "ethTransact": {
+        "raw": "0x0101c5016661696c656420746f2072756e20636f6e74726163743a204d6f64756c65284d6f64756c654572726f72207b20696e6465783a2038302c206572726f723a205b31312c20302c20302c20305d2c206d6573736167653a20536f6d652822436f6e7472616374547261707065642229207d29",
+        "decoded": {
+          "success": false,
+          "value": {
+            "type": "Message",
+            "value": "failed to run contract: Module(ModuleError { index: 80, error: [11, 0, 0, 0], message: Some(\"ContractTrapped\") })"
+          }
+        }
+      },
+      "trace": {
+        "raw": "0x0000007f68506cf7b6fd947b5539dcaeb6494977da23b63aae2b05615a00009b861f86548a000041635a685448cfa86da1600656f103a211e398f490fe0d94c1000000000000000000000000000000000000000000000000000000000000000100013c436f6e7472616374547261707065640000000100000000000000000000000000000000000000000000000000000000000000000000000000",
+        "decoded": {
+          "success": true,
+          "value": {
+            "type": "V1",
+            "value": {
+              "type": "Call",
+              "value": {
+                "from": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+                "gas": "99372745076282",
+                "gas_used": "152095632098971",
+                "to": "0x41635a685448cfa86da1600656f103a211e398f4",
+                "input": "0xfe0d94c10000000000000000000000000000000000000000000000000000000000000001",
+                "output": "0x",
+                "error": "ContractTrapped",
+                "calls": [],
+                "logs": [],
+                "value": [
+                  "0",
+                  "0",
+                  "0",
+                  "0"
+                ],
+                "call_type": {
+                  "type": "Call"
+                },
+                "child_call_count": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "gas": "180000000000000",
+      "balanceChecks": true,
+      "note": "Actual historical balance checks enabled.",
+      "ethTransact": {
+        "raw": "0x000003b2a5c45cfe34050000000000000000000000000000000000005c4ae4615d01000000000000000000612ad202578a000000000000000000000000000000000000000000000000000000",
+        "decoded": {
+          "success": true,
+          "value": {
+            "type": "V1",
+            "value": {
+              "weight_required": {
+                "ref_time": "1556391346",
+                "proof_size": "85311"
+              },
+              "storage_deposit": "0",
+              "max_storage_deposit": "384150000000000",
+              "eth_gas": [
+                "152106314115681",
+                "0",
+                "0",
+                "0"
+              ],
+              "data": "0x"
+            }
+          }
+        }
+      },
+      "trace": {
+        "raw": "0x0000007f68506cf7b6fd947b5539dcaeb6494977da23b63aaec07823a30000000000000000000041635a685448cfa86da1600656f103a211e398f490fe0d94c100000000000000000000000000000000000000000000000000000000000000010000000841635a685448cfa86da1600656f103a211e398f440420f0000000000d90709000000000061382db168db646b899234cd707c7ba0142c407190e6d6aedc00000000000000000000000000000000000000000000000000000000000000010001204f75744f66476173000000010000000000000000000000000000000000000000000000000000000000000000000000000041635a685448cfa86da1600656f103a211e398f4000000000000000000000000000000007f68506cf7b6fd947b5539dcaeb6494977da23b6000000000000010080c6a47e8d030000000000000000000000000000000000000000000000000000000000000441635a685448cfa86da1600656f103a211e398f40cd46c4be72c8d417fb7bd3ed06c582786f0201b4c3460e1355364d010e822e93e00000000000000000000000000000000000000000000000000000000000000010000000000000000000000007f68506cf7b6fd947b5539dcaeb6494977da23b68101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000020000000100000000000000000000000000000000000000000000000000000000000000000002000000",
+        "decoded": {
+          "success": true,
+          "value": {
+            "type": "V1",
+            "value": {
+              "type": "Call",
+              "value": {
+                "from": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+                "gas": "179372745076282",
+                "gas_used": "0",
+                "to": "0x41635a685448cfa86da1600656f103a211e398f4",
+                "input": "0xfe0d94c10000000000000000000000000000000000000000000000000000000000000001",
+                "output": "0x",
+                "calls": [
+                  {
+                    "from": "0x41635a685448cfa86da1600656f103a211e398f4",
+                    "gas": "1000000",
+                    "gas_used": "591833",
+                    "to": "0x61382db168db646b899234cd707c7ba0142c4071",
+                    "input": "0xe6d6aedc0000000000000000000000000000000000000000000000000000000000000001",
+                    "output": "0x",
+                    "error": "OutOfGas",
+                    "calls": [],
+                    "logs": [],
+                    "value": [
+                      "0",
+                      "0",
+                      "0",
+                      "0"
+                    ],
+                    "call_type": {
+                      "type": "Call"
+                    },
+                    "child_call_count": 0
+                  },
+                  {
+                    "from": "0x41635a685448cfa86da1600656f103a211e398f4",
+                    "gas": "0",
+                    "gas_used": "0",
+                    "to": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+                    "input": "0x",
+                    "output": "0x",
+                    "calls": [],
+                    "logs": [],
+                    "value": [
+                      "1000000000000000",
+                      "0",
+                      "0",
+                      "0"
+                    ],
+                    "call_type": {
+                      "type": "Call"
+                    },
+                    "child_call_count": 0
+                  }
+                ],
+                "logs": [
+                  {
+                    "address": "0x41635a685448cfa86da1600656f103a211e398f4",
+                    "topics": [
+                      "0xd46c4be72c8d417fb7bd3ed06c582786f0201b4c3460e1355364d010e822e93e",
+                      "0x0000000000000000000000000000000000000000000000000000000000000001",
+                      "0x0000000000000000000000007f68506cf7b6fd947b5539dcaeb6494977da23b6"
+                    ],
+                    "data": "0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000",
+                    "position": 2
+                  }
+                ],
+                "value": [
+                  "0",
+                  "0",
+                  "0",
+                  "0"
+                ],
+                "call_type": {
+                  "type": "Call"
+                },
+                "child_call_count": 2
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "gas": "1000000000000000",
+      "balanceChecks": false,
+      "note": "Read-only isolation with balance checks disabled; not a funded execution claim.",
+      "ethTransact": {
+        "raw": "0x000003b2a5c45cfe34050000000000000000000000000000000000005c4ae4615d01000000000000000000612ad202578a000000000000000000000000000000000000000000000000000000",
+        "decoded": {
+          "success": true,
+          "value": {
+            "type": "V1",
+            "value": {
+              "weight_required": {
+                "ref_time": "1556391346",
+                "proof_size": "85311"
+              },
+              "storage_deposit": "0",
+              "max_storage_deposit": "384150000000000",
+              "eth_gas": [
+                "152106314115681",
+                "0",
+                "0",
+                "0"
+              ],
+              "data": "0x"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "status": "callback-gas-cap-failure-confirmed-in-ethereum-context",
+  "finding": {
+    "sameHistoricalState": 271527,
+    "sameOriginH160": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+    "actualBalanceChecks": true,
+    "stateOverrides": false,
+    "timestampOverride": false,
+    "outerGas": "180000000000000",
+    "outerTransactionSimulation": "success",
+    "childGas": "1000000",
+    "childError": "OutOfGas",
+    "depositRefunded": false,
+    "conclusion": "The old Cronpot callback cap also fails under the Ethereum transaction context. This simulation does not support switching transaction paths as a remedy.",
+    "limitations": "All additional calls were read-only historical simulations; no Ethereum transaction was signed or broadcast."
+  }
+}

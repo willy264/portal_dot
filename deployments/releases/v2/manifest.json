@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "id": "v2",
+  "createdAt": "2026-11-02T00:15:04.271Z",
+  "status": "prepared-not-deployed",
+  "intent": {
+    "release": "v2",
+    "reason": "Correct the finalized v1 Cronpot callback OutOfGas using calibrated immutable gas limits",
+    "originalFailure": "0x2b9249a026b3f868527e6964de6bd5241f401942f28e247d82dfb0eac9d75e35",
+    "priorContracts": {
+      "Cronpot": {
+        "address": "0x41635a685448cfa86da1600656f103a211e398f4",
+        "txHash": "0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93"
+      },
+      "MeterMend": {
+        "address": "0x61382db168db646b899234cd707c7ba0142c4071",
+        "txHash": "0x23b8aa6ffcb18dbbdf12f0d1c59a33b860a43d81362b2f253efdfd43262b8f17"
+      }
+    },
+    "compiled": {
+      "Cronpot": "f08b5d95cc3f2ec89114608302e26f2d449c88e28a04d46eddd8143436999710",
+      "MeterMend": "45d0d5526febdb861df841afbaa0b9021e0f34306d5acf3fff5b169f9079d2be"
+    },
+    "profileSha256": "36677e99b5de5208494994ed53b5c88b407f43416f7a6eb2f0f951e421a163bd",
+    "cronTipEvm": "1000000000000000",
+    "signer": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB"
+  },
+  "intentHash": "b7d07517c04b8adfd0aa2204c0ea3bae0b5b32024016bc8b16484b2a15745ead",
+  "contracts": {},
+  "candidateExecutionProfile": {
+    "schemaVersion": 1,
+    "id": "portaldot-v3-cronpot-v2-candidate",
+    "verified": false,
+    "observedAt": "2026-11-02T00:14:16.399Z",
+    "runtime": {
+      "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+      "specName": "portaldot-v3",
+      "specVersion": 3002,
+      "transactionVersion": 2,
+      "codeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+      "nativeToEthRatio": "10000"
+    },
+    "contracts": null,
+    "contractGas": {
+      "targetGasLimit": "550000000000000",
+      "postCallGasReserve": "200000000000000",
+      "tipGasLimit": "30000",
+      "minCallGas": "758730158740159"
+    },
+    "native": {
+      "weightLimit": {
+        "ref_time": "10000000000",
+        "proof_size": "1048576"
+      },
+      "storageDepositLimit": "2500000000000000",
+      "feeReserve": "100000000000000"
+    },
+    "ethereum": {
+      "gasPriceMin": "25360",
+      "gasPriceMax": "25360"
+    },
+    "verification": {
+      "artifact": "deployments/cronpot-candidate-full-simulation.json",
+      "sha256": "d6e8471641a06ad5386717155ccb765cfd7696a15987d660b52314e922b33458",
+      "nativeBoundedSuccess": false,
+      "ethereumTraceSuccess": true
+    },
+    "limitations": [
+      "Predeployment candidate only; contracts are not deployed and the profile is not verified for operational use.",
+      "The corrected full Ethereum-context trace used temporary code and balance overrides; it is simulation evidence only.",
+      "The native bounded full corrected-contract path must be proved against actual deployed addresses before activation.",
+      "Gas price 25360 is the historical calibration observation, not a fresh live price; operational guards must reject changed pricing until recalibrated.",
+      "The 1 tPOT fee reserve is a conservative reviewed cap, not a fee quote."
+    ],
+    "runtimeObservation": {
+      "finalizedHash": "0x6ce48a4609f0843a1f57adcebec035d8fea334446909cd52aad2823214c865d9",
+      "readOnly": true
+    },
+    "sourceCreationBytecodeSha256": "f08b5d95cc3f2ec89114608302e26f2d449c88e28a04d46eddd8143436999710"
+  },
+  "active": false
+}

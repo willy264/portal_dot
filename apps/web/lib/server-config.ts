@@ -22,7 +22,8 @@ export async function readDeployment(
     | "rpc-discovery.json"
     | "hosting-status.json"
     | "notification-status.json"
-    | "submission-materials.json",
+    | "submission-materials.json"
+    | "refund-calibration-summary.json",
 ): Promise<Record<string, any> | null> {
   try {
     return JSON.parse(

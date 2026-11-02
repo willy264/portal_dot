@@ -1,0 +1,34 @@
+{
+  "observedAt": "2026-11-02T00:15:05.811Z",
+  "mode": "read-only-plan",
+  "release": "v2",
+  "pending": [
+    "Cronpot",
+    "MeterMend"
+  ],
+  "runtime": {
+    "at": {
+      "number": 284406,
+      "hash": "0xce0906206bd0576d5a102b677e86af753e4b1fc5ab9f93048ef5c93491c71dc0",
+      "timestamp": "1793578488"
+    },
+    "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+    "specName": "portaldot-v3",
+    "specVersion": 3002,
+    "transactionVersion": 2,
+    "codeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+    "nativeToEthRatio": "10000"
+  },
+  "budgetArtifact": "deployments/release-v2-budget.json",
+  "budgetSha256": "866ca029d89df0c94a2f8dcda4b8254422acd806491f89908d1acc66b7479d45",
+  "storedEstimate": {
+    "deployment": "139604886237234877",
+    "required": "211224990954536781",
+    "available": "8348665812789099",
+    "funded": false,
+    "shortfall": "202876325141747682"
+  },
+  "signedTransactions": 0,
+  "activation": false,
+  "status": "blocked-insufficient-full-plan-funds"
+}

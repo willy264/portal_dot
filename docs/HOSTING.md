@@ -2,6 +2,14 @@
 
 The web app, refund worker and notification worker are independently restartable. SQLite and evidence bytes must survive restarts. Deployments and their proof files are part of the release; rebuild after recording a new verified deployment.
 
+## Selected free Render deployment
+
+On November 2 the owner authorized Render login and selected **the free version**, declining the proposed paid services. [`render-free.yaml`](../render-free.yaml) defines `metermend-preview`: a public read-only history API. It restores the reviewed public chain snapshot from `deployments/preview-chain.json`, verifies its SHA-256 and block/event consistency, and continues indexing without a signer. Existing cursors are preserved. The app can use its verified public origin from `deployments/hosting-status.json`.
+
+This service is **not an always-on keeper or persistent evidence backend**. Render Free sleeps after 15 minutes without inbound traffic and loses filesystem changes on sleep, restart or redeploy; it cannot attach a persistent disk. Its wrapper forces read-only mode and disables evidence uploads. The retained snapshot survives as a repository artifact, but newly indexed records on the instance remain ephemeral. Local keeper and Telegram SQLite databases remain separate. No paid services or disks are authorized. [Render Free limitations](https://render.com/docs/free).
+
+Before switching any actual keeper or Telegram sender, preserve its complete transaction/outbox journal on durable storage and stop the old sender. The free preview contains only public chain events and terminal jobs, and cannot replay notifications or submit a refund. Durable hosting remains an outstanding submission item under this cost constraint.
+
 ## Render persistent services
 
 [`render.yaml`](../render.yaml) defines two Docker services in Frankfurt. The public `metermend-relayer` service runs the Cronpot keeper, event indexer and authenticated evidence backend; its 1GB disk stores `/data/cronpot.sqlite` and `/data/evidence`. The separate `metermend-telegram` worker reads the indexer over Render's private network and keeps its delivery outbox in `/data/debox.sqlite` on its own 1GB disk. Both use the smallest paid `0.5c-512mb` plan (512MB RAM, 0.5 CPU). Automatic deploys are off so a source push does not interrupt the live proof run.
@@ -10,7 +18,7 @@ Refunds execute automatically via Cronpot; execution is permissionless and our k
 
 The explicit initial indexer start is block **271379**, MeterMend's finalized deployment. The [bootstrap evidence](../deployments/indexer-bootstrap.json) proves Cronpot had no earlier jobs, using `nextJobId=1` at finalized block 271384. Import the local retained SQLite database before starting the hosted worker so previously indexed events, job submissions and Telegram deliveries are not replayed. Existing cursors are never skipped or cleared. The blueprint allows 120 seconds for the observed slow typed RPC initialization.
 
-The estimated base cost, checked October 31, 2026, is **US$14.50/month**: $7 for the web service, $7 for the Telegram worker, and $0.25 per 1GB disk. This assumes the free Hobby workspace; workspace upgrades, excess usage and tax are additional. The account owner's cost approval is still pending, and no paid service has been provisioned. See [Render pricing](https://render.com/pricing), [compute plans](https://render.com/docs/compute-plans) and [persistent disks](https://render.com/docs/disks).
+This unselected paid alternative has an estimated base cost of **US$14.50/month**: $7 for the web service, $7 for the Telegram worker, and $0.25 per 1GB disk. It assumes the free Hobby workspace; workspace upgrades, excess usage and tax are additional. The owner selected the free plan, so this blueprint must not be provisioned under the current authorization. See [Render pricing](https://render.com/pricing), [compute plans](https://render.com/docs/compute-plans) and [persistent disks](https://render.com/docs/disks).
 
 ### Deploy after cost approval
 
@@ -41,4 +49,4 @@ Vercel must proxy evidence to the persistent backend. A local `/public/evidence`
 
 ## Current external requirements
 
-The web app is published at https://metermend.vercel.app/ and the permanent report at https://willy264.github.io/portal_dot/. Render hosting is prepared but not provisioned: renewed CLI authorization and the hosting cost decision are pending. The local Telegram configuration passed read-only bot and destination checks on October 31; actual notification delivery remains pending. DeBox is the target integration and is not live. The software reports missing services rather than claiming delivery or evidence persistence.
+The web app is published at https://metermend.vercel.app/ and the permanent report at https://willy264.github.io/portal_dot/. Render authentication succeeded and the free preview configuration passed workspace validation. Its actual provisioning and health checks are recorded in `deployments/hosting-status.json`. Local Telegram has acknowledged actual registration, rental and return messages; remaining event types and group screenshots are pending. DeBox is the target integration and is not live. Durable worker/evidence hosting remains outstanding.

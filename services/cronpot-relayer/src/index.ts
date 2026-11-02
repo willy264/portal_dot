@@ -1,17 +1,16 @@
 import { config as loadEnv } from "dotenv";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import { encodeFunctionData, type Address } from "viem";
+import { type Address } from "viem";
 import {
   configureChain,
   configureNativeScheduler,
   disconnectChain,
   getApi,
-  ensureMapped,
   readContract,
-  reviveCall,
   scheduleCronpot,
   verifyNetwork,
   type ChainSigner,
@@ -23,6 +22,12 @@ import { JobEngine } from "./engine.js";
 import { SubstrateSource } from "./source.js";
 import { evidenceRoutes } from "./evidence.js";
 import { eventRoutes } from "./events.js";
+import {
+  parseExecutionProfile,
+  type ExecutionProfile,
+} from "./execution-profile.js";
+import { executeKeeperRefund, verifyKeeperConfiguration } from "./preflight.js";
+import { bootstrapPreview } from "./bootstrap.js";
 
 const root = fileURLToPath(new URL("../../../", import.meta.url));
 loadEnv({ path: root + ".env", quiet: true });
@@ -35,11 +40,18 @@ const store = new Store(process.env.DB_PATH ?? root + "data/cronpot.sqlite");
 let manifest: any = null;
 try {
   manifest = JSON.parse(
-    await readFile(root + "deployments/portaldot-v3.json", "utf8"),
+    await readFile(
+      resolve(
+        root,
+        process.env.DEPLOYMENT_MANIFEST ?? "deployments/portaldot-v3.json",
+      ),
+      "utf8",
+    ),
   );
 } catch (error) {
   if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
 }
+await bootstrapPreview(store, root, manifest);
 const cronpot = (process.env.CRONPOT_ADDRESS ||
   manifest?.contracts?.Cronpot?.address) as Address | undefined;
 const meterMend = (process.env.METERMEND_ADDRESS ||
@@ -61,6 +73,17 @@ let scanner: Scanner | null = null;
 let engine: JobEngine | null = null;
 let lastError: string | null = null;
 let signerError: string | null = null;
+const readOnly = process.env.READ_ONLY === "1";
+let profile: ExecutionProfile | null = null;
+try {
+  profile = parseExecutionProfile(
+    manifest?.executionProfile,
+    cronpot ?? "",
+    meterMend ?? "",
+  );
+} catch (error) {
+  signerError = error instanceof Error ? error.message : String(error);
+}
 let busy = false;
 let stopped = false;
 
@@ -105,15 +128,16 @@ async function initialize() {
         return { status: result[3], executeAfter: result[2] };
       },
       execute: async (id, onStatus) => {
-        if (!signer) throw new Error("Relayer signer is not configured");
-        return await reviveCall({
+        if (!signer || !profile || readOnly)
+          throw new Error(
+            "Relayer writes are disabled; verify the deployment execution profile first",
+          );
+        return await executeKeeperRefund({
           signer,
-          to: cronpot,
-          data: encodeFunctionData({
-            abi: cronpotAbi,
-            functionName: "execute",
-            args: [id],
-          }),
+          profile,
+          jobId: id,
+          journal: (evidence) =>
+            store.observation("keeper-preflight", evidence),
           onStatus,
         });
       },
@@ -141,10 +165,15 @@ async function tick() {
   busy = true;
   try {
     if (!scanner || !engine) await initialize();
-    if (!signer && process.env.RELAYER_SEED) {
+    if (!signer && !readOnly && profile && process.env.RELAYER_SEED) {
       try {
         const candidate = signerFromSeed(process.env.RELAYER_SEED);
-        await ensureMapped(candidate);
+        const verification = await verifyKeeperConfiguration(
+          profile,
+          root,
+          candidate,
+        );
+        store.observation("keeper-configuration-verified", verification);
         signer = candidate;
         signerError = null;
       } catch (error) {
@@ -182,6 +211,10 @@ app.get("/health", (c) =>
     startBlock,
     signer: signer?.address ?? null,
     signerError,
+    writesEnabled: !!signer && !!profile && !readOnly,
+    readOnly,
+    storageMode: process.env.STORAGE_MODE ?? "local-persistent-disk",
+    executionProfile: profile?.id ?? null,
     cursor: store.cursor("chain") ?? null,
     gap: scanner?.gap ?? null,
     error: lastError,

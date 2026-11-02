@@ -1,83 +1,73 @@
 {
-  "observedAt": "2026-11-01T02:36:23.692007Z",
-  "status": "prepared-awaiting-authorization-and-cost-decision",
-  "summary": "Render Blueprint prepared and schema-validated. Persistent keeper/evidence and Telegram services are not provisioned; renewed CLI authorization and the hosting cost decision are pending.",
+  "observedAt": "2026-11-02T00:15:23.853Z",
+  "status": "free-preview-prepared",
+  "summary": "Render account authentication succeeded. Owner selected the free tier. A read-only public history preview is prepared; always-on keeper execution and persistent evidence uploads are not provided by this free service.",
   "provider": "Render",
   "publicUrl": null,
   "persistenceVerified": false,
   "webApp": "https://metermend.vercel.app",
   "blueprint": {
-    "path": "render.yaml",
-    "sha256": "d89c20493c646526ed3ee0705b8dbf73bd55a8ff8b824498ad7ea11801e47770",
-    "schemaUrl": "https://render.com/schema/render.yaml.json",
-    "schemaValidation": "passed",
-    "schemaErrors": [],
-    "workspaceValidation": "pending: no Render workspace selected",
-    "credentialsInline": false,
-    "initialStartBlock": 271379,
-    "chainTimeoutMs": 120000
+    "path": "render-free.yaml",
+    "sha256": "49847824cae22572dbddb2c775e26b005625eb421bafa18f847464084b6dab5c",
+    "workspaceValidation": "passed",
+    "plannedServices": [
+      "metermend-preview"
+    ],
+    "credentialsInline": false
   },
   "services": [
     {
-      "name": "metermend-relayer",
+      "name": "metermend-preview",
       "type": "web",
-      "purpose": "Cronpot keeper, finalized event indexer and evidence backend",
+      "plan": "free",
       "region": "frankfurt",
-      "plan": "0.5c-512mb",
-      "mode": "keeper",
-      "diskGB": 1,
-      "mountPath": "/data",
-      "databasePath": "/data/cronpot.sqlite",
-      "evidencePath": "/data/evidence",
       "serviceId": null,
       "deployId": null,
       "publicUrl": null,
-      "status": "not-provisioned"
-    },
-    {
-      "name": "metermend-telegram",
-      "type": "worker",
-      "purpose": "Telegram event delivery and durable outbox",
-      "region": "frankfurt",
-      "plan": "0.5c-512mb",
-      "diskGB": 1,
-      "mountPath": "/data",
-      "databasePath": "/data/debox.sqlite",
-      "indexerConnection": "Render private network service reference",
-      "serviceId": null,
-      "deployId": null,
-      "status": "not-provisioned"
+      "status": "prepared",
+      "writesEnabled": false,
+      "persistentDisk": false
     }
   ],
   "estimatedCost": {
     "currency": "USD",
-    "monthlyBase": 14.5,
-    "webCompute": 7,
-    "workerCompute": 7,
-    "twoDisks": 0.5,
-    "assumption": "Free Hobby workspace; excludes workspace upgrades, excess usage and tax.",
-    "approved": false,
-    "pricingSource": "https://render.com/pricing",
-    "checkedAt": "2026-10-31"
+    "monthlyBase": 0,
+    "approved": true,
+    "decision": "Use the free version",
+    "pricingSource": "https://render.com/docs/free",
+    "checkedAt": "2026-11-02"
   },
   "authentication": {
-    "status": "renewed-browser-authorization-needed",
+    "status": "authenticated",
+    "verifiedAt": "2026-11-02T00:15:23.853Z",
     "cliVersion": "2.34.0",
-    "finding": "The official CLI returned slow_down before saving credentials and does not persist its device grant. The displayed user code cannot recover that terminated grant.",
-    "workaround": "Ignored local helper persists its own device grant and honors polling interval and slow_down backoff; simulated checks passed. No new grant created during preflight.",
-    "source": "https://github.com/render-oss/cli/blob/v2.34.0/pkg/tui/views/login.go"
+    "workspaceSelected": true
   },
   "verification": {
     "publicHealth": "pending",
     "publicJobs": "pending",
     "webAppConnection": "pending",
-    "relayerRestartPersistence": "pending",
-    "evidenceRestartPersistence": "pending",
-    "notificationOutboxPersistence": "pending"
+    "relayerRestartPersistence": "not-supported-on-free-plan",
+    "evidenceRestartPersistence": "not-supported-on-free-plan",
+    "notificationOutboxPersistence": "local-only"
   },
   "localRehearsal": {
     "keeper": "deployments/keeper-status.json",
     "endpoint": "http://127.0.0.1:8787",
     "publiclyHosted": false
+  },
+  "previousPaidProposal": {
+    "monthlyBase": 14.5,
+    "approved": false,
+    "decision": "Owner selected free services on 2026-11-02; no paid resource provisioned."
+  },
+  "constraints": {
+    "alwaysOn": false,
+    "persistentDisk": false,
+    "idleSleepMinutes": 15,
+    "filesystem": "ephemeral",
+    "signing": "disabled",
+    "evidenceUploads": "disabled",
+    "retainedHistory": "Bundled verified public chain snapshot plus read-only indexing"
   }
 }

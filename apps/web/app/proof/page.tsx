@@ -4,6 +4,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { Badge, EmptyState, PageHeading } from "@/components/ui";
 import { publicConfig, readDeployment } from "@/lib/server-config";
+import { historyEndpoint } from "@/lib/history-endpoint";
 import {
   demoStatus,
   demoTransactionsFrom,
@@ -36,6 +37,7 @@ export default async function Proof() {
     hosting,
     notifications,
     submission,
+    refundCalibration,
   ] = await Promise.all([
     readDeployment("deployment-status.json"),
     readDeployment("chain-status-2026-10-31.json"),
@@ -43,11 +45,12 @@ export default async function Proof() {
     readDeployment("hosting-status.json"),
     readDeployment("notification-status.json"),
     readDeployment("submission-materials.json"),
+    readDeployment("refund-calibration-summary.json"),
   ]);
   let jobs: unknown = null;
   let jobsError: string | null = null;
   let executorHealth: Record<string, any> | null = null;
-  const base = process.env.CHAIN_INDEXER_URL ?? process.env.RELAYER_URL;
+  const base = await historyEndpoint();
   if (base) {
     const readExecutor = async (route: string) => {
       const response = await fetch(new URL(route, base), {
@@ -95,6 +98,7 @@ export default async function Proof() {
     notifications,
     submission,
     executorHealth,
+    refundCalibration,
   });
   const deckAvailable = hasGeneratedDeck(
     submission,

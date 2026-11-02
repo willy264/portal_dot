@@ -4,7 +4,8 @@ pragma solidity ^0.8.28;
 import {ICronpot} from "./ICronpot.sol";
 
 /// @notice Permissionless, prepaid execution. Timing is a minimum, not an execution guarantee.
-/// @dev Targets receive at most TARGET_GAS_LIMIT. Failed jobs are terminal and are not retried.
+/// @dev Gas budgets are immutable and must be calibrated for the deployment runtime.
+/// Targets receive at most TARGET_GAS_LIMIT. Failed jobs are terminal and are not retried.
 contract Cronpot is ICronpot {
     enum Status {
         None,
@@ -23,13 +24,13 @@ contract Cronpot is ICronpot {
         bytes data;
     }
 
-    uint256 public constant TARGET_GAS_LIMIT = 1_000_000;
-    uint256 public constant POST_CALL_GAS_RESERVE = 100_000;
-    uint256 public constant TIP_GAS_LIMIT = 30_000;
+    uint256 public immutable TARGET_GAS_LIMIT;
+    uint256 public immutable POST_CALL_GAS_RESERVE;
+    uint256 public immutable TIP_GAS_LIMIT;
     uint256 public constant MAX_RETURN_DATA = 4096;
-    // Covers EIP-150's 63/64 cap, cold CALL costs and instructions between the check and CALL.
-    uint256 public constant MIN_CALL_GAS =
-        TARGET_GAS_LIMIT + TARGET_GAS_LIMIT / 63 + 10_000 + POST_CALL_GAS_RESERVE;
+    uint256 public immutable MIN_CALL_GAS;
+    uint256 private constant MAX_RUNTIME_GAS = type(uint64).max;
+    uint256 private constant CALL_SETUP_GAS = 10_000;
 
     uint256 public nextJobId = 1;
     mapping(uint256 => Job) public jobs;
@@ -44,6 +45,7 @@ contract Cronpot is ICronpot {
     error TipTooLarge();
     error TransferFailed();
     error InsufficientExecutionGas(uint256 required);
+    error BadGasConfiguration();
 
     event JobScheduled(
         uint256 indexed jobId,
@@ -58,6 +60,23 @@ contract Cronpot is ICronpot {
     event ReturnDataTruncated(uint256 indexed jobId, uint256 originalLength, uint256 copiedLength);
     event TipDeferred(uint256 indexed jobId, address indexed executor, uint256 amount);
     event TipCreditWithdrawn(address indexed executor, uint256 amount);
+
+    constructor(uint256 targetGasLimit, uint256 postCallGasReserve, uint256 tipGasLimit) {
+        if (
+            targetGasLimit == 0 || tipGasLimit == 0 || postCallGasReserve <= tipGasLimit
+                || targetGasLimit > MAX_RUNTIME_GAS || postCallGasReserve > MAX_RUNTIME_GAS
+                || tipGasLimit > MAX_RUNTIME_GAS
+        ) revert BadGasConfiguration();
+        // Ceil(target / 63) covers EIP-150 forwarding. The configured reserve must cover
+        // runtime-specific CALL overhead, bounded return copying, settlement and the tip call.
+        // CALL_SETUP_GAS is an additional EVM setup margin, not a V3 gas-unit conversion.
+        uint256 minimum = targetGasLimit + (targetGasLimit + 62) / 63 + CALL_SETUP_GAS + postCallGasReserve;
+        if (minimum > MAX_RUNTIME_GAS) revert BadGasConfiguration();
+        TARGET_GAS_LIMIT = targetGasLimit;
+        POST_CALL_GAS_RESERVE = postCallGasReserve;
+        TIP_GAS_LIMIT = tipGasLimit;
+        MIN_CALL_GAS = minimum;
+    }
 
     modifier nonReentrant() {
         if (entered) revert Reentrant();
@@ -93,7 +112,7 @@ contract Cronpot is ICronpot {
         emit JobCancelled(jobId);
     }
 
-    function execute(uint256 jobId) external nonReentrant {
+    function execute(uint256 jobId) external nonReentrant returns (bool success) {
         Job storage job = jobs[jobId];
         if (job.status != Status.Scheduled) revert NotScheduled();
         if (block.timestamp < job.executeAfter) revert TooEarly(job.executeAfter);
@@ -103,7 +122,9 @@ contract Cronpot is ICronpot {
         // Prevent callbacks from observing a cancellable/executable funded job.
         job.status = Status.Executed;
         job.tip = 0;
-        (bool success, bytes memory returnData, uint256 originalLength) = _boundedCall(target, data);
+        bytes memory returnData;
+        uint256 originalLength;
+        (success, returnData, originalLength) = _boundedCall(target, data);
         if (!success) job.status = Status.Failed;
         if (originalLength > MAX_RETURN_DATA) {
             emit ReturnDataTruncated(jobId, originalLength, returnData.length);

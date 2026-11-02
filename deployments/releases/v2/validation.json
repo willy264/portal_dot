@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-02T00:23:27.240Z",
+  "status": "local-safety-tests-passed-live-plan-read-timeout",
+  "summary": "Versioned release preserves v1 and refuses unresolved attempts. Simulation nonce is pinned through journal preparation and final broadcast guard. No replacement deployment has been submitted.",
+  "sourceHashes": {
+    "scripts/release.ts": "73cf06419b8ffa6e7651af80690449f839163b122de8f8cc7ee1bfc6908d1059",
+    "scripts/release-model.ts": "73577879cdb4c0b35bf54be3ea92fe7395da9c63199659b044603c2cffe41ec3",
+    "scripts/release-model.test.ts": "07299e84aba83e926c4cf07c92af859015fa6f187dcf01267e9c9aa0cd75c1d5",
+    "scripts/lib.ts": "def469e09c03499f4a908c0de20374f9e7b9b04900da4ea621eb58c16cd1117e",
+    "scripts/lib.test.ts": "82039cc200034b6eacd9b2e84e2083b5a03cc3ea8fc002094804c8651ef2823c",
+    "scripts/deploy.ts": "ce01b089cfe3bfb8367d63b5827db142d44b3ada84e640f6bb4fd30387c2a0ab",
+    "scripts/deploy.test.ts": "5aa66517b40a9f507b46984c5b3b0654ee5b2fecc55ccfa3a1c6e16fd45deb10"
+  },
+  "validation": {
+    "releaseModelAndJournalTests": {
+      "command": "vitest run scripts/release-model.test.ts scripts/lib.test.ts",
+      "passed": 18,
+      "failed": 0
+    },
+    "scriptsTypecheck": "passed",
+    "chainTypecheck": "passed",
+    "keeperTypecheck": "passed",
+    "previewBootstrapTests": {
+      "passed": 7,
+      "failed": 0
+    },
+    "legacyDeployBranchTests": {
+      "command": "vitest run scripts/deploy.test.ts",
+      "passed": 2,
+      "failed": 0,
+      "checks": [
+        "Completed v1 pair reuses receipts without signer/artifact/journal access",
+        "New constructor cannot enter historical deployment journal"
+      ]
+    }
+  },
+  "candidate": {
+    "path": "deployments/releases/v2/candidate-profile.json",
+    "sha256": "436654f706149f4daa5f8224fbf329303a974a01382f47ce4d1b84bbe370219f",
+    "verified": false,
+    "contracts": null
+  },
+  "budget": {
+    "path": "deployments/release-v2-budget.json",
+    "sha256": "22e6a6e6fb575d496cb83122694d250eb5f8302aff5aafa5b418da22f0804e35"
+  },
+  "readOnlyPlanAttempts": [
+    {
+      "command": "tsx scripts/release.ts",
+      "outcome": "V3 network identity verification timed out after 45000ms",
+      "journalOpened": false,
+      "signedTransactions": 0
+    },
+    {
+      "command": "tsx scripts/release.ts --timeout-ms=15000",
+      "outcome": "V3 network identity verification timed out after 15000ms",
+      "journalOpened": false,
+      "signedTransactions": 0
+    }
+  ],
+  "signedTransactions": 0,
+  "contractsDeployed": 0,
+  "activeV1ManifestModified": false
+}

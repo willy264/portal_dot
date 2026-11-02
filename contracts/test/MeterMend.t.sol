@@ -76,7 +76,7 @@ contract MeterMendTest is TestBase {
         vm.deal(address(this), 10 ether);
         vm.deal(RENTER, 10 ether);
         vm.deal(ARBITER, 10 ether);
-        cron = new Cronpot();
+        cron = new Cronpot(1_000_000, 100_000, 30_000);
         meter = new MeterMend(cron, TIP);
         item = meter.registerItem(ARBITER, FEE, DEPOSIT, 2000, WINDOW, "ipfs://camera");
     }

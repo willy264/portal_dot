@@ -362,6 +362,7 @@ export class Journal {
     intent: unknown,
     account: ChainSigner,
     action: (options: SubmissionOptions) => Promise<TransactionEvidence>,
+    precondition?: { expectedNonce: number },
   ): Promise<TransactionEvidence> {
     const old = this.data.steps[key];
     if (old) {
@@ -384,6 +385,10 @@ export class Journal {
       }
     }
     const state = await getAccountState(account.address);
+    if (precondition && state.nonce !== precondition.expectedNonce)
+      throw new Error(
+        "Deployer nonce changed after simulation; no journal entry written or transaction submitted",
+      );
     const entry: Entry = {
       intent,
       intentHash: hash(intent),

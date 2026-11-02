@@ -51,6 +51,14 @@ export function evidenceRoutes(
   );
   let writing = false;
   app.post("/", async (c) => {
+    if (process.env.EVIDENCE_READ_ONLY === "1")
+      return c.json(
+        {
+          error:
+            "This free preview has no persistent evidence storage. Uploads are disabled.",
+        },
+        503,
+      );
     if (writing)
       return c.json({ error: "Storage is busy; retry shortly" }, 429);
     writing = true;

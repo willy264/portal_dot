@@ -1,0 +1,46 @@
+{
+    "observedAt":  "2026-11-02T00:06:30.3021645Z",
+    "mode":  "read-only",
+    "signedTransactions":  0,
+    "finalizedHash":  "0x0bad7f42351601e9396045a53f179ca977a52831945c676f35653f6d4bd89820",
+    "accounts":  [
+                     {
+                         "role":  "deployer",
+                         "address":  "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                         "freeNative":  "8348665812789099",
+                         "freeTPOT":  "83.48665812789099",
+                         "raw":  "0x120000000000000001000000000000006ba71e3c11a91d000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080"
+                     },
+                     {
+                         "role":  "renter",
+                         "address":  "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+                         "freeNative":  "4803048287915833",
+                         "freeTPOT":  "48.03048287915833",
+                         "raw":  "0x01000000000000000100000000000000394f0ad3581011000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080"
+                     },
+                     {
+                         "role":  "arbiter",
+                         "address":  "5DjjjeBpydQRtt4wDHF9hq1xpKPDEWoeREbRkc4YbghL6fua",
+                         "freeNative":  "1200000000000000",
+                         "freeTPOT":  "12",
+                         "raw":  "0x000000000000000001000000000000000000bbc5644304000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080"
+                     },
+                     {
+                         "role":  "relayer",
+                         "address":  "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+                         "freeNative":  "882408597152205",
+                         "freeTPOT":  "8.82408597152205",
+                         "raw":  "0x01000000000000000100000000000000cde1fac28b2203000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080"
+                     },
+                     {
+                         "role":  "participant",
+                         "address":  "5Dttvxy9hkPHngYPfioratFH4iru9p1Lp1nwKoJJeMzHbC22",
+                         "freeNative":  "17007603917939",
+                         "freeTPOT":  "0.17007603917939",
+                         "raw":  "0x0500000000000000010000000000000073a430e4770f00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080"
+                     }
+                 ],
+    "notes":  [
+                  "participant is registered user wallet; reading public balance does not establish signing access or authorize a transfer."
+              ]
+}

@@ -1,12 +1,21 @@
 # MeterMend progress report
 
-**Updated October 31, 2026 · previous committed baseline `7a76f70`**
+**Updated November 2, 2026 · latest published baseline `8095352`; continuation checks below are local until committed**
 
 MeterMend's contracts, web interface, chain client, workers and deployment scripts are implemented and tested. The web app and permanent proof report are public. **Cronpot and MeterMend are finalized at blocks 265131 and 271379. Both contracts passed read-back checks at block 271384. The live rental and return passed, but Cronpot's refund callback ran out of gas. The full golden path is blocked pending correction.**
 
 [Public app](https://metermend.vercel.app/) · [Application proof page](https://metermend.vercel.app/proof) · [Permanent proof report](https://willy264.github.io/portal_dot/) · [Repository](https://github.com/willy264/portal_dot)
 
 The public app and report are published from committed evidence. A successful contract deployment is separate from completion of the live rental, refund, dispute and repair demonstration.
+
+## November 2 continuation
+
+- V3 is producing and finalizing blocks: the latest retained check observed one peer, `isSyncing=false`, finalized block 284330 and deployer nonce 18, with no pending pool transactions. See [timestamped node checks](../deployments/chain-status-2026-11-02.json).
+- Corrected Cronpot's fixed callback allowance for the measured V3 gas scale. The updated constructor accepts explicit bounds, and `execute` returns the callback outcome. All 49 contract tests pass. The historical runtime simulation returns `true`, emits successful `JobExecuted` and the matching 0.05 tPOT refund, using clearly recorded code and balance overrides. No corrected contract has been deployed and no live refund is claimed.
+- Added keeper checks for runtime identity, deployed code, reviewed configuration, real available funds, an exact bounded native simulation returning `true`, and a separate matching Ethereum trace. A successful outer dispatch alone cannot authorize execution. The existing local keeper is still the older process; these checks have not been loaded into it.
+- Prepared a separate v2 release with its own manifest and journal. The complete conservative funding guard is 2,112.72 tPOT; the deployer's observed available balance is 83.49 tPOT. The owner will request 2,200 additional V3 test tokens. The request is pending; no tokens are assumed received. [Funding draft](FAUCET_REQUEST.md), [budget](../deployments/release-v2-budget.json).
+- Render authentication succeeded. The owner selected the free tier and declined the paid proposal. A public read-only history preview is prepared from retained finalized events; its actual provisioning and public checks are tracked in [hosting evidence](../deployments/hosting-status.json). Free Render cannot provide the requested always-on keeper or persistent evidence files. Signing and evidence uploads are disabled on that preview.
+- The ten-slide PDF and printed-QR sheet remain public. Telegram has acknowledged real rented and returned events; the remaining four required event types and actual group screenshots still depend on completing the live flow. Physical-phone rehearsal, recording/uploading the video and final BUIDL submission remain outstanding.
 
 ## November 1 continuation
 
@@ -112,6 +121,6 @@ This is the predeployment funding snapshot. Cronpot subsequently finalized in tr
 
 MeterMend is finalized at **`0x61382db168db646b899234cd707c7ba0142c4071`** in transaction `0x23b8aa6ffcb18dbbdf12f0d1c59a33b860a43d81362b2f253efdfd43262b8f17`, block **271379**. The [replacement journal](../deployments/deploy-replacement-journal.json) and [reconciliation](../deployments/metermend-reconciliation-2026-11-01.json) preserve the deliberate same-nonce replacement checks and original unknown attempt. The post-deployment balance was **306.74945 tPOT** at block 271383; [measured seed costs](../deployments/funding-seed-budget.json) guide the remaining allocations.
 
-Remaining work is to preserve the automatic refund, dispute, repair, rejected reserve-access attempt and unchanged-reserve proof; activate persistent Render hosting; demonstrate all six required Telegram event messages; complete the physical-phone rehearsal; and record/upload the video before updating the BUIDL. The [recording plan](DEMO_VIDEO.md) stays under 2:30. Public video and final submission remain pending.
+Remaining work is to fund and deploy the corrected release, preserve the automatic refund, dispute, repair, rejected reserve-access attempt and unchanged-reserve proof; resolve durable hosting within the owner's free-tier constraint; demonstrate all six required Telegram event messages; complete the physical-phone rehearsal; and record/upload the video before updating the BUIDL. The [recording plan](DEMO_VIDEO.md) stays under 2:30. Public video and final submission remain pending.
 
 Physical damage decisions still rely on people. Missing dispute votes can delay settlement; native evidence expires; pruned chain history requires retained records. Labeled demo-image fixtures test the workflow without claiming an actual physical rental or repair.

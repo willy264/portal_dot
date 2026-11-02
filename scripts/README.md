@@ -25,6 +25,27 @@ The completed probe is recorded in `deployments/funded-probe.json`: P4 passed, P
 
 `deploy.ts` deploys Cronpot and MeterMend in that order, persisting each real address, transaction hash, block and decoded events immediately. It checks the current artifact hashes against `deployments/budget.json` and requires the combined remaining storage estimate plus 20% and a retained balance before starting. Each individual transaction also receives a fresh simulation and fee check. `--cron-tip 0.001` and `--keep 25` are the defaults. The budget file is an estimate; fees and further contract storage for item registration and rentals require additional funds.
 
+The completed v1 pair makes `deploy.ts` a no-op even when newer code has been compiled. It must not overwrite the original deployment intent. Corrected Cronpot bytecode requires the isolated v2 release procedure below; its constructor receives explicit calibrated target, post-call and tip gas allowances.
+
+## Corrected v2 release preparation
+
+The original Cronpot job 1 finalized with a failed callback at block 271528. Its failed receipt, existing contract pair, items, rental liability and journals remain historical evidence. The corrected constructor and local tests are not a completed deployment or refund.
+
+```sh
+# Default is read-only planning; it never submits or activates a release.
+pnpm tsx scripts/release.ts
+# Only after reviewing the prepared plan, obtaining its full budget and resolving all prior attempts:
+pnpm tsx scripts/release.ts --execute
+```
+
+The command reads `deployments/releases/v2/candidate-profile.json`, its hash-linked full simulation, the compiled artifacts and the completed `deployments/release-v2-budget.json`. It verifies the exact corrected source, compiler, initcode, constructor arguments, constructor-patched runtime code hash and runtime identity. The candidate has `verified:false` and `contracts:null`; its Ethereum-context trace used temporary overrides. `nativeBoundedSuccess:false` remains honest until the complete corrected native path is demonstrated. The operational worker must not treat this candidate as a verified profile.
+
+Only `deployments/releases/v2/` receives the release manifest, plan, journal and preflight records. A changed preparation can replace its draft only when it has no contract addresses and no journal attempts; the previous draft is archived by intent hash. The active v1 manifest, original journals, item registrations and demo are not overwritten. A successful release is recorded as `deployed-not-activated`. Read back both actual addresses, immutable values and deployed code, and prepare a separately reviewed operational profile before deliberate activation. Profile verification means reviewed configuration and code, not a live refund. Each due job must independently pass the exact bounded native simulation and return `true` from `execute` before the keeper can broadcast it.
+
+Before the first deployment, the budget includes **both remaining contracts**, storage margins, fee margins, an explicit seed/demo/phone allowance and retained funds. Once funded, the tool freshly simulates every remaining constructor, including the exact dependent Cronpot address, with bounded native deployment limits. It records an unchanged nonce before and after simulation, checks it again before the journal creates an attempt, and pins it during signing. Each broadcast repeats the remaining-plan budget, checks finalized and best nonces plus `system_accountNextIndex` against that simulation nonce, requires an empty node pool and an absent predicted contract, and rechecks runtime identity immediately before submission. Insufficient funding or changed runtime/nonce/pool state stops the operation.
+
+Confirmed v2 journal receipts restore a missing release manifest and are reused; completing both deployments becomes a no-op. Any prior preparing, submitted, unknown, failed or only-finalized entry blocks another release write, even if a receipt is present. Reconcile its original hash and nonce and preserve authoritative outcome evidence before a separately reviewed recovery. `--retry-failed` is forbidden here. Never delete a release journal to clear a blocker.
+
 `fund-accounts.ts` tops up the known project roles to an explicit target balance. It never accepts arbitrary recipient addresses. `--keep 25` retains that many tPOT in the deployer. Repeating a completed target does not pay it twice. For a deliberately new top-up after a role has spent funds, supply a distinct `--attempt` label. Choose funding targets using the current simulations; the command's example is not a guarantee that 30 tPOT covers every future operation.
 
 `seed.ts` registers the camera, printer and drill with 20% maintenance reserves and 120-second demo dispute windows. Their metadata is a self-contained JSON data URI. Their records describe demonstration equipment and do not attest that a physical rental occurred.
