@@ -47,13 +47,14 @@
   "verification": {
     "publicHealth": "passed",
     "publicJobs": "passed",
-    "webAppConnection": "pending",
+    "webAppConnection": "passed",
     "relayerRestartPersistence": "not-supported-on-free-plan",
     "evidenceRestartPersistence": "not-supported-on-free-plan",
     "notificationOutboxPersistence": "local-only",
     "uploadsDisabled": "passed",
     "indexingAdvancing": "passed",
-    "evidence": "deployments/render-free-verification.json"
+    "evidence": "deployments/render-free-verification.json",
+    "publicAppEvidence": "deployments/public-preview-integration.json"
   },
   "localRehearsal": {
     "keeper": "deployments/keeper-status.json",

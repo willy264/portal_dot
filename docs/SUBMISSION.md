@@ -1,12 +1,12 @@
 # MeterMend BUIDL answers
 
-Working draft dated **November 1, 2026**. Both application contracts are deployed and two items are registered. The first live rental, reserve split, native return-image storage and return/job scheduling passed. The keeper transaction finalized, but its refund callback failed; the full golden path, video and final BUIDL submission remain incomplete. Replace pending fields only after recording their actual result.
+Working draft dated **November 2, 2026**. Both application contracts are deployed and two items are registered. The first live rental, reserve split, native return-image storage and return/job scheduling passed. The keeper transaction finalized, but its refund callback failed; the full golden path, video and final BUIDL submission remain incomplete. Replace pending fields only after recording their actual result.
 
 **Internal submission deadline: November 5, 2026, 22:00 WAT (21:00 UTC).** The supplied official cutoff is November 6, 2026, 05:00 WAT (04:00 UTC). Use the internal deadline for the final paste/upload action.
 
 ## Project name and one-line description
 
-**MeterMend — Every rental funds its next repair.**
+**MeterMend â€” Every rental funds its next repair.**
 
 MeterMend gives shared workshop equipment a protected repair reserve, an evidence-backed rental history, and permissionless deposit refunds on Portaldot V3.
 
@@ -68,18 +68,18 @@ Network: **Portaldot V3 testnet**. Chain ID: **420420777 (`0x190f1ca9`)**. Runti
 | -------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
 | Ping runtime probe address       | `0x96ee88d272550530b518cbaa15a80cf5d38cdcfd`                         | Finalized deployment                                                                       |
 | Ping deployment transaction      | `0x5003af976f3c78775fd5911a1a6308565a97136d18feeeb8406f1254324a011c` | 213570                                                                                     |
-| P4 funded value movement         | `0x1e4af77310fe6f7afbf03b9310963a7a84bbfaebab50d291315c10127cbef7c2` | 213573 · Successful                                                                        |
-| P5 signed Scheduler request      | `0x7a05968d67b82e52899f6414ec7acefda443b0fa76aae4a49aaa216e8ef16276` | 213576 · Failed with `BadOrigin`                                                           |
-| P6 native evidence store         | `0x76ffd5d81bf8e97d1dde819ba38e1fb1b94f90e1cbfec8216667b5a75abcc4b1` | 213579 · Successful                                                                        |
-| Cronpot deployment transaction   | `0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93` | 265131 · Finalized successfully                                                            |
+| P4 funded value movement         | `0x1e4af77310fe6f7afbf03b9310963a7a84bbfaebab50d291315c10127cbef7c2` | 213573 Â· Successful                                                                        |
+| P5 signed Scheduler request      | `0x7a05968d67b82e52899f6414ec7acefda443b0fa76aae4a49aaa216e8ef16276` | 213576 Â· Failed with `BadOrigin`                                                           |
+| P6 native evidence store         | `0x76ffd5d81bf8e97d1dde819ba38e1fb1b94f90e1cbfec8216667b5a75abcc4b1` | 213579 Â· Successful                                                                        |
+| Cronpot deployment transaction   | `0xd60b3e1372d10c1ce547da5f7aeadbb943ec803634a161597ef855c501a0df93` | 265131 Â· Finalized successfully                                                            |
 | Cronpot address                  | `0x41635a685448cfa86da1600656f103a211e398f4`                         | Finalized deployment                                                                       |
-| MeterMend deployment transaction | `0x23b8aa6ffcb18dbbdf12f0d1c59a33b860a43d81362b2f253efdfd43262b8f17` | 271379 · Finalized successfully                                                            |
+| MeterMend deployment transaction | `0x23b8aa6ffcb18dbbdf12f0d1c59a33b860a43d81362b2f253efdfd43262b8f17` | 271379 Â· Finalized successfully                                                            |
 | MeterMend address                | `0x61382db168db646b899234cd707c7ba0142c4071`                         | Finalized deployment                                                                       |
 | Earlier MeterMend attempt        | `0xcd4488ec20cc250520bb944ffca6d21806e379dfc35e3f2aea72147cf259e782` | Reconciled before deliberate same-nonce replacement; not the successful deployment receipt |
-| First camera rental              | `0xb5485a043aa46e182a6511163a1716711262a5be98d437b42c1cf8fd13d13b67` | 271490 · Finalized; 0.002 tPOT reserve contribution verified                               |
-| First return-image native store  | `0x958a2258295503cb547704b8c41a1f5b23ac06a64a7632808fd5a7d325c59226` | 271494 · Finalized; labeled fixture, 42,569 bytes                                          |
-| First return / Cronpot schedule  | `0x826d77cd7a5ee1c7133f57051ae96d8e6593c3234b39de397f7ef16029c4ce4b` | 271498 · Finalized; job 1 scheduled                                                        |
-| First keeper execution           | `0x2b9249a026b3f868527e6964de6bd5241f401942f28e247d82dfb0eac9d75e35` | 271528 · Outer dispatch succeeded; callback failed; no refund                              |
+| First camera rental              | `0xb5485a043aa46e182a6511163a1716711262a5be98d437b42c1cf8fd13d13b67` | 271490 Â· Finalized; 0.002 tPOT reserve contribution verified                               |
+| First return-image native store  | `0x958a2258295503cb547704b8c41a1f5b23ac06a64a7632808fd5a7d325c59226` | 271494 Â· Finalized; labeled fixture, 42,569 bytes                                          |
+| First return / Cronpot schedule  | `0x826d77cd7a5ee1c7133f57051ae96d8e6593c3234b39de397f7ef16029c4ce4b` | 271498 Â· Finalized; job 1 scheduled                                                        |
+| First keeper execution           | `0x2b9249a026b3f868527e6964de6bd5241f401942f28e247d82dfb0eac9d75e35` | 271528 Â· Outer dispatch succeeded; callback failed; no refund                              |
 | Complete live golden path        | Partial evidence in `deployments/demo-run.json`                      | Blocked at the first refund; dispute, repair and withdrawal proof pending                  |
 
 The source of truth for completed deployments is `deployments/portaldot-v3.json`. Every new success must include its actual transaction and block hash. Retain failures and uncertain attempts as such.

@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-02T00:30:25.858Z",
+  "status": "passed",
+  "sourceCommit": "2ee9615b8fa47fae4dbd19679730b20e40d42e09",
+  "scope": "Public read-only Render health/jobs integrated into the Vercel proof page; this is not persistent keeper execution or a successful refund.",
+  "workflows": [
+    {
+      "conclusion": "success",
+      "headSha": "2ee9615b8fa47fae4dbd19679730b20e40d42e09",
+      "status": "completed",
+      "url": "https://github.com/willy264/portal_dot/actions/runs/41367379100",
+      "workflowName": "ci"
+    },
+    {
+      "conclusion": "success",
+      "headSha": "2ee9615b8fa47fae4dbd19679730b20e40d42e09",
+      "status": "completed",
+      "url": "https://github.com/willy264/portal_dot/actions/runs/41367379090",
+      "workflowName": "proof-report"
+    }
+  ],
+  "render": {
+    "health": {
+      "url": "https://metermend-preview.onrender.com/health",
+      "httpStatus": 200,
+      "observedAt": "2026-11-02T00:30:21.950Z",
+      "configured": true,
+      "readOnly": true,
+      "writesEnabled": false,
+      "signer": null,
+      "storageMode": "ephemeral-free-preview",
+      "cursor": {
+        "block": 274532,
+        "hash": "0xe5670c7a5ee2a26b9f630f9841148151fc28651bfdeb8b116326a266a0c97028"
+      },
+      "gap": null,
+      "error": null
+    },
+    "jobs": {
+      "url": "https://metermend-preview.onrender.com/jobs",
+      "httpStatus": 200,
+      "observedAt": "2026-11-02T00:30:21.724Z",
+      "jobCount": 1,
+      "job": {
+        "id": "1",
+        "state": "Failed",
+        "scheduling": "keeper-executed",
+        "attempts": 1
+      }
+    }
+  },
+  "webApp": {
+    "url": "https://metermend.vercel.app/proof",
+    "httpStatus": 200,
+    "observedAt": "2026-11-02T00:30:22.926Z",
+    "responseSha256": "658840253be056189dceeee2b61c443cb7ab110ef0100a3f944eeda41f19e2f4",
+    "renderUrlShown": true,
+    "executorHealthExcerpt": "Executor health response Observation recorded Observed: 2026-11-02T00:30:22.742Z Configured true Execution mode keeper Writes enabled false Read only true Storage ephemeral-free-preview Indexed through block 274532 History gap None reported Service error None reported Open pitch deck PDF Application contract ",
+    "jobListExcerpt": "Keeper job list 1 JOBS JOB STATE EXECUTION DUE AT (UNIX SECONDS) ATTEMPTS 1 Failed keeper-executed 1793500716 1 Refunds execute automatically via Cronpot; execu",
+    "readOnlyShown": true,
+    "writesDisabledShown": true,
+    "failedJobShown": true,
+    "correctionLabelShown": true,
+    "noLiveCorrectionClaim": true
+  },
+  "proofReport": {
+    "url": "https://willy264.github.io/portal_dot/",
+    "httpStatus": 200,
+    "observedAt": "2026-11-02T00:30:22.013Z",
+    "responseSha256": "888ade604dbd2059ee2b6494f743f0d078d1d5869084dd209ae2b34badfea3d7",
+    "commit": "2ee9615b8fa47fae4dbd19679730b20e40d42e09",
+    "exactCommit": true,
+    "foundryResults": "Foundry results: 49 passed, 0 failed, 0 skipped in this report's build.",
+    "correctionLabelShown": true,
+    "renderUrlShown": true
+  },
+  "limitations": [
+    "Free service uses ephemeral storage and may sleep; no always-on or restart persistence claim.",
+    "Signing and evidence uploads are disabled. Job1 is the retained terminal failure, not a successful automated refund."
+  ],
+  "actions": {
+    "transactionsSubmitted": 0,
+    "deploymentsTriggered": 0,
+    "sourceFilesChanged": 0
+  }
+}
