@@ -1,0 +1,260 @@
+{
+  "observedAt": "2026-11-03T22:31:14.539Z",
+  "status": "enqueued-for-existing-worker",
+  "source": "fresh canonical native block events matched to finalized demo receipts",
+  "modifiesIndexerCursor": false,
+  "events": [
+    {
+      "address": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "eventName": "DepositRefunded",
+      "args": {
+        "rentalId": "1",
+        "itemId": "1",
+        "renter": "0x5C8ce2C2987Ea625BA9F60Fe959b12e13574B404",
+        "amount": "50000000000000000"
+      },
+      "txHash": "0x53739d89deade004318a522a9517e97dc103432c73aad50f226cf6606ad523a7",
+      "blockHash": "0x19fff960b9a45e47fb58b2b83f8b6f6285871aeffe048c62f5d301777a05e07e",
+      "block": 311559,
+      "logIndex": 3,
+      "eventIndex": 3,
+      "source": "substrate",
+      "id": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x19fff960b9a45e47fb58b2b83f8b6f6285871aeffe048c62f5d301777a05e07e:3",
+      "network": "portaldot-v3-testnet",
+      "observedAt": "2026-11-03T22:30:59.260Z"
+    },
+    {
+      "address": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "eventName": "Rented",
+      "args": {
+        "rentalId": "2",
+        "itemId": "1",
+        "renter": "0x5C8ce2C2987Ea625BA9F60Fe959b12e13574B404",
+        "fee": "10000000000000000",
+        "toReserve": "2000000000000000",
+        "deposit": "50000000000000000"
+      },
+      "txHash": "0xadbf4bcdebde6cd209bc9f7e7337e0539389500c3511aeb372eda87ac032276e",
+      "blockHash": "0x31cd16d4c85728d366f478487fcec04e1ca8111697cfe3ab0cd9e8469532bc5b",
+      "block": 311944,
+      "logIndex": 3,
+      "eventIndex": 3,
+      "source": "substrate",
+      "id": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x31cd16d4c85728d366f478487fcec04e1ca8111697cfe3ab0cd9e8469532bc5b:3",
+      "network": "portaldot-v3-testnet",
+      "observedAt": "2026-11-03T22:31:05.094Z"
+    },
+    {
+      "address": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "eventName": "Returned",
+      "args": {
+        "rentalId": "2",
+        "itemId": "1",
+        "evidenceHash": "0x440cb2128282ffef1ad8e2e7ad3a111126fb1ef84354425a17181438fc7416f1",
+        "refundAt": "1793744916",
+        "cronJobId": "2"
+      },
+      "txHash": "0x8334168734195084b296cc894e5db67454211e62cba5902aafa4099a71811539",
+      "blockHash": "0x51cd423b680d36beca41809bfe24f3d57eaab57a1c08ff4263a285bba5b07431",
+      "block": 311948,
+      "logIndex": 5,
+      "eventIndex": 5,
+      "source": "substrate",
+      "id": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x51cd423b680d36beca41809bfe24f3d57eaab57a1c08ff4263a285bba5b07431:5",
+      "network": "portaldot-v3-testnet",
+      "observedAt": "2026-11-03T22:31:07.708Z"
+    },
+    {
+      "address": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "eventName": "DisputeOpened",
+      "args": {
+        "rentalId": "2",
+        "itemId": "1",
+        "amount": "15000000000000000",
+        "evidenceHash": "0x588d76c88c3eb8fbb5def1dd0f534e01a4cca8336bc242adf7b02abf38f5336e"
+      },
+      "txHash": "0x8334168734195084b296cc894e5db67454211e62cba5902aafa4099a71811539",
+      "blockHash": "0x51cd423b680d36beca41809bfe24f3d57eaab57a1c08ff4263a285bba5b07431",
+      "block": 311948,
+      "logIndex": 11,
+      "eventIndex": 11,
+      "source": "substrate",
+      "id": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x51cd423b680d36beca41809bfe24f3d57eaab57a1c08ff4263a285bba5b07431:11",
+      "network": "portaldot-v3-testnet",
+      "observedAt": "2026-11-03T22:31:07.708Z"
+    },
+    {
+      "address": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "eventName": "DisputeVote",
+      "args": {
+        "rentalId": "2",
+        "voter": "0xD5653AA4Ad6fD3E1dF19beb8b5Eb8c1C92f088D6",
+        "approve": true
+      },
+      "txHash": "0x93339980a2a8a6be74f1bd5dfd9911a7e7db171d90e3570ac43b5fc1b9621df5",
+      "blockHash": "0x982c54ce9709944487b72db44442409bd81d9850d858322fefbdf579f4795b16",
+      "block": 311952,
+      "logIndex": 2,
+      "eventIndex": 2,
+      "source": "substrate",
+      "id": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x982c54ce9709944487b72db44442409bd81d9850d858322fefbdf579f4795b16:2",
+      "network": "portaldot-v3-testnet",
+      "observedAt": "2026-11-03T22:31:10.324Z"
+    },
+    {
+      "address": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "eventName": "DisputeResolved",
+      "args": {
+        "rentalId": "2",
+        "itemId": "1",
+        "deducted": "15000000000000000",
+        "refunded": "35000000000000000"
+      },
+      "txHash": "0x93339980a2a8a6be74f1bd5dfd9911a7e7db171d90e3570ac43b5fc1b9621df5",
+      "blockHash": "0x982c54ce9709944487b72db44442409bd81d9850d858322fefbdf579f4795b16",
+      "block": 311952,
+      "logIndex": 4,
+      "eventIndex": 4,
+      "source": "substrate",
+      "id": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x982c54ce9709944487b72db44442409bd81d9850d858322fefbdf579f4795b16:4",
+      "network": "portaldot-v3-testnet",
+      "observedAt": "2026-11-03T22:31:10.324Z"
+    },
+    {
+      "address": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "eventName": "RepairProposed",
+      "args": {
+        "repairId": "1",
+        "itemId": "1",
+        "repairer": "0x5C8ce2C2987Ea625BA9F60Fe959b12e13574B404",
+        "amount": "9500000000000000",
+        "receiptHash": "0x9ffdbea7ec8c2683f6bf2600986b0685e5d58e335744b367a7ecac7b805e8771"
+      },
+      "txHash": "0xbe3562ed2da7c14d43516299b61ba8c4ce316645033071ba362bfc83643ec7df",
+      "blockHash": "0x43189aa75bc3da141bbe45990ad81c79c34673f2426f63974376cd1a0730e1aa",
+      "block": 311957,
+      "logIndex": 2,
+      "eventIndex": 2,
+      "source": "substrate",
+      "id": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x43189aa75bc3da141bbe45990ad81c79c34673f2426f63974376cd1a0730e1aa:2",
+      "network": "portaldot-v3-testnet",
+      "observedAt": "2026-11-03T22:31:11.777Z"
+    },
+    {
+      "address": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "eventName": "RepairPaid",
+      "args": {
+        "repairId": "1",
+        "itemId": "1",
+        "repairer": "0x5C8ce2C2987Ea625BA9F60Fe959b12e13574B404",
+        "amount": "9500000000000000"
+      },
+      "txHash": "0x055af7ced3d7504d8dbc72b93fe438c8b9469d25211b2ea23e5b99d7f9d679be",
+      "blockHash": "0x118be35fe7cf39badd13ba7ec55175e57b054a60b1d90f7036117d6d747d956e",
+      "block": 311961,
+      "logIndex": 3,
+      "eventIndex": 3,
+      "source": "substrate",
+      "id": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x118be35fe7cf39badd13ba7ec55175e57b054a60b1d90f7036117d6d747d956e:3",
+      "network": "portaldot-v3-testnet",
+      "observedAt": "2026-11-03T22:31:13.233Z"
+    },
+    {
+      "address": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "eventName": "IncomeWithdrawn",
+      "args": {
+        "operator": "0xa83014ba71476262795173fbbc06656546b57Ec0",
+        "amount": "16000000000000000"
+      },
+      "txHash": "0x0f8dc5da23b5bc24c1e496da7b7cddb5cd20683fcd0b4f8d89579ae246743134",
+      "blockHash": "0xbba2cda115a0faf22b68cf34b8dae65ef34b47dcb423189d1235094c24afeb2b",
+      "block": 311966,
+      "logIndex": 3,
+      "eventIndex": 3,
+      "source": "substrate",
+      "id": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0xbba2cda115a0faf22b68cf34b8dae65ef34b47dcb423189d1235094c24afeb2b:3",
+      "network": "portaldot-v3-testnet",
+      "observedAt": "2026-11-03T22:31:14.471Z"
+    }
+  ],
+  "notifications": [
+    {
+      "eventName": "DepositRefunded",
+      "txHash": "0x53739d89deade004318a522a9517e97dc103432c73aad50f226cf6606ad523a7",
+      "block": 311559,
+      "blockHash": "0x19fff960b9a45e47fb58b2b83f8b6f6285871aeffe048c62f5d301777a05e07e",
+      "network": "portaldot-v3-testnet",
+      "itemId": "1",
+      "rentalId": "1",
+      "link": "https://metermend.vercel.app/rentals/1",
+      "eventId": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x19fff960b9a45e47fb58b2b83f8b6f6285871aeffe048c62f5d301777a05e07e:3"
+    },
+    {
+      "eventName": "Rented",
+      "txHash": "0xadbf4bcdebde6cd209bc9f7e7337e0539389500c3511aeb372eda87ac032276e",
+      "block": 311944,
+      "blockHash": "0x31cd16d4c85728d366f478487fcec04e1ca8111697cfe3ab0cd9e8469532bc5b",
+      "network": "portaldot-v3-testnet",
+      "itemId": "1",
+      "rentalId": "2",
+      "link": "https://metermend.vercel.app/rentals/2",
+      "eventId": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x31cd16d4c85728d366f478487fcec04e1ca8111697cfe3ab0cd9e8469532bc5b:3"
+    },
+    {
+      "eventName": "Returned",
+      "txHash": "0x8334168734195084b296cc894e5db67454211e62cba5902aafa4099a71811539",
+      "block": 311948,
+      "blockHash": "0x51cd423b680d36beca41809bfe24f3d57eaab57a1c08ff4263a285bba5b07431",
+      "network": "portaldot-v3-testnet",
+      "itemId": "1",
+      "rentalId": "2",
+      "link": "https://metermend.vercel.app/rentals/2",
+      "eventId": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x51cd423b680d36beca41809bfe24f3d57eaab57a1c08ff4263a285bba5b07431:5"
+    },
+    {
+      "eventName": "Returned",
+      "txHash": "0x8334168734195084b296cc894e5db67454211e62cba5902aafa4099a71811539",
+      "block": 311948,
+      "blockHash": "0x51cd423b680d36beca41809bfe24f3d57eaab57a1c08ff4263a285bba5b07431",
+      "network": "portaldot-v3-testnet",
+      "itemId": "1",
+      "rentalId": "2",
+      "link": "https://metermend.vercel.app/items/1",
+      "eventId": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x51cd423b680d36beca41809bfe24f3d57eaab57a1c08ff4263a285bba5b07431:5:available",
+      "variant": "available"
+    },
+    {
+      "eventName": "DisputeOpened",
+      "txHash": "0x8334168734195084b296cc894e5db67454211e62cba5902aafa4099a71811539",
+      "block": 311948,
+      "blockHash": "0x51cd423b680d36beca41809bfe24f3d57eaab57a1c08ff4263a285bba5b07431",
+      "network": "portaldot-v3-testnet",
+      "itemId": "1",
+      "rentalId": "2",
+      "link": "https://metermend.vercel.app/rentals/2",
+      "eventId": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x51cd423b680d36beca41809bfe24f3d57eaab57a1c08ff4263a285bba5b07431:11"
+    },
+    {
+      "eventName": "DisputeResolved",
+      "txHash": "0x93339980a2a8a6be74f1bd5dfd9911a7e7db171d90e3570ac43b5fc1b9621df5",
+      "block": 311952,
+      "blockHash": "0x982c54ce9709944487b72db44442409bd81d9850d858322fefbdf579f4795b16",
+      "network": "portaldot-v3-testnet",
+      "itemId": "1",
+      "rentalId": "2",
+      "link": "https://metermend.vercel.app/rentals/2",
+      "eventId": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x982c54ce9709944487b72db44442409bd81d9850d858322fefbdf579f4795b16:4"
+    },
+    {
+      "eventName": "RepairPaid",
+      "txHash": "0x055af7ced3d7504d8dbc72b93fe438c8b9469d25211b2ea23e5b99d7f9d679be",
+      "block": 311961,
+      "blockHash": "0x118be35fe7cf39badd13ba7ec55175e57b054a60b1d90f7036117d6d747d956e",
+      "network": "portaldot-v3-testnet",
+      "itemId": "1",
+      "link": "https://metermend.vercel.app/items/1",
+      "eventId": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd:0x118be35fe7cf39badd13ba7ec55175e57b054a60b1d90f7036117d6d747d956e:3"
+    }
+  ],
+  "newlyEnqueued": 7
+}

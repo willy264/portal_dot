@@ -1,0 +1,89 @@
+{
+  "observations": [
+    {
+      "startedAt": "2026-11-03T22:26:38.689Z",
+      "observedAt": "2026-11-03T22:26:41.836Z",
+      "endpoint": "https://test-node-v3.portaldot.dev",
+      "genesis": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+      "runtimeCodeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+      "specVersion": 3002,
+      "health": {
+        "peers": 1,
+        "isSyncing": false,
+        "shouldHavePeers": true
+      },
+      "best": {
+        "number": 311948,
+        "hash": "0x51cd423b680d36beca41809bfe24f3d57eaab57a1c08ff4263a285bba5b07431"
+      },
+      "finalized": {
+        "number": 311946,
+        "hash": "0xf4432244f972c9df82dc73d41be6107145f4af0dcad9d26076a43fd5f54c4278"
+      },
+      "pendingPoolCount": 0,
+      "account": {
+        "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+        "finalizedNonce": 18,
+        "bestNonce": 19,
+        "nextIndex": 19,
+        "finalized": {
+          "nonce": 18,
+          "freeNative": "228348665812789099",
+          "freeTPOT": "2283.48665812789099",
+          "frozenNative": "0"
+        },
+        "best": {
+          "nonce": 19,
+          "freeNative": "225271672421670903",
+          "freeTPOT": "2252.71672421670903",
+          "frozenNative": "0"
+        }
+      }
+    },
+    {
+      "startedAt": "2026-11-03T22:34:49.427Z",
+      "observedAt": "2026-11-03T22:34:54.399Z",
+      "endpoint": "https://test-node-v3.portaldot.dev",
+      "genesis": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+      "runtimeCodeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+      "specVersion": 3002,
+      "health": {
+        "peers": 1,
+        "isSyncing": false,
+        "shouldHavePeers": true
+      },
+      "best": {
+        "number": 312028,
+        "hash": "0x347ea34c69b73edd68ebca783536e6aa4af4bfe86b61a4b04b97216f4bf9b309"
+      },
+      "finalized": {
+        "number": 312026,
+        "hash": "0x61fbe0571c0cc73a4371ed27e5e004e16cbdf4dd4bb5c113d4bfe7decce1fbd5"
+      },
+      "pendingPoolCount": 0,
+      "account": {
+        "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+        "finalizedNonce": 22,
+        "bestNonce": 22,
+        "nextIndex": 22,
+        "finalized": {
+          "nonce": 22,
+          "freeNative": "224114289564492397",
+          "freeTPOT": "2241.14289564492397",
+          "frozenNative": "0"
+        },
+        "best": {
+          "nonce": 22,
+          "freeNative": "224114289564492397",
+          "freeTPOT": "2241.14289564492397",
+          "frozenNative": "0"
+        }
+      }
+    }
+  ],
+  "observedAt": "2026-11-03T22:34:54.399Z",
+  "progress": {
+    "newBlocks": 80,
+    "newFinalizedBlocks": 80
+  }
+}

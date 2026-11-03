@@ -1,7 +1,7 @@
 {
-  "observedAt": "2026-11-02T00:26:33.136295+00:00",
-  "status": "live-demo-blocked-refund-callback-failed",
-  "summary": "Original contracts, role funding, two registrations and the first rent/return ran live. The refund failed. A corrected contract passes 49 tests and an explicitly overridden historical simulation, but test-token funding, replacement deployment and the full live demo remain pending. The public ten-slide deck is retained; the owner will perform the phone rehearsal after the corrected scripted proof.",
+  "observedAt": "2026-11-03T22:35:50.271Z",
+  "status": "direct-recovery-recorded-video-and-submission-pending",
+  "summary": "Ten-slide pitch deck exported and browser-checked. The live direct recovery is complete; the original Cronpot callback failed and corrected Cronpot automation is not claimed. Phone rehearsal, durable hosting, video and final submission remain outstanding. This revised PDF requires publication verification.",
   "deadline": {
     "internal": "2026-11-05T22:00:00+01:00",
     "official": "2026-11-06T05:00:00+01:00",
@@ -11,10 +11,10 @@
     "status": "generated",
     "path": "apps/web/public/metermend-pitch.pdf",
     "publicUrl": "https://metermend.vercel.app/metermend-pitch.pdf",
-    "publicLinkVerified": true,
+    "publicLinkVerified": false,
     "source": "docs/pitch/index.html",
-    "sha256": "31b14f906f0bb3781096ca9d54e889e74e412d8cdf48a791bda64137f6a11b85",
-    "bytes": 180852,
+    "sha256": "7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8",
+    "bytes": 181330,
     "slides": 10,
     "layout": "16:9",
     "exportedWith": "Chromium Page.printToPDF; CSS page size 1600px x 900px; vector text and SVG",
@@ -22,12 +22,7 @@
       "overflowChecks": "passed",
       "browserExceptions": 0,
       "screenshots": "docs/pitch/previews/",
-      "visualReview": "passed",
-      "reviewedAt": "2026-11-01T02:30:49.085Z",
-      "actualPdfPages": 10,
-      "clickableLinks": 8,
-      "selectableTextPages": 10,
-      "pdfContactSheet": "docs/pitch/previews/pdf-contact-sheet.png"
+      "visualReview": "Reviewed contact sheet and live-proof slide; no clipped content observed"
     },
     "previousPublications": [
       {
@@ -53,34 +48,35 @@
           }
         ],
         "verifiedAt": "2026-11-01T02:21:03.627Z"
-      }
-    ],
-    "publicLinks": [
-      {
-        "url": "https://metermend.vercel.app/metermend-pitch.pdf",
-        "status": 200,
-        "contentType": "application/pdf",
-        "bytes": 180852,
-        "sha256": "31b14f906f0bb3781096ca9d54e889e74e412d8cdf48a791bda64137f6a11b85",
-        "matchesLocal": true,
-        "verifiedAt": "2026-11-01T02:35:28.165Z"
       },
       {
-        "url": "https://willy264.github.io/portal_dot/metermend-pitch.pdf",
-        "status": 200,
-        "contentType": "application/pdf",
-        "bytes": 180852,
         "sha256": "31b14f906f0bb3781096ca9d54e889e74e412d8cdf48a791bda64137f6a11b85",
-        "matchesLocal": true,
-        "verifiedAt": "2026-11-01T02:35:28.442Z"
+        "publicLinks": [
+          {
+            "url": "https://metermend.vercel.app/metermend-pitch.pdf",
+            "status": 200,
+            "contentType": "application/pdf",
+            "bytes": 180852,
+            "sha256": "31b14f906f0bb3781096ca9d54e889e74e412d8cdf48a791bda64137f6a11b85",
+            "matchesLocal": true,
+            "verifiedAt": "2026-11-01T02:35:28.165Z"
+          },
+          {
+            "url": "https://willy264.github.io/portal_dot/metermend-pitch.pdf",
+            "status": 200,
+            "contentType": "application/pdf",
+            "bytes": 180852,
+            "sha256": "31b14f906f0bb3781096ca9d54e889e74e412d8cdf48a791bda64137f6a11b85",
+            "matchesLocal": true,
+            "verifiedAt": "2026-11-01T02:35:28.442Z"
+          }
+        ]
       }
-    ],
-    "verifiedAt": "2026-11-01T02:35:28.442Z"
+    ]
   },
   "submission": {
     "path": "docs/SUBMISSION.md",
-    "status": "draft-awaiting-live-evidence-and-links",
-    "sha256": "761b1e2309ed37d610baaff7d09f34125007cdcfe1fa14cdc894f6b7f9018895"
+    "status": "paste-ready-except-video-and-manual-evidence"
   },
   "video": {
     "status": "not-recorded",
@@ -90,7 +86,8 @@
   },
   "caveats": [
     "The proposed business model is not implemented platform-fee collection.",
-    "Test counts are engineering evidence, not live application settlement."
+    "Test counts are engineering evidence, not live application settlement.",
+    "Public deck URL is the intended location; verify it after publishing before claiming availability."
   ],
   "phoneRehearsalPreparation": {
     "status": "runbook-ready-waiting-for-corrected-release-and-live-scripted-proof",

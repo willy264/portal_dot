@@ -1,14 +1,20 @@
 # MeterMend progress report
 
-**Updated November 2, 2026 · correction baseline `5e687f5` passed CI and proof publication**
+**Updated November 3, 2026. Direct recovery completed; automatic Cronpot proof remains outstanding.**
 
-MeterMend's contracts, web interface, chain client, workers and deployment scripts are implemented and tested. The web app and permanent proof report are public. **Cronpot and MeterMend are finalized at blocks 265131 and 271379. Both contracts passed read-back checks at block 271384. The live rental and return passed, but Cronpot's refund callback ran out of gas. The full golden path is blocked pending correction.**
+MeterMend's contracts, web interface, chain client, workers and deployment scripts are implemented and tested. The web app and permanent proof report are public. **Cronpot and MeterMend are finalized at blocks 265131 and 271379. Both contracts passed read-back checks at block 271384. The live rental and return passed, but Cronpot's refund callback ran out of gas. The direct-recovery demonstration is complete; successful Cronpot automation remains outstanding.**
 
 [Public app](https://metermend.vercel.app/) · [Application proof page](https://metermend.vercel.app/proof) · [Permanent proof report](https://willy264.github.io/portal_dot/) · [Repository](https://github.com/willy264/portal_dot)
 
 The public app and report are published from committed evidence. A successful contract deployment is separate from completion of the live rental, refund, dispute and repair demonstration.
 
-## November 3 direct recovery
+## November 3 completed recovery
+
+The existing-contract direct recovery completed on November 3, 2026. Rental 1 refunded **0.05 tPOT** through a direct keeper call. The second rental contributed **0.002 tPOT** to the reserve; its approved dispute added **0.015 tPOT** and refunded **0.035 tPOT**. The approved repair paid **0.0095 tPOT**. Income withdrawal paid **0.016 tPOT**, leaving the **0.0095 tPOT** reserve unchanged. A signed unauthorized repair approval finalized with `Revive.ContractReverted`; its live simulation decoded `NotArbiter` and the reserve/repair state stayed unchanged.
+
+The original Cronpot callback remains a failed live attempt (OutOfGas). The successful refund was direct, not successful Cronpot execution. Corrected Cronpot passes 49 tests but is not deployed. MeterMend was not changed or redeployed. The 2,200 tPOT top-up arrived; recovery still stayed within the separate 83.49 tPOT cap. See [the complete transaction and cost table](LIVE_RECOVERY.md).
+
+### First recovery checkpoint
 
 The 2,200 tPOT top-up arrived. The existing MeterMend passed an unmodified direct refund simulation, so no replacement contract was deployed. Keeper transaction `0x53739d89deade004318a522a9517e97dc103432c73aad50f226cf6606ad523a7` finalized at block **311559**, emitted `DepositRefunded(1, ..., 0.05 tPOT)` and closed the first rental. Its actual fee was **0.01851166742868 tPOT**, with no new storage charge. This was a direct MeterMend call; the original Cronpot callback remains a failed live attempt.
 
@@ -128,6 +134,6 @@ This is the predeployment funding snapshot. Cronpot subsequently finalized in tr
 
 MeterMend is finalized at **`0x61382db168db646b899234cd707c7ba0142c4071`** in transaction `0x23b8aa6ffcb18dbbdf12f0d1c59a33b860a43d81362b2f253efdfd43262b8f17`, block **271379**. The [replacement journal](../deployments/deploy-replacement-journal.json) and [reconciliation](../deployments/metermend-reconciliation-2026-11-01.json) preserve the deliberate same-nonce replacement checks and original unknown attempt. The post-deployment balance was **306.74945 tPOT** at block 271383; [measured seed costs](../deployments/funding-seed-budget.json) guide the remaining allocations.
 
-Remaining work is to fund and deploy the corrected release, preserve the automatic refund, dispute, repair, rejected reserve-access attempt and unchanged-reserve proof; resolve durable hosting within the owner's free-tier constraint; demonstrate all six required Telegram event messages; complete the physical-phone rehearsal; and record/upload the video before updating the BUIDL. The [recording plan](DEMO_VIDEO.md) stays under 2:30. Public video and final submission remain pending.
+Remaining work is successful corrected Cronpot automation (without redeploying MeterMend), durable hosting within the free-tier constraint, all required Telegram delivery evidence and screenshots, physical-phone rehearsal, recording/uploading the video and final BUIDL submission. The direct refund, dispute, repair, income withdrawal and signed reserve-access rejection are complete.
 
 Physical damage decisions still rely on people. Missing dispute votes can delay settlement; native evidence expires; pruned chain history requires retained records. Labeled demo-image fixtures test the workflow without claiming an actual physical rental or repair.

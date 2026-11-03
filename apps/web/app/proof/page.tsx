@@ -40,7 +40,7 @@ export default async function Proof() {
     refundCalibration,
   ] = await Promise.all([
     readDeployment("deployment-status.json"),
-    readDeployment("chain-status-2026-10-31.json"),
+    readDeployment("chain-status-2026-11-03.json"),
     readDeployment("rpc-discovery.json"),
     readDeployment("hosting-status.json"),
     readDeployment("notification-status.json"),

@@ -204,9 +204,9 @@ try {
   const evidence = {
     ...previousEvidence,
     observedAt: new Date().toISOString(),
-    status: "materials-prepared-live-demo-and-publication-pending",
+    status: "direct-recovery-recorded-video-and-submission-pending",
     summary:
-      "Ten-slide pitch deck exported and browser-checked. Finalized deployments and runtime probes are distinguished from the pending live golden path, notifications and video. This revised PDF requires publication verification.",
+      "Ten-slide pitch deck exported and browser-checked. The live direct recovery is complete; the original Cronpot callback failed and corrected Cronpot automation is not claimed. Phone rehearsal, durable hosting, video and final submission remain outstanding. This revised PDF requires publication verification.",
     deadline: {
       internal: "2026-11-05T22:00:00+01:00",
       official: "2026-11-06T05:00:00+01:00",

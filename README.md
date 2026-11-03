@@ -12,7 +12,7 @@ Built for **Portaldot Hacker House 2026 · Ecosystem DApps**. MeterMend implemen
 
 ## Live on Portaldot V3
 
-**Cronpot and MeterMend are deployed and finalized on V3.** Cronpot finalized at block 265131; MeterMend finalized at block 271379 after a deliberate nonce-7 replacement, with the original attempt preserved separately. Both contracts passed [finalized read-back checks](deployments/read-back.json). The first live rent, reserve split, native evidence store and return passed; **the automatic refund failed because Cronpot's nested callback ran out of gas**. The complete golden path remains blocked. [Live trace and diagnosis](deployments/cronpot-callback-diagnosis.json).
+**Cronpot and MeterMend are deployed and finalized on V3.** Cronpot finalized at block 265131; MeterMend finalized at block 271379 after a deliberate nonce-7 replacement, with the original attempt preserved separately. Both contracts passed [finalized read-back checks](deployments/read-back.json). The first live rent, reserve split, native evidence store and return passed; **the automatic refund failed because Cronpot's nested callback ran out of gas**. The subsequent [direct-recovery demonstration](docs/LIVE_RECOVERY.md) completed: refund, dispute, repair, income-only withdrawal and signed reserve-spending rejection. Successful automatic Cronpot execution remains unproved. [Live trace and diagnosis](deployments/cronpot-callback-diagnosis.json).
 
 | Contract           | V3 address                                   | Status                    |
 | ------------------ | -------------------------------------------- | ------------------------- |
@@ -30,9 +30,9 @@ The [public web app](https://metermend.vercel.app/) and its [proof page](https:/
 - Cronpot's generic timed-call registry, with permissionless execution and bounded callbacks. Its keeper fallback is the selected V3 mode.
 - A persistent finalized-event indexer and refund worker, with transaction journals and recovery states.
 - Mobile web catalogue, operator dashboard, arbiter inbox, rental history, wallet activation, evidence verification, dark mode and proof pages.
-- Durable community notifications with Telegram as the selected delivery channel. Actual registration, rental and return updates have Telegram acknowledgements; the remaining required event types and group screenshots are pending. DeBox is the target integration and is not live.
+- Durable community notifications with Telegram as the selected delivery channel. All six required event types have real Telegram acknowledgements; actual group screenshots remain pending. DeBox is the target integration and is not live.
 
-The Foundry suite has **43 passing tests**, including fee-split fuzzing, reserve isolation, dispute voting, callback failures and transfer restrictions. TypeScript tests cover conversion, transaction outcomes, durable services, scheduling, evidence integrity and web data handling. These checks are separate from the pending full live demonstration.
+The Foundry suite has **49 passing tests**, including fee-split fuzzing, reserve isolation, dispute voting, callback failures and transfer restrictions. TypeScript tests cover conversion, transaction outcomes, durable services, scheduling, evidence integrity and web data handling. These checks are separate from the pending full live demonstration.
 
 ## Architecture
 
@@ -118,7 +118,7 @@ Humans assess damage. Missing dispute votes can leave deposits unresolved; a con
 
 The testnet prunes history, so the worker must stay online or report a gap. Native evidence expires unless renewed. DeBox wallet-chain support is separate from its bot API; notifications do not imply its embedded wallet can sign V3 transactions. Notification delivery is at-least-once across ambiguous provider responses.
 
-The first application release is finalized, all demo roles are funded and mapped, and two equipment items are registered with 120-second dispute windows. The [printable QR sheet](https://metermend.vercel.app/metermend-qr.html) uses those actual item IDs. The corrected Cronpot passes 49 contract tests and a historical runtime simulation; its isolated release still needs test tokens, deployment and a complete live demo. The local keeper and Telegram bot are running. The owner selected a free Render read-only preview; always-on keeper/evidence hosting and the physical phone rehearsal remain pending. Reserve isolation passes in Foundry; its live proof is outstanding. No submitted BUIDL or uploaded video is claimed yet.
+The first application release is finalized, all demo roles are funded and mapped, and two equipment items are registered with 120-second dispute windows. The [printable QR sheet](https://metermend.vercel.app/metermend-qr.html) uses those actual item IDs. The corrected Cronpot passes 49 contract tests and a historical runtime simulation; it has not been deployed. The 2,200 tPOT top-up arrived, and the existing-contract recovery completed for 73.23301569451228 tPOT under the 83.49 tPOT cap. The local keeper and Telegram bot are running. The owner selected a free Render read-only preview; always-on keeper/evidence hosting and the physical phone rehearsal remain pending. Live reserve isolation passed during the completed direct recovery. No submitted BUIDL or uploaded video is claimed yet.
 
 ## Research archive
 

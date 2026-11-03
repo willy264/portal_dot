@@ -58,7 +58,7 @@ const [
   refundCalibration,
 ] = await Promise.all([
   optional("deployments/deployment-status.json"),
-  optional("deployments/chain-status-2026-10-31.json"),
+  optional("deployments/chain-status-2026-11-03.json"),
   optional("deployments/rpc-discovery.json"),
   optional("deployments/hosting-status.json"),
   optional("deployments/notification-status.json"),

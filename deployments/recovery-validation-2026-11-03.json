@@ -1,0 +1,44 @@
+{
+  "observedAt": "2026-11-03T22:36:50.953Z",
+  "status": "local-checks-passed-awaiting-final-publication",
+  "noContractsRedeployed": true,
+  "directRecovery": true,
+  "automaticCronpotRefund": false,
+  "actualSignedTransactions": 8,
+  "totalConservativeSpendTPOT": "73.23301569451228",
+  "capTPOT": "83.49",
+  "reserveAfterIncomeAndRejectedAttemptTPOT": "0.0095",
+  "notifications": {
+    "requiredTypesDelivered": 6,
+    "providerReceipts": 12,
+    "screenshotsVerified": false
+  },
+  "checks": {
+    "scriptTypecheck": "passed",
+    "targetedTests": {
+      "passed": 19,
+      "failed": 0
+    },
+    "deck": {
+      "slides": 10,
+      "overflow": 0,
+      "browserExceptions": 0,
+      "sha256": "7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8"
+    },
+    "report": "regenerated; 11 successful/failed demo entries plus signed rejection section"
+  },
+  "priorCI": {
+    "commit": "8253778f9948bf3ee8414363e63ec6266f41fac2",
+    "url": "https://github.com/willy264/portal_dot/actions/runs/41730706218",
+    "conclusion": "success",
+    "typescriptTests": 241,
+    "foundryTests": 49
+  },
+  "remaining": [
+    "Successful corrected Cronpot automation",
+    "Always-on keeper and persistent public evidence storage under the free-hosting constraint",
+    "Actual Telegram group screenshots",
+    "Physical-phone rehearsal and recording",
+    "Voiceover, video upload and final BUIDL submission"
+  ]
+}

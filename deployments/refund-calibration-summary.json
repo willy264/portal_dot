@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "observedAt": "2026-11-03T22:25:22.208Z",
+  "observedAt": "2026-11-03T22:30:23.326Z",
   "mode": "read-only runtime simulation",
   "signedTransactions": 0,
   "contractsDeployed": 0,
@@ -78,8 +78,8 @@
     }
   ],
   "initialObservedAt": "2026-11-01T02:51:05.1611317Z",
-  "status": "direct-refund-finalized-continuation-in-progress",
-  "summary": "The existing MeterMend refunded rental 1 directly through the keeper at block 311559; transaction 0x53739d89deade004318a522a9517e97dc103432c73aad50f226cf6606ad523a7. The original Cronpot callback failed OutOfGas. Direct recovery is in-progress; conservative spend 0.01851166742868 of 83.49 tPOT. The 2,200 tPOT top-up arrived. No replacement contracts were deployed.",
+  "status": "direct-recovery-completed",
+  "summary": "The existing MeterMend refunded rental 1 directly through the keeper at block 311559; transaction 0x53739d89deade004318a522a9517e97dc103432c73aad50f226cf6606ad523a7. The original Cronpot callback failed OutOfGas. Direct recovery is completed; conservative spend 73.23301569451228 of 83.49 tPOT. The 2,200 tPOT top-up arrived. No replacement contracts were deployed.",
   "candidateSimulation": "deployments/cronpot-candidate-full-simulation.json",
   "reviewedGasBounds": {
     "targetGasLimit": "550000000000000",
@@ -151,8 +151,8 @@
       "amount": "50000000000000000"
     },
     "automaticCronpotRefund": false,
-    "status": "in-progress",
-    "conservativeSpentTPOT": "0.01851166742868",
+    "status": "completed",
+    "conservativeSpentTPOT": "73.23301569451228",
     "evidence": "deployments/demo-run.json"
   }
 }

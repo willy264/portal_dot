@@ -694,6 +694,10 @@ await run(async () => {
       after: rejectionAfter,
       txHash: rejected.evidence.txHash,
     });
+    report.assertions[rejectionKey] = {
+      passed: true, txHash: rejected.evidence.txHash,
+      reserveBefore: c.rejectionBefore.reserve, reserveAfter: rejectionAfter.reserve,
+    };
     c.accountsAfter = await snapshotAccounts();
     c.status = "completed";
     c.completedAt = now();

@@ -1,5 +1,5 @@
 {
-  "observedAt": "2026-11-03T21:47:24.215Z",
+  "observedAt": "2026-11-03T22:25:49.714Z",
   "status": "reviewed-spending-limits-not-exact-future-fees",
   "capTPOT": "83.49",
   "plannedMaximumTPOT": "81.391",
@@ -51,5 +51,7 @@
     "Native return evidence already exists; remaining labeled fixture hashes use repository bytes and local backup, without additional native uploads.",
     "No storage refunds, rental refunds, incoming faucet funds or reserve payments enlarge the 83.49 cap."
   ],
-  "signedTransactions": 0
+  "actualSignedTransactions": 8,
+  "completedAt": "2026-11-03T22:29:02.296Z",
+  "actualConservativeSpentTPOT": "73.23301569451228"
 }
