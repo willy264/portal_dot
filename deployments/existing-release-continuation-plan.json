@@ -1,0 +1,60 @@
+{
+  "observedAt": "2026-11-03T20:32:02.775Z",
+  "status": "reviewed-spending-limits-not-exact-future-fees",
+  "capTPOT": "83.49",
+  "plannedMaximumTPOT": "81.391",
+  "limits": {
+    "direct-refund": {
+      "storageTPOT": "0",
+      "feeCeilingTPOT": "0.5",
+      "valueTPOT": "0"
+    },
+    "rent-second": {
+      "storageTPOT": "19.2075",
+      "feeCeilingTPOT": "0.5",
+      "valueTPOT": "0.06"
+    },
+    "return-second": {
+      "storageTPOT": "26.8905",
+      "feeCeilingTPOT": "0.5",
+      "valueTPOT": "0.001"
+    },
+    "open-dispute": {
+      "storageTPOT": "7.683",
+      "feeCeilingTPOT": "0.5",
+      "valueTPOT": "0"
+    },
+    "approve-dispute": {
+      "storageTPOT": "3.8415",
+      "feeCeilingTPOT": "0.5",
+      "valueTPOT": "0"
+    },
+    "propose-repair": {
+      "storageTPOT": "15.366",
+      "feeCeilingTPOT": "0.5",
+      "valueTPOT": "0"
+    },
+    "approve-repair": {
+      "storageTPOT": "3.8415",
+      "feeCeilingTPOT": "0.5",
+      "valueTPOT": "0"
+    },
+    "withdraw-income": {
+      "storageTPOT": "0",
+      "feeCeilingTPOT": "0.5",
+      "valueTPOT": "0"
+    },
+    "reserve-rejection": {
+      "storageTPOT": "0",
+      "feeCeilingTPOT": "0.5",
+      "valueTPOT": "0"
+    }
+  },
+  "assumptions": [
+    "Existing contracts, funded/mapped roles and item1 reused; no deployment, account top-up or item registration.",
+    "Every dependent step gets a fresh native simulation and fee quote before signing. Final fee comes from its receipt.",
+    "Native return evidence already exists; remaining labeled fixture hashes use repository bytes and local backup, without additional native uploads.",
+    "No storage refunds, rental refunds, incoming faucet funds or reserve payments enlarge the 83.49 cap."
+  ],
+  "signedTransactions": 0
+}

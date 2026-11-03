@@ -1,0 +1,311 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-03T20:23:13.701Z",
+  "mode": "read-only-current-state-no-overrides",
+  "signedTransactions": 0,
+  "contract": "0x61382db168db646b899234cd707c7ba0142c4071",
+  "cronpot": "0x41635a685448cfa86da1600656f103a211e398f4",
+  "rentalId": "1",
+  "at": {
+    "number": 310727,
+    "hash": "0x99acba94b811a7d3bd86ef8ffd473548b20e80006e27c28162d7af392fcf6a40",
+    "timestamp": "1793737374"
+  },
+  "health": {
+    "peers": 1,
+    "isSyncing": false,
+    "shouldHavePeers": true
+  },
+  "poolCount": 0,
+  "rental": [
+    "1",
+    "0x5C8ce2C2987Ea625BA9F60Fe959b12e13574B404",
+    "50000000000000000",
+    "1793500548",
+    "1793500716",
+    2,
+    "1"
+  ],
+  "item": [
+    "0xa83014ba71476262795173fbbc06656546b57Ec0",
+    "0xD5653AA4Ad6fD3E1dF19beb8b5Eb8c1C92f088D6",
+    "10000000000000000",
+    "50000000000000000",
+    2000,
+    120,
+    true,
+    false,
+    "2000000000000000",
+    "data:application/json,%7B%22name%22%3A%22Canon%20EOS%20camera%22%2C%22description%22%3A%22Shared%20makerspace%20camera.%20Physical%20returns%20are%20confirmed%20by%20the%20operator.%22%2C%22equipmentClass%22%3A%22camera%22%2C%22demo%22%3Atrue%7D"
+  ],
+  "job": {
+    "owner": "0x61382db168Db646b899234Cd707c7ba0142c4071",
+    "target": "0x61382db168Db646b899234Cd707c7ba0142c4071",
+    "executeAfter": "1793500716",
+    "status": 4,
+    "tip": "0",
+    "data": "0xe6d6aedc0000000000000000000000000000000000000000000000000000000000000001"
+  },
+  "accounts": [
+    {
+      "role": "operator",
+      "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+      "mapped": true,
+      "autoMap": true,
+      "h160": "0xa83014ba71476262795173fbbc06656546b57ec0",
+      "nativeBalance": "228348665812789099",
+      "nativeFrozen": "0",
+      "nativeReserved": "0",
+      "nonce": 18,
+      "block": 310727,
+      "blockHash": "0x99acba94b811a7d3bd86ef8ffd473548b20e80006e27c28162d7af392fcf6a40",
+      "availableTPOT": "2283.48665812789099"
+    },
+    {
+      "role": "renter",
+      "address": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+      "mapped": true,
+      "autoMap": true,
+      "h160": "0x5c8ce2c2987ea625ba9f60fe959b12e13574b404",
+      "nativeBalance": "4803048287915833",
+      "nativeFrozen": "0",
+      "nativeReserved": "0",
+      "nonce": 1,
+      "block": 310727,
+      "blockHash": "0x99acba94b811a7d3bd86ef8ffd473548b20e80006e27c28162d7af392fcf6a40",
+      "availableTPOT": "48.03048287915833"
+    },
+    {
+      "role": "arbiter",
+      "address": "5DjjjeBpydQRtt4wDHF9hq1xpKPDEWoeREbRkc4YbghL6fua",
+      "mapped": true,
+      "autoMap": true,
+      "h160": "0xd5653aa4ad6fd3e1df19beb8b5eb8c1c92f088d6",
+      "nativeBalance": "1200000000000000",
+      "nativeFrozen": "0",
+      "nativeReserved": "0",
+      "nonce": 0,
+      "block": 310727,
+      "blockHash": "0x99acba94b811a7d3bd86ef8ffd473548b20e80006e27c28162d7af392fcf6a40",
+      "availableTPOT": "12"
+    },
+    {
+      "role": "keeper",
+      "address": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+      "mapped": true,
+      "autoMap": true,
+      "h160": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+      "nativeBalance": "882408597152205",
+      "nativeFrozen": "0",
+      "nativeReserved": "0",
+      "nonce": 1,
+      "block": 310727,
+      "blockHash": "0x99acba94b811a7d3bd86ef8ffd473548b20e80006e27c28162d7af392fcf6a40",
+      "availableTPOT": "8.82408597152205"
+    }
+  ],
+  "direct": {
+    "status": "passed",
+    "output": "0x",
+    "initial": {
+      "weight_consumed": {
+        "ref_time": "1307569268",
+        "proof_size": "75964"
+      },
+      "weight_required": {
+        "ref_time": "1307569268",
+        "proof_size": "75964"
+      },
+      "storage_deposit": {
+        "type": "Refund",
+        "value": "384149999999998"
+      },
+      "max_storage_deposit": {
+        "type": "Charge",
+        "value": "384150000000000"
+      },
+      "gas_consumed": "0",
+      "result": {
+        "success": true,
+        "value": {
+          "flags": 0,
+          "data": "0x"
+        }
+      },
+      "output": "0x"
+    },
+    "bounded": {
+      "weight_consumed": {
+        "ref_time": "1307569268",
+        "proof_size": "75964"
+      },
+      "weight_required": {
+        "ref_time": "1307569268",
+        "proof_size": "75964"
+      },
+      "storage_deposit": {
+        "type": "Refund",
+        "value": "384149999999998"
+      },
+      "max_storage_deposit": {
+        "type": "Charge",
+        "value": "384150000000000"
+      },
+      "gas_consumed": "0",
+      "result": {
+        "success": true,
+        "value": {
+          "flags": 0,
+          "data": "0x"
+        }
+      },
+      "output": "0x"
+    },
+    "caps": {
+      "weight_limit": {
+        "ref_time": "10000000000",
+        "proof_size": "1048576"
+      },
+      "storage_deposit_limit": "500000000000000"
+    },
+    "feeNative": "1855166521646",
+    "feeTPOT": "0.01855166521646",
+    "maximumCashRequiredTPOT": "5.01855166521646",
+    "revertReason": null
+  },
+  "quotes": [
+    {
+      "step": "rent-second",
+      "role": "renter",
+      "status": "simulated-current-state",
+      "storage": {
+        "type": "Charge",
+        "value": "1536600000000000"
+      },
+      "storageMaximum": {
+        "type": "Charge",
+        "value": "1920750000000000"
+      },
+      "capNative": "2304900000000000",
+      "feeNative": "1901761247357",
+      "valueNative": "6000000000000",
+      "maximumCashRequiredTPOT": "23.12801761247357",
+      "simulation": {
+        "weight_consumed": {
+          "ref_time": "2162915221",
+          "proof_size": "153468"
+        },
+        "weight_required": {
+          "ref_time": "2162915221",
+          "proof_size": "153884"
+        },
+        "storage_deposit": {
+          "type": "Charge",
+          "value": "1536600000000000"
+        },
+        "max_storage_deposit": {
+          "type": "Charge",
+          "value": "1920750000000000"
+        },
+        "gas_consumed": "668243441263858",
+        "result": {
+          "success": true,
+          "value": {
+            "flags": 0,
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000002"
+          }
+        }
+      }
+    },
+    {
+      "step": "propose-repair-current-reserve",
+      "role": "operator",
+      "status": "simulated-current-state",
+      "storage": {
+        "type": "Charge",
+        "value": "1536600000000000"
+      },
+      "storageMaximum": {
+        "type": "Charge",
+        "value": "1920750000000000"
+      },
+      "capNative": "2304900000000000",
+      "feeNative": "2811320879508",
+      "valueNative": "0",
+      "maximumCashRequiredTPOT": "23.07711320879508",
+      "simulation": {
+        "weight_consumed": {
+          "ref_time": "1364960777",
+          "proof_size": "102023"
+        },
+        "weight_required": {
+          "ref_time": "1364960777",
+          "proof_size": "102439"
+        },
+        "storage_deposit": {
+          "type": "Charge",
+          "value": "1536600000000000"
+        },
+        "max_storage_deposit": {
+          "type": "Charge",
+          "value": "1920750000000000"
+        },
+        "gas_consumed": "668243361468413",
+        "result": {
+          "success": true,
+          "value": {
+            "flags": 0,
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000001"
+          }
+        }
+      }
+    },
+    {
+      "step": "withdraw-current-income",
+      "role": "operator",
+      "status": "simulated-current-state",
+      "storage": {
+        "type": "Refund",
+        "value": "384149999999998"
+      },
+      "storageMaximum": {
+        "type": "Charge",
+        "value": "384150000000000"
+      },
+      "capNative": "460980000000000",
+      "feeNative": "1511009218403",
+      "valueNative": "0",
+      "maximumCashRequiredTPOT": "4.62491009218403",
+      "simulation": {
+        "weight_consumed": {
+          "ref_time": "800229346",
+          "proof_size": "34808"
+        },
+        "weight_required": {
+          "ref_time": "800229346",
+          "proof_size": "34808"
+        },
+        "storage_deposit": {
+          "type": "Refund",
+          "value": "384149999999998"
+        },
+        "max_storage_deposit": {
+          "type": "Charge",
+          "value": "384150000000000"
+        },
+        "gas_consumed": "0",
+        "result": {
+          "success": true,
+          "value": {
+            "flags": 0,
+            "data": "0x"
+          }
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Future dependent steps require a fresh simulation after their preceding state exists. Fee estimates are quoted at the observed state, not guaranteed final charges.",
+    "The direct simulation does not execute Cronpot and proves no live refund."
+  ]
+}

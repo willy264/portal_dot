@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "observedAt": "2026-11-02T00:19:55.085Z",
+  "observedAt": "2026-11-03T20:23:13.701Z",
   "mode": "read-only runtime simulation",
   "signedTransactions": 0,
   "contractsDeployed": 0,
@@ -78,8 +78,8 @@
     }
   ],
   "initialObservedAt": "2026-11-01T02:51:05.1611317Z",
-  "status": "corrected-candidate-simulated-not-deployed",
-  "summary": "The original live Cronpot refund failed with OutOfGas. A corrected immutable gas profile now passes the complete read-only Ethereum-context simulation and returns true, with matching JobExecuted(success=true) and DepositRefunded events. That simulation used temporary code and balance overrides; no corrected contract was deployed and no live refund is claimed.",
+  "status": "current-direct-refund-simulation-passed",
+  "summary": "The existing MeterMend direct finalizeRefund(1) passes an explicit bounded native simulation at block310727 with no overrides. The 2200tPOT funding arrived, but the user selected an existing-contract direct-refund continuation capped at83.49tPOT. No new deployment or live direct refund has occurred yet. The original Cronpot callback failed OutOfGas.",
   "candidateSimulation": "deployments/cronpot-candidate-full-simulation.json",
   "reviewedGasBounds": {
     "targetGasLimit": "550000000000000",
@@ -138,5 +138,6 @@
     "totalRequiredTPOT": "2112.71850953521368",
     "additionalFundingRequestedTPOT": "2200",
     "actualFundingReceived": false
-  }
+  },
+  "directDiagnosis": "deployments/direct-refund-diagnosis-2026-11-03.json"
 }
