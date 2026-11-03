@@ -19,6 +19,7 @@ export async function readDeployment(
     | "demo-run.json"
     | "deployment-status.json"
     | "chain-status-2026-10-31.json"
+    | "chain-status-2026-11-03.json"
     | "rpc-discovery.json"
     | "hosting-status.json"
     | "notification-status.json"

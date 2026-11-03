@@ -10,6 +10,7 @@ const config: NextConfig = {
       "../../deployments/demo-run.json",
       "../../deployments/deployment-status.json",
       "../../deployments/chain-status-2026-10-31.json",
+      "../../deployments/chain-status-2026-11-03.json",
       "../../deployments/rpc-discovery.json",
       "../../deployments/hosting-status.json",
       "../../deployments/notification-status.json",
