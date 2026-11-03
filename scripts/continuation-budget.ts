@@ -12,12 +12,11 @@ export const STEP_LIMITS: Record<
     fee: native("0.5"),
     value: native("0.06"),
   },
-  "return-second": {
-    storage: native("26.8905"),
-    fee: native("0.5"),
+  "return-dispute": {
+    storage: native("34.5735"),
+    fee: native("1"),
     value: native("0.001"),
   },
-  "open-dispute": { storage: native("7.683"), fee: native("0.5"), value: 0n },
   "approve-dispute": {
     storage: native("3.8415"),
     fee: native("0.5"),

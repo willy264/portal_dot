@@ -61,6 +61,7 @@ export function operationalCards(input: {
   notifications?: RecordValue;
   submission?: RecordValue;
   refundCalibration?: RecordValue;
+  demo?: RecordValue;
   executorHealth?: RecordValue;
 }): OperationalCard[] {
   const pending = input.deploymentStatus;
@@ -99,7 +100,7 @@ export function operationalCards(input: {
         "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
       ],
     ]),
-    card("Refund correction (simulation only)", input.refundCalibration, [
+    card("Refund diagnosis and recovery", input.refundCalibration, [
       ["Finding", input.refundCalibration?.summary],
       [
         "Transactions submitted by calibration",
@@ -110,6 +111,10 @@ export function operationalCards(input: {
         input.refundCalibration?.contractsDeployed,
       ],
       ["Live corrected refund", "Pending deployment and live demonstration"],
+      ["Direct keeper refund", input.demo?.directRefund?.txHash ? hash(input.demo.directRefund.txHash) : "Not recorded"],
+      ["Direct refund block", input.demo?.directRefund?.block],
+      ["Recovery budget spent (tPOT)", input.demo?.continuation?.conservativeSpentTPOT],
+      ["Direct recovery status", input.demo?.continuation?.status],
     ]),
     card("Persistent worker and evidence hosting", input.hosting, [
       ["Finding", input.hosting?.summary],

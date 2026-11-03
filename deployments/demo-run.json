@@ -1087,6 +1087,264 @@
           }
         }
       ]
+    },
+    "direct-refund": {
+      "txHash": "0x53739d89deade004318a522a9517e97dc103432c73aad50f226cf6606ad523a7",
+      "block": 311559,
+      "blockHash": "0x19fff960b9a45e47fb58b2b83f8b6f6285871aeffe048c62f5d301777a05e07e",
+      "extrinsicIndex": 1,
+      "events": [
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "Withdraw",
+              "value": {
+                "who": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+                "amount": "1855156051424"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "Withdraw",
+            "value": {
+              "who": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+              "amount": "1855156051424"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "Transfer",
+              "value": {
+                "from": "5EGBC11Lvt36nt1w7nPrgBupfRNpnj3MVN1QPsNKVEQcv8ZY",
+                "to": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+                "amount": "5000000000000"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "Transfer",
+            "value": {
+              "from": "5EGBC11Lvt36nt1w7nPrgBupfRNpnj3MVN1QPsNKVEQcv8ZY",
+              "to": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+              "amount": "5000000000000"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Revive",
+            "value": {
+              "type": "ContractEmitted",
+              "value": {
+                "contract": "0x61382db168db646b899234cd707c7ba0142c4071",
+                "data": "0x00000000000000000000000000000000000000000000000000b1a2bc2ec50000",
+                "topics": [
+                  "0x13fe8ef6de97005cf5076b72219295e7f98acc7f5b651899709a156a29909c48",
+                  "0x0000000000000000000000000000000000000000000000000000000000000001",
+                  "0x0000000000000000000000000000000000000000000000000000000000000001",
+                  "0x0000000000000000000000005c8ce2c2987ea625ba9f60fe959b12e13574b404"
+                ]
+              }
+            }
+          },
+          "topics": [],
+          "type": "Revive",
+          "value": {
+            "type": "ContractEmitted",
+            "value": {
+              "contract": "0x61382db168db646b899234cd707c7ba0142c4071",
+              "data": "0x00000000000000000000000000000000000000000000000000b1a2bc2ec50000",
+              "topics": [
+                "0x13fe8ef6de97005cf5076b72219295e7f98acc7f5b651899709a156a29909c48",
+                "0x0000000000000000000000000000000000000000000000000000000000000001",
+                "0x0000000000000000000000000000000000000000000000000000000000000001",
+                "0x0000000000000000000000005c8ce2c2987ea625ba9f60fe959b12e13574b404"
+              ]
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "TransferOnHold",
+              "value": {
+                "reason": {
+                  "type": "Revive",
+                  "value": {
+                    "type": "StorageDepositReserve"
+                  }
+                },
+                "source": "5EGBC11Lvt36nt1w7nPrgBupfRNpnj3MVN1QPsNKVEQcv8ZY",
+                "dest": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+                "amount": "384149999999998"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "TransferOnHold",
+            "value": {
+              "reason": {
+                "type": "Revive",
+                "value": {
+                  "type": "StorageDepositReserve"
+                }
+              },
+              "source": "5EGBC11Lvt36nt1w7nPrgBupfRNpnj3MVN1QPsNKVEQcv8ZY",
+              "dest": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+              "amount": "384149999999998"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "Deposit",
+              "value": {
+                "who": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+                "amount": "3989308556"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "Deposit",
+            "value": {
+              "who": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+              "amount": "3989308556"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "Deposit",
+              "value": {
+                "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+                "amount": "1851166742868"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "Deposit",
+            "value": {
+              "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+              "amount": "1851166742868"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "TransactionPayment",
+            "value": {
+              "type": "TransactionFeePaid",
+              "value": {
+                "who": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+                "actual_fee": "1851166742868",
+                "tip": "0"
+              }
+            }
+          },
+          "topics": [],
+          "type": "TransactionPayment",
+          "value": {
+            "type": "TransactionFeePaid",
+            "value": {
+              "who": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+              "actual_fee": "1851166742868",
+              "tip": "0"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "System",
+            "value": {
+              "type": "ExtrinsicSuccess",
+              "value": {
+                "dispatch_info": {
+                  "weight": {
+                    "ref_time": "2414743268",
+                    "proof_size": "95873"
+                  },
+                  "class": {
+                    "type": "Normal"
+                  },
+                  "pays_fee": {
+                    "type": "Yes"
+                  }
+                }
+              }
+            }
+          },
+          "topics": [],
+          "type": "System",
+          "value": {
+            "type": "ExtrinsicSuccess",
+            "value": {
+              "dispatch_info": {
+                "weight": {
+                  "ref_time": "2414743268",
+                  "proof_size": "95873"
+                },
+                "class": {
+                  "type": "Normal"
+                },
+                "pays_fee": {
+                  "type": "Yes"
+                }
+              }
+            }
+          }
+        }
+      ]
     }
   },
   "assertions": {
@@ -1105,10 +1363,29 @@
         "expected": "2000000000000000",
         "rentalId": "1"
       }
+    },
+    "direct-refund-exact-deposit": {
+      "passed": true,
+      "observedAt": "2026-11-03T21:47:56.182Z",
+      "values": {
+        "rentalId": "1",
+        "itemId": "1",
+        "renter": "0x5C8ce2C2987Ea625BA9F60Fe959b12e13574B404",
+        "amount": "50000000000000000",
+        "finalRental": [
+          "1",
+          "0x5C8ce2C2987Ea625BA9F60Fe959b12e13574B404",
+          "0",
+          "1793500548",
+          "1793500716",
+          4,
+          "1"
+        ]
+      }
     }
   },
-  "updatedAt": "2026-11-01T02:46:06.974Z",
-  "status": "Blocked: Cronpot refund callback failed; no automatic refund",
+  "updatedAt": "2026-11-03T21:47:56.205Z",
+  "status": "Direct-refund recovery in progress; original Cronpot callback failed",
   "blocker": {
     "observedAt": "2026-11-01T02:42:00.187Z",
     "jobId": "1",
@@ -1582,5 +1859,240 @@
       "diagnosis": "Historical trace of this finalized extrinsic reports OutOfGas in the nested MeterMend call with gas=1000000.",
       "diagnosisEvidence": "deployments/cronpot-callback-diagnosis.json"
     }
+  },
+  "continuation": {
+    "startedAt": "2026-11-03T20:34:20.170Z",
+    "status": "in-progress",
+    "mode": "keeper-direct-finalizeRefund-existing-contracts",
+    "capNative": "8349000000000000",
+    "plan": {
+      "status": "reviewed-spending-limits-not-exact-future-fees",
+      "capTPOT": "83.49",
+      "plannedMaximumTPOT": "81.391",
+      "limits": {
+        "direct-refund": {
+          "storageTPOT": "0",
+          "feeCeilingTPOT": "0.5",
+          "valueTPOT": "0"
+        },
+        "rent-second": {
+          "storageTPOT": "19.2075",
+          "feeCeilingTPOT": "0.5",
+          "valueTPOT": "0.06"
+        },
+        "return-dispute": {
+          "storageTPOT": "34.5735",
+          "feeCeilingTPOT": "1",
+          "valueTPOT": "0.001"
+        },
+        "approve-dispute": {
+          "storageTPOT": "3.8415",
+          "feeCeilingTPOT": "0.5",
+          "valueTPOT": "0"
+        },
+        "propose-repair": {
+          "storageTPOT": "15.366",
+          "feeCeilingTPOT": "0.5",
+          "valueTPOT": "0"
+        },
+        "approve-repair": {
+          "storageTPOT": "3.8415",
+          "feeCeilingTPOT": "0.5",
+          "valueTPOT": "0"
+        },
+        "withdraw-income": {
+          "storageTPOT": "0",
+          "feeCeilingTPOT": "0.5",
+          "valueTPOT": "0"
+        },
+        "reserve-rejection": {
+          "storageTPOT": "0",
+          "feeCeilingTPOT": "0.5",
+          "valueTPOT": "0"
+        }
+      },
+      "assumptions": [
+        "Existing contracts, funded/mapped roles and item1 reused; no deployment, account top-up or item registration.",
+        "Each ordinary call gets a fresh native simulation and fee quote. Return/dispute uses one atomic native batch: the return is simulated, dispute storage is bounded, and the batch fee is quoted. Final fees come from receipts.",
+        "Native return evidence already exists; remaining labeled fixture hashes use repository bytes and local backup, without additional native uploads.",
+        "No storage refunds, rental refunds, incoming faucet funds or reserve payments enlarge the 83.49 cap."
+      ]
+    },
+    "accountsBefore": {
+      "operator": {
+        "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+        "mapped": true,
+        "autoMap": true,
+        "h160": "0xa83014ba71476262795173fbbc06656546b57ec0",
+        "nativeBalance": "228348665812789099",
+        "nativeFrozen": "0",
+        "nativeReserved": "0",
+        "nonce": 18,
+        "block": 310837,
+        "blockHash": "0x7fc4a822b5bb91876f5ef086a1056602026690db698ab50dac66bc3020ddb419"
+      },
+      "renter": {
+        "address": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+        "mapped": true,
+        "autoMap": true,
+        "h160": "0x5c8ce2c2987ea625ba9f60fe959b12e13574b404",
+        "nativeBalance": "4803048287915833",
+        "nativeFrozen": "0",
+        "nativeReserved": "0",
+        "nonce": 1,
+        "block": 310837,
+        "blockHash": "0x7fc4a822b5bb91876f5ef086a1056602026690db698ab50dac66bc3020ddb419"
+      },
+      "arbiter": {
+        "address": "5DjjjeBpydQRtt4wDHF9hq1xpKPDEWoeREbRkc4YbghL6fua",
+        "mapped": true,
+        "autoMap": true,
+        "h160": "0xd5653aa4ad6fd3e1df19beb8b5eb8c1c92f088d6",
+        "nativeBalance": "1200000000000000",
+        "nativeFrozen": "0",
+        "nativeReserved": "0",
+        "nonce": 0,
+        "block": 310837,
+        "blockHash": "0x7fc4a822b5bb91876f5ef086a1056602026690db698ab50dac66bc3020ddb419"
+      },
+      "keeper": {
+        "address": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+        "mapped": true,
+        "autoMap": true,
+        "h160": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+        "nativeBalance": "882408597152205",
+        "nativeFrozen": "0",
+        "nativeReserved": "0",
+        "nonce": 1,
+        "block": 310837,
+        "blockHash": "0x7fc4a822b5bb91876f5ef086a1056602026690db698ab50dac66bc3020ddb419"
+      }
+    },
+    "quotes": {
+      "direct-refund": {
+        "observedAt": "2026-11-03T21:47:35.785Z",
+        "at": {
+          "number": 311554,
+          "hash": "0xe6e5a85b81f84582ca1ec63b824337f9aeab4d32840b91f14fe1eef4a3f31f97",
+          "timestamp": "1793742432"
+        },
+        "role": "keeper",
+        "fn": "finalizeRefund",
+        "args": [
+          "1"
+        ],
+        "value": "0",
+        "storage": {
+          "type": "Refund",
+          "value": "384149999999998"
+        },
+        "maximumStorage": {
+          "type": "Charge",
+          "value": "384150000000000"
+        },
+        "caps": {
+          "weight_limit": {
+            "ref_time": "10000000000",
+            "proof_size": "1048576"
+          },
+          "storage_deposit_limit": "460980000000000"
+        },
+        "feeNative": "1855156089283",
+        "feeTPOT": "0.01855156089283",
+        "nonce": 1
+      }
+    },
+    "costs": {
+      "direct-refund": {
+        "feeNative": "1851166742868",
+        "storageHeldNative": "0",
+        "valueNative": "0",
+        "conservativeSpentNative": "1851166742868",
+        "feeTPOT": "0.01851166742868",
+        "storageHeldTPOT": "0",
+        "valueTPOT": "0",
+        "conservativeSpentTPOT": "0.01851166742868",
+        "feeSource": "TransactionPayment.TransactionFeePaid",
+        "balanceEvents": [
+          {
+            "type": "Withdraw",
+            "value": {
+              "who": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+              "amount": "1855156051424"
+            }
+          },
+          {
+            "type": "Transfer",
+            "value": {
+              "from": "5EGBC11Lvt36nt1w7nPrgBupfRNpnj3MVN1QPsNKVEQcv8ZY",
+              "to": "5HMeeW8k8ZHUJf1H5seQbkf3oTJGyhdb7KmUqNnaESTqQ31R",
+              "amount": "5000000000000"
+            }
+          },
+          {
+            "type": "TransferOnHold",
+            "value": {
+              "reason": {
+                "type": "Revive",
+                "value": {
+                  "type": "StorageDepositReserve"
+                }
+              },
+              "source": "5EGBC11Lvt36nt1w7nPrgBupfRNpnj3MVN1QPsNKVEQcv8ZY",
+              "dest": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+              "amount": "384149999999998"
+            }
+          },
+          {
+            "type": "Deposit",
+            "value": {
+              "who": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+              "amount": "3989308556"
+            }
+          },
+          {
+            "type": "Deposit",
+            "value": {
+              "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+              "amount": "1851166742868"
+            }
+          }
+        ]
+      }
+    },
+    "originalFailure": {
+      "txHash": "0x2b9249a026b3f868527e6964de6bd5241f401942f28e247d82dfb0eac9d75e35",
+      "block": 271528,
+      "canonicalHashVerified": true,
+      "keeperNonceCheck": {
+        "mapped": true,
+        "autoMap": true,
+        "h160": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+        "nativeBalance": "882408597152205",
+        "nativeFrozen": "0",
+        "nativeReserved": "0",
+        "nonce": 1,
+        "block": 310836,
+        "blockHash": "0xe31e99b16a0621bccd6f97242dc752f794ec0972f0a659a4a8522b3bbf3828c5",
+        "bestNonce": 1,
+        "nextIndex": 1,
+        "pendingPoolCount": 0
+      },
+      "retainedEvidence": "deployments/keeper-refund-observation.json"
+    },
+    "conservativeSpentNative": "1851166742868",
+    "conservativeSpentTPOT": "0.01851166742868"
+  },
+  "directRefund": {
+    "mode": "direct call by keeper account; Cronpot callback not used",
+    "txHash": "0x53739d89deade004318a522a9517e97dc103432c73aad50f226cf6606ad523a7",
+    "block": 311559,
+    "refund": {
+      "rentalId": "1",
+      "itemId": "1",
+      "renter": "0x5C8ce2C2987Ea625BA9F60Fe959b12e13574B404",
+      "amount": "50000000000000000"
+    },
+    "automaticCronpotRefund": false
   }
 }

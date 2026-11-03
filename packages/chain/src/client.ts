@@ -24,6 +24,13 @@ export type { HistoryResult } from "./history";
 export const CHAIN_ID = 420420777;
 export const GENESIS_HASH =
   "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd";
+// Generated metadata is valid only for this exact runtime Wasm hash. PAPI reads
+// the live :code hash before requesting this cache; upgrades fall back to RPC.
+const RETAINED_RUNTIME_CODE_HASH =
+  "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2";
+export async function retainedMetadata(codeHash: string): Promise<Uint8Array | null> {
+  return codeHash === RETAINED_RUNTIME_CODE_HASH ? portaldot.getMetadata() : null;
+}
 export const DEFAULT_WSS_URL = "wss://test-node-v3.portaldot.dev";
 export const DEFAULT_EVM_RPC_URL = "https://test-evm-rpc-v3.portaldot.dev";
 let settings = {
@@ -89,6 +96,7 @@ export function configureChain(options: Partial<typeof settings>): void {
 export function getClient() {
   return (nativeClient ??= createClient(
     getWsProvider(settings.wssUrl, { timeout: settings.timeoutMs }),
+    { getMetadata: retainedMetadata },
   ));
 }
 export function getApi() {

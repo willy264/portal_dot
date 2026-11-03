@@ -8,6 +8,12 @@ MeterMend's contracts, web interface, chain client, workers and deployment scrip
 
 The public app and report are published from committed evidence. A successful contract deployment is separate from completion of the live rental, refund, dispute and repair demonstration.
 
+## November 3 direct recovery
+
+The 2,200 tPOT top-up arrived. The existing MeterMend passed an unmodified direct refund simulation, so no replacement contract was deployed. Keeper transaction `0x53739d89deade004318a522a9517e97dc103432c73aad50f226cf6606ad523a7` finalized at block **311559**, emitted `DepositRefunded(1, ..., 0.05 tPOT)` and closed the first rental. Its actual fee was **0.01851166742868 tPOT**, with no new storage charge. This was a direct MeterMend call; the original Cronpot callback remains a failed live attempt.
+
+The remaining recovery uses the existing item and roles under the owner's **83.49 tPOT cap**. Return and dispute will use one atomic native batch to avoid losing the 120-second window during RPC delays. The client now reuses retained metadata only when the live runtime Wasm hash exactly matches; live genesis, runtime and denomination checks remain mandatory. The metadata fix cleared the recorded RPC blocker. [Diagnosis and budget](REFUND_DIAGNOSIS.md), [live receipts](../deployments/demo-run.json).
+
 ## November 2 continuation
 
 - V3 is producing and finalizing blocks: the latest retained check observed one peer, `isSyncing=false`, finalized block 284330 and deployer nonce 18, with no pending pool transactions. See [timestamped node checks](../deployments/chain-status-2026-11-02.json).

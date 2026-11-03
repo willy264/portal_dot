@@ -57,6 +57,20 @@ import {
   STEP_LIMITS,
 } from "./continuation-budget";
 
+/** Legacy RPC reads need their own deadline; they do not submit anything. */
+async function rawRpc<T = any>(method: string, params: unknown[] = []): Promise<T> {
+  const response = await fetch("https://test-node-v3.portaldot.dev", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
+    signal: AbortSignal.timeout(25_000),
+  });
+  if (!response.ok) throw new Error(`${method}: HTTP ${response.status}`);
+  const result = await response.json() as { result: T; error?: unknown };
+  if (result.error) throw new Error(`${method}: ${JSON.stringify(result.error)}`);
+  return result.result;
+}
+
 await run(async () => {
   const meter = requireContract("MeterMend"),
     cron = requireContract("Cronpot");
@@ -97,7 +111,7 @@ await run(async () => {
     ),
     assumptions: [
       "Existing contracts, funded/mapped roles and item1 reused; no deployment, account top-up or item registration.",
-      "Every dependent step gets a fresh native simulation and fee quote before signing. Final fee comes from its receipt.",
+      "Each ordinary call gets a fresh native simulation and fee quote. Return/dispute uses one atomic native batch: the return is simulated, dispute storage is bounded, and the batch fee is quoted. Final fees come from receipts.",
       "Native return evidence already exists; remaining labeled fixture hashes use repository bytes and local backup, without additional native uploads.",
       "No storage refunds, rental refunds, incoming faucet funds or reserve payments enlarge the 83.49 cap.",
     ],
@@ -111,6 +125,10 @@ await run(async () => {
     console.log(json(plan));
     return;
   }
+  console.log("Verifying original receipt, current nonce and pool before direct recovery");
+  const rpcGenesis = await rawRpc<string>("chain_getBlockHash", [0]);
+  if (rpcGenesis !== "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd")
+    throw new Error("Native HTTP endpoint genesis mismatch");
   const journal = new Journal("deployments/continuation-journal.json");
   const save = () => {
     report.updatedAt = now();
@@ -149,7 +167,7 @@ await run(async () => {
   };
   const observeNonce = async (account: ChainSigner) => {
     const state = await getAccountState(account.address),
-      best = await getClient()._request<string>("chain_getBlockHash", []);
+      best = await rawRpc<string>("chain_getBlockHash", []);
     const id = AccountId().enc(account.address),
       key = toHex(
         new Uint8Array([
@@ -160,11 +178,11 @@ await run(async () => {
         ]),
       );
     const [raw, next, pool] = await Promise.all([
-      getClient()._request<string>("state_getStorage", [key, best]),
-      getClient()._request<number>("system_accountNextIndex", [
+      rawRpc<string>("state_getStorage", [key, best]),
+      rawRpc<number>("system_accountNextIndex", [
         account.address,
       ]),
-      getClient()._request<string[]>("author_pendingExtrinsics", []),
+      rawRpc<string[]>("author_pendingExtrinsics", []),
     ]);
     const bytes = hexToBytes(raw as Hex);
     if (bytes.length !== 80) throw Error("Account codec changed");
@@ -244,7 +262,7 @@ await run(async () => {
     );
     const failedHash =
       "0x2b9249a026b3f868527e6964de6bd5241f401942f28e247d82dfb0eac9d75e35";
-    const failedBlock = await getClient()._request<string>(
+    const failedBlock = await rawRpc<string>(
       "chain_getBlockHash",
       [271528],
     );
@@ -253,7 +271,7 @@ await run(async () => {
       "0x4c48aacbf687fba94bb09d227c9b96ec840b4c7c3f96ba3a3b9e502994e19ab5"
     )
       throw Error("Original failed receipt block changed");
-    const body = await getClient()._request<any>("chain_getBlock", [
+    const body = await rawRpc<any>("chain_getBlock", [
       failedBlock,
     ]);
     if (
@@ -286,6 +304,7 @@ await run(async () => {
       save();
     }
     const c = report.continuation;
+    c.plan = plan;
     const spent = () =>
       Object.values(c.costs).reduce(
         (n: bigint, v: any) => n + BigInt(v.conservativeSpentNative),
@@ -468,18 +487,62 @@ await run(async () => {
     assert("second-rental-reserve-split", reserve2 === amount("0.004"), {
       reserve: reserve2,
     });
-    await call(
-      "return-second",
-      "operator",
-      "markReturned",
-      [secondId, returnHash],
-      amount("0.001"),
-    );
-    await call("open-dispute", "operator", "openDispute", [
-      secondId,
-      amount("0.015"),
-      disputeHash,
-    ]);
+    // Both calls use the operator origin. Atomic execution guarantees the dispute
+    // is opened in the return's block, despite intermittent RPC latency.
+    const batchKey = "return-dispute";
+    const returnData = encodeFunctionData({ abi: meterMendAbi, functionName: "markReturned", args: [secondId, returnHash] });
+    const disputeData = encodeFunctionData({ abi: meterMendAbi, functionName: "openDispute", args: [secondId, amount("0.015"), disputeHash] });
+    const batchIntent = { to: meter.address, calls: [returnData, disputeData], value: amount("0.001").toString(), atomic: true };
+    let batchReceipt: TransactionEvidence;
+    if (journal.data.steps[batchKey]) {
+      batchReceipt = (await journal.recover(batchKey, batchIntent, roles.operator))!;
+    } else {
+      const at = await getFinalizedHead();
+      const prepared = await prepareBoundedReviveCall(
+        { signer: roles.operator, to: meter.address, data: returnData, value: amount("0.001"), abi: meterMendAbi },
+        { weight_limit: { ref_time: 10000000000n, proof_size: 1048576n }, storage_deposit_limit: amount("34", 14) },
+        at,
+      );
+      const currentRental = await rental(secondId);
+      if (currentRental[5] !== 1 || currentRental[2] !== amount("0.05"))
+        throw Error("Atomic return/dispute requires the active second rental and its exact deposit");
+      const disputeCall = getApi().tx.Revive.call({
+        dest: meter.address, value: 0n,
+        weight_limit: { ref_time: 10000000000n, proof_size: 1048576n },
+        storage_deposit_limit: amount("16", 14), data: Binary.fromHex(disputeData),
+      });
+      const batch = getApi().tx.Utility.batch_all({ calls: [prepared.tx.decodedCall, disputeCall.decodedCall] });
+      const fee = await batch.getEstimatedFees(roles.operator.txCreator);
+      const bound = STEP_LIMITS[batchKey]!;
+      checkQuote(batchKey, bound.storage, fee, amount("0.001", 14));
+      const future = Object.entries(STEP_LIMITS).filter(([k]) => k !== batchKey && !c.costs[k])
+        .reduce((n, [, v]) => n + v.storage + v.fee + v.value, 0n);
+      if (spent() + bound.storage + bound.fee + bound.value + future > CONTINUATION_CAP)
+        throw Error("Atomic return/dispute exceeds complete-flow cap");
+      const state = await observeNonce(roles.operator);
+      if (state.nativeBalance - state.nativeFrozen < amount("50.101", 14) + fee)
+        throw Error("Operator lacks temporary storage balance for atomic return/dispute");
+      c.quotes[batchKey] = {
+        observedAt: now(), at, role: "operator", calls: ["markReturned", "openDispute"],
+        mode: "Utility.batch_all", feeNative: fee, feeTPOT: formatUnits(fee, 14), nonce: state.nonce,
+        returnSimulation: prepared.bounded, storageBoundNative: bound.storage,
+        limitation: "The return was simulated; the dependent dispute was not simulated independently against future state. Native batch_all rolls back both calls if either fails.",
+      };
+      save();
+      console.log(json({ preflight: batchKey, feeTPOT: formatUnits(fee, 14), storageBoundTPOT: formatUnits(bound.storage, 14) }));
+      batchReceipt = await journal.step(batchKey, batchIntent, roles.operator, async (options) => {
+        const last = await observeNonce(roles.operator);
+        if (last.nonce !== state.nonce) throw Error("Nonce changed after atomic batch preparation");
+        return submitAndWatch(batch, roles.operator, { ...options, nonce: state.nonce });
+      }, { expectedNonce: state.nonce });
+    }
+    report.transactions[batchKey] = batchReceipt;
+    save();
+    costCheck(batchKey, receiptCost(batchReceipt, roles.operator, amount("0.001", 14)));
+    const returnedArgs = eventArgs(batchReceipt, meterMendAbi, meter.address, "Returned");
+    const disputeArgs = eventArgs(batchReceipt, meterMendAbi, meter.address, "DisputeOpened");
+    assert("return-and-dispute-atomic", BigInt(returnedArgs.rentalId as bigint) === secondId && BigInt(disputeArgs.rentalId as bigint) === secondId,
+      { returned: returnedArgs, dispute: disputeArgs, txHash: batchReceipt.txHash, block: batchReceipt.block });
     const decision = await call("approve-dispute", "arbiter", "voteDispute", [
       secondId,
       true,

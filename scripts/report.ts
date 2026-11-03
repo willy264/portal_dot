@@ -66,6 +66,7 @@ const [
   optional("deployments/refund-calibration-summary.json"),
 ]);
 const operations = operationalCards({
+  demo,
   deploymentStatus,
   chainStatus,
   rpcDiscovery,
@@ -137,7 +138,7 @@ ${deckAvailable ? '<p><a href="metermend-pitch.pdf">Open pitch deck PDF</a></p>'
 <h2>Funded runtime probes</h2>${fundedRows ? `<div class="scroll"><table><thead><tr><th>Check</th><th>Result</th><th>Transaction</th><th>Block</th></tr></thead><tbody>${fundedRows}</tbody></table></div>` : "<p>No funded probe transactions recorded.</p>"}
 <h2>Live demonstration</h2><p>Status: ${escape(demo?.status ?? (demo?.completedAt ? "completed" : demo ? "in progress" : "not run"))}.</p>${transactionRows ? `<div class="scroll"><table><thead><tr><th>Step</th><th>Transaction hash</th><th>Block</th><th>Event</th><th>Amount</th></tr></thead><tbody>${transactionRows}</tbody></table></div>` : "<p>No live demo transactions have been recorded.</p>"}
 <h2>Expected rejection evidence</h2><p>These signed attempts exercise permission checks. The dispatch error records the on-chain rejection; the decoded preflight error comes from the live simulation before signing.</p>${failureRows ? `<div class="scroll"><table><thead><tr><th>Attempt / outcome</th><th>Transaction hash</th><th>Block</th><th>On-chain dispatch error</th><th>Preflight error / source</th><th>State comparison</th></tr></thead><tbody>${failureRows}</tbody></table></div>` : "<p>No signed rejection receipt has been recorded.</p>"}
-<h2>Refund execution</h2><p>${escape(KEEPER_EXPLANATION)} The signed native Scheduler probe returned BadOrigin (P5); native Scheduler does not execute these refunds.</p>${demo?.automaticRefund ? `<pre>${escape(JSON.stringify(demo.automaticRefund, null, 2))}</pre>` : "<p>Automatic keeper refund proof has not yet been recorded.</p>"}
+<h2>Refund execution</h2><p>${escape(KEEPER_EXPLANATION)} The signed native Scheduler probe returned BadOrigin (P5); native Scheduler does not execute these refunds.</p>${demo?.automaticRefund ? `<pre>${escape(JSON.stringify(demo.automaticRefund, null, 2))}</pre>` : "<p>Automatic keeper refund proof has not yet been recorded.</p>"}${demo?.directRefund ? `<p>The original failed callback was recovered by a direct keeper call to MeterMend. This is not successful Cronpot execution.</p><pre>${escape(JSON.stringify(demo.directRefund, null, 2))}</pre>` : ""}
 ${demo ? `<h2>Retained demonstration evidence</h2><details><summary>Full receipts, refund execution and reserve assertions</summary><pre>${escape(JSON.stringify(demo, null, 2))}</pre></details>` : ""}
 <h2>Phase 0 runtime probe</h2><p>Observed ${escape(probe?.observedAt ?? "not run")}. Probe mode: ${escape(probe?.mode ?? "unknown")}.</p><div class="scroll"><table><thead><tr><th>Check</th><th>Status</th><th>Evidence</th></tr></thead><tbody>${probeRows}</tbody></table></div>
 <h2>Implementation decisions</h2><pre>${escape(decisions)}</pre><footer><small>Generated ${escape(now)} · Commit ${escape(process.env.GITHUB_SHA ?? "local working tree")} · MIT license. This self-contained report retains observed evidence even when testnet RPC history is pruned.</small></footer></main></html>`;

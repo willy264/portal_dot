@@ -91,6 +91,7 @@ export default async function Proof() {
   const schedulerTransactions = transactionsFrom(jobs, "Executor");
   const jobList = executorJobs(jobs);
   const operations = operationalCards({
+    demo,
     deploymentStatus,
     chainStatus,
     rpcDiscovery,
