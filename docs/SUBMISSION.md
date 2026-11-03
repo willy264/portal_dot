@@ -111,7 +111,7 @@ The source of truth for completed deployments is `deployments/portaldot-v3.json`
 | Public app        | https://metermend.vercel.app/                                                                                                                                                                                                                                                                                                                                                   |
 | Application proof | https://metermend.vercel.app/proof                                                                                                                                                                                                                                                                                                                                              |
 | Permanent report  | https://willy264.github.io/portal_dot/                                                                                                                                                                                                                                                                                                                                          |
-| Pitch deck PDF    | [Public PDF](https://metermend.vercel.app/metermend-pitch.pdf); [Permanent report mirror](https://willy264.github.io/portal_dot/metermend-pitch.pdf). Both copies of the revised deck were downloaded and verified on November 1 with SHA-256 `31b14f906f0bb3781096ca9d54e889e74e412d8cdf48a791bda64137f6a11b85`. Refresh the deck again after the complete live demonstration. |
+| Pitch deck PDF | [Public PDF](https://metermend.vercel.app/metermend-pitch.pdf) and [permanent mirror](https://willy264.github.io/portal_dot/metermend-pitch.pdf). Both verified November 3, 2026; SHA-256 `7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8`. |
 | Video             | **Pending. No completed video or public video URL exists yet.**                                                                                                                                                                                                                                                                                                                 |
 
 ## Final paste checklist
@@ -120,6 +120,6 @@ The source of truth for completed deployments is `deployments/portaldot-v3.json`
 - Confirm the golden-path transaction list and both reserve assertions are in `deployments/demo-run.json`.
 - Verify public worker/evidence health and the real phone/printed-QR rehearsal.
 - Attach actual Telegram delivery screenshots; retain DeBox's honest status.
-- Both public PDF links matched the generated artifact on November 1. Recheck the SHA-256 after regenerating the deck, then paste the verified link above.
+- Both revised public PDFs matched the generated artifact on November 3. Use the verified links above.
 - Record only real testnet footage, add the voiceover, keep the video under 2:30, upload it, and replace the pending video field.
 - Check README links and CI for the final commit; paste/update the BUIDL and retain submission confirmation before **November 5, 22:00 WAT**.

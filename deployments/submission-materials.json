@@ -1,7 +1,7 @@
 {
   "observedAt": "2026-11-03T22:35:50.271Z",
   "status": "direct-recovery-recorded-video-and-submission-pending",
-  "summary": "Ten-slide pitch deck exported and browser-checked. The live direct recovery is complete; the original Cronpot callback failed and corrected Cronpot automation is not claimed. Phone rehearsal, durable hosting, video and final submission remain outstanding. This revised PDF requires publication verification.",
+  "summary": "Ten-slide deck published and both public PDF hashes verified. Full direct-recovery receipts and all six Telegram delivery types are public. Successful corrected Cronpot automation, durable hosting, physical-phone evidence, video and final submission remain outstanding.",
   "deadline": {
     "internal": "2026-11-05T22:00:00+01:00",
     "official": "2026-11-06T05:00:00+01:00",
@@ -11,7 +11,7 @@
     "status": "generated",
     "path": "apps/web/public/metermend-pitch.pdf",
     "publicUrl": "https://metermend.vercel.app/metermend-pitch.pdf",
-    "publicLinkVerified": false,
+    "publicLinkVerified": true,
     "source": "docs/pitch/index.html",
     "sha256": "7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8",
     "bytes": 181330,
@@ -71,6 +71,21 @@
             "verifiedAt": "2026-11-01T02:35:28.442Z"
           }
         ]
+      }
+    ],
+    "publicLinkVerifiedAt": "2026-11-03T22:53:04.316Z",
+    "publicLinks": [
+      {
+        "url": "https://metermend.vercel.app/metermend-pitch.pdf",
+        "sha256": "7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8",
+        "bytes": 181330,
+        "status": 200
+      },
+      {
+        "url": "https://willy264.github.io/portal_dot/metermend-pitch.pdf",
+        "sha256": "7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8",
+        "bytes": 181330,
+        "status": 200
       }
     ]
   },

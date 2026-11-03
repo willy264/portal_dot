@@ -1,0 +1,115 @@
+{
+  "observedAt": "2026-11-03T22:53:04.316Z",
+  "results": [
+    {
+      "url": "https://metermend.vercel.app/",
+      "status": 200,
+      "bytes": 23748
+    },
+    {
+      "url": "https://metermend.vercel.app/proof",
+      "status": 200,
+      "bytes": 166236,
+      "allDemoHashesPresent": true,
+      "directRecoveryDisclosed": true,
+      "signedRejectionVisible": true,
+      "sixTelegramTypes": true
+    },
+    {
+      "url": "https://willy264.github.io/portal_dot/",
+      "status": 200,
+      "bytes": 340485,
+      "allDemoHashesPresent": true,
+      "directRecoveryDisclosed": true,
+      "signedRejectionVisible": true,
+      "sixTelegramTypes": true
+    },
+    {
+      "url": "https://metermend.vercel.app/metermend-pitch.pdf",
+      "status": 200,
+      "bytes": 181330,
+      "sha256": "7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8",
+      "matchesLocal": true
+    },
+    {
+      "url": "https://willy264.github.io/portal_dot/metermend-pitch.pdf",
+      "status": 200,
+      "bytes": 181330,
+      "sha256": "7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8",
+      "matchesLocal": true
+    },
+    {
+      "url": "https://metermend.vercel.app/metermend-qr.html",
+      "status": 200,
+      "bytes": 8693
+    },
+    {
+      "url": "https://metermend-preview.onrender.com/health",
+      "status": 200,
+      "bytes": 507,
+      "response": {
+        "network": "portaldot-v3-testnet",
+        "configured": true,
+        "mode": "keeper",
+        "requestedMode": "keeper",
+        "startBlock": 271379,
+        "signer": null,
+        "signerError": "Keeper writes disabled: a verified manifest.executionProfile is required; keep indexing until calibrated deployment evidence is recorded",
+        "writesEnabled": false,
+        "readOnly": true,
+        "storageMode": "ephemeral-free-preview",
+        "executionProfile": null,
+        "cursor": {
+          "block": 275684,
+          "hash": "0x3963616bdde755ea2343b5bbab42008e51addcffdeafa53b4d4a44cf8135e370"
+        },
+        "gap": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://metermend-preview.onrender.com/jobs",
+      "status": 200,
+      "bytes": 7346,
+      "mode": "keeper",
+      "jobs": [
+        {
+          "id": "1",
+          "state": "Failed",
+          "attempts": 1,
+          "txHash": "0x2b9249a026b3f868527e6964de6bd5241f401942f28e247d82dfb0eac9d75e35"
+        }
+      ]
+    },
+    {
+      "url": "https://metermend.vercel.app/api/ledger",
+      "status": 200,
+      "bytes": 14195,
+      "state": "ready",
+      "block": "312206",
+      "items": [
+        {
+          "id": "1",
+          "reserve": "9500000000000000"
+        },
+        {
+          "id": "2",
+          "reserve": "0"
+        }
+      ],
+      "rentals": [
+        {
+          "id": "1",
+          "status": 4,
+          "deposit": "0"
+        },
+        {
+          "id": "2",
+          "status": 4,
+          "deposit": "0"
+        }
+      ],
+      "historyStatus": "Persisted events from the workshop indexer."
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "observedAt": "2026-11-03T22:36:50.953Z",
-  "status": "local-checks-passed-awaiting-final-publication",
+  "status": "recovery-and-publication-verified",
   "noContractsRedeployed": true,
   "directRecovery": true,
   "automaticCronpotRefund": false,
@@ -40,5 +40,120 @@
     "Actual Telegram group screenshots",
     "Physical-phone rehearsal and recording",
     "Voiceover, video upload and final BUIDL submission"
-  ]
+  ],
+  "publication": {
+    "observedAt": "2026-11-03T22:53:04.316Z",
+    "proofPages": [
+      "https://metermend.vercel.app/proof",
+      "https://willy264.github.io/portal_dot/"
+    ],
+    "deckSha256": "7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8",
+    "allDemoHashesPresent": true,
+    "signedRejectionVisible": true
+  },
+  "correctedPublicationCI": {
+    "commit": "17d3659736f291e51011e94a452401574e7b5ebf",
+    "url": "https://github.com/willy264/portal_dot/actions/runs/41734475047",
+    "conclusion": "success",
+    "typescriptTests": 241,
+    "foundryTests": 49
+  },
+  "readmeLinks": {
+    "observedAt": "2026-11-03T22:52:42.864Z",
+    "results": [
+      {
+        "target": "docs/BRAND.md",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "docs/PROGRESS_REPORT.md",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "LICENSE",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "deployments/read-back.json",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "docs/LIVE_RECOVERY.md",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "deployments/cronpot-callback-diagnosis.json",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "deployments/portaldot-v3.json",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "deployments/funded-probe.json",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "https://willy264.github.io/portal_dot/",
+        "status": 200
+      },
+      {
+        "target": "https://node-console.portaldot.dev/?rpc=wss%3A%2F%2Ftest-node-v3.portaldot.dev",
+        "status": 200
+      },
+      {
+        "target": "https://metermend.vercel.app/",
+        "status": 200
+      },
+      {
+        "target": "https://metermend.vercel.app/proof",
+        "status": 200
+      },
+      {
+        "target": "docs/DEMO_VIDEO.md",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "docs/ARCHITECTURE.md",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "SPEC.md",
+        "status": "local-file-exists"
+      },
+      {
+        "target": ".env.example",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "scripts/README.md",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "docs/HOSTING.md",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "docs/DECISIONS.md",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "docs/FAUCET_REQUEST.md",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "https://metermend.vercel.app/metermend-qr.html",
+        "status": 200
+      },
+      {
+        "target": "PORTALDOT_RESEARCH_AND_IDEAS.md",
+        "status": "local-file-exists"
+      },
+      {
+        "target": "research/",
+        "status": "local-file-exists"
+      }
+    ],
+    "passed": true
+  }
 }

@@ -14,6 +14,8 @@ The existing-contract direct recovery completed on November 3, 2026. Rental 1 re
 
 The original Cronpot callback remains a failed live attempt (OutOfGas). The successful refund was direct, not successful Cronpot execution. Corrected Cronpot passes 49 tests but is not deployed. MeterMend was not changed or redeployed. The 2,200 tPOT top-up arrived; recovery still stayed within the separate 83.49 tPOT cap. See [the complete transaction and cost table](LIVE_RECOVERY.md).
 
+The final recovery proof and refreshed ten-slide PDF are public on Vercel and GitHub Pages; both PDF downloads match SHA-256 `7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8`. All six Telegram event types have provider acknowledgements. Actual group screenshots, physical-phone rehearsal, durable hosting and video remain outstanding. Publication configuration was corrected and CI passed on `17d3659` (241 TypeScript/JavaScript and 49 contract tests).
+
 ### First recovery checkpoint
 
 The 2,200 tPOT top-up arrived. The existing MeterMend passed an unmodified direct refund simulation, so no replacement contract was deployed. Keeper transaction `0x53739d89deade004318a522a9517e97dc103432c73aad50f226cf6606ad523a7` finalized at block **311559**, emitted `DepositRefunded(1, ..., 0.05 tPOT)` and closed the first rental. Its actual fee was **0.01851166742868 tPOT**, with no new storage charge. This was a direct MeterMend call; the original Cronpot callback remains a failed live attempt.
