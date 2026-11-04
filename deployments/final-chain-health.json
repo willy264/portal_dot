@@ -1,0 +1,16 @@
+{
+  "observedAt": "2026-11-04T16:36:05.439Z",
+  "completedAt": "2026-11-04T16:36:20.147Z",
+  "endpoint": "https://test-node-v3.portaldot.dev",
+  "health": {
+    "peers": 1,
+    "isSyncing": false,
+    "shouldHavePeers": true
+  },
+  "bestStart": 322755,
+  "bestEnd": 322756,
+  "finalizedBlock": 322752,
+  "finalizedHash": "0x8bba4562751b7994ab7129ac4cbcfe659cd4a5852685c4ea333a86fd3832fe85",
+  "newBlocks": 1,
+  "signedTransactions": 0
+}

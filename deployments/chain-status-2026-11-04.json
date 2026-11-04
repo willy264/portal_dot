@@ -39,6 +39,24 @@
           "frozenNative": "0"
         }
       }
+    },
+    {
+      "observedAt": "2026-11-04T16:36:05.439Z",
+      "endpoint": "https://test-node-v3.portaldot.dev",
+      "health": {
+        "peers": 1,
+        "isSyncing": false,
+        "shouldHavePeers": true
+      },
+      "best": {
+        "number": 322756
+      },
+      "finalized": {
+        "number": 322752,
+        "hash": "0x8bba4562751b7994ab7129ac4cbcfe659cd4a5852685c4ea333a86fd3832fe85"
+      },
+      "newBlocks": 1,
+      "account": null
     }
   ],
   "observedAt": "2026-11-04T07:18:32.240Z"

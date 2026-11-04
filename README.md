@@ -103,13 +103,17 @@ pnpm --filter @metermend/debox-bot start
 
 See [script operations](scripts/README.md) and [persistent hosting](docs/HOSTING.md). Vercel requires an external persistent evidence backend; serverless local disk is not durable storage.
 
+## Hosting
+
+Vercel app, GitHub Pages proof, GitHub Actions keeper (free, runs every ~10 min), permissionless refunds as fallback. Render Free remains the read-only history service; the app shows a waking-up message during a cold start. Committed [demo evidence images](docs/evidence/demo/README.md) are linked from the proof page. No paid hosting is used.
+
 For the corrected Cronpot recording keeper, run this from the repository root:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\start-recording-keeper.ps1
 ```
 
-The [free keeper setup](docs/HOSTING_FINAL.md) also prepares GitHub Actions attempts every ten minutes, with journal restoration and no overlapping signer. Scheduled runs can be delayed; configuration alone is not evidence of successful execution. The keeper can directly finalize eligible ordinary rentals lacking an active corrected job as a **permissionless direct fallback**; that produces a refund event, not successful Cronpot execution. The public rental page also offers **Finalize refund** after the deadline as a manual fallback.
+The [free keeper setup](docs/HOSTING_FINAL.md) runs GitHub Actions attempts every ten minutes, with journal restoration and no overlapping signer. Scheduled runs can be delayed; configuration alone is not evidence of successful execution. The keeper can directly finalize eligible ordinary rentals lacking an active corrected job as a **permissionless direct fallback**; that produces a refund event, not successful Cronpot execution. The public rental page also offers **Finalize refund** after the deadline as a manual fallback.
 
 ## Phase 0 findings
 
@@ -138,3 +142,5 @@ The distinct demo roles are funded and mapped, and two items have 120-second dis
 ## Research archive
 
 The original [research report and twelve proposals](PORTALDOT_RESEARCH_AND_IDEAS.md) includes three ideas per track, technology findings and partner integration options. Supporting evidence remains in [research/](research/). MeterMend is the selected build.
+
+Free keeper verification: [two manual scans passed, including journal restoration](https://github.com/willy264/portal_dot/actions/runs/41868737068). Both were idle and submitted no transactions. The scheduled trigger is enabled; timing is not guaranteed. It uses a separate mapped account funded with 10 tPOT. The live corrected refund was executed by the local keeper.

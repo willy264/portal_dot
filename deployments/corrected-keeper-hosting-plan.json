@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "observedAt": "2026-11-04T16:28:58.445Z",
-  "status": "free-actions-prepared-not-enabled",
+  "observedAt": "2026-11-04T16:38:53.550Z",
+  "status": "free-actions-enabled-manual-runs-verified",
   "paidHostingDecision": "declined-by-owner",
   "paidResourcesCreated": 0,
   "hostingTimebox": {
@@ -12,11 +12,11 @@
   "githubActions": {
     "workflow": ".github/workflows/keeper.yml",
     "schedule": "*/10 * * * *",
-    "status": "prepared-not-enabled",
+    "status": "enabled; two manual scans passed; journal restoration verified",
     "repository": "willy264/portal_dot",
     "branch": "main",
-    "runUrl": null,
-    "lastSuccessfulRun": null,
+    "runUrl": "https://github.com/willy264/portal_dot/actions/runs/41868737068",
+    "lastSuccessfulRun": "2026-11-04T16:35:25.454Z",
     "runner": "ubuntu-latest",
     "nodeVersion": "22.23.4",
     "pnpmVersion": "10.34.9",
@@ -38,7 +38,7 @@
     "isPersistentDisk": false,
     "maximumRefundDelayGuaranteed": false,
     "repositoryVisibilityVerified": "public",
-    "remoteWorkflowObservation": "not-created-as-of-observedAt",
+    "remoteWorkflowObservation": "enabled on main",
     "artifactCompressionLevel": 9,
     "billingScope": "public-standard-runner-compute-free-artifacts-use-shared-allowance-no-paid-overage-authorized",
     "account": {
@@ -48,7 +48,8 @@
       "dedicated": true,
       "fundingTxHash": "0x89dfafd2ec8fc020c0efd0bfa29e98170c6d084f164e785483263b34e2f41b39"
     },
-    "secretConfigured": true
+    "secretConfigured": true,
+    "scheduledTriggerObserved": false
   },
   "existingServiceObservation": {
     "serviceId": "srv-dbjtgpu7bikc738h3hc0",
@@ -71,7 +72,7 @@
     "artifactRecoveryTests": "11-passed",
     "powershellSyntax": "passed",
     "paidProvisioning": "not-attempted",
-    "remoteSignerConfiguration": "not-attempted-by-hosting-preparation",
+    "remoteSignerConfiguration": "dedicated 10 tPOT account; secret configured and two remote scans verified",
     "localPrerequisites": "passed-node22-entrypoint-manifest-dependencies-env-file-present-no-transaction"
   },
   "sources": [
@@ -80,7 +81,7 @@
     "https://docs.github.com/en/rest/actions/artifacts"
   ],
   "limitations": [
-    "No successful GitHub Actions keeper run is claimed until its run URL and chain evidence are recorded.",
+    "The two verified Actions scans were idle; the live corrected refund was executed by the local keeper.",
     "Scheduled execution can be delayed or dropped and is not an always-on worker.",
     "An absent or expired journal artifact blocks further signing until prior attempts are reconciled.",
     "Durable public evidence-upload storage remains outstanding.",

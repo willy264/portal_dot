@@ -1,0 +1,50 @@
+{
+  "observedAt": "2026-11-04T16:38:53.550Z",
+  "status": "two-manual-runs-passed-journal-restored",
+  "schedule": "*/10 * * * *",
+  "scheduledTriggerObserved": false,
+  "signedTransactions": 0,
+  "first": {
+    "runId": 41868427167,
+    "url": "https://github.com/willy264/portal_dot/actions/runs/41868427167",
+    "worker": {
+      "schemaVersion": 1,
+      "status": "idle",
+      "observedAt": "2026-11-04T16:33:54.935Z",
+      "cronpot": "0x232c9673766794d6106a68cf4480678c73658f4c",
+      "meterMend": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "keeper": "5E49UZgRcyc8xpfbXz4WhsaF8PM29ZBcNEj55oW1HVYMfPP7",
+      "jobs": [],
+      "executedJobs": [],
+      "rentals": [],
+      "directRefunds": [],
+      "directFallbackEnabled": true
+    }
+  },
+  "second": {
+    "runId": 41868737068,
+    "url": "https://github.com/willy264/portal_dot/actions/runs/41868737068",
+    "worker": {
+      "schemaVersion": 1,
+      "status": "idle",
+      "observedAt": "2026-11-04T16:35:25.454Z",
+      "cronpot": "0x232c9673766794d6106a68cf4480678c73658f4c",
+      "meterMend": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "keeper": "5E49UZgRcyc8xpfbXz4WhsaF8PM29ZBcNEj55oW1HVYMfPP7",
+      "jobs": [],
+      "executedJobs": [],
+      "rentals": [],
+      "directRefunds": [],
+      "directFallbackEnabled": true
+    },
+    "restored": {
+      "schemaVersion": 1,
+      "restoredAt": "2026-11-04T16:35:12.614Z",
+      "runId": 41868737068,
+      "runAttempt": 1,
+      "sourceRunId": 41868427167,
+      "sourceRunAttempt": 1,
+      "sourceArtifactId": 13343396928
+    }
+  }
+}

@@ -63,3 +63,5 @@ Free GitHub Actions is configured for periodic attempts roughly every ten minute
 The owner handles the real printed-QR phone scan, wallet rehearsal, Telegram screenshots, voiceover and video upload. The QR sheet remains valid because MeterMend and the item IDs are unchanged. Follow [PHONE_REHEARSAL.md](PHONE_REHEARSAL.md), the [recording manifest](templates/recording-manifest.template.json) and [shot map](templates/shot-map.template.csv). After exporting a readable 1080p MP4, watch it through and verify anonymous playback before inserting the actual URL in [SUBMISSION.md](SUBMISSION.md). Video URL remains **pending**; no recording or upload is claimed.
 
 Internal submission deadline: **November 5, 2026, 22:00 WAT**.
+
+Free keeper verification: [two manual scans passed, including journal restoration](https://github.com/willy264/portal_dot/actions/runs/41868737068). Both were idle and submitted no transactions. The scheduled trigger is enabled; timing is not guaranteed. It uses a separate mapped account funded with 10 tPOT. The live corrected refund was executed by the local keeper.

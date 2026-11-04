@@ -52,3 +52,7 @@ Never run local and Actions keepers with the same seed simultaneously. When movi
 The app remains on [Vercel](https://metermend.vercel.app/). The existing [Render preview](https://metermend-preview.onrender.com) stays free and read-only. GitHub Actions does not provide a public evidence-upload service or persistent SQLite/filesystem hosting; the original always-on evidence-service requirement remains outstanding.
 
 The indexer can lag current finality; the corrected keeper reads Cronpot jobs directly, and indexer catch-up is outside this final-push scope.
+
+## Verified activation
+
+The first manual run and [second restoration run](https://github.com/willy264/portal_dot/actions/runs/41868737068) passed. Both found no eligible refunds and signed no transactions. The dedicated Actions account is `5E49UZgRcyc8xpfbXz4WhsaF8PM29ZBcNEj55oW1HVYMfPP7`, mapped to `0x60cdf5edc2e10f7a5183d50cca4cedc4f0ee36ee`, funded with 10 tPOT. GitHub `KEEPER_SEED` uses its ignored `ACTIONS_KEEPER_SEED` value, distinct from the local recording relayer. The ten-minute schedule is enabled; a scheduled-trigger run has not yet been verified.

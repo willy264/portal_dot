@@ -1,5 +1,5 @@
 {
-  "observedAt": "2026-11-04T16:18:49.114Z",
+  "observedAt": "2026-11-04T16:39:55.281Z",
   "meterMendRedeployed": false,
   "correctedCronpot": "0x232c9673766794d6106a68cf4480678c73658f4c",
   "correctedRefund": "0x8c45df7bebdaaa714c7490bac16538455196445eec253097b4d6a4e80b373b63",
@@ -13,11 +13,40 @@
   },
   "typechecks": "all workspace and scripts passed",
   "paidResourcesCreated": 0,
-  "githubActions": "pending-first-run",
-  "publicPublication": "pending",
+  "githubActions": "two-manual-runs-passed-journal-restored",
+  "publicPublication": "Vercel and GitHub Pages proof, deck and QR links verified",
   "scriptTests": {
     "passed": 76,
     "failed": 0
   },
-  "totalTypeScriptJavaScriptTests": 276
+  "totalTypeScriptJavaScriptTests": 276,
+  "ci": {
+    "conclusion": "success",
+    "headSha": "90cb5f7690496e2dcaa2b751370c999c5e8cc698",
+    "status": "completed",
+    "url": "https://github.com/willy264/portal_dot/actions/runs/41868417024"
+  },
+  "githubActionsRunUrl": "https://github.com/willy264/portal_dot/actions/runs/41868737068",
+  "chain": {
+    "observedAt": "2026-11-04T16:36:05.439Z",
+    "completedAt": "2026-11-04T16:36:20.147Z",
+    "endpoint": "https://test-node-v3.portaldot.dev",
+    "health": {
+      "peers": 1,
+      "isSyncing": false,
+      "shouldHavePeers": true
+    },
+    "bestStart": 322755,
+    "bestEnd": 322756,
+    "finalizedBlock": 322752,
+    "finalizedHash": "0x8bba4562751b7994ab7129ac4cbcfe659cd4a5852685c4ea333a86fd3832fe85",
+    "newBlocks": 1,
+    "signedTransactions": 0
+  },
+  "productionBuild": "passed",
+  "pages": {
+    "status": "success",
+    "url": "https://github.com/willy264/portal_dot/actions/runs/41868417283"
+  },
+  "publicChecks": "deployments/final-public-checks.json"
 }

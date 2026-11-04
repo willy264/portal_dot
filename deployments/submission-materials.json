@@ -11,7 +11,7 @@
     "status": "generated",
     "path": "apps/web/public/metermend-pitch.pdf",
     "publicUrl": "https://metermend.vercel.app/metermend-pitch.pdf",
-    "publicLinkVerified": false,
+    "publicLinkVerified": true,
     "source": "docs/pitch/index.html",
     "sha256": "a250a28da7baf3bc4dd27d9fe92a34636f69829499250d29bde1fb03acbd90ab",
     "bytes": 183099,
@@ -22,7 +22,7 @@
       "overflowChecks": "passed",
       "browserExceptions": 0,
       "screenshots": "docs/pitch/previews/",
-      "visualReview": "pending"
+      "visualReview": "passed-contact-sheet-and-overflow-checks"
     },
     "previousPublications": [
       {
@@ -90,11 +90,16 @@
         ],
         "verifiedAt": "2026-11-03T22:53:04.316Z"
       }
+    ],
+    "publicLinkVerifiedAt": "2026-11-04T16:39:55.281Z",
+    "publicLinks": [
+      "https://metermend.vercel.app/metermend-pitch.pdf",
+      "https://willy264.github.io/portal_dot/metermend-pitch.pdf"
     ]
   },
   "submission": {
     "path": "docs/SUBMISSION.md",
-    "status": "ready-for-final-video-link-and-owner-submission"
+    "status": "ready-except-video-url-and-owner-submission"
   },
   "video": {
     "status": "not-recorded",

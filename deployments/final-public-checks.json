@@ -1,0 +1,92 @@
+{
+  "observedAt": "2026-11-04T16:39:55.281Z",
+  "results": [
+    {
+      "url": "https://metermend.vercel.app/",
+      "status": 200,
+      "bytes": 23825
+    },
+    {
+      "url": "https://metermend.vercel.app/proof",
+      "status": 200,
+      "bytes": 211537,
+      "allDemoHashesPresent": true,
+      "correctedRefundVisible": true,
+      "correctedAddressVisible": true,
+      "freeHostingVisible": true,
+      "fixturesLinked": true
+    },
+    {
+      "url": "https://willy264.github.io/portal_dot/",
+      "status": 200,
+      "bytes": 592783,
+      "allDemoHashesPresent": true,
+      "correctedRefundVisible": true,
+      "correctedAddressVisible": true,
+      "freeHostingVisible": true,
+      "fixturesLinked": true
+    },
+    {
+      "url": "https://metermend.vercel.app/metermend-pitch.pdf",
+      "status": 200,
+      "bytes": 183099,
+      "sha256": "a250a28da7baf3bc4dd27d9fe92a34636f69829499250d29bde1fb03acbd90ab",
+      "matchesLocal": true
+    },
+    {
+      "url": "https://willy264.github.io/portal_dot/metermend-pitch.pdf",
+      "status": 200,
+      "bytes": 183099,
+      "sha256": "a250a28da7baf3bc4dd27d9fe92a34636f69829499250d29bde1fb03acbd90ab",
+      "matchesLocal": true
+    },
+    {
+      "url": "https://metermend.vercel.app/metermend-qr.html",
+      "status": 200,
+      "bytes": 8693
+    },
+    {
+      "url": "https://metermend-preview.onrender.com/health",
+      "status": 200,
+      "bytes": 507,
+      "readOnly": true,
+      "signer": null,
+      "cursor": {
+        "block": 274603,
+        "hash": "0xdc78682be9eb6b861adae93984a70dbc62e8e327d6c3543cffc03c0f1130dfcb"
+      }
+    },
+    {
+      "url": "https://metermend-preview.onrender.com/jobs",
+      "status": 200,
+      "bytes": 7346,
+      "mode": "keeper",
+      "jobs": 1
+    },
+    {
+      "url": "https://metermend.vercel.app/api/ledger",
+      "status": 200,
+      "bytes": 14360,
+      "state": "ready",
+      "block": "322789",
+      "rentals": [
+        {
+          "id": "1",
+          "status": 4,
+          "deposit": "0"
+        },
+        {
+          "id": "2",
+          "status": 4,
+          "deposit": "0"
+        },
+        {
+          "id": "3",
+          "status": 4,
+          "deposit": "0"
+        }
+      ],
+      "historyStatus": "Persisted events from the workshop indexer."
+    }
+  ]
+}

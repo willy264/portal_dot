@@ -20,7 +20,7 @@ An operator registers an item, assigns a distinct arbiter and prints its QR code
 
 refunds execute automatically via Cronpot; execution is permissionless and our keeper runs it.
 
-MeterMend still creates its built-in job on the immutable original Cronpot. For the corrected demonstration, the keeper separately registers `MeterMend.finalizeRefund(rentalId)` on corrected Cronpot with `executeAfter = refundAt`, then executes the due job. MeterMend has not been redeployed or rewired. The corrected live execution is counted only after `JobExecuted(success=true)` and `DepositRefunded` appear in the same finalized transaction.
+MeterMend still creates its built-in job on the immutable original Cronpot. For the corrected demonstration, the keeper separately registers `MeterMend.finalizeRefund(rentalId)` on corrected Cronpot with `executeAfter = refundAt`, then executes the due job. MeterMend has not been redeployed or rewired. The corrected live execution emitted `JobExecuted(success=true)` and `DepositRefunded` in the same finalized transaction at block 322488.
 
 The refund contract independently checks the deadline and rental status. A damage proposal counts as the operator's approval and needs either the distinct renter or arbiter to approve a deduction; both other parties must reject to return the full deposit. Only an arbiter-approved repair can spend the item reserve. Operator income withdrawal cannot release reserve money. Damage assessment still relies on people, and unresolved votes can delay settlement.
 
@@ -82,7 +82,7 @@ Rental **3** finalized at block **317426**, transaction `0x227e8d1a237afa3eff399
 
 ## Hosting and outstanding work
 
-Paid hosting was declined. The selected free setup prepares GitHub Actions to run the corrected keeper approximately every ten minutes, with restored transaction journals and no overlapping signer. GitHub may delay scheduled runs; this is not an always-on guarantee. A one-command supervised local keeper is ready for recording. For ordinary app rentals lacking an active corrected job, the keeper provides a permissionless direct fallback; this produces `DepositRefunded`, not `JobExecuted(success=true)`. The public rental page also offers **Finalize refund** with its finalized transaction hash. The corrected recording run disables direct fallback so its successful proof must come through the corrected Cronpot. [Commands and observed hosting status](HOSTING_FINAL.md).
+Paid hosting was declined. The selected free setup enables GitHub Actions to run the keeper approximately every ten minutes, with restored transaction journals and no overlapping signer. GitHub may delay scheduled runs; this is not an always-on guarantee. A one-command supervised local keeper is ready for recording. For ordinary app rentals lacking an active corrected job, the keeper provides a permissionless direct fallback; this produces `DepositRefunded`, not `JobExecuted(success=true)`. The public rental page also offers **Finalize refund** with its finalized transaction hash. The corrected recording run disables direct fallback so its successful proof must come through the corrected Cronpot. [Commands and observed hosting status](HOSTING_FINAL.md).
 
 The app is on [Vercel](https://metermend.vercel.app/); [Render Free](https://metermend-preview.onrender.com/health) provides a read-only history preview that can sleep. It has no signer or durable evidence uploads. The UI identifies when that free history service may be waking up. Persistent public evidence storage remains outstanding.
 
@@ -122,7 +122,7 @@ Network: **Portaldot V3 testnet**. Chain ID: **420420777 (`0x190f1ca9`)**. Runti
 | First return-image native store  | `0x958a2258295503cb547704b8c41a1f5b23ac06a64a7632808fd5a7d325c59226` | 271494 Â· Finalized; labeled fixture, 42,569 bytes                                          |
 | First return / Cronpot schedule  | `0x826d77cd7a5ee1c7133f57051ae96d8e6593c3234b39de397f7ef16029c4ce4b` | 271498 Â· Finalized; job 1 scheduled                                                        |
 | First keeper execution           | `0x2b9249a026b3f868527e6964de6bd5241f401942f28e247d82dfb0eac9d75e35` | 271528 Â· Outer dispatch succeeded; callback failed; no refund                              |
-| Complete live golden path        | Full direct-recovery receipts in `deployments/demo-run.json`                      | Direct recovery completed; original automatic callback failed                  |
+| Complete live golden path        | Full direct-recovery receipts in `deployments/demo-run.json`                      | Direct recovery and corrected automatic refund completed; original failure preserved                  |
 
 The original deployment manifest is `deployments/portaldot-v3.json`; the separate corrected contract is in `deployments/corrected-cronpot.json`. All corrected-run receipts belong in `deployments/demo-run.json.correctedAutomation`, preserving the original failure and direct recovery. Every success includes its actual transaction and block hash.
 
@@ -134,15 +134,17 @@ The original deployment manifest is `deployments/portaldot-v3.json`; the separat
 | Public app        | https://metermend.vercel.app/                                                                                                                                                                                                                                                                                                                                                   |
 | Application proof | https://metermend.vercel.app/proof                                                                                                                                                                                                                                                                                                                                              |
 | Permanent report  | https://willy264.github.io/portal_dot/                                                                                                                                                                                                                                                                                                                                          |
-| Pitch deck PDF | [Public PDF](https://metermend.vercel.app/metermend-pitch.pdf) and [permanent mirror](https://willy264.github.io/portal_dot/metermend-pitch.pdf). Both verified November 3, 2026; SHA-256 `7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8`. |
+| Pitch deck PDF | [Public PDF](https://metermend.vercel.app/metermend-pitch.pdf) and [permanent mirror](https://willy264.github.io/portal_dot/metermend-pitch.pdf). Both verified November 4, 2026; SHA-256 `a250a28da7baf3bc4dd27d9fe92a34636f69829499250d29bde1fb03acbd90ab`. |
 | Video             | **Pending. No completed video or public video URL exists yet.**                                                                                                                                                                                                                                                                                                                 |
 
 ## Final paste checklist
 
-- Preserve both finalized deployment receipts; add the live golden-path evidence to the deck and regenerate the PDF/report when the demo completes.
+- Completed: original and corrected deployment receipts, full settlement receipts, regenerated deck and proof report are committed.
 - Confirm the golden-path transaction list and both reserve assertions are in `deployments/demo-run.json`.
 - Verify public worker/evidence health and the real phone/printed-QR rehearsal.
 - Attach actual Telegram delivery screenshots; retain DeBox's honest status.
-- Both revised public PDFs matched the generated artifact on November 3. Use the verified links above.
+- Completed: both public PDFs matched the generated artifact on November 4. Use the verified links above.
 - Record only real testnet footage, add the voiceover, keep the video under 2:30, upload it, and replace the pending video field.
 - Check README links and CI for the final commit; paste/update the BUIDL and retain submission confirmation before **November 5, 22:00 WAT**.
+
+Free keeper verification: [two manual scans passed, including journal restoration](https://github.com/willy264/portal_dot/actions/runs/41868737068). Both were idle and submitted no transactions. The scheduled trigger is enabled; timing is not guaranteed. It uses a separate mapped account funded with 10 tPOT. The live corrected refund was executed by the local keeper.
