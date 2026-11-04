@@ -109,6 +109,42 @@ describe("finalized workshop reads", () => {
     expect(a).toBe(b);
     expect(fake.chain.getFinalizedHead).toHaveBeenCalledTimes(1);
   });
+  it.each(["timeout", "gateway"])(
+    "keeps verified chain state actionable while Render history is waking up (%s)",
+    async (failure) => {
+      vi.stubEnv("CHAIN_INDEXER_URL", "https://metermend-preview.onrender.com");
+      vi.stubGlobal(
+        "fetch",
+        vi.fn(async () => {
+          if (failure === "timeout")
+            throw new DOMException("Request timed out", "TimeoutError");
+          return new Response("Starting service", { status: 503 });
+        }),
+      );
+      const ledger = await readLedger();
+      expect(ledger.state).toBe("ready");
+      expect(ledger.rentals[0]?.status).toBe(3);
+      expect(ledger.historyStatus).toContain(
+        "Render Free history may be waking up",
+      );
+      expect(ledger.jobsError).toContain("waking up");
+      expect(ledger.events).toEqual([]);
+      expect(ledger.automaticRefundCount).toBeNull();
+    },
+  );
+  it("does not describe an unavailable chain as a waking history service", async () => {
+    vi.stubEnv("CHAIN_INDEXER_URL", "https://metermend-preview.onrender.com");
+    fake.chain.getFinalizedHead.mockRejectedValueOnce(
+      new Error("RPC unreachable"),
+    );
+    const ledger = await readLedger();
+    expect(ledger.state).toBe("error");
+    expect(ledger.error).toContain("RPC unreachable");
+    expect(ledger.historyStatus).toContain(
+      "Current chain state could not be verified",
+    );
+    expect(ledger.historyStatus).not.toContain("waking up");
+  });
   it("returns an explicit unavailable state on failure and permits a fresh read afterward", async () => {
     fake.chain.readContract.mockRejectedValueOnce(
       new Error("Both read paths unavailable"),

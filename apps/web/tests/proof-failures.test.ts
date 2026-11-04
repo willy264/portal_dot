@@ -3,6 +3,7 @@ import {
   demoTransactionsFrom,
   failedDemoTransactionsFrom,
   expectedFailuresFrom,
+  correctedRefundFrom,
 } from "../lib/proof";
 
 // Synthetic model fixtures only; never written to deployments/ or claimed live.
@@ -30,6 +31,77 @@ const receipt = {
 };
 
 describe("expected rejection proof", () => {
+  it("requires both corrected callback and matching refund before claiming automatic execution", () => {
+    const execution = {
+      txHash: successHash,
+      blockHash,
+      block: 30,
+      jobExecuted: { jobId: "1", success: true },
+      depositRefunded: { rentalId: "3", amount: "50000000000000000" },
+    };
+    const correctedAutomation = {
+      status: "completed",
+      jobId: "1",
+      rentalId: "3",
+      execution,
+    };
+    expect(correctedRefundFrom({ correctedAutomation })?.status).toBe(
+      "Finalized automatic refund",
+    );
+    for (const altered of [
+      { ...correctedAutomation, status: "scheduled-awaiting-execution" },
+      {
+        ...correctedAutomation,
+        execution: {
+          ...execution,
+          jobExecuted: { jobId: "1", success: false },
+        },
+      },
+      {
+        ...correctedAutomation,
+        execution: { ...execution, depositRefunded: { rentalId: "2" } },
+      },
+      { ...correctedAutomation, execution: { ...execution, blockHash: null } },
+    ])
+      expect(correctedRefundFrom({ correctedAutomation: altered })).toBeNull();
+  });
+  it("does not count the original callback failure as success or duplicate corrected receipts", () => {
+    const execution = {
+      txHash: successHash,
+      blockHash,
+      block: 30,
+      jobExecuted: { jobId: "1", success: true },
+      depositRefunded: { rentalId: "3" },
+    };
+    const demo = {
+      transactions: {
+        "original-cronpot-failed-new-rental": {
+          txHash: failureHash,
+          block: 29,
+        },
+        "corrected-keeper-execute": execution,
+        "corrected-mirrored-receipt": execution,
+      },
+      correctedAutomation: {
+        status: "completed",
+        jobId: "1",
+        rentalId: "3",
+        execution,
+        originalFailure: {
+          txHash: failureHash,
+          block: 29,
+          callbackSuccess: false,
+          reason: "OutOfGas",
+        },
+      },
+    };
+    expect(demoTransactionsFrom(demo)).toHaveLength(1);
+    expect(demoTransactionsFrom(demo)[0]?.eventNames).toEqual([
+      "JobExecuted(success=true)",
+      "DepositRefunded",
+    ]);
+    expect(failedDemoTransactionsFrom(demo)[0]?.txHash).toBe(failureHash);
+  });
   it("separates a real-failure-shaped callback receipt from successful demo evidence", () => {
     const demo = {
       transactions: { rent: { txHash: successHash, block: 20 } },

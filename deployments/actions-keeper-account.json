@@ -1,0 +1,279 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-04T16:17:33.350Z",
+  "network": "portaldot-v3-testnet",
+  "ss58": "5E49UZgRcyc8xpfbXz4WhsaF8PM29ZBcNEj55oW1HVYMfPP7",
+  "h160": "0x60cdf5edc2e10f7a5183d50cca4cedc4f0ee36ee",
+  "role": "dedicated-free-GitHub-Actions-keeper",
+  "secretLocation": "ignored .env: ACTIONS_KEEPER_SEED; GitHub KEEPER_SEED is configured separately",
+  "noContractDeployment": true,
+  "localRecordingKeeperChanged": false,
+  "funding": {
+    "intent": {
+      "type": "actions-keeper-initial-funding",
+      "from": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+      "to": "5E49UZgRcyc8xpfbXz4WhsaF8PM29ZBcNEj55oW1HVYMfPP7",
+      "h160": "0x60cdf5edc2e10f7a5183d50cca4cedc4f0ee36ee",
+      "targetNative": "1000000000000000",
+      "amountNative": "1000000000000000",
+      "recipientBalanceBeforeNative": "0"
+    },
+    "before": {
+      "mapped": false,
+      "autoMap": true,
+      "h160": "0x60cdf5edc2e10f7a5183d50cca4cedc4f0ee36ee",
+      "nativeBalance": "0",
+      "nativeFrozen": "0",
+      "nativeReserved": "0",
+      "nonce": 0,
+      "block": 322568,
+      "blockHash": "0x40a68798a8d2c76b8b07bf53c554af32d66e08e53e6c8f6dbde805b21fc8fb63"
+    },
+    "preflight": {
+      "observedAt": "2026-11-04T16:21:32.551Z",
+      "nonce": 27,
+      "account": {
+        "mapped": true,
+        "autoMap": true,
+        "h160": "0xa83014ba71476262795173fbbc06656546b57ec0",
+        "nativeBalance": "176745460141923909",
+        "nativeFrozen": "0",
+        "nativeReserved": "0",
+        "nonce": 27,
+        "block": 322605,
+        "blockHash": "0x6e4083772d045a90107fb457c64b5003f01b586a9c1bdc9eb0dddea9fae18e2f",
+        "bestHash": "0x66cde88828c7c3958ffa8a77481687db4084e22da3d1d6ca6b6ab41b817b6b06",
+        "bestNonce": 27,
+        "nextIndex": 27,
+        "pendingPoolCount": 0
+      },
+      "valueNative": "1000000000000000",
+      "feeNative": "1500401222141",
+      "feeTPOT": "0.01500401222141",
+      "feeCapTPOT": "0.1",
+      "deployerRetainedTPOT": "200",
+      "signedTransactions": 0
+    },
+    "receipt": {
+      "txHash": "0x89dfafd2ec8fc020c0efd0bfa29e98170c6d084f164e785483263b34e2f41b39",
+      "block": 322619,
+      "blockHash": "0xb633e3ae66ee5334aa41ebbae195e41e7880b8c5c52341dad4328a40d13e6bca",
+      "extrinsicIndex": 1,
+      "events": [
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "Withdraw",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "amount": "1500401213351"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "Withdraw",
+            "value": {
+              "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+              "amount": "1500401213351"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "System",
+            "value": {
+              "type": "NewAccount",
+              "value": {
+                "account": "5E49UZgRcyc8xpfbXz4WhsaF8PM29ZBcNEj55oW1HVYMfPP7"
+              }
+            }
+          },
+          "topics": [],
+          "type": "System",
+          "value": {
+            "type": "NewAccount",
+            "value": {
+              "account": "5E49UZgRcyc8xpfbXz4WhsaF8PM29ZBcNEj55oW1HVYMfPP7"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "Endowed",
+              "value": {
+                "account": "5E49UZgRcyc8xpfbXz4WhsaF8PM29ZBcNEj55oW1HVYMfPP7",
+                "free_balance": "1000000000000000"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "Endowed",
+            "value": {
+              "account": "5E49UZgRcyc8xpfbXz4WhsaF8PM29ZBcNEj55oW1HVYMfPP7",
+              "free_balance": "1000000000000000"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "Transfer",
+              "value": {
+                "from": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "to": "5E49UZgRcyc8xpfbXz4WhsaF8PM29ZBcNEj55oW1HVYMfPP7",
+                "amount": "1000000000000000"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "Transfer",
+            "value": {
+              "from": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+              "to": "5E49UZgRcyc8xpfbXz4WhsaF8PM29ZBcNEj55oW1HVYMfPP7",
+              "amount": "1000000000000000"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "Balances",
+            "value": {
+              "type": "Deposit",
+              "value": {
+                "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+                "amount": "1500401213351"
+              }
+            }
+          },
+          "topics": [],
+          "type": "Balances",
+          "value": {
+            "type": "Deposit",
+            "value": {
+              "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+              "amount": "1500401213351"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "TransactionPayment",
+            "value": {
+              "type": "TransactionFeePaid",
+              "value": {
+                "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+                "actual_fee": "1500401213351",
+                "tip": "0"
+              }
+            }
+          },
+          "topics": [],
+          "type": "TransactionPayment",
+          "value": {
+            "type": "TransactionFeePaid",
+            "value": {
+              "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+              "actual_fee": "1500401213351",
+              "tip": "0"
+            }
+          }
+        },
+        {
+          "phase": {
+            "type": "ApplyExtrinsic",
+            "value": 1
+          },
+          "event": {
+            "type": "System",
+            "value": {
+              "type": "ExtrinsicSuccess",
+              "value": {
+                "dispatch_info": {
+                  "weight": {
+                    "ref_time": "764602000",
+                    "proof_size": "15777"
+                  },
+                  "class": {
+                    "type": "Normal"
+                  },
+                  "pays_fee": {
+                    "type": "Yes"
+                  }
+                }
+              }
+            }
+          },
+          "topics": [],
+          "type": "System",
+          "value": {
+            "type": "ExtrinsicSuccess",
+            "value": {
+              "dispatch_info": {
+                "weight": {
+                  "ref_time": "764602000",
+                  "proof_size": "15777"
+                },
+                "class": {
+                  "type": "Normal"
+                },
+                "pays_fee": {
+                  "type": "Yes"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "status": "funded-and-mapping-verified",
+  "observedAt": "2026-11-04T16:23:14.116Z",
+  "readback": {
+    "mapped": true,
+    "autoMap": true,
+    "h160": "0x60cdf5edc2e10f7a5183d50cca4cedc4f0ee36ee",
+    "nativeBalance": "1000000000000000",
+    "nativeFrozen": "0",
+    "nativeReserved": "0",
+    "nonce": 0,
+    "block": 322619,
+    "blockHash": "0xb633e3ae66ee5334aa41ebbae195e41e7880b8c5c52341dad4328a40d13e6bca"
+  },
+  "balanceNative": "1000000000000000",
+  "balanceTPOT": "10",
+  "mapped": true
+}

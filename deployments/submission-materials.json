@@ -1,7 +1,7 @@
 {
-  "observedAt": "2026-11-03T22:35:50.271Z",
-  "status": "direct-recovery-recorded-video-and-submission-pending",
-  "summary": "Ten-slide deck published and both public PDF hashes verified. Full direct-recovery receipts and all six Telegram delivery types are public. Successful corrected Cronpot automation, durable hosting, physical-phone evidence, video and final submission remain outstanding.",
+  "observedAt": "2026-11-04T16:32:25.567Z",
+  "status": "live-corrected-refund-recorded-video-and-submission-pending",
+  "summary": "Ten-slide pitch deck exported and browser-checked. Original Cronpot failed with OutOfGas; the first deposit was refunded directly, and corrected Cronpot executed a live automatic refund on the existing MeterMend. Free scheduled keeper and permissionless fallback replace paid hosting. Phone rehearsal, video and final submission remain outstanding. This revised PDF requires publication verification.",
   "deadline": {
     "internal": "2026-11-05T22:00:00+01:00",
     "official": "2026-11-06T05:00:00+01:00",
@@ -11,10 +11,10 @@
     "status": "generated",
     "path": "apps/web/public/metermend-pitch.pdf",
     "publicUrl": "https://metermend.vercel.app/metermend-pitch.pdf",
-    "publicLinkVerified": true,
+    "publicLinkVerified": false,
     "source": "docs/pitch/index.html",
-    "sha256": "7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8",
-    "bytes": 181330,
+    "sha256": "a250a28da7baf3bc4dd27d9fe92a34636f69829499250d29bde1fb03acbd90ab",
+    "bytes": 183099,
     "slides": 10,
     "layout": "16:9",
     "exportedWith": "Chromium Page.printToPDF; CSS page size 1600px x 900px; vector text and SVG",
@@ -22,7 +22,7 @@
       "overflowChecks": "passed",
       "browserExceptions": 0,
       "screenshots": "docs/pitch/previews/",
-      "visualReview": "Reviewed contact sheet and live-proof slide; no clipped content observed"
+      "visualReview": "pending"
     },
     "previousPublications": [
       {
@@ -71,27 +71,30 @@
             "verifiedAt": "2026-11-01T02:35:28.442Z"
           }
         ]
-      }
-    ],
-    "publicLinkVerifiedAt": "2026-11-03T22:53:04.316Z",
-    "publicLinks": [
-      {
-        "url": "https://metermend.vercel.app/metermend-pitch.pdf",
-        "sha256": "7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8",
-        "bytes": 181330,
-        "status": 200
       },
       {
-        "url": "https://willy264.github.io/portal_dot/metermend-pitch.pdf",
         "sha256": "7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8",
-        "bytes": 181330,
-        "status": 200
+        "publicLinks": [
+          {
+            "url": "https://metermend.vercel.app/metermend-pitch.pdf",
+            "sha256": "7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8",
+            "bytes": 181330,
+            "status": 200
+          },
+          {
+            "url": "https://willy264.github.io/portal_dot/metermend-pitch.pdf",
+            "sha256": "7ce9479973bace084a84c843f7f4da4cf4a47e7d681256466e538bf13ac94dd8",
+            "bytes": 181330,
+            "status": 200
+          }
+        ],
+        "verifiedAt": "2026-11-03T22:53:04.316Z"
       }
     ]
   },
   "submission": {
     "path": "docs/SUBMISSION.md",
-    "status": "paste-ready-except-video-and-manual-evidence"
+    "status": "ready-for-final-video-link-and-owner-submission"
   },
   "video": {
     "status": "not-recorded",

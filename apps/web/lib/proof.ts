@@ -171,7 +171,11 @@ export function transactionsFrom(
 
 /** The successful flow excludes assertions and expected rejection receipts. */
 export function demoTransactionsFrom(value: any): ProofTransaction[] {
-  return transactionsFrom(
+  const failed = new Set(
+    failedDemoTransactionsFrom(value).map((row) => row.txHash),
+  );
+  const corrected = correctedRefundFrom(value);
+  const rows = transactionsFrom(
     {
       steps: value?.steps,
       transactions: value?.transactions,
@@ -179,10 +183,71 @@ export function demoTransactionsFrom(value: any): ProofTransaction[] {
     },
     "Demonstration",
   );
+  return rows
+    .filter(
+      (row) =>
+        !failed.has(row.txHash) &&
+        !row.label.includes("original-cronpot-failed-new-rental"),
+    )
+    .map((row) => (corrected?.txHash === row.txHash ? corrected : row))
+    .filter(
+      (row, index, all) =>
+        all.findIndex((other) => other.txHash === row.txHash) === index,
+    );
 }
 
 export function failedDemoTransactionsFrom(value: any): ProofTransaction[] {
-  return transactionsFrom(value?.failedTransactions, "Failed demonstration");
+  const original = value?.correctedAutomation?.originalFailure;
+  const rows = transactionsFrom(
+    {
+      failures: value?.failedTransactions,
+      ...(original?.callbackSuccess === false
+        ? {
+            originalCronpot: {
+              ...original,
+              label: "Original Cronpot callback failed on new rental",
+              status: original.reason ?? "Callback failed; no refund",
+              event: "JobExecuted(success=false); no DepositRefunded event",
+            },
+          }
+        : {}),
+    },
+    "Failed demonstration",
+  );
+  return rows.filter(
+    (row, index) =>
+      rows.findIndex((other) => other.txHash === row.txHash) === index,
+  );
+}
+
+/** A deployed correction or a successful outer extrinsic does not establish a refund. */
+export function correctedRefundFrom(value: any): ProofTransaction | null {
+  const automation = value?.correctedAutomation;
+  const execution = automation?.execution;
+  const txHash = hash(execution?.txHash);
+  const blockHash = hash(execution?.blockHash);
+  if (
+    automation?.status !== "completed" ||
+    !txHash ||
+    !blockHash ||
+    !Number.isSafeInteger(execution?.block) ||
+    execution.block < 0 ||
+    execution.jobExecuted?.success !== true ||
+    String(execution.jobExecuted?.jobId) !== String(automation.jobId) ||
+    String(execution.depositRefunded?.rentalId) !==
+      String(automation.rentalId) ||
+    !/^\d+$/.test(String(automation.rentalId)) ||
+    !/^\d+$/.test(String(automation.jobId))
+  )
+    return null;
+  return {
+    label: "Corrected Cronpot automatic refund",
+    txHash,
+    blockHash,
+    block: String(execution.block),
+    status: "Finalized automatic refund",
+    eventNames: ["JobExecuted(success=true)", "DepositRefunded"],
+  };
 }
 
 function dispatchErrorName(value: unknown, depth = 0): string | null {

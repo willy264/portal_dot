@@ -1,0 +1,73 @@
+{
+  "observedAt": "2026-11-04T07:38:29.959Z",
+  "status": "implemented-and-locally-verified",
+  "finalizedRefund": {
+    "label": "Finalize refund",
+    "eligibility": "Returned rental and finalized chain timestamp >= refundAt",
+    "signer": "Any connected funded and mapped account",
+    "receipt": "Shows finalized transaction hash on the rental page after completion",
+    "newLiveTransactionForThisUiCheck": false
+  },
+  "history": {
+    "host": "Render Free",
+    "readOnly": true,
+    "wakingMessage": "Render Free history may be waking up.",
+    "chainFailuresRemainDistinct": true,
+    "indexerChanged": false
+  },
+  "proof": {
+    "route": "/proof",
+    "hostingSection": true,
+    "generatedEvidenceLinks": true,
+    "correctedRefundClaim": "Requires completed status and matching JobExecuted(success=true) plus DepositRefunded receipt",
+    "deployedPublicUiVerified": false
+  },
+  "checks": [
+    {
+      "command": "vitest run tests/finalized-ledger.test.ts tests/operational-proof.test.ts tests/history-endpoint.test.ts tests/proof-failures.test.ts",
+      "cwd": "apps/web",
+      "passed": 28,
+      "failed": 0
+    },
+    {
+      "command": "tsc --noEmit",
+      "cwd": "apps/web",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "evidenceCopies": [
+    {
+      "source": "scripts/fixtures/return.png",
+      "copy": "docs/evidence/demo/return.png",
+      "bytes": 42569,
+      "sha256": "440cb2128282ffef1ad8e2e7ad3a111126fb1ef84354425a17181438fc7416f1",
+      "byteIdentical": true,
+      "provenance": "Generated labeled demo fixture, not a photograph or real-world receipt."
+    },
+    {
+      "source": "scripts/fixtures/dispute.png",
+      "copy": "docs/evidence/demo/dispute.png",
+      "bytes": 41924,
+      "sha256": "588d76c88c3eb8fbb5def1dd0f534e01a4cca8336bc242adf7b02abf38f5336e",
+      "byteIdentical": true,
+      "provenance": "Generated labeled demo fixture, not a photograph or real-world receipt."
+    },
+    {
+      "source": "scripts/fixtures/repair.png",
+      "copy": "docs/evidence/demo/repair.png",
+      "bytes": 41060,
+      "sha256": "9ffdbea7ec8c2683f6bf2600986b0685e5d58e335744b367a7ecac7b805e8771",
+      "byteIdentical": true,
+      "provenance": "Generated labeled demo fixture, not a photograph or real-world receipt."
+    }
+  ],
+  "limitations": [
+    "Public UI deployment is handled separately.",
+    "No physical phone rehearsal or Telegram screenshot was fabricated.",
+    "GitHub Actions configuration status is read from corrected-keeper-hosting-plan.json; a prepared workflow is not recorded as a successful remote run."
+  ]
+}

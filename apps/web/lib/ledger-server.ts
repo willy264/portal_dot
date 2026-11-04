@@ -5,18 +5,13 @@ import { publicConfig } from "./server-config";
 import { errorMessage, metadata } from "./format";
 import { normalizeEvents } from "./history";
 import { historyEndpoint } from "./history-endpoint";
+import { readHistoryJson } from "./history-service";
 import type { Ledger, Rental } from "./types";
 
 async function backend(path: string): Promise<any> {
   const base = await historyEndpoint();
   if (!base) throw new Error("The history service is not configured.");
-  const response = await fetch(new URL(path, base), {
-    cache: "no-store",
-    signal: AbortSignal.timeout(8000),
-  });
-  if (!response.ok)
-    throw new Error(`History service returned ${response.status}.`);
-  return response.json();
+  return readHistoryJson(base, path);
 }
 async function range<T>(
   next: bigint,

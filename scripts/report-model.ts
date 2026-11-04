@@ -1,5 +1,6 @@
 import { decodeEventLog, formatUnits, toHex, type Abi, type Hex } from "viem";
 import { cronpotAbi, meterMendAbi, pingAbi } from "../packages/chain/src/abi";
+import { correctedRefundFrom } from "../apps/web/lib/proof";
 export { expectedFailuresFrom as demoExpectedFailures } from "../apps/web/lib/proof";
 
 export function demoSteps(demo: any): any[] {
@@ -10,17 +11,47 @@ export function demoSteps(demo: any): any[] {
         ...(value as object),
         step,
       }));
+  const corrected = demo?.correctedAutomation;
+  for (const [step, receipt] of Object.entries(corrected?.transactions ?? {})) {
+    if (!receipt || typeof receipt !== "object") continue;
+    const row = receipt as Record<string, unknown>;
+    if (!steps.some((existing) => row.txHash && existing.txHash === row.txHash))
+      steps.push({ ...row, step });
+  }
+  const originalFailure = corrected?.originalFailure;
+  if (originalFailure?.callbackSuccess === false) {
+    const existing = steps.find((row) => row.txHash === originalFailure.txHash);
+    const failure = {
+      ...originalFailure,
+      step: "original-cronpot-failed-new-rental",
+      outcome: "failed",
+      status: originalFailure.reason ?? "Callback failed",
+      event: "JobExecuted(success=false); no DepositRefunded event",
+    };
+    if (existing) Object.assign(existing, failure);
+    else steps.push(failure);
+  }
+  for (const row of steps) {
+    if (String(row.step).includes("original-cronpot-failed-new-rental")) {
+      row.outcome = "failed";
+      row.status ??= "Original Cronpot callback failed; inspect retained trace";
+      row.event = "JobExecuted(success=false); no DepositRefunded event";
+    }
+  }
   const failures = demo?.failedTransactions;
   if (failures && typeof failures === "object") {
     for (const [name, value] of Object.entries(failures)) {
       if (!value || typeof value !== "object") continue;
       const receipt = value as Record<string, unknown>;
-      steps.push({
+      const failure = {
         ...receipt,
         step: receipt.label ?? receipt.step ?? name,
         outcome: "failed",
         status: receipt.status ?? "Failed live attempt",
-      });
+      };
+      const existing = steps.find((row) => row.txHash === receipt.txHash);
+      if (existing) Object.assign(existing, failure);
+      else steps.push(failure);
     }
   }
   const automatic = demo?.automaticRefund;
@@ -34,6 +65,27 @@ export function demoSteps(demo: any): any[] {
           ? ""
           : `${automatic.refund.args.amount} EVM base units`,
     });
+  }
+  const correctedRefund = correctedRefundFrom(demo);
+  if (correctedRefund) {
+    const row = {
+      ...corrected.execution,
+      step: correctedRefund.label,
+      status: correctedRefund.status,
+      event: correctedRefund.eventNames.join(" + "),
+    };
+    const existing = steps.find((step) => step.txHash === row.txHash);
+    if (existing) Object.assign(existing, row);
+    else steps.push(row);
+  } else if (corrected?.execution?.txHash) {
+    const row = steps.find(
+      (step) => step.txHash === corrected.execution.txHash,
+    );
+    if (row) {
+      row.status = "Corrected refund outcome not verified";
+      row.event =
+        "Pending matched JobExecuted(success=true) and DepositRefunded";
+    }
   }
   return steps.sort(
     (a, b) =>
@@ -53,6 +105,7 @@ export function eventSummary(
   const abis: Record<string, Abi> = {
     MeterMend: meterMendAbi,
     Cronpot: cronpotAbi,
+    CorrectedCronpot: cronpotAbi,
     Ping: pingAbi,
   };
   for (const raw of step.events ?? []) {

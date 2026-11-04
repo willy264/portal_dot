@@ -204,9 +204,9 @@ try {
   const evidence = {
     ...previousEvidence,
     observedAt: new Date().toISOString(),
-    status: "direct-recovery-recorded-video-and-submission-pending",
+    status: "live-corrected-refund-recorded-video-and-submission-pending",
     summary:
-      "Ten-slide pitch deck exported and browser-checked. The live direct recovery is complete; the original Cronpot callback failed and corrected Cronpot automation is not claimed. Phone rehearsal, durable hosting, video and final submission remain outstanding. This revised PDF requires publication verification.",
+      "Ten-slide pitch deck exported and browser-checked. Original Cronpot failed with OutOfGas; the first deposit was refunded directly, and corrected Cronpot executed a live automatic refund on the existing MeterMend. Free scheduled keeper and permissionless fallback replace paid hosting. Phone rehearsal, video and final submission remain outstanding. This revised PDF requires publication verification.",
     deadline: {
       internal: "2026-11-05T22:00:00+01:00",
       official: "2026-11-06T05:00:00+01:00",
@@ -245,7 +245,7 @@ try {
     },
     submission: {
       path: "docs/SUBMISSION.md",
-      status: "draft-awaiting-live-evidence-and-links",
+      status: "ready-for-final-video-link-and-owner-submission",
     },
     video: previousEvidence.video ?? {
       status: "not-recorded",

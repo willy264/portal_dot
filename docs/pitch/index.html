@@ -366,7 +366,7 @@
       />
       <div class="foot">
         <span
-          >3 November 2026 · Live direct recovery complete</span
+          >4 November 2026 · Corrected Cronpot deployed; MeterMend unchanged</span
         ><span>01 / 10</span>
       </div>
     </section>
@@ -456,7 +456,7 @@
         </div>
       </div>
       <div class="foot">
-        <span>Live direct recovery complete · Phone rehearsal pending</span
+        <span>Direct recovery complete · Corrected automatic refund finalized</span
         ><span>03 / 10</span>
       </div>
     </section>
@@ -585,17 +585,17 @@
         <div class="stage">
           <div class="label">01</div>
           <h3>Return</h3>
-          <p>MeterMend records the deadline and schedules a Cronpot job.</p>
+          <p>MeterMend records the deadline and creates its original Cronpot job.</p>
         </div>
         <div class="stage">
           <div class="label">02</div>
-          <h3>Wait</h3>
-          <p>The configured keeper observes finalized chain time.</p>
+          <h3>Register</h3>
+          <p>The keeper separately registers the same refund on corrected Cronpot.</p>
         </div>
         <div class="stage">
           <div class="label">03</div>
           <h3>Execute</h3>
-          <p>Any eligible caller can execute the due Cronpot job.</p>
+          <p>After the deadline, the keeper executes the due corrected job.</p>
         </div>
         <div class="stage">
           <div class="label">04</div>
@@ -607,17 +607,15 @@
       </div>
       <div class="callout" style="margin-top: 30px">
         <p class="small">
-          <strong>What the funded probe found:</strong> the native Scheduler
-          rejected our signed origin with
-          <span class="mono">BadOrigin</span> (P5, block 213576). It is not the
-          refund executor. The original Cronpot callback ran out of gas; the keeper
-          refunded 0.05 tPOT directly. Corrected Cronpot: 49 tests, not deployed.
+          <strong>Measured history:</strong> Original Cronpot failed (OutOfGas,
+          tx <span class="mono">0x2b9249…75e35</span>). The deposit was refunded directly
+          (tx <span class="mono">0x53739d89…d523a7</span>). The corrected Cronpot then executed a live automatic refund
+          (tx <span class="mono">0x8c45df7b…373b63</span>). Native Scheduler: signed origin rejected with <span class="mono">BadOrigin</span> (P5).
         </p>
       </div>
       <div class="foot">
         <span
-          >Keeper timing: 120-second demo window + 30-second grace +
-          finality</span
+          >Same refundAt deadline · External keeper registration · MeterMend was not rewired</span
         ><span>06 / 10</span>
       </div>
     </section>
@@ -633,50 +631,50 @@
       <div class="table">
         <div class="table-row">
           <div>
-            <strong>Ping contract</strong><br /><span class="pill"
-              >Finalized · 213570</span
+            <strong>Corrected Cronpot</strong><br /><span class="pill"
+              >Finalized · 317301</span
             >
           </div>
           <div>
-            <p class="mono">0x96ee88d272550530b518cbaa15a80cf5d38cdcfd</p>
+            <p class="mono">0x232c9673766794d6106a68cf4480678c73658f4c</p>
             <p class="small muted">
-              Runtime deployment and signed value movement verified
+              Calibrated callback gas; same existing MeterMend target.
             </p>
           </div>
           <a
             class="mono"
-            href="https://github.com/willy264/portal_dot/blob/main/deployments/portaldot-v3.json"
-            >tx 0x5003af97…24a011c ↗</a
+            href="https://github.com/willy264/portal_dot/blob/main/deployments/corrected-cronpot.json"
+            >tx 0x295eb372…7f21a7b ↗</a
           >
         </div>
         <div class="table-row">
           <div>
-            <strong>P4 / P6 probes</strong><br /><span class="pill"
-              >Finalized</span
+            <strong>New rental</strong><br /><span class="pill"
+              >Finalized · 317426</span
             >
           </div>
           <div>
-            <p>Exact 14/18 value movement; signed 1 KiB native store</p>
+            <p>Rental 3 added 0.002 tPOT to the repair reserve.</p>
             <p class="small muted">
-              Blocks 213573 and 213579 · Full receipts retained
+              Corrected execution at block 322488: JobExecuted(true) + DepositRefunded; 0.05 tPOT refunded.
             </p>
           </div>
           <a
             class="small"
-            href="https://github.com/willy264/portal_dot/blob/main/deployments/funded-probe.json"
-            >Funded evidence ↗</a
+            href="https://github.com/willy264/portal_dot/blob/main/deployments/demo-run.json"
+            >tx 0x227e8d1a…2b571c ↗</a
           >
         </div>
         <div class="table-row">
           <div>
-            <strong>Cronpot</strong><br /><span class="pill"
+            <strong>Original Cronpot</strong><br /><span class="pill"
               >Finalized · 265131</span
             >
           </div>
           <div>
             <p class="mono">0x41635a685448cfa86da1600656f103a211e398f4</p>
             <p class="small muted">
-              Original deployment transaction finalized after the node resumed.
+              Immutable built-in integration remains; original callback failed OutOfGas.
             </p>
           </div>
           <a
@@ -707,7 +705,7 @@
       </div>
       <div class="foot">
         <span
-          >3 November · Direct refund tx 0x53739d89…d523a7 · Full hashes on proof page</span
+          >4 November · Preserve failed and direct-refund receipts · Full hashes on proof page</span
         ><span>07 / 10</span>
       </div>
     </section>
@@ -729,18 +727,18 @@
             fuzzed fee splits.
           </p>
           <p class="tiny muted">
-            Corrected Cronpot included; CI passed November 3.
+            Corrected Cronpot included; 49 tests passed November 4.
           </p>
         </div>
         <div class="card">
-          <div class="number accent">241</div>
+          <div class="number accent">276</div>
           <h3 style="margin-top: 24px">TypeScript tests</h3>
           <p>
             Chain handling, durable services, transaction recovery, web flows,
             and deployment scripts.
           </p>
           <p class="tiny muted">
-            November 3 CI · 8253778 · package and script checks passed.
+            November 4 local package and script checks passed.
           </p>
         </div>
         <div class="card">
@@ -840,8 +838,8 @@
           <span class="label">Now / Submission</span>
           <h3 style="margin-top: 16px">Finish operations + video</h3>
           <p class="small">
-            Prove corrected Cronpot automation, host durable services, complete
-            the physical phone rehearsal, and record the actual demo.
+            Finish the physical phone rehearsal and video.
+            Free Actions has periodic timing; durable public evidence storage remains open.
           </p>
         </div>
         <div class="card" style="background: #fff8ed; border-color: #fff8ed">

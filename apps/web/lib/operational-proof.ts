@@ -1,3 +1,5 @@
+import { correctedRefundFrom } from "./proof";
+
 export const KEEPER_EXPLANATION =
   "Refunds execute automatically via Cronpot; execution is permissionless and our keeper runs it.";
 
@@ -61,6 +63,8 @@ export function operationalCards(input: {
   notifications?: RecordValue;
   submission?: RecordValue;
   refundCalibration?: RecordValue;
+  correctedCronpot?: RecordValue;
+  keeperHosting?: RecordValue;
   demo?: RecordValue;
   executorHealth?: RecordValue;
 }): OperationalCard[] {
@@ -71,6 +75,7 @@ export function operationalCards(input: {
     : input.chainStatus;
   const chain = latest ?? pending;
   const account = chain?.account ?? pending?.account;
+  const correctedRefund = correctedRefundFrom(input.demo);
   const cards: OperationalCard[] = [
     card("Application deployment observation", pending, [
       ["Transaction", hash(pending?.txHash)],
@@ -110,10 +115,32 @@ export function operationalCards(input: {
         "Contracts deployed by calibration",
         input.refundCalibration?.contractsDeployed,
       ],
-      ["Live corrected refund", "Pending deployment and live demonstration"],
-      ["Direct keeper refund", input.demo?.directRefund?.txHash ? hash(input.demo.directRefund.txHash) : "Not recorded"],
+      [
+        "Corrected automation status",
+        input.demo?.correctedAutomation?.status ??
+          "No live corrected automation recorded",
+      ],
+      [
+        "Live corrected refund",
+        correctedRefund?.txHash ??
+          "Pending verified JobExecuted(success=true) and DepositRefunded",
+      ],
+      [
+        "Corrected Cronpot deployment",
+        hash(input.correctedCronpot?.deployment?.txHash),
+      ],
+      ["Corrected Cronpot read-back", input.correctedCronpot?.status],
+      [
+        "Direct keeper refund",
+        input.demo?.directRefund?.txHash
+          ? hash(input.demo.directRefund.txHash)
+          : "Not recorded",
+      ],
       ["Direct refund block", input.demo?.directRefund?.block],
-      ["Recovery budget spent (tPOT)", input.demo?.continuation?.conservativeSpentTPOT],
+      [
+        "Recovery budget spent (tPOT)",
+        input.demo?.continuation?.conservativeSpentTPOT,
+      ],
       ["Direct recovery status", input.demo?.continuation?.status],
     ]),
     card("Persistent worker and evidence hosting", input.hosting, [
@@ -126,6 +153,15 @@ export function operationalCards(input: {
       ["Always on", input.hosting?.constraints?.alwaysOn],
       ["Signing", input.hosting?.constraints?.signing],
       ["Evidence uploads", input.hosting?.constraints?.evidenceUploads],
+      [
+        "GitHub Actions keeper",
+        input.keeperHosting?.githubActions?.status ?? "Not yet verified",
+      ],
+      [
+        "Keeper cadence",
+        "Free GitHub Actions schedule: every ~10 minutes; delays are possible",
+      ],
+      ["Refund fallback", "Anyone can use Finalize refund after refundAt"],
     ]),
     card("Telegram delivery", input.notifications, [
       ["Finding", input.notifications?.summary],

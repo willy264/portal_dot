@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useState } from "react";
 import { ArrowLeft, ArrowRight, Check, Clock3 } from "lucide-react";
 import { useApp } from "./providers";
 import {
@@ -22,6 +23,10 @@ import {
 } from "@/lib/format";
 export function RentalDetail({ id }: { id: string }) {
   const { ledger, wallet, execute } = useApp();
+  const [refundReceipt, setRefundReceipt] = useState<{
+    rentalId: string;
+    txHash: string;
+  } | null>(null);
   const rental = ledger?.rentals.find((r) => r.id === id);
   const item = ledger?.items.find((i) => i.id === rental?.itemId);
   const job = ledger?.jobs.find((j) => String(j.id) === rental?.cronJobId);
@@ -113,9 +118,17 @@ export function RentalDetail({ id }: { id: string }) {
                     </p>
                     <ActionButton
                       disabled={(ledger?.blockTimestamp ?? 0) < rental.refundAt}
-                      onAction={() => execute("finalizeRefund", [BigInt(id)])}
+                      onAction={async () => {
+                        const receipt = await execute("finalizeRefund", [
+                          BigInt(id),
+                        ]);
+                        setRefundReceipt({
+                          rentalId: id,
+                          txHash: receipt.txHash,
+                        });
+                      }}
                     >
-                      Finalize eligible refund <ArrowRight size={16} />
+                      Finalize refund <ArrowRight size={16} />
                     </ActionButton>
                   </>
                 )}
@@ -203,6 +216,14 @@ export function RentalDetail({ id }: { id: string }) {
                     The contract has closed the deposit. The recorded refund or
                     dispute-resolution event below contains the settled amounts.
                   </p>
+                )}
+                {refundReceipt?.rentalId === id && (
+                  <div className="callout" role="status">
+                    <div>
+                      <strong>Refund transaction finalized</strong>
+                      <code className="hash">{refundReceipt.txHash}</code>
+                    </div>
+                  </div>
                 )}
               </section>
               {returnEvent &&

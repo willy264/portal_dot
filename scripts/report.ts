@@ -2,6 +2,7 @@ import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { demoSteps, demoExpectedFailures, eventSummary } from "./report-model";
+import { correctedRefundFrom } from "../apps/web/lib/proof";
 import {
   KEEPER_EXPLANATION,
   hasGeneratedDeck,
@@ -56,14 +57,18 @@ const [
   notifications,
   submission,
   refundCalibration,
+  correctedCronpot,
+  keeperHosting,
 ] = await Promise.all([
   optional("deployments/deployment-status.json"),
-  optional("deployments/chain-status-2026-11-03.json"),
+  optional("deployments/chain-status-2026-11-04.json"),
   optional("deployments/rpc-discovery.json"),
   optional("deployments/hosting-status.json"),
   optional("deployments/notification-status.json"),
   optional("deployments/submission-materials.json"),
   optional("deployments/refund-calibration-summary.json"),
+  optional("deployments/corrected-cronpot.json"),
+  optional("deployments/corrected-keeper-hosting-plan.json"),
 ]);
 const operations = operationalCards({
   demo,
@@ -74,6 +79,8 @@ const operations = operationalCards({
   notifications,
   submission,
   refundCalibration,
+  correctedCronpot,
+  keeperHosting,
 });
 const operationRows = operations
   .map(
@@ -87,13 +94,24 @@ const blockEvidence = (hash: unknown, block: unknown) =>
   typeof hash === "string" && /^0x[0-9a-f]{64}$/i.test(hash)
     ? `<a href="https://node-console.portaldot.dev/?rpc=wss%3A%2F%2Ftest-node-v3.portaldot.dev#/explorer/query/${hash}">${escape(block)}</a>`
     : escape(block);
-const contractRows = Object.entries(deployment?.contracts ?? {})
+const contracts = {
+  ...(deployment?.contracts ?? {}),
+  ...(correctedCronpot?.deployment?.address
+    ? { CorrectedCronpot: correctedCronpot.deployment }
+    : {}),
+};
+const contractLabels: Record<string, string> = {
+  Cronpot: "Original Cronpot (MeterMend built-in)",
+  CorrectedCronpot: "Corrected Cronpot (keeper registration)",
+};
+const contractRows = Object.entries(contracts)
   .map(
     ([name, c]: [string, any]) =>
-      `<tr><td>${escape(name)}</td><td><code>${escape(c.address)}</code></td><td><code>${escape(c.txHash)}</code></td><td>${blockEvidence(c.blockHash, c.block)}</td></tr>`,
+      `<tr><td>${escape(contractLabels[name] ?? name)}</td><td><code>${escape(c.address)}</code></td><td><code>${escape(c.txHash)}</code></td><td>${blockEvidence(c.blockHash, c.block)}</td></tr>`,
   )
   .join("");
 const steps = demoSteps(demo);
+const correctedRefund = correctedRefundFrom(demo);
 const expectedFailures = demoExpectedFailures(demo);
 const failureRows = expectedFailures
   .map(
@@ -105,7 +123,7 @@ const transactionRows = steps
   .map((s) => {
     const summary = eventSummary(
       s,
-      deployment?.contracts,
+      contracts,
       deployment?.units?.verified ? deployment.units.evmDecimals : undefined,
     );
     return `<tr><td>${escape(s.step ?? s.name)}${s.outcome === "failed" ? `<br><strong>${escape(s.status)}; no automatic refund established</strong>` : ""}</td><td><code>${escape(s.txHash ?? "Native block initialization; no extrinsic hash")}</code></td><td>${blockEvidence(s.blockHash, s.block)}</td><td>${escape(summary.events)}</td><td>${escape(summary.amounts)}</td></tr>`;
@@ -125,6 +143,25 @@ const fundedRows = Object.entries(funded?.checks ?? {})
   .join("");
 const applicationReady =
   !!deployment?.contracts?.MeterMend && !!deployment?.contracts?.Cronpot;
+const refundNarrative = [
+  demo?.failedTransactions?.["cronpot-callback-failed"]?.txHash
+    ? `Original Cronpot failed (OutOfGas, tx ${demo.failedTransactions["cronpot-callback-failed"].txHash}).`
+    : "Original Cronpot failure evidence has not been recorded.",
+  demo?.directRefund?.txHash
+    ? `The deposit was refunded directly (tx ${demo.directRefund.txHash}).`
+    : "A direct recovery refund has not been recorded.",
+  correctedRefund
+    ? `The corrected Cronpot then executed a live automatic refund (tx ${correctedRefund.txHash}).`
+    : correctedCronpot?.deployment?.address
+      ? "The corrected Cronpot has been deployed; its live automatic refund is pending verified JobExecuted(success=true) and DepositRefunded."
+      : "Corrected Cronpot deployment and live automatic refund are pending.",
+].join(" ");
+const fixtureLinks = ["return", "dispute", "repair"]
+  .map(
+    (name) =>
+      `<a href="https://raw.githubusercontent.com/willy264/portal_dot/main/docs/evidence/demo/${name}.png">${name} image</a>`,
+  )
+  .join(" · ");
 const now = new Date().toISOString();
 const html = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MeterMend · deployment proof</title>
 <style>:root{color-scheme:light dark;--bg:#f6f3eb;--fg:#171713;--line:#d4d0c6;--muted:#625e53}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,sans-serif}main{max-width:1100px;margin:auto;padding:clamp(20px,5vw,64px)}a{color:inherit;text-underline-offset:4px}header{border-bottom:3px solid #ff6a13;padding-bottom:26px}h1{font-size:clamp(40px,7vw,80px);letter-spacing:-.065em;line-height:1.05;margin:12px 0}h2{margin-top:40px;font-size:24px}small,.muted{color:var(--muted)}.tag{font:12px monospace;text-transform:uppercase;letter-spacing:.12em;color:#ba4300}.scroll{overflow:auto;border:1px solid var(--line);border-radius:8px}table{width:100%;border-collapse:collapse;text-align:left;font-size:14px}th,td{padding:12px;vertical-align:top;border-bottom:1px solid var(--line)}code,pre{font:12px/1.65 ui-monospace,monospace;overflow-wrap:anywhere}pre{white-space:pre-wrap;max-height:500px;overflow:auto}summary{cursor:pointer}.status{border-left:4px solid #ff6a13;padding:12px 20px;background:#ff6a1310}footer{margin-top:50px;border-top:1px solid var(--line);padding-top:18px}@media(prefers-color-scheme:dark){:root{--bg:#171713;--fg:#f4efe5;--line:#3b3a34;--muted:#b2ad9f}.tag{color:#ff8b46}}</style>
@@ -138,7 +175,9 @@ ${deckAvailable ? '<p><a href="metermend-pitch.pdf">Open pitch deck PDF</a></p>'
 <h2>Funded runtime probes</h2>${fundedRows ? `<div class="scroll"><table><thead><tr><th>Check</th><th>Result</th><th>Transaction</th><th>Block</th></tr></thead><tbody>${fundedRows}</tbody></table></div>` : "<p>No funded probe transactions recorded.</p>"}
 <h2>Live demonstration</h2><p>Status: ${escape(demo?.status ?? (demo?.completedAt ? "completed" : demo ? "in progress" : "not run"))}.</p>${transactionRows ? `<div class="scroll"><table><thead><tr><th>Step</th><th>Transaction hash</th><th>Block</th><th>Event</th><th>Amount</th></tr></thead><tbody>${transactionRows}</tbody></table></div>` : "<p>No live demo transactions have been recorded.</p>"}
 <h2>Expected rejection evidence</h2><p>These signed attempts exercise permission checks. The dispatch error records the on-chain rejection; the decoded preflight error comes from the live simulation before signing.</p>${failureRows ? `<div class="scroll"><table><thead><tr><th>Attempt / outcome</th><th>Transaction hash</th><th>Block</th><th>On-chain dispatch error</th><th>Preflight error / source</th><th>State comparison</th></tr></thead><tbody>${failureRows}</tbody></table></div>` : "<p>No signed rejection receipt has been recorded.</p>"}
-<h2>Refund execution</h2><p>${escape(KEEPER_EXPLANATION)} The signed native Scheduler probe returned BadOrigin (P5); native Scheduler does not execute these refunds.</p>${demo?.automaticRefund ? `<pre>${escape(JSON.stringify(demo.automaticRefund, null, 2))}</pre>` : "<p>Automatic keeper refund proof has not yet been recorded.</p>"}${demo?.directRefund ? `<p>The original failed callback was recovered by a direct keeper call to MeterMend. This is not successful Cronpot execution.</p><pre>${escape(JSON.stringify(demo.directRefund, null, 2))}</pre>` : ""}
+<h2>Refund execution</h2><p>${escape(KEEPER_EXPLANATION)} The signed native Scheduler probe returned BadOrigin (P5); native Scheduler does not execute these refunds.</p><p>${escape(refundNarrative)}</p><p>MeterMend retains its original built-in Cronpot address. The keeper registers the new callback on the corrected Cronpot, targeting the existing MeterMend contract at refundAt.</p>${correctedRefund ? `<pre>${escape(JSON.stringify(demo.correctedAutomation.execution, null, 2))}</pre>` : "<p>Corrected automatic refund proof is pending.</p>"}${demo?.directRefund ? `<p>The direct keeper refund recovered the original failed callback. Its receipt is retained separately from corrected Cronpot execution.</p><pre>${escape(JSON.stringify(demo.directRefund, null, 2))}</pre>` : ""}
+<h2>Hosting</h2><p><a href="https://metermend.vercel.app">Vercel app</a> · <a href="https://willy264.github.io/portal_dot/">GitHub Pages proof</a> · <a href="https://github.com/willy264/portal_dot/actions/workflows/keeper.yml">GitHub Actions keeper</a> (free, scheduled every ~10 minutes) · permissionless refunds as fallback.</p><p>Keeper status: ${escape(keeperHosting?.githubActions?.status ?? "Not yet verified")}. Scheduled runs can be delayed; anyone can use the rental page's Finalize refund button after refundAt. <a href="https://metermend-preview.onrender.com/health">Render Free history service</a> is read only, may need time to wake up, and has temporary storage. Durable public evidence-upload storage remains outstanding.</p><p>Known limitation: the history indexer can lag; finalized transaction receipts and direct contract reads provide the live demo evidence.</p>
+<h2>Demo evidence images</h2><p>The return, dispute and repair fixtures are generated demonstration images. They are not photographs or real-world receipts. Their SHA-256 commitments, source files and submission provenance are recorded in the repository.</p><p>${fixtureLinks} · <a href="https://github.com/willy264/portal_dot/blob/main/docs/evidence/demo/README.md">Image provenance and hashes</a></p>
 ${demo ? `<h2>Retained demonstration evidence</h2><details><summary>Full receipts, refund execution and reserve assertions</summary><pre>${escape(JSON.stringify(demo, null, 2))}</pre></details>` : ""}
 <h2>Phase 0 runtime probe</h2><p>Observed ${escape(probe?.observedAt ?? "not run")}. Probe mode: ${escape(probe?.mode ?? "unknown")}.</p><div class="scroll"><table><thead><tr><th>Check</th><th>Status</th><th>Evidence</th></tr></thead><tbody>${probeRows}</tbody></table></div>
 <h2>Implementation decisions</h2><pre>${escape(decisions)}</pre><footer><small>Generated ${escape(now)} · Commit ${escape(process.env.GITHUB_SHA ?? "local working tree")} · MIT license. This self-contained report retains observed evidence even when testnet RPC history is pruned.</small></footer></main></html>`;

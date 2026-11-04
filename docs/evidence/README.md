@@ -1,5 +1,7 @@
 # Live notification and phone evidence
 
+The [public demo image copies](demo/README.md) contain the generated, labeled return/dispute/repair fixtures and their SHA-256 hashes. They are distinct from the genuine Telegram and phone captures requested below.
+
 **Status: screenshots are pending.** This directory is a collection guide, not proof of completed delivery or a completed phone rental. Provider tests use mocked responses and must never be presented as live Telegram messages.
 
 After the actual live golden path sends notifications, capture the messages in the configured Telegram group for:

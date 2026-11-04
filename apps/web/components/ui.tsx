@@ -303,7 +303,11 @@ export function ChainStatus() {
   if (loading)
     return (
       <div className="callout">
-        <RefreshCw className="spin" size={16} /> Reading the workshop ledger…
+        <RefreshCw className="spin" size={16} />
+        <div>
+          <strong>Reading the workshop ledger…</strong>
+          <span>Render Free history may be waking up.</span>
+        </div>
       </div>
     );
   if (loadError)

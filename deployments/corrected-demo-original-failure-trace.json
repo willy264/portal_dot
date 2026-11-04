@@ -1,0 +1,450 @@
+{
+  "schemaVersion": 1,
+  "kind": "finalized-native-cronpot-transaction-trace",
+  "observedAt": "2026-11-04T09:50:04.738Z",
+  "mode": "read-only",
+  "signedTransactions": 0,
+  "txHash": "0x2b3591d343415e03c1fa12bc252aa8bacfcfc3ef5e935554d5d0d5f947f14599",
+  "block": 318709,
+  "stateOverrides": false,
+  "timestampOverride": false,
+  "method": "ReviveApi.trace_tx_versioned(V1)",
+  "basis": "Replay of the exact finalized native block at its parent state, selecting the hash-matched extrinsic index; not a hypothetical call simulation.",
+  "status": "callback-out-of-gas-confirmed",
+  "identity": {
+    "genesis": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+    "runtime": {
+      "specName": "portaldot-v3",
+      "implName": "portaldot-v3-node",
+      "authoringVersion": 10,
+      "specVersion": 3002,
+      "implVersion": 0,
+      "apis": [
+        [
+          "0x17a6bc0d0062aeb3",
+          1
+        ],
+        [
+          "0x18ef58a3b67ba770",
+          1
+        ],
+        [
+          "0xcbca25e39f142387",
+          2
+        ],
+        [
+          "0x687ad44ad37f03c2",
+          1
+        ],
+        [
+          "0x6ef953004ba30e59",
+          1
+        ],
+        [
+          "0xbc9d89904f5b923f",
+          1
+        ],
+        [
+          "0x8453b50b22293977",
+          1
+        ],
+        [
+          "0x68b66ba122c93fa7",
+          2
+        ],
+        [
+          "0x37c8bb1350a9a2a8",
+          4
+        ],
+        [
+          "0x8a8047a53a8277ec",
+          1
+        ],
+        [
+          "0xf3ff14d5ab527059",
+          3
+        ],
+        [
+          "0x899a250cbe84f250",
+          1
+        ],
+        [
+          "0x49eaaf1b548a0cb0",
+          6
+        ],
+        [
+          "0x91d5df18b0d2cf58",
+          3
+        ],
+        [
+          "0x6fd7c327202e4a8d",
+          1
+        ],
+        [
+          "0xab3c0572291feb8b",
+          2
+        ],
+        [
+          "0x3b1cfc440dd23f49",
+          2
+        ],
+        [
+          "0xfbc577b9d747efd6",
+          1
+        ],
+        [
+          "0x8c403e5c4a9fd442",
+          2
+        ],
+        [
+          "0xdf6acb689907609b",
+          5
+        ],
+        [
+          "0x37e397fc7c91f5e4",
+          2
+        ],
+        [
+          "0xccd9de6396c899ca",
+          1
+        ],
+        [
+          "0x40fe3ad401f8959a",
+          6
+        ],
+        [
+          "0xd2bc9897eed08f15",
+          3
+        ],
+        [
+          "0xf78b278be53f454c",
+          2
+        ],
+        [
+          "0xed99c5acb25eedf5",
+          3
+        ]
+      ],
+      "transactionVersion": 2,
+      "systemVersion": 1,
+      "stateVersion": 1
+    },
+    "runtimeCodeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2"
+  },
+  "blockHash": "0x10e0a1de693a0702d975863dde41f4cc0d81f86fa23a639e3c9438c330218c1a",
+  "parentHash": "0xdf74d93ca1b47947c192440143aecbfa691cc7b71c21282d7ba0c1f4cb5b3fbb",
+  "finalizedAtObservation": {
+    "number": 318720,
+    "hash": "0xa2122d0b42beb80835e36da9c284e86519895328d599e5f17a90e081e14eb999"
+  },
+  "extrinsicIndex": 1,
+  "rawExtrinsic": "0xdd028400506478042f11fb087203f528b13228a60613281137c098db88fc3c3c75911c580178e0b247158919921635b31e2c0c85ad122a7675392d86fdd38e4f18fcb3e30e8c65a1ba6537cebc21272bac36ec163f87f0938017863c09707217ac8ca05c8f14010c000000500141635a685448cfa86da1600656f103a211e398f4000700e40b5402020040000f0008264542a30190fe0d94c10000000000000000000000000000000000000000000000000000000000000003",
+  "rawBlock": {
+    "header": {
+      "parentHash": "0xdf74d93ca1b47947c192440143aecbfa691cc7b71c21282d7ba0c1f4cb5b3fbb",
+      "number": "0x4dcf5",
+      "stateRoot": "0x284ee4e5a043f56a00032da92473c7b6cada5e7b8c71d85b4e7e4a0f9ec3e46c",
+      "extrinsicsRoot": "0x1a7aaabc6bdf0771372478b3972ae0aa515582111a967428b761f49fe0d8abf5",
+      "digest": {
+        "logs": [
+          "0x064241424534020000000040d5d11100000000",
+          "0x044245454684039decd54bb2517e4d38532e27ca2571716c7fc642d834585aeaf5703a96e57669",
+          "0x05424142450101cc6b58da0371662d5cf16728b151c8bc2fda4eee701efe7b6f837f8afdea632a48736e2c8832f7ab59639b2684f74d308f330f34cb35640d990e5e84eec3558f"
+        ]
+      }
+    },
+    "extrinsics": [
+      "0x280503000b000cf6a5a101",
+      "0xdd028400506478042f11fb087203f528b13228a60613281137c098db88fc3c3c75911c580178e0b247158919921635b31e2c0c85ad122a7675392d86fdd38e4f18fcb3e30e8c65a1ba6537cebc21272bac36ec163f87f0938017863c09707217ac8ca05c8f14010c000000500141635a685448cfa86da1600656f103a211e398f4000700e40b5402020040000f0008264542a30190fe0d94c10000000000000000000000000000000000000000000000000000000000000003"
+    ]
+  },
+  "trace": {
+    "type": "V1",
+    "value": {
+      "type": "Call",
+      "value": {
+        "from": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+        "gas": "204511901262604",
+        "gas_used": "0",
+        "to": "0x41635a685448cfa86da1600656f103a211e398f4",
+        "input": "0xfe0d94c10000000000000000000000000000000000000000000000000000000000000003",
+        "output": "0x",
+        "calls": [
+          {
+            "from": "0x41635a685448cfa86da1600656f103a211e398f4",
+            "gas": "1000000",
+            "gas_used": "0",
+            "to": "0x61382db168db646b899234cd707c7ba0142c4071",
+            "input": "0xe6d6aedc0000000000000000000000000000000000000000000000000000000000000003",
+            "output": "0x",
+            "error": "OutOfGas",
+            "calls": [],
+            "logs": [],
+            "value": [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            "call_type": {
+              "type": "Call"
+            },
+            "child_call_count": 0
+          },
+          {
+            "from": "0x41635a685448cfa86da1600656f103a211e398f4",
+            "gas": "0",
+            "gas_used": "0",
+            "to": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+            "input": "0x",
+            "output": "0x",
+            "calls": [],
+            "logs": [],
+            "value": [
+              "1000000000000000",
+              "0",
+              "0",
+              "0"
+            ],
+            "call_type": {
+              "type": "Call"
+            },
+            "child_call_count": 0
+          }
+        ],
+        "logs": [
+          {
+            "address": "0x41635a685448cfa86da1600656f103a211e398f4",
+            "topics": [
+              "0xd46c4be72c8d417fb7bd3ed06c582786f0201b4c3460e1355364d010e822e93e",
+              "0x0000000000000000000000000000000000000000000000000000000000000003",
+              "0x0000000000000000000000007f68506cf7b6fd947b5539dcaeb6494977da23b6"
+            ],
+            "data": "0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000",
+            "position": 2
+          }
+        ],
+        "value": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "call_type": {
+          "type": "Call"
+        },
+        "child_call_count": 2
+      }
+    }
+  },
+  "nativeEvents": [
+    {
+      "phase": {
+        "type": "ApplyExtrinsic",
+        "value": 1
+      },
+      "event": {
+        "type": "Balances",
+        "value": {
+          "type": "Withdraw",
+          "value": {
+            "who": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+            "amount": "1855066647530"
+          }
+        }
+      },
+      "topics": []
+    },
+    {
+      "phase": {
+        "type": "ApplyExtrinsic",
+        "value": 1
+      },
+      "event": {
+        "type": "Balances",
+        "value": {
+          "type": "Transfer",
+          "value": {
+            "from": "5DYSV1UpVqo7tcJaaYGa4u5dRGxfbYdW8W7kcjmt52WjQ1DP",
+            "to": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+            "amount": "100000000000"
+          }
+        }
+      },
+      "topics": []
+    },
+    {
+      "phase": {
+        "type": "ApplyExtrinsic",
+        "value": 1
+      },
+      "event": {
+        "type": "Revive",
+        "value": {
+          "type": "ContractEmitted",
+          "value": {
+            "contract": "0x41635a685448cfa86da1600656f103a211e398f4",
+            "data": "0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000",
+            "topics": [
+              "0xd46c4be72c8d417fb7bd3ed06c582786f0201b4c3460e1355364d010e822e93e",
+              "0x0000000000000000000000000000000000000000000000000000000000000003",
+              "0x0000000000000000000000007f68506cf7b6fd947b5539dcaeb6494977da23b6"
+            ]
+          }
+        }
+      },
+      "topics": []
+    },
+    {
+      "phase": {
+        "type": "ApplyExtrinsic",
+        "value": 1
+      },
+      "event": {
+        "type": "Balances",
+        "value": {
+          "type": "TransferOnHold",
+          "value": {
+            "reason": {
+              "type": "Revive",
+              "value": {
+                "type": "StorageDepositReserve"
+              }
+            },
+            "source": "5DYSV1UpVqo7tcJaaYGa4u5dRGxfbYdW8W7kcjmt52WjQ1DP",
+            "dest": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+            "amount": "384150000000000"
+          }
+        }
+      },
+      "topics": []
+    },
+    {
+      "phase": {
+        "type": "ApplyExtrinsic",
+        "value": 1
+      },
+      "event": {
+        "type": "Balances",
+        "value": {
+          "type": "Deposit",
+          "value": {
+            "who": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+            "amount": "3807815420"
+          }
+        }
+      },
+      "topics": []
+    },
+    {
+      "phase": {
+        "type": "ApplyExtrinsic",
+        "value": 1
+      },
+      "event": {
+        "type": "Balances",
+        "value": {
+          "type": "Deposit",
+          "value": {
+            "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+            "amount": "1851258832110"
+          }
+        }
+      },
+      "topics": []
+    },
+    {
+      "phase": {
+        "type": "ApplyExtrinsic",
+        "value": 1
+      },
+      "event": {
+        "type": "TransactionPayment",
+        "value": {
+          "type": "TransactionFeePaid",
+          "value": {
+            "who": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+            "actual_fee": "1851258832110",
+            "tip": "0"
+          }
+        }
+      },
+      "topics": []
+    },
+    {
+      "phase": {
+        "type": "ApplyExtrinsic",
+        "value": 1
+      },
+      "event": {
+        "type": "System",
+        "value": {
+          "type": "ExtrinsicSuccess",
+          "value": {
+            "dispatch_info": {
+              "weight": {
+                "ref_time": "2660606182",
+                "proof_size": "105220"
+              },
+              "class": {
+                "type": "Normal"
+              },
+              "pays_fee": {
+                "type": "Yes"
+              }
+            }
+          }
+        }
+      },
+      "topics": []
+    }
+  ],
+  "contractEvents": [
+    {
+      "address": "0x41635a685448cfa86da1600656f103a211e398f4",
+      "eventName": "JobExecuted",
+      "args": {
+        "jobId": "3",
+        "executor": "0x7F68506cf7b6FD947b5539dCAeB6494977Da23B6",
+        "success": false,
+        "returnData": "0x"
+      }
+    }
+  ],
+  "callbacks": [
+    {
+      "path": "root.calls[0]",
+      "from": "0x41635a685448cfa86da1600656f103a211e398f4",
+      "to": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "rentalId": "3",
+      "input": "0xe6d6aedc0000000000000000000000000000000000000000000000000000000000000003",
+      "output": "0x",
+      "gas": "1000000",
+      "gasUsed": "0",
+      "error": "OutOfGas",
+      "revertReason": null
+    }
+  ],
+  "cronpot": "0x41635a685448cfa86da1600656f103a211e398f4",
+  "jobId": "3",
+  "finding": {
+    "outerExtrinsicSucceeded": true,
+    "jobExecutedSuccess": false,
+    "depositRefundedEmitted": false,
+    "callback": {
+      "path": "root.calls[0]",
+      "from": "0x41635a685448cfa86da1600656f103a211e398f4",
+      "to": "0x61382db168db646b899234cd707c7ba0142c4071",
+      "rentalId": "3",
+      "input": "0xe6d6aedc0000000000000000000000000000000000000000000000000000000000000003",
+      "output": "0x",
+      "gas": "1000000",
+      "gasUsed": "0",
+      "error": "OutOfGas",
+      "revertReason": null
+    },
+    "exactNestedError": "OutOfGas",
+    "exactNestedRevertReason": null
+  },
+  "completedAt": "2026-11-04T09:50:09.791Z"
+}

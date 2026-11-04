@@ -2588,5 +2588,21 @@
       }
     ],
     "evidence": "deployments/demo-run.json"
+  },
+  "correctedCronpot": {
+    "address": "0x232c9673766794d6106a68cf4480678c73658f4c",
+    "txHash": "0x295eb372f486fbc53a10b11cbc1aa2265fd35a5d88bbf5d78abca9e3a7f21a7b",
+    "block": 317301,
+    "blockHash": "0x541f709b2e0429453c5acbf6341b49f806e10a3a01cf87532a9fc3620da4224b",
+    "manifest": "deployments/corrected-cronpot.json",
+    "integration": "External keeper jobs; MeterMend original immutable Cronpot unchanged",
+    "automaticRefundTxHash": "0x8c45df7bebdaaa714c7490bac16538455196445eec253097b4d6a4e80b373b63"
+  },
+  "actionsKeeper": {
+    "ss58": "5E49UZgRcyc8xpfbXz4WhsaF8PM29ZBcNEj55oW1HVYMfPP7",
+    "h160": "0x60cdf5edc2e10f7a5183d50cca4cedc4f0ee36ee",
+    "fundingTxHash": "0x89dfafd2ec8fc020c0efd0bfa29e98170c6d084f164e785483263b34e2f41b39",
+    "block": 322619,
+    "record": "deployments/actions-keeper-account.json"
   }
 }

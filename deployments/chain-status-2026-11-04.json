@@ -1,0 +1,45 @@
+{
+  "observations": [
+    {
+      "startedAt": "2026-11-04T07:18:27.886Z",
+      "observedAt": "2026-11-04T07:18:32.240Z",
+      "endpoint": "https://test-node-v3.portaldot.dev",
+      "genesis": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+      "runtimeCodeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+      "specVersion": 3002,
+      "health": {
+        "peers": 1,
+        "isSyncing": false,
+        "shouldHavePeers": true
+      },
+      "best": {
+        "number": 317219,
+        "hash": "0x1094946f1d324c28e60487f87653970f3408dea18d8784687295d0403839a5d4"
+      },
+      "finalized": {
+        "number": 317216,
+        "hash": "0x20f0601ac78044889d7da65aae8c027bafe655abe1334a5d467d3e20a250cc84"
+      },
+      "pendingPoolCount": 0,
+      "account": {
+        "address": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+        "finalizedNonce": 22,
+        "bestNonce": 22,
+        "nextIndex": 22,
+        "finalized": {
+          "nonce": 22,
+          "freeNative": "224114289564492397",
+          "freeTPOT": "2241.14289564492397",
+          "frozenNative": "0"
+        },
+        "best": {
+          "nonce": 22,
+          "freeNative": "224114289564492397",
+          "freeTPOT": "2241.14289564492397",
+          "frozenNative": "0"
+        }
+      }
+    }
+  ],
+  "observedAt": "2026-11-04T07:18:32.240Z"
+}

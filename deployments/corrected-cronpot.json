@@ -1,0 +1,434 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-04T07:26:55.163Z",
+  "status": "deployed-and-readbacks-verified",
+  "deployment": {
+    "txHash": "0x295eb372f486fbc53a10b11cbc1aa2265fd35a5d88bbf5d78abca9e3a7f21a7b",
+    "block": 317301,
+    "blockHash": "0x541f709b2e0429453c5acbf6341b49f806e10a3a01cf87532a9fc3620da4224b",
+    "extrinsicIndex": 1,
+    "events": [
+      {
+        "phase": {
+          "type": "ApplyExtrinsic",
+          "value": 1
+        },
+        "event": {
+          "type": "Balances",
+          "value": {
+            "type": "Withdraw",
+            "value": {
+              "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+              "amount": "54440895565110"
+            }
+          }
+        },
+        "topics": [],
+        "type": "Balances",
+        "value": {
+          "type": "Withdraw",
+          "value": {
+            "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+            "amount": "54440895565110"
+          }
+        }
+      },
+      {
+        "phase": {
+          "type": "ApplyExtrinsic",
+          "value": 1
+        },
+        "event": {
+          "type": "System",
+          "value": {
+            "type": "NewAccount",
+            "value": {
+              "account": "5Crpn6vL356yvd2mXG3LNJ8CAL8gdsXdLgwbDC3YfhwgxGP5"
+            }
+          }
+        },
+        "topics": [],
+        "type": "System",
+        "value": {
+          "type": "NewAccount",
+          "value": {
+            "account": "5Crpn6vL356yvd2mXG3LNJ8CAL8gdsXdLgwbDC3YfhwgxGP5"
+          }
+        }
+      },
+      {
+        "phase": {
+          "type": "ApplyExtrinsic",
+          "value": 1
+        },
+        "event": {
+          "type": "Balances",
+          "value": {
+            "type": "Endowed",
+            "value": {
+              "account": "5Crpn6vL356yvd2mXG3LNJ8CAL8gdsXdLgwbDC3YfhwgxGP5",
+              "free_balance": "10000000000000"
+            }
+          }
+        },
+        "topics": [],
+        "type": "Balances",
+        "value": {
+          "type": "Endowed",
+          "value": {
+            "account": "5Crpn6vL356yvd2mXG3LNJ8CAL8gdsXdLgwbDC3YfhwgxGP5",
+            "free_balance": "10000000000000"
+          }
+        }
+      },
+      {
+        "phase": {
+          "type": "ApplyExtrinsic",
+          "value": 1
+        },
+        "event": {
+          "type": "Balances",
+          "value": {
+            "type": "Minted",
+            "value": {
+              "who": "5Crpn6vL356yvd2mXG3LNJ8CAL8gdsXdLgwbDC3YfhwgxGP5",
+              "amount": "10000000000000"
+            }
+          }
+        },
+        "topics": [],
+        "type": "Balances",
+        "value": {
+          "type": "Minted",
+          "value": {
+            "who": "5Crpn6vL356yvd2mXG3LNJ8CAL8gdsXdLgwbDC3YfhwgxGP5",
+            "amount": "10000000000000"
+          }
+        }
+      },
+      {
+        "phase": {
+          "type": "ApplyExtrinsic",
+          "value": 1
+        },
+        "event": {
+          "type": "Balances",
+          "value": {
+            "type": "TransferAndHold",
+            "value": {
+              "reason": {
+                "type": "Revive",
+                "value": {
+                  "type": "CodeUploadDepositReserve"
+                }
+              },
+              "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+              "dest": "5EYCAe5ijiYfhaAUBd6H9WGRTsvwFFc7GnhQkiHvBYxdvpbV",
+              "transferred": "28938000000000000"
+            }
+          }
+        },
+        "topics": [],
+        "type": "Balances",
+        "value": {
+          "type": "TransferAndHold",
+          "value": {
+            "reason": {
+              "type": "Revive",
+              "value": {
+                "type": "CodeUploadDepositReserve"
+              }
+            },
+            "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+            "dest": "5EYCAe5ijiYfhaAUBd6H9WGRTsvwFFc7GnhQkiHvBYxdvpbV",
+            "transferred": "28938000000000000"
+          }
+        }
+      },
+      {
+        "phase": {
+          "type": "ApplyExtrinsic",
+          "value": 1
+        },
+        "event": {
+          "type": "Revive",
+          "value": {
+            "type": "Instantiated",
+            "value": {
+              "deployer": "0xa83014ba71476262795173fbbc06656546b57ec0",
+              "contract": "0x232c9673766794d6106a68cf4480678c73658f4c"
+            }
+          }
+        },
+        "topics": [],
+        "type": "Revive",
+        "value": {
+          "type": "Instantiated",
+          "value": {
+            "deployer": "0xa83014ba71476262795173fbbc06656546b57ec0",
+            "contract": "0x232c9673766794d6106a68cf4480678c73658f4c"
+          }
+        }
+      },
+      {
+        "phase": {
+          "type": "ApplyExtrinsic",
+          "value": 1
+        },
+        "event": {
+          "type": "Balances",
+          "value": {
+            "type": "TransferAndHold",
+            "value": {
+              "reason": {
+                "type": "Revive",
+                "value": {
+                  "type": "StorageDepositReserve"
+                }
+              },
+              "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+              "dest": "5Crpn6vL356yvd2mXG3LNJ8CAL8gdsXdLgwbDC3YfhwgxGP5",
+              "transferred": "9830550000000000"
+            }
+          }
+        },
+        "topics": [],
+        "type": "Balances",
+        "value": {
+          "type": "TransferAndHold",
+          "value": {
+            "reason": {
+              "type": "Revive",
+              "value": {
+                "type": "StorageDepositReserve"
+              }
+            },
+            "source": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+            "dest": "5Crpn6vL356yvd2mXG3LNJ8CAL8gdsXdLgwbDC3YfhwgxGP5",
+            "transferred": "9830550000000000"
+          }
+        }
+      },
+      {
+        "phase": {
+          "type": "ApplyExtrinsic",
+          "value": 1
+        },
+        "event": {
+          "type": "Balances",
+          "value": {
+            "type": "Deposit",
+            "value": {
+              "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+              "amount": "16373756"
+            }
+          }
+        },
+        "topics": [],
+        "type": "Balances",
+        "value": {
+          "type": "Deposit",
+          "value": {
+            "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+            "amount": "16373756"
+          }
+        }
+      },
+      {
+        "phase": {
+          "type": "ApplyExtrinsic",
+          "value": 1
+        },
+        "event": {
+          "type": "Balances",
+          "value": {
+            "type": "Deposit",
+            "value": {
+              "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+              "amount": "54440879191354"
+            }
+          }
+        },
+        "topics": [],
+        "type": "Balances",
+        "value": {
+          "type": "Deposit",
+          "value": {
+            "who": "5EYCAe5ijiYfyeZ2JJCGq56LmPyNRAKzpG4QkoQkkQNB5e6Z",
+            "amount": "54440879191354"
+          }
+        }
+      },
+      {
+        "phase": {
+          "type": "ApplyExtrinsic",
+          "value": 1
+        },
+        "event": {
+          "type": "TransactionPayment",
+          "value": {
+            "type": "TransactionFeePaid",
+            "value": {
+              "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+              "actual_fee": "54440879191354",
+              "tip": "0"
+            }
+          }
+        },
+        "topics": [],
+        "type": "TransactionPayment",
+        "value": {
+          "type": "TransactionFeePaid",
+          "value": {
+            "who": "5Gn8dCfyVQkKzoidcXXfncDR6amfmp5zVxFiXidsdzrZH3uB",
+            "actual_fee": "54440879191354",
+            "tip": "0"
+          }
+        }
+      },
+      {
+        "phase": {
+          "type": "ApplyExtrinsic",
+          "value": 1
+        },
+        "event": {
+          "type": "System",
+          "value": {
+            "type": "ExtrinsicSuccess",
+            "value": {
+              "dispatch_info": {
+                "weight": {
+                  "ref_time": "1812473620",
+                  "proof_size": "29264"
+                },
+                "class": {
+                  "type": "Normal"
+                },
+                "pays_fee": {
+                  "type": "Yes"
+                }
+              }
+            }
+          }
+        },
+        "topics": [],
+        "type": "System",
+        "value": {
+          "type": "ExtrinsicSuccess",
+          "value": {
+            "dispatch_info": {
+              "weight": {
+                "ref_time": "1812473620",
+                "proof_size": "29264"
+              },
+              "class": {
+                "type": "Normal"
+              },
+              "pays_fee": {
+                "type": "Yes"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "address": "0x232c9673766794d6106a68cf4480678c73658f4c",
+    "bytecodeSha256": "824d0f55abd5ac14cd9b9a6a3a3185a31b74c565b933afef0f6d086746c58c53",
+    "ctorData": "0x0000000000000000000000000000000000000000000000000001f438daa060000000000000000000000000000000000000000000000000000000b5e620f480000000000000000000000000000000000000000000000000000000000000007530"
+  },
+  "originalCronpot": "0x41635a685448cfa86da1600656f103a211e398f4",
+  "meterMend": "0x61382db168db646b899234cd707c7ba0142c4071",
+  "integration": "Keeper registers external jobs; MeterMend retains its original immutable Cronpot",
+  "profile": {
+    "schemaVersion": 1,
+    "id": "portaldot-v3-corrected-cronpot-external-keeper",
+    "verified": true,
+    "observedAt": "2026-11-02T00:19:53.415Z",
+    "runtime": {
+      "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+      "specName": "portaldot-v3",
+      "specVersion": 3002,
+      "transactionVersion": 2,
+      "codeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+      "nativeToEthRatio": "10000"
+    },
+    "contracts": {
+      "Cronpot": "0x232c9673766794d6106a68cf4480678c73658f4c",
+      "MeterMend": "0x61382db168db646b899234cd707c7ba0142c4071"
+    },
+    "contractGas": {
+      "targetGasLimit": "550000000000000",
+      "postCallGasReserve": "200000000000000",
+      "tipGasLimit": "30000",
+      "minCallGas": "758730158740159"
+    },
+    "native": {
+      "weightLimit": {
+        "ref_time": "10000000000",
+        "proof_size": "1048576"
+      },
+      "storageDepositLimit": "2500000000000000",
+      "feeReserve": "100000000000000"
+    },
+    "ethereum": {
+      "gasPriceMin": "20000",
+      "gasPriceMax": "25360"
+    },
+    "verification": {
+      "artifact": "deployments/cronpot-candidate-full-simulation.json",
+      "sha256": "374696e508b1adbddf875c8b93729cdbe15472752ae5accc1b9aca4faab1d382",
+      "nativeBoundedSuccess": true,
+      "ethereumTraceSuccess": true
+    },
+    "limitations": [
+      "Predeployment candidate only; contracts are not deployed and the profile is not verified for operational use.",
+      "The corrected full Ethereum-context trace used temporary code and balance overrides; it is simulation evidence only.",
+      "Actual deployed code and addresses must be read back before an operational profile is reviewed; each due job must return true in its exact bounded native simulation before any broadcast.",
+      "Gas price 25360 is the historical calibration observation, not a fresh live price; operational guards must reject changed pricing until recalibrated.",
+      "The 1 tPOT fee reserve is a conservative reviewed cap, not a fee quote."
+    ],
+    "runtimeObservation": {
+      "finalizedHash": "0x6ce48a4609f0843a1f57adcebec035d8fea334446909cd52aad2823214c865d9",
+      "readOnly": true
+    },
+    "sourceCreationBytecodeSha256": "824d0f55abd5ac14cd9b9a6a3a3185a31b74c565b933afef0f6d086746c58c53",
+    "code": {
+      "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+      "creationBytecodeSha256": "824d0f55abd5ac14cd9b9a6a3a3185a31b74c565b933afef0f6d086746c58c53",
+      "runtimeBytecodeSha256": "d432137146bce41e8017428ee7a52c29bcc7eed420317f32ef509db1f43c5644"
+    }
+  },
+  "readbacks": {
+    "at": {
+      "number": 317301,
+      "hash": "0x541f709b2e0429453c5acbf6341b49f806e10a3a01cf87532a9fc3620da4224b",
+      "timestamp": "1793777202"
+    },
+    "targetGasLimit": "550000000000000",
+    "postCallGasReserve": "200000000000000",
+    "tipGasLimit": "30000",
+    "minCallGas": "758730158740159",
+    "actualBuiltInCronpot": "0x41635A685448cfa86DA1600656f103a211e398F4",
+    "codeHash": "0x5fdb1e48a8c85adfe9a80759b1a80463e4ee999935edcd238eea8a2cdb5446b3",
+    "runtimeBytecodeSha256": "d432137146bce41e8017428ee7a52c29bcc7eed420317f32ef509db1f43c5644",
+    "nextJobId": "1",
+    "cronTip": "1000000000000000"
+  },
+  "gasPriceCalibration": {
+    "artifact": "deployments/corrected-cronpot-live-price-calibration.json",
+    "sha256": "18653afb2f3150558cecb262780fc85e871bf59dacc4053a44ea74fef602decb",
+    "observedAt": "2026-11-04T15:57:43.387Z",
+    "at": {
+      "number": 322369,
+      "hash": "0x620f22dc99e7c9085cc608b14f23f03f4a9e028b3e0658ffaa43f8d284dc0bcd",
+      "timestamp": "1793807826"
+    },
+    "observedGasPrice": "22335",
+    "reviewedOperatingTolerance": {
+      "gasPriceMin": "20000",
+      "gasPriceMax": "25360"
+    },
+    "allPricesEmpiricallyTested": false,
+    "perJobNativeAndTraceRequired": true
+  }
+}

@@ -5,8 +5,11 @@ import path from "node:path";
 import { Badge, EmptyState, PageHeading } from "@/components/ui";
 import { publicConfig, readDeployment } from "@/lib/server-config";
 import { historyEndpoint } from "@/lib/history-endpoint";
+import { readHistoryJson } from "@/lib/history-service";
+import { errorMessage } from "@/lib/format";
 import {
   demoStatus,
+  correctedRefundFrom,
   demoTransactionsFrom,
   failedDemoTransactionsFrom,
   expectedFailuresFrom,
@@ -38,14 +41,18 @@ export default async function Proof() {
     notifications,
     submission,
     refundCalibration,
+    keeperHosting,
+    correctedCronpot,
   ] = await Promise.all([
     readDeployment("deployment-status.json"),
-    readDeployment("chain-status-2026-11-03.json"),
+    readDeployment("chain-status-2026-11-04.json"),
     readDeployment("rpc-discovery.json"),
     readDeployment("hosting-status.json"),
     readDeployment("notification-status.json"),
     readDeployment("submission-materials.json"),
     readDeployment("refund-calibration-summary.json"),
+    readDeployment("corrected-keeper-hosting-plan.json"),
+    readDeployment("corrected-cronpot.json"),
   ]);
   let jobs: unknown = null;
   let jobsError: string | null = null;
@@ -53,13 +60,7 @@ export default async function Proof() {
   const base = await historyEndpoint();
   if (base) {
     const readExecutor = async (route: string) => {
-      const response = await fetch(new URL(route, base), {
-        cache: "no-store",
-        signal: AbortSignal.timeout(6000),
-      });
-      if (!response.ok)
-        throw new Error(`Executor service returned ${response.status}.`);
-      const body = await response.json();
+      const body = await readHistoryJson(base, route, 6000);
       if (!body || typeof body !== "object" || Array.isArray(body))
         throw new Error("Invalid executor response");
       return body;
@@ -69,19 +70,25 @@ export default async function Proof() {
       readExecutor("/health"),
     ]);
     if (jobResponse.status === "fulfilled") jobs = jobResponse.value;
-    else jobsError = "The executor evidence service is currently unavailable.";
+    else jobsError = errorMessage(jobResponse.reason);
     executorHealth =
       healthResponse.status === "fulfilled"
         ? { ...healthResponse.value, observedAt: new Date().toISOString() }
         : {
             status: "Unavailable",
             observedAt: new Date().toISOString(),
-            error:
-              "The configured keeper health endpoint could not be reached.",
+            error: errorMessage(healthResponse.reason),
           };
   }
-  const deployTransactions = transactionsFrom(deployment, "Deployment");
+  const deployTransactions = [
+    ...transactionsFrom(deployment, "Deployment"),
+    ...transactionsFrom(
+      correctedCronpot?.deployment,
+      "Corrected Cronpot deployment",
+    ),
+  ];
   const demoTransactions = demoTransactionsFrom(demo);
+  const correctedRefund = correctedRefundFrom(demo);
   const failedDemoTransactions = failedDemoTransactionsFrom(demo);
   const rejectedTransactions = expectedFailuresFrom(demo);
   const probeTransactions = [
@@ -100,6 +107,8 @@ export default async function Proof() {
     submission,
     executorHealth,
     refundCalibration,
+    correctedCronpot,
+    keeperHosting,
   });
   const deckAvailable = hasGeneratedDeck(
     submission,
@@ -239,6 +248,125 @@ export default async function Proof() {
           </dl>
         </section>
       </div>
+      <section className="proof-section" id="refund-proof">
+        <div className="section-heading">
+          <h2>Refund execution evidence</h2>
+          <span className="eyebrow">FINALIZED RECEIPTS</span>
+        </div>
+        <p>
+          Original Cronpot failed (OutOfGas, tx{" "}
+          <code className="hash">
+            {demo?.failedTransactions?.["cronpot-callback-failed"]?.txHash ??
+              "not recorded"}
+          </code>
+          ). The deposit was refunded directly (tx{" "}
+          <code className="hash">
+            {demo?.directRefund?.txHash ?? "not recorded"}
+          </code>
+          ).
+          {correctedRefund ? (
+            <>
+              {" "}
+              The corrected Cronpot then executed a live automatic refund (tx{" "}
+              <code className="hash">{correctedRefund.txHash}</code>).
+            </>
+          ) : (
+            <>
+              {" "}
+              The corrected Cronpot has been deployed; its live automatic refund
+              is pending verified JobExecuted(success=true) and DepositRefunded.
+            </>
+          )}
+        </p>
+        <p className="small muted">
+          MeterMend retains its original built-in Cronpot address. The keeper
+          schedules the new callback on the corrected Cronpot, targeting the
+          existing MeterMend contract after refundAt.
+        </p>
+      </section>
+      <section className="proof-section" id="hosting">
+        <div className="section-heading">
+          <h2>Hosting</h2>
+          <span className="eyebrow">FREE SERVICES</span>
+        </div>
+        <p>
+          Vercel app, GitHub Pages proof, GitHub Actions keeper (free, runs
+          every ~10 min), permissionless refunds as fallback. Scheduled runs can
+          be delayed; the rental page’s Finalize refund button is available
+          after the dispute deadline and displays its finalized transaction
+          hash.
+        </p>
+        <dl className="detail-list">
+          <div>
+            <dt>Public app</dt>
+            <dd>
+              <a href="https://metermend.vercel.app">Vercel</a>
+            </dd>
+          </div>
+          <div>
+            <dt>Proof report</dt>
+            <dd>
+              <a href="https://willy264.github.io/portal_dot/">GitHub Pages</a>
+            </dd>
+          </div>
+          <div>
+            <dt>GitHub Actions keeper</dt>
+            <dd>
+              {keeperHosting?.githubActions?.status ?? "Not yet verified"}
+              {" · "}
+              <a href="https://github.com/willy264/portal_dot/actions/workflows/keeper.yml">
+                Workflow runs
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt>History service</dt>
+            <dd>
+              <a href="https://metermend-preview.onrender.com/health">
+                Render Free · read only
+              </a>
+            </dd>
+          </div>
+        </dl>
+        <p className="small muted">
+          Render Free may be waking up when history is requested; its filesystem
+          is temporary. Known limitation: the history indexer can lag, so
+          finalized transaction receipts and direct contract reads are the
+          evidence for the live demo.
+        </p>
+      </section>
+      <section className="proof-section" id="demo-evidence">
+        <div className="section-heading">
+          <h2>Demo evidence images</h2>
+          <span className="eyebrow">PUBLIC COPIES</span>
+        </div>
+        <p>
+          These are the labeled return, dispute and repair fixtures submitted
+          during the live testnet demo. They are generated demonstration images,
+          not photographs or real-world receipts. Their SHA-256 hashes and
+          source files are recorded in the repository.
+        </p>
+        <div className="decision-actions">
+          {["return", "dispute", "repair"].map((name) => (
+            <a
+              key={name}
+              className="button"
+              href={`https://raw.githubusercontent.com/willy264/portal_dot/main/docs/evidence/demo/${name}.png`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {name.charAt(0).toUpperCase() + name.slice(1)} image{" "}
+              <ArrowUpRight size={16} />
+            </a>
+          ))}
+          <a
+            className="text-button"
+            href="https://github.com/willy264/portal_dot/blob/main/docs/evidence/demo/README.md"
+          >
+            Image provenance and hashes <ArrowUpRight size={14} />
+          </a>
+        </div>
+      </section>
       <section className="proof-section">
         <div className="section-heading">
           <h2>Submission readiness and operational evidence</h2>
@@ -288,7 +416,15 @@ export default async function Proof() {
           <div className="proof-addresses">
             {[
               ["MeterMend", config.meterMend],
-              ["Cronpot", config.cronpot],
+              ["Original built-in Cronpot", config.cronpot],
+              ...(isAddress(String(correctedCronpot?.deployment?.address))
+                ? [
+                    [
+                      "Corrected external Cronpot",
+                      correctedCronpot!.deployment.address,
+                    ],
+                  ]
+                : []),
             ].map(([name, address]) => (
               <article className="panel" key={name}>
                 <h3>{name}</h3>

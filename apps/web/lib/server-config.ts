@@ -20,11 +20,14 @@ export async function readDeployment(
     | "deployment-status.json"
     | "chain-status-2026-10-31.json"
     | "chain-status-2026-11-03.json"
+    | "chain-status-2026-11-04.json"
     | "rpc-discovery.json"
     | "hosting-status.json"
     | "notification-status.json"
     | "submission-materials.json"
-    | "refund-calibration-summary.json",
+    | "refund-calibration-summary.json"
+    | "corrected-cronpot.json"
+    | "corrected-keeper-hosting-plan.json",
 ): Promise<Record<string, any> | null> {
   try {
     return JSON.parse(

@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "kind": "external-keeper-refund-preflight",
+  "profileId": "portaldot-v3-corrected-cronpot-external-keeper",
+  "observedAt": "2026-11-04T16:08:37.305Z",
+  "at": {
+    "number": 322474,
+    "hash": "0x54a06fcb21bfa9bee0a15ab6de021fcb3f724f2f53217b59a02c84f57f80cfba",
+    "timestamp": "1793808468"
+  },
+  "runtime": {
+    "genesisHash": "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+    "specName": "portaldot-v3",
+    "specVersion": 3002,
+    "transactionVersion": 2,
+    "codeHash": "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+    "nativeToEthRatio": "10000"
+  },
+  "readbacks": {
+    "targetGasLimit": "550000000000000",
+    "postCallGasReserve": "200000000000000",
+    "tipGasLimit": "30000",
+    "minCallGas": "758730158740159",
+    "actualBuiltInCronpot": "0x41635A685448cfa86DA1600656f103a211e398F4",
+    "codeHash": "0x5fdb1e48a8c85adfe9a80759b1a80463e4ee999935edcd238eea8a2cdb5446b3",
+    "runtimeBytecodeSha256": "d432137146bce41e8017428ee7a52c29bcc7eed420317f32ef509db1f43c5644"
+  },
+  "binding": {
+    "cronpot": "0x232c9673766794d6106a68cf4480678c73658f4c",
+    "meterMend": "0x61382db168db646b899234cd707c7ba0142c4071",
+    "keeper": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+    "oldCronpot": "0x41635a685448cfa86da1600656f103a211e398f4",
+    "actualBuiltInCronpot": "0x41635A685448cfa86DA1600656f103a211e398F4",
+    "jobId": "1",
+    "rentalId": "3",
+    "oldJobId": "3",
+    "timestamp": "1793808468",
+    "job": {
+      "owner": "0x7F68506cf7b6FD947b5539dCAeB6494977Da23B6",
+      "target": "0x61382db168Db646b899234Cd707c7ba0142c4071",
+      "executeAfter": "1793785644",
+      "status": 1,
+      "tip": "1000000000000000",
+      "data": "0xe6d6aedc0000000000000000000000000000000000000000000000000000000000000003"
+    },
+    "oldJob": {
+      "owner": "0x61382db168Db646b899234Cd707c7ba0142c4071",
+      "target": "0x61382db168Db646b899234Cd707c7ba0142c4071",
+      "executeAfter": "1793785644",
+      "status": 4,
+      "tip": "0",
+      "data": "0xe6d6aedc0000000000000000000000000000000000000000000000000000000000000003"
+    },
+    "rental": [
+      "1",
+      "0x5C8ce2C2987Ea625BA9F60Fe959b12e13574B404",
+      "50000000000000000",
+      "1793777958",
+      "1793785644",
+      2,
+      "3"
+    ]
+  },
+  "expected": {
+    "cronpot": "0x232c9673766794d6106a68cf4480678c73658f4c",
+    "meterMend": "0x61382db168db646b899234cd707c7ba0142c4071",
+    "executor": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+    "jobId": "1",
+    "rentalId": "3",
+    "itemId": "1",
+    "renter": "0x5C8ce2C2987Ea625BA9F60Fe959b12e13574B404",
+    "deposit": "50000000000000000"
+  },
+  "account": {
+    "address": "5Dt7Xte4QDLeyTTDQH7vNveCXy7akearVuYPXW3m2rDXCe4a",
+    "h160": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+    "nonce": 4,
+    "balance": "4073887544531335",
+    "spendable": "4063887544531335"
+  },
+  "native": {
+    "caps": {
+      "weight_limit": {
+        "ref_time": "10000000000",
+        "proof_size": "1048576"
+      },
+      "storage_deposit_limit": "2500000000000000"
+    },
+    "initial": {
+      "weight_consumed": {
+        "ref_time": "1554812710",
+        "proof_size": "85365"
+      },
+      "weight_required": {
+        "ref_time": "1554812710",
+        "proof_size": "85365"
+      },
+      "storage_deposit": {
+        "type": "Refund",
+        "value": "384149999999998"
+      },
+      "max_storage_deposit": {
+        "type": "Charge",
+        "value": "384150000000000"
+      },
+      "gas_consumed": "0",
+      "result": {
+        "success": true,
+        "value": {
+          "flags": 0,
+          "data": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      },
+      "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "bounded": {
+      "weight_consumed": {
+        "ref_time": "2853082130",
+        "proof_size": "151715"
+      },
+      "weight_required": {
+        "ref_time": "2853082130",
+        "proof_size": "151715"
+      },
+      "storage_deposit": {
+        "type": "Refund",
+        "value": "768299999999998"
+      },
+      "max_storage_deposit": {
+        "type": "Charge",
+        "value": "384150000000000"
+      },
+      "gas_consumed": "0",
+      "result": {
+        "success": true,
+        "value": {
+          "flags": 0,
+          "data": "0x0000000000000000000000000000000000000000000000000000000000000001"
+        }
+      },
+      "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    },
+    "callbackSuccess": true,
+    "feeEstimate": "1855020143536",
+    "encodedCall": "0x5001232c9673766794d6106a68cf4480678c73658f4c000700e40b5402020040000f0040f09bbce10890fe0d94c10000000000000000000000000000000000000000000000000000000000000001"
+  },
+  "ethereum": {
+    "gas": "1164613661814109",
+    "gasPrice": "22325",
+    "nativeBudget": "2600000000000000",
+    "evmBudget": "25999999999999983425",
+    "stateOverrides": false,
+    "timestampOverride": false,
+    "basis": "Independent Ethereum-context check with actual balances; not a native gas equivalence",
+    "events": {
+      "jobExecuted": {
+        "jobId": "1",
+        "executor": "0x7F68506cf7b6FD947b5539dCAeB6494977Da23B6",
+        "success": true,
+        "returnData": "0x"
+      },
+      "depositRefunded": {
+        "rentalId": "3",
+        "itemId": "1",
+        "renter": "0x5C8ce2C2987Ea625BA9F60Fe959b12e13574B404",
+        "amount": "50000000000000000"
+      },
+      "callbackGas": "550000000000000"
+    },
+    "trace": {
+      "from": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+      "gas": "1163901266823550",
+      "gas_used": "0",
+      "to": "0x232c9673766794d6106a68cf4480678c73658f4c",
+      "input": "0xfe0d94c10000000000000000000000000000000000000000000000000000000000000001",
+      "output": "0x0000000000000000000000000000000000000000000000000000000000000001",
+      "calls": [
+        {
+          "from": "0x232c9673766794d6106a68cf4480678c73658f4c",
+          "gas": "550000000000000",
+          "gas_used": "0",
+          "to": "0x61382db168db646b899234cd707c7ba0142c4071",
+          "input": "0xe6d6aedc0000000000000000000000000000000000000000000000000000000000000003",
+          "output": "0x",
+          "calls": [
+            {
+              "from": "0x61382db168db646b899234cd707c7ba0142c4071",
+              "gas": "0",
+              "gas_used": "0",
+              "to": "0x5c8ce2c2987ea625ba9f60fe959b12e13574b404",
+              "input": "0x",
+              "output": "0x",
+              "calls": [],
+              "logs": [],
+              "value": [
+                "50000000000000000",
+                "0",
+                "0",
+                "0"
+              ],
+              "call_type": {
+                "type": "Call"
+              },
+              "child_call_count": 0
+            }
+          ],
+          "logs": [
+            {
+              "address": "0x61382db168db646b899234cd707c7ba0142c4071",
+              "topics": [
+                "0x13fe8ef6de97005cf5076b72219295e7f98acc7f5b651899709a156a29909c48",
+                "0x0000000000000000000000000000000000000000000000000000000000000003",
+                "0x0000000000000000000000000000000000000000000000000000000000000001",
+                "0x0000000000000000000000005c8ce2c2987ea625ba9f60fe959b12e13574b404"
+              ],
+              "data": "0x00000000000000000000000000000000000000000000000000b1a2bc2ec50000",
+              "position": 1
+            }
+          ],
+          "value": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "call_type": {
+            "type": "Call"
+          },
+          "child_call_count": 1
+        },
+        {
+          "from": "0x232c9673766794d6106a68cf4480678c73658f4c",
+          "gas": "0",
+          "gas_used": "0",
+          "to": "0x7f68506cf7b6fd947b5539dcaeb6494977da23b6",
+          "input": "0x",
+          "output": "0x",
+          "calls": [],
+          "logs": [],
+          "value": [
+            "1000000000000000",
+            "0",
+            "0",
+            "0"
+          ],
+          "call_type": {
+            "type": "Call"
+          },
+          "child_call_count": 0
+        }
+      ],
+      "logs": [
+        {
+          "address": "0x232c9673766794d6106a68cf4480678c73658f4c",
+          "topics": [
+            "0xd46c4be72c8d417fb7bd3ed06c582786f0201b4c3460e1355364d010e822e93e",
+            "0x0000000000000000000000000000000000000000000000000000000000000001",
+            "0x0000000000000000000000007f68506cf7b6fd947b5539dcaeb6494977da23b6"
+          ],
+          "data": "0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000",
+          "position": 2
+        }
+      ],
+      "value": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "call_type": {
+        "type": "Call"
+      },
+      "child_call_count": 2
+    }
+  },
+  "signedTransactions": 0
+}
