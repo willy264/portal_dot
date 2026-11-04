@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import { Providers } from "@/components/providers";
 import { Shell } from "@/components/shell";
 import "./globals.css";
+const josefin = localFont({
+  src: "./fonts/JosefinSans-Variable.ttf",
+  variable: "--font-josefin",
+  weight: "100 700",
+  display: "swap",
+});
 export const metadata: Metadata = {
   title: {
     default: "MeterMend — Every rental funds its next repair",
@@ -26,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={josefin.variable} suppressHydrationWarning>
       <body>
         <a className="skip-link" href="#main-content">
           Skip to content

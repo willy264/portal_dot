@@ -9,6 +9,7 @@ import {
   PageHeading,
 } from "@/components/ui";
 import { ScanButton } from "@/components/qr";
+import { PillGroup } from "@/components/pill-group";
 export default function Items() {
   const { ledger } = useApp();
   const [query, setQuery] = useState("");
@@ -28,20 +29,26 @@ export default function Items() {
       />
       <ChainStatus />
       <div className="filter-bar">
-        <div className="segmented">
+        <PillGroup
+          className="segmented"
+          activeKey={filter}
+          aria-label="Equipment availability"
+        >
           <button
             onClick={() => setFilter("all")}
             className={filter === "all" ? "selected" : ""}
+            aria-pressed={filter === "all"}
           >
             All equipment
           </button>
           <button
             onClick={() => setFilter("available")}
             className={filter === "available" ? "selected" : ""}
+            aria-pressed={filter === "available"}
           >
             Available now
           </button>
-        </div>
+        </PillGroup>
         <label className="search-field">
           <Search size={17} />
           <input

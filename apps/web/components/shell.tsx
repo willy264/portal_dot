@@ -18,6 +18,7 @@ import {
 import { useApp } from "./providers";
 import { useDialog } from "./use-dialog";
 import { TransactionRecovery } from "./transaction-recovery";
+import { PillGroup } from "./pill-group";
 import { amount, shortAddress } from "@/lib/format";
 
 export function Logo() {
@@ -88,20 +89,32 @@ export function Shell({ children }: { children: ReactNode }) {
       <header className="site-header">
         <div className="header-inner">
           <Logo />
-          <nav
+          <PillGroup
+            as="nav"
+            activeKey={pathname}
+            id="main-navigation"
             className={menu ? "main-nav open" : "main-nav"}
             aria-label="Main navigation"
+            onKeyDown={(event) => {
+              if (event.key === "Escape") {
+                setMenu(false);
+                document
+                  .querySelector<HTMLButtonElement>(".mobile-menu")
+                  ?.focus();
+              }
+            }}
           >
             {links.map(([href, label]) => (
               <Link
                 key={href}
                 href={href}
                 className={pathname.startsWith(href) ? "active" : ""}
+                aria-current={pathname.startsWith(href) ? "page" : undefined}
               >
                 {label}
               </Link>
             ))}
-          </nav>
+          </PillGroup>
           <div className="header-actions">
             <button
               className="icon-button theme-button"
@@ -126,6 +139,7 @@ export function Shell({ children }: { children: ReactNode }) {
               className="icon-button mobile-menu"
               aria-label="Toggle navigation"
               aria-expanded={menu}
+              aria-controls="main-navigation"
               onClick={() => setMenu(!menu)}
             >
               {menu ? <X /> : <Menu />}

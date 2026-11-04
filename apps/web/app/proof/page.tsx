@@ -1,3 +1,4 @@
+import { ProofAccordion } from "@/components/proof-accordion";
 import { ArrowUpRight, FileCheck2, Radio } from "lucide-react";
 import { isAddress } from "viem";
 import { existsSync } from "node:fs";
@@ -248,11 +249,16 @@ export default async function Proof() {
           </dl>
         </section>
       </div>
-      <section className="proof-section" id="refund-proof">
-        <div className="section-heading">
-          <h2>Refund execution evidence</h2>
-          <span className="eyebrow">FINALIZED RECEIPTS</span>
-        </div>
+      <ProofAccordion
+        id="refund-proof"
+        level={2}
+        title={<>Refund execution evidence</>}
+        meta={
+          <>
+            <span className="eyebrow">FINALIZED RECEIPTS</span>
+          </>
+        }
+      >
         <p>
           Original Cronpot failed (OutOfGas, tx{" "}
           <code className="hash">
@@ -283,12 +289,17 @@ export default async function Proof() {
           schedules the new callback on the corrected Cronpot, targeting the
           existing MeterMend contract after refundAt.
         </p>
-      </section>
-      <section className="proof-section" id="hosting">
-        <div className="section-heading">
-          <h2>Hosting</h2>
-          <span className="eyebrow">FREE SERVICES</span>
-        </div>
+      </ProofAccordion>
+      <ProofAccordion
+        id="hosting"
+        level={2}
+        title={<>Hosting</>}
+        meta={
+          <>
+            <span className="eyebrow">FREE SERVICES</span>
+          </>
+        }
+      >
         <p>
           Vercel app, GitHub Pages proof, GitHub Actions keeper (free, runs
           every ~10 min), permissionless refunds as fallback. Scheduled runs can
@@ -334,12 +345,17 @@ export default async function Proof() {
           finalized transaction receipts and direct contract reads are the
           evidence for the live demo.
         </p>
-      </section>
-      <section className="proof-section" id="demo-evidence">
-        <div className="section-heading">
-          <h2>Demo evidence images</h2>
-          <span className="eyebrow">PUBLIC COPIES</span>
-        </div>
+      </ProofAccordion>
+      <ProofAccordion
+        id="demo-evidence"
+        level={2}
+        title={<>Demo evidence images</>}
+        meta={
+          <>
+            <span className="eyebrow">PUBLIC COPIES</span>
+          </>
+        }
+      >
         <p>
           These are the labeled return, dispute and repair fixtures submitted
           during the live testnet demo. They are generated demonstration images,
@@ -366,23 +382,32 @@ export default async function Proof() {
             Image provenance and hashes <ArrowUpRight size={14} />
           </a>
         </div>
-      </section>
-      <section className="proof-section">
-        <div className="section-heading">
-          <h2>Submission readiness and operational evidence</h2>
-          <span className="eyebrow">TIMESTAMPED OBSERVATIONS</span>
-        </div>
+      </ProofAccordion>
+      <ProofAccordion
+        level={2}
+        title={<>Submission readiness and operational evidence</>}
+        meta={
+          <>
+            <span className="eyebrow">TIMESTAMPED OBSERVATIONS</span>
+          </>
+        }
+      >
         <p>
           These are retained observations, not a live guarantee of node health
           or completed deployment. Pending transactions remain separate from
           finalized receipts.
         </p>
         {operations.map((operation) => (
-          <article className="panel proof-transaction" key={operation.title}>
-            <div className="section-heading">
-              <h3>{operation.title}</h3>
-              <Badge>{operation.status}</Badge>
-            </div>
+          <ProofAccordion
+            key={operation.title}
+            level={3}
+            title={<>{operation.title}</>}
+            meta={
+              <>
+                <Badge>{operation.status}</Badge>
+              </>
+            }
+          >
             <p className="small muted">
               Observed: {operation.observedAt ?? "Not recorded"}
             </p>
@@ -394,7 +419,7 @@ export default async function Proof() {
                 </div>
               ))}
             </dl>
-          </article>
+          </ProofAccordion>
         ))}
         {deckAvailable && (
           <a
@@ -406,12 +431,16 @@ export default async function Proof() {
             Open pitch deck PDF <ArrowUpRight size={16} />
           </a>
         )}
-      </section>
-      <section className="proof-section">
-        <div className="section-heading">
-          <h2>Application contract addresses</h2>
-          <span className="eyebrow">RECORDED IDENTIFIERS</span>
-        </div>
+      </ProofAccordion>
+      <ProofAccordion
+        level={2}
+        title={<>Application contract addresses</>}
+        meta={
+          <>
+            <span className="eyebrow">RECORDED IDENTIFIERS</span>
+          </>
+        }
+      >
         {config.meterMend || config.cronpot ? (
           <div className="proof-addresses">
             {[
@@ -441,18 +470,26 @@ export default async function Proof() {
             description="This section fills from the actual deployment manifest after the contracts are deployed."
           />
         )}
-      </section>
+      </ProofAccordion>
       {hasPingProof && (
-        <section className="proof-section">
-          <div className="section-heading">
-            <h2>Runtime probe contract</h2>
-            <span className="eyebrow">DEPLOYED PROBE</span>
-          </div>
-          <article className="panel proof-transaction">
-            <div className="section-heading">
-              <h3>Ping</h3>
-              <Badge tone="green">Deployment recorded</Badge>
-            </div>
+        <ProofAccordion
+          level={2}
+          title={<>Runtime probe contract</>}
+          meta={
+            <>
+              <span className="eyebrow">DEPLOYED PROBE</span>
+            </>
+          }
+        >
+          <ProofAccordion
+            level={3}
+            title={<>Ping</>}
+            meta={
+              <>
+                <Badge tone="green">Deployment recorded</Badge>
+              </>
+            }
+          >
             <p className="small muted">
               This probe verified runtime behavior. It is separate from the
               MeterMend and Cronpot application contracts.
@@ -483,14 +520,18 @@ export default async function Proof() {
             >
               Inspect probe deployment <ArrowUpRight size={14} />
             </a>
-          </article>
-        </section>
+          </ProofAccordion>
+        </ProofAccordion>
       )}
-      <section className="proof-section">
-        <div className="section-heading">
-          <h2>Phase 0 observations</h2>
-          <span className="eyebrow">{probe?.mode ?? "NOT RUN"}</span>
-        </div>
+      <ProofAccordion
+        level={2}
+        title={<>Phase 0 observations</>}
+        meta={
+          <>
+            <span className="eyebrow">{probe?.mode ?? "NOT RUN"}</span>
+          </>
+        }
+      >
         <p>
           {probe?.observedAt
             ? `Observed ${new Date(probe.observedAt).toUTCString()}.`
@@ -533,7 +574,7 @@ export default async function Proof() {
             </tbody>
           </table>
         </div>
-      </section>
+      </ProofAccordion>
       <TransactionSection
         title="Deployment transactions"
         records={deployTransactions}
@@ -561,11 +602,17 @@ export default async function Proof() {
           />
         </>
       )}
-      <section className="proof-section">
-        <div className="section-heading">
-          <h2>Expected rejection evidence</h2>
-          <span className="eyebrow">{rejectedTransactions.length} RECORDS</span>
-        </div>
+      <ProofAccordion
+        level={2}
+        title={<>Expected rejection evidence</>}
+        meta={
+          <>
+            <span className="eyebrow">
+              {rejectedTransactions.length} RECORDS
+            </span>
+          </>
+        }
+      >
         <p>
           These signed attempts exercise permission checks. The dispatch error
           records the on-chain rejection; the decoded preflight error comes from
@@ -573,11 +620,16 @@ export default async function Proof() {
         </p>
         {rejectedTransactions.length ? (
           rejectedTransactions.map((record) => (
-            <article className="panel proof-transaction" key={record.txHash}>
-              <div className="section-heading">
-                <h3>{record.label}</h3>
-                <Badge>{record.status}</Badge>
-              </div>
+            <ProofAccordion
+              key={record.txHash}
+              level={3}
+              title={<>{record.label}</>}
+              meta={
+                <>
+                  <Badge>{record.status}</Badge>
+                </>
+              }
+            >
               <code className="hash">{record.txHash}</code>
               <dl className="detail-list">
                 <div>
@@ -624,14 +676,14 @@ export default async function Proof() {
               >
                 Inspect rejection receipt <ArrowUpRight size={14} />
               </a>
-            </article>
+            </ProofAccordion>
           ))
         ) : (
           <p className="callout">
             No signed rejection receipt has been recorded.
           </p>
         )}
-      </section>
+      </ProofAccordion>
       <TransactionSection
         title="Funded probe transactions"
         records={probeTransactions}
@@ -647,11 +699,15 @@ export default async function Proof() {
           "No executor transaction evidence is available from the persisted service."
         }
       />
-      <section className="proof-section">
-        <div className="section-heading">
-          <h2>Keeper job list</h2>
-          <span className="eyebrow">{jobList.length} JOBS</span>
-        </div>
+      <ProofAccordion
+        level={2}
+        title={<>Keeper job list</>}
+        meta={
+          <>
+            <span className="eyebrow">{jobList.length} JOBS</span>
+          </>
+        }
+      >
         {jobList.length ? (
           <div className="proof-table-wrap">
             <table className="proof-table">
@@ -685,7 +741,7 @@ export default async function Proof() {
                 : "The persistent keeper service has not been configured.")}
           </p>
         )}
-      </section>
+      </ProofAccordion>
       <p className="proof-note">
         Refunds execute automatically via Cronpot; execution is permissionless
         and our keeper runs it. Testnet history may be pruned; the persisted
@@ -708,21 +764,27 @@ function TransactionSection({
   empty: string;
 }) {
   return (
-    <section className="proof-section">
-      <div className="section-heading">
-        <h2>{title}</h2>
-        <span className="eyebrow">{records.length} RECORDS</span>
-      </div>
+    <ProofAccordion
+      level={2}
+      title={<>{title}</>}
+      meta={
+        <>
+          <span className="eyebrow">{records.length} RECORDS</span>
+        </>
+      }
+    >
       {records.length ? (
         records.map((record, index) => (
-          <article
-            className="panel proof-transaction"
+          <ProofAccordion
             key={`${record.txHash ?? record.blockHash}-${index}`}
+            level={3}
+            title={<>{record.label}</>}
+            meta={
+              <>
+                <Badge>{record.status}</Badge>
+              </>
+            }
           >
-            <div className="section-heading">
-              <h3>{record.label}</h3>
-              <Badge>{record.status}</Badge>
-            </div>
             {record.txHash ? (
               <code className="hash">{record.txHash}</code>
             ) : (
@@ -753,11 +815,11 @@ function TransactionSection({
               {record.blockHash ? "Inspect this block" : "Open node console"}
               <ArrowUpRight size={14} />
             </a>
-          </article>
+          </ProofAccordion>
         ))
       ) : (
         <p className="callout">{empty}</p>
       )}
-    </section>
+    </ProofAccordion>
   );
 }

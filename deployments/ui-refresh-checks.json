@@ -1,0 +1,391 @@
+{
+  "checkedAt": "2026-11-04T21:54:35.226Z",
+  "origin": "http://localhost:3003",
+  "results": [
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/",
+      "sticky": true,
+      "menu": true,
+      "screenshot": "docs/evidence/ui-refresh/390-home.png"
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/items",
+      "sticky": true,
+      "pill": {
+        "before": "translate(5px, 5px)",
+        "after": "translate(131px, 5px)",
+        "selected": "Available now",
+        "moves": true
+      },
+      "screenshot": "docs/evidence/ui-refresh/390-items.png"
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [
+        {
+          "tag": "BUTTON",
+          "class": "",
+          "width": 123.8125
+        }
+      ],
+      "route": "/operator",
+      "sticky": true,
+      "screenshot": "docs/evidence/ui-refresh/390-operator.png"
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/arbiter",
+      "sticky": true,
+      "screenshot": "docs/evidence/ui-refresh/390-arbiter.png"
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [
+        {
+          "tag": "TABLE",
+          "class": "proof-table",
+          "width": 487.59375
+        },
+        {
+          "tag": "THEAD",
+          "class": "",
+          "width": 487.59375
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "width": 487.59375
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "width": 230
+        },
+        {
+          "tag": "TBODY",
+          "class": "",
+          "width": 487.59375
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "width": 487.59375
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "width": 230
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "width": 487.59375
+        }
+      ],
+      "route": "/proof",
+      "sticky": true,
+      "accordions": {
+        "count": 71,
+        "closed": true,
+        "keyboardOpens": true,
+        "clickToggles": true
+      },
+      "screenshot": "docs/evidence/ui-refresh/390-proof.png"
+    },
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/",
+      "sticky": true
+    },
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/items",
+      "sticky": true,
+      "pill": {
+        "before": "translate(5px, 5px)",
+        "after": "translate(131px, 5px)",
+        "selected": "Available now",
+        "moves": true
+      }
+    },
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [
+        {
+          "tag": "BUTTON",
+          "class": "",
+          "width": 78.734375
+        },
+        {
+          "tag": "BUTTON",
+          "class": "",
+          "width": 123.8125
+        }
+      ],
+      "route": "/operator",
+      "sticky": true
+    },
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/arbiter",
+      "sticky": true
+    },
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [
+        {
+          "tag": "TABLE",
+          "class": "proof-table",
+          "width": 487.59375
+        },
+        {
+          "tag": "THEAD",
+          "class": "",
+          "width": 487.59375
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "width": 487.59375
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "width": 230
+        },
+        {
+          "tag": "TBODY",
+          "class": "",
+          "width": 487.59375
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "width": 487.59375
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "width": 230
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "width": 487.59375
+        }
+      ],
+      "route": "/proof",
+      "sticky": true,
+      "accordions": {
+        "count": 71,
+        "closed": true,
+        "keyboardOpens": true,
+        "clickToggles": true
+      }
+    },
+    {
+      "width": 768,
+      "scrollWidth": 753,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/",
+      "sticky": true
+    },
+    {
+      "width": 768,
+      "scrollWidth": 753,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/items",
+      "sticky": true,
+      "pill": {
+        "before": "translate(5px, 5px)",
+        "after": "translate(146px, 5px)",
+        "selected": "Available now",
+        "moves": true
+      }
+    },
+    {
+      "width": 768,
+      "scrollWidth": 753,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/operator",
+      "sticky": true
+    },
+    {
+      "width": 768,
+      "scrollWidth": 753,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/arbiter",
+      "sticky": true
+    },
+    {
+      "width": 768,
+      "scrollWidth": 753,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [
+        {
+          "tag": "TABLE",
+          "class": "proof-table",
+          "width": 739.125
+        },
+        {
+          "tag": "THEAD",
+          "class": "",
+          "width": 739.125
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "width": 739.125
+        },
+        {
+          "tag": "TH",
+          "class": "",
+          "width": 250
+        },
+        {
+          "tag": "TBODY",
+          "class": "",
+          "width": 739.125
+        },
+        {
+          "tag": "TR",
+          "class": "",
+          "width": 739.125
+        },
+        {
+          "tag": "TD",
+          "class": "",
+          "width": 250
+        }
+      ],
+      "route": "/proof",
+      "sticky": true,
+      "accordions": {
+        "count": 71,
+        "closed": true,
+        "keyboardOpens": true,
+        "clickToggles": true
+      }
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1425,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/",
+      "sticky": true,
+      "screenshot": "docs/evidence/ui-refresh/1440-home.png"
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1425,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/items",
+      "sticky": true,
+      "pill": {
+        "before": "translate(5px, 5px)",
+        "after": "translate(146px, 5px)",
+        "selected": "Available now",
+        "moves": true
+      }
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1425,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/operator",
+      "sticky": true
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1425,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/arbiter",
+      "sticky": true
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1425,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/proof",
+      "sticky": true,
+      "accordions": {
+        "count": 71,
+        "closed": true,
+        "keyboardOpens": true,
+        "clickToggles": true
+      },
+      "screenshot": "docs/evidence/ui-refresh/1440-proof.png"
+    }
+  ],
+  "reducedMotion": "0s",
+  "browserErrors": [],
+  "transactionsSent": 0,
+  "validation": {
+    "webTests": 86,
+    "typecheck": "passed",
+    "productionBuild": "passed",
+    "physicalPhoneTest": false,
+    "notes": [
+      "Automated Edge browser checks on a local production build; no transactions sent.",
+      "Wide operator tabs and proof tables scroll inside their containers; document width stays within viewport.",
+      "Final source also consolidates the shared radius token, rounds the large reserve panel, and uses a div around accordion headings."
+    ]
+  }
+}

@@ -15,6 +15,7 @@ import {
 } from "@/components/ui";
 import { EvidenceField } from "@/components/evidence";
 import { ItemQR } from "@/components/qr";
+import { PillGroup } from "@/components/pill-group";
 import { Field, Form, accountAddress, text } from "@/components/forms";
 import { amount, exactAmount, parseAmount, sameAddress } from "@/lib/format";
 import { request } from "@/lib/request";
@@ -37,7 +38,11 @@ export default function Operator() {
         description="Set the terms, record returns and turn a little of every rental into a longer life for your equipment."
       />
       <ChainStatus />
-      <div className="segmented operator-tabs">
+      <PillGroup
+        className="segmented operator-tabs"
+        activeKey={tab}
+        aria-label="Workshop views"
+      >
         {[
           ["equipment", "Equipment"],
           ["returns", "Returns & deposits"],
@@ -47,12 +52,13 @@ export default function Operator() {
           <button
             key={key}
             className={tab === key ? "selected" : ""}
+            aria-pressed={tab === key}
             onClick={() => setTab(key)}
           >
             {label}
           </button>
         ))}
-      </div>
+      </PillGroup>
       {!wallet && (
         <div className="callout">
           Connect your operator wallet to see equipment you manage and approve

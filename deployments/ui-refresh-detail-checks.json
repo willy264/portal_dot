@@ -1,0 +1,60 @@
+{
+  "checkedAt": "2026-11-04T21:55:40.294Z",
+  "origin": "http://localhost:3003",
+  "results": [
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/items/1",
+      "sticky": true,
+      "screenshot": "docs/evidence/ui-refresh/390-items-1.png"
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/rentals/3",
+      "sticky": true,
+      "screenshot": "docs/evidence/ui-refresh/390-rentals-3.png"
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1425,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/items/1",
+      "sticky": true,
+      "darkTheme": "dark"
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1425,
+      "font": "josefin, \"josefin Fallback\", \"Josefin Sans\", sans-serif",
+      "fontSize": "19px",
+      "overflows": [],
+      "route": "/rentals/3",
+      "sticky": true,
+      "darkTheme": "dark"
+    }
+  ],
+  "reducedMotion": "0s",
+  "browserErrors": [],
+  "transactionsSent": 0,
+  "validation": {
+    "webTests": 86,
+    "typecheck": "passed",
+    "productionBuild": "passed",
+    "physicalPhoneTest": false,
+    "notes": [
+      "Automated Edge browser checks on a local production build; no transactions sent.",
+      "Wide operator tabs and proof tables scroll inside their containers; document width stays within viewport.",
+      "Final source also consolidates the shared radius token, rounds the large reserve panel, and uses a div around accordion headings."
+    ]
+  }
+}
