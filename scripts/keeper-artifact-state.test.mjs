@@ -14,6 +14,7 @@ import {
   requireArtifact,
   restore,
   recoverZeroNonce,
+  isUnsignedExtrinsic,
   summaryLines,
   validateJournal,
 } from "./keeper-artifact-state.mjs";
@@ -74,8 +75,8 @@ describe("keeper artifact recovery", () => {
           {
             workflow_runs: [
               {
-                id: 43671052039,
-                run_number: 44,
+                id: 43696492379,
+                run_number: 45,
                 run_attempt: 1,
                 head_branch: "main",
                 status: "completed",
@@ -83,7 +84,7 @@ describe("keeper artifact recovery", () => {
             ],
           },
         ]
-      : { id: 45, run_number: 45, run_attempt: 1, head_branch: "main" };
+      : { id: 46, run_number: 46, run_attempt: 1, head_branch: "main" };
   const recoveryRpc = async (method) =>
     ({
       chain_getBlockHash:
@@ -102,7 +103,7 @@ describe("keeper artifact recovery", () => {
       readFileSync(join(environment.DATA_DIR, JOURNAL), "utf8"),
     );
     expect(journal.steps).toEqual({});
-    expect(journal.recovery.reviewedThroughRun).toBe(44);
+    expect(journal.recovery.reviewedThroughRun).toBe(45);
     expect(readFileSync(environment.GITHUB_OUTPUT, "utf8")).toBe(
       "ready=true\n",
     );
@@ -136,9 +137,16 @@ describe("keeper artifact recovery", () => {
     ).rejects.toThrow("manual dispatch");
     await expect(
       recoverZeroNonce(context(), {
-        api: () => ({ head_branch: "main", run_number: 46, run_attempt: 1 }),
+        api: () => ({ head_branch: "main", run_number: 47, run_attempt: 1 }),
       }),
-    ).rejects.toThrow("run 45");
+    ).rejects.toThrow("run 46");
+  });
+  it("distinguishes unsigned extrinsics from signed or malformed pool entries", () => {
+    expect(isUnsignedExtrinsic("0x080400")).toBe(true);
+    expect(isUnsignedExtrinsic("0x088400")).toBe(false);
+    expect(isUnsignedExtrinsic("0x100400")).toBe(false);
+    expect(isUnsignedExtrinsic("0x02")).toBe(false);
+    expect(isUnsignedExtrinsic("0xpending")).toBe(false);
   });
   it("requires the immediately previous failed run and its latest attempt", () => {
     expect(

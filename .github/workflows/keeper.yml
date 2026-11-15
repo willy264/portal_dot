@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       recover_zero_nonce:
-        description: "One-time reviewed outage recovery: run 45 only, zero nonce and empty pool required"
+        description: "One-time reviewed outage recovery: run 46 only, zero nonce and no signed pending transactions"
         required: false
         type: boolean
         default: false

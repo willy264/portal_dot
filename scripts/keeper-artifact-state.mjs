@@ -315,19 +315,19 @@ export async function recoverZeroNonce(
   );
   if (
     current.head_branch !== "main" ||
-    current.run_number !== 45 ||
+    current.run_number !== 46 ||
     current.run_attempt !== 1
   )
-    throw new Error("Recovery is restricted to run 45 attempt 1 on main.");
+    throw new Error("Recovery is restricted to run 46 attempt 1 on main.");
   const runs = api(
     "repos/willy264/portal_dot/actions/workflows/keeper.yml/runs?branch=main&per_page=100",
     true,
   ).flatMap((page) => page.workflow_runs);
   const previous = previousAttempt(current, runs);
   if (
-    previous?.id !== 43671052039 ||
+    previous?.id !== 43696492379 ||
     previous.run_attempt !== 1 ||
-    runs.some((run) => run.run_number > 45)
+    runs.some((run) => run.run_number > 46)
   )
     throw new Error("Recovery run history changed; review again.");
   const call =
@@ -382,10 +382,10 @@ export async function recoverZeroNonce(
     bestNonce !== 0 ||
     Number(nextIndex) !== 0 ||
     !Array.isArray(pool) ||
-    pool.length !== 0
+    !pool.every(isUnsignedExtrinsic)
   )
     throw new Error(
-      "Recovery requires zero finalized/best/next nonce and empty pending pool.",
+      "Recovery requires zero finalized/best/next nonce and no signed pending extrinsics.",
     );
   const directory = resolve(environment.DATA_DIR ?? "data/corrected-keeper");
   mkdirSync(directory, { recursive: true });
@@ -397,7 +397,7 @@ export async function recoverZeroNonce(
     steps: {},
     recovery: {
       reason: "Run 23 artifact download HTTP 503; expired predecessor",
-      reviewedThroughRun: 44,
+      reviewedThroughRun: 45,
       observedAt: new Date().toISOString(),
       genesis,
       finalized,
@@ -405,18 +405,38 @@ export async function recoverZeroNonce(
       finalizedNonce,
       bestNonce,
       nextIndex,
-      pendingPoolCount: 0,
+      pendingPoolCount: pool.length,
+      signedPendingCount: 0,
     },
   });
   saveJson(join(directory, "workflow-state.json"), {
     schemaVersion: 1,
     runId: Number(environment.GITHUB_RUN_ID),
     runAttempt: 1,
-    recovery: "reviewed-zero-nonce-run-45",
+    recovery: "reviewed-zero-nonce-run-46",
   });
   if (environment.GITHUB_OUTPUT)
     appendFileSync(environment.GITHUB_OUTPUT, "ready=true\n");
-  console.log("One-time run 45 recovery verified: zero nonce and empty pool.");
+  console.log(
+    "One-time run 46 recovery verified: zero nonce and no signed pending extrinsics.",
+  );
+}
+
+export function isUnsignedExtrinsic(hex) {
+  if (!/^0x(?:[0-9a-f]{2})+$/i.test(hex ?? "")) return false;
+  const bytes = Buffer.from(hex.slice(2), "hex");
+  const mode = bytes[0] & 3;
+  if (mode === 3) return false;
+  const prefix = [1, 2, 4][mode];
+  if (bytes.length <= prefix) return false;
+  const length =
+    mode === 0
+      ? bytes[0] >>> 2
+      : mode === 1
+        ? bytes.readUInt16LE(0) >>> 2
+        : bytes.readUInt32LE(0) >>> 2;
+  // Version 4 with the signed bit clear: no account signer or account nonce.
+  return length === bytes.length - prefix && bytes[prefix] === 4;
 }
 
 function main() {
