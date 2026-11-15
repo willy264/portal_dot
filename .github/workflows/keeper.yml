@@ -5,6 +5,11 @@ on:
     - cron: "*/10 * * * *"
   workflow_dispatch:
     inputs:
+      recover_zero_nonce:
+        description: "One-time reviewed outage recovery: run 45 only, zero nonce and empty pool required"
+        required: false
+        type: boolean
+        default: false
       bootstrap:
         description: "First run only: initialize an empty journal after checking this keeper account has no pending transaction"
         required: true
@@ -28,6 +33,7 @@ jobs:
       DATA_DIR: ${{ github.workspace }}/data/corrected-keeper
       GH_TOKEN: ${{ github.token }}
       BOOTSTRAP: ${{ inputs.bootstrap || false }}
+      RECOVER_ZERO_NONCE: ${{ inputs.recover_zero_nonce || false }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -61,7 +67,9 @@ jobs:
             data/corrected-keeper/preflight.json
             data/corrected-keeper/workflow-state.json
           if-no-files-found: error
-          retention-days: 3
+          # The next run must restore this exact state. Keep the chain intact
+          # across scheduler pauses and other gaps between scheduled runs.
+          retention-days: 90
           compression-level: 9
       - name: Summarize finalized jobs and transaction hashes
         if: always() && steps.restore.outputs.ready == 'true'

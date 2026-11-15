@@ -22,6 +22,8 @@ The schedule is `*/10 * * * *`. GitHub can delay or drop scheduled runs, so this
 
 ## Journal persistence and failure recovery
 
+November 15 outage recovery: run 23 failed while downloading run 22's journal with HTTP 503 (`Egress is over the account limit`); runs 23–44 subsequently skipped the signing step. Run 22's summary recorded no transactions. The workflow now requests 90-day retention, superseding the original three-day policy described below. Its manual `recover_zero_nonce` input is restricted to run 45 attempt 1 after run 44; it verifies the genesis and runtime code hash, zero finalized/best/next account nonce for the dedicated Actions keeper, and an empty pending pool before saving a replacement journal with recovery evidence. Any mismatch stops recovery. Later runs must restore that journal normally; this input is not a reusable reset option.
+
 One concurrency group prevents overlapping workflow signers; in-progress runs are not cancelled. Every run restores the **immediately previous run's latest attempt**, including a failed run. A rerun restores the immediately previous attempt of the same run, and rerunning an older run after a newer run exists is refused to prevent journal rollback. Prefer a fresh manual dispatch. The artifact name is `corrected-keeper-journal-{runId}-{runAttempt}` and contains only these public, non-secret records:
 
 - `corrected-keeper-journal.json`: intentions, original hashes/nonces, confirmed and unknown attempts.

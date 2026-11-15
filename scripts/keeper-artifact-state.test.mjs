@@ -13,6 +13,7 @@ import {
   previousAttempt,
   requireArtifact,
   restore,
+  recoverZeroNonce,
   summaryLines,
   validateJournal,
 } from "./keeper-artifact-state.mjs";
@@ -67,6 +68,78 @@ function recoveryApi(endpoint) {
 }
 
 describe("keeper artifact recovery", () => {
+  const outageApi = (endpoint) =>
+    endpoint.includes("/workflows/")
+      ? [
+          {
+            workflow_runs: [
+              {
+                id: 43671052039,
+                run_number: 44,
+                run_attempt: 1,
+                head_branch: "main",
+                status: "completed",
+              },
+            ],
+          },
+        ]
+      : { id: 45, run_number: 45, run_attempt: 1, head_branch: "main" };
+  const recoveryRpc = async (method) =>
+    ({
+      chain_getBlockHash:
+        "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd",
+      chain_getFinalizedHead: "0xfinalized",
+      state_getStorageHash:
+        "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2",
+      state_getStorage: `0x${"00".repeat(80)}`,
+      system_accountNextIndex: 0,
+      author_pendingExtrinsics: [],
+    })[method];
+  it("recovers only the reviewed outage after fresh zero-nonce observations", async () => {
+    const environment = context();
+    await recoverZeroNonce(environment, { api: outageApi, rpc: recoveryRpc });
+    const journal = JSON.parse(
+      readFileSync(join(environment.DATA_DIR, JOURNAL), "utf8"),
+    );
+    expect(journal.steps).toEqual({});
+    expect(journal.recovery.reviewedThroughRun).toBe(44);
+    expect(readFileSync(environment.GITHUB_OUTPUT, "utf8")).toBe(
+      "ready=true\n",
+    );
+  });
+  it.each([
+    "state_getStorage",
+    "system_accountNextIndex",
+    "author_pendingExtrinsics",
+  ])("refuses recovery with uncertain account state: %s", async (method) => {
+    const environment = context();
+    const rpc = async (name) =>
+      name === method
+        ? {
+            state_getStorage: `0x01000000${"00".repeat(76)}`,
+            system_accountNextIndex: 1,
+            author_pendingExtrinsics: ["0xpending"],
+          }[method]
+        : recoveryRpc(name);
+    await expect(
+      recoverZeroNonce(environment, { api: outageApi, rpc }),
+    ).rejects.toThrow("zero finalized/best/next nonce");
+    expect(existsSync(join(environment.DATA_DIR, JOURNAL))).toBe(false);
+    expect(existsSync(environment.GITHUB_OUTPUT)).toBe(false);
+  });
+  it("refuses scheduled recovery and later runs", async () => {
+    await expect(
+      recoverZeroNonce(
+        { ...context(), GITHUB_EVENT_NAME: "schedule" },
+        { api: outageApi },
+      ),
+    ).rejects.toThrow("manual dispatch");
+    await expect(
+      recoverZeroNonce(context(), {
+        api: () => ({ head_branch: "main", run_number: 46, run_attempt: 1 }),
+      }),
+    ).rejects.toThrow("run 45");
+  });
   it("requires the immediately previous failed run and its latest attempt", () => {
     expect(
       previousAttempt(current, [

@@ -298,8 +298,132 @@ export function restore(
   );
 }
 
+// One-time recovery of the Nov 9 download outage. Never a general bootstrap.
+export async function recoverZeroNonce(
+  environment = process.env,
+  { api = ghJson, rpc } = {},
+) {
+  if (
+    environment.GITHUB_REPOSITORY !== "willy264/portal_dot" ||
+    environment.GITHUB_EVENT_NAME !== "workflow_dispatch"
+  )
+    throw new Error(
+      "Recovery requires manual dispatch in the keeper repository.",
+    );
+  const current = api(
+    `repos/willy264/portal_dot/actions/runs/${environment.GITHUB_RUN_ID}`,
+  );
+  if (
+    current.head_branch !== "main" ||
+    current.run_number !== 45 ||
+    current.run_attempt !== 1
+  )
+    throw new Error("Recovery is restricted to run 45 attempt 1 on main.");
+  const runs = api(
+    "repos/willy264/portal_dot/actions/workflows/keeper.yml/runs?branch=main&per_page=100",
+    true,
+  ).flatMap((page) => page.workflow_runs);
+  const previous = previousAttempt(current, runs);
+  if (
+    previous?.id !== 43671052039 ||
+    previous.run_attempt !== 1 ||
+    runs.some((run) => run.run_number > 45)
+  )
+    throw new Error("Recovery run history changed; review again.");
+  const call =
+    rpc ??
+    (async (method, params = []) => {
+      const response = await fetch("https://test-node-v3.portaldot.dev", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
+        signal: AbortSignal.timeout(30000),
+      });
+      if (!response.ok) throw new Error(`Recovery RPC HTTP ${response.status}`);
+      const body = await response.json();
+      if (body.error || body.result === undefined)
+        throw new Error("Recovery RPC failed.");
+      return body.result;
+    });
+  const genesis = await call("chain_getBlockHash", [0]);
+  if (
+    genesis !==
+    "0xd4f9acbcf7f52388d8b095abe3c198d19fc510e0343e643e87cfbccb155283bd"
+  )
+    throw new Error("Recovery chain identity changed.");
+  const finalized = await call("chain_getFinalizedHead");
+  const codeHash = await call("state_getStorageHash", [
+    "0x3a636f6465",
+    finalized,
+  ]);
+  if (
+    codeHash !==
+    "0xedc03c9dc81d39fea5c02893cc34cf2ec898d55d7ee8f8e89eb27597a724c7c2"
+  )
+    throw new Error("Recovery runtime changed; review account codec.");
+  const best = await call("chain_getBlockHash");
+  const key =
+    "0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da9dc6a09b1c3a7e441e523999161afb263580b765da614f51788dda1df5759e5755bca34ee92a35369dc7965ed2a74770d";
+  const nonce = (raw) => {
+    if (!/^0x[0-9a-f]{160}$/i.test(raw ?? ""))
+      throw new Error("Recovery account codec changed.");
+    return Buffer.from(raw.slice(2), "hex").readUInt32LE(0);
+  };
+  const finalizedNonce = nonce(
+    await call("state_getStorage", [key, finalized]),
+  );
+  const bestNonce = nonce(await call("state_getStorage", [key, best]));
+  const nextIndex = await call("system_accountNextIndex", [
+    "5E49UZgRcyc8xpfbXz4WhsaF8PM29ZBcNEj55oW1HVYMfPP7",
+  ]);
+  const pool = await call("author_pendingExtrinsics");
+  if (
+    finalizedNonce !== 0 ||
+    bestNonce !== 0 ||
+    Number(nextIndex) !== 0 ||
+    !Array.isArray(pool) ||
+    pool.length !== 0
+  )
+    throw new Error(
+      "Recovery requires zero finalized/best/next nonce and empty pending pool.",
+    );
+  const directory = resolve(environment.DATA_DIR ?? "data/corrected-keeper");
+  mkdirSync(directory, { recursive: true });
+  if (readdirSync(directory).length)
+    throw new Error("Recovery DATA_DIR must be empty.");
+  saveJson(join(directory, JOURNAL), {
+    schemaVersion: 1,
+    network: "portaldot-v3-testnet",
+    steps: {},
+    recovery: {
+      reason: "Run 23 artifact download HTTP 503; expired predecessor",
+      reviewedThroughRun: 44,
+      observedAt: new Date().toISOString(),
+      genesis,
+      finalized,
+      best,
+      finalizedNonce,
+      bestNonce,
+      nextIndex,
+      pendingPoolCount: 0,
+    },
+  });
+  saveJson(join(directory, "workflow-state.json"), {
+    schemaVersion: 1,
+    runId: Number(environment.GITHUB_RUN_ID),
+    runAttempt: 1,
+    recovery: "reviewed-zero-nonce-run-45",
+  });
+  if (environment.GITHUB_OUTPUT)
+    appendFileSync(environment.GITHUB_OUTPUT, "ready=true\n");
+  console.log("One-time run 45 recovery verified: zero nonce and empty pool.");
+}
+
 function main() {
-  if (process.argv[2] === "restore") return restore();
+  if (process.argv[2] === "restore")
+    return process.env.RECOVER_ZERO_NONCE === "true"
+      ? recoverZeroNonce()
+      : restore();
   if (process.argv[2] === "summary") {
     const file = join(
       resolve(process.env.DATA_DIR ?? "data/corrected-keeper"),
@@ -320,4 +444,7 @@ if (
   process.argv[1] &&
   resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 )
-  main();
+  Promise.resolve(main()).catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
